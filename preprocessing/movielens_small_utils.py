@@ -3,27 +3,54 @@ from preprocessing import dbpedia_utils as from_dbpedia
 
 
 def read_movie_info():
+    """
+    Function that reads the name of the movies of the small movielens dataset
+    :return: pandas DataFrame with the movieId column as index and title as value
+    """
     return pd.read_csv("./datasets/ml-latest-small/movies.csv", usecols=['movieId', 'title']).set_index(['movieId'])
 
 
 def __get_movie_strings(full_name: str):
-    all_names = full_name.split(" (")
-    format_names = [all_names[0]]
-    if len(all_names) > 2:
-        if all_names[1].find("a.k.a. ") != -1:
-            format_names.append(all_names[1].split("a.k.a. ")[1][:-1])
+    """
+    Function that, given a full name on the movielens dataset: Initially, the string is separated by " (" string to
+    exclude the year, than the first step is to extract the first and eventually second and third names. Finally, the
+    articles of the pt, en, es, it, fr and de are placed on the beginning of the string
+    :param full_name: movie name on movielens dataset that follows the patters  "name (year)"; "name, The (year)";
+    "name (a.k.a. second_name) (year)" and "name (second_name) (third_name) (year)" and combinations
+    :return: a list with all possible movie names on dbpedia
+    """
 
+    # remove year of string
+    all_names = full_name.split(" (")
+    all_names = all_names[:-1]
+    format_names = [all_names[0]]
+    if len(all_names) > 1:
+        for i in range(1, len(all_names)):
+            # get names on a.k.a parenthesis, else get name between parenthesis
+            if all_names[i].find("a.k.a. ") != -1:
+                format_names.append(all_names[i].split("a.k.a. ")[1][:-1])
+            else:
+                format_names.append(all_names[i][:-1])
+
+    # place articles in front of strings
     for i in range(0, len(format_names)):
         fn = format_names[i]
         has_coma = fn.split(", ")
-        if len(has_coma) > 1:
-            fn = has_coma[-1] + ' ' + ''.join(has_coma[:-1])
+        if len(has_coma[-1]) <= 4:
+            fn = has_coma[-1] + ' ' + fn[:-5]
         format_names[i] = fn
 
     return format_names
 
 
 def generate_movies_uri_dbpedia_dataset():
+    """
+    Function that generates the dataset with movieId, title and uri from dbpedia by invoking, for every title of movie
+    the function get_movie_uri_from_dbpedia. Because the API can cause timeout, the DBPedia API is called until it
+    successfully works
+    :return: A DataFrame with movieId, title and uri from dbpedia
+    """
+
     movies = read_movie_info()
     movies_uri = pd.DataFrame(index=movies.index, columns=['uri'])
 
@@ -31,6 +58,7 @@ def generate_movies_uri_dbpedia_dataset():
     for index, row in movies.iterrows():
         names = __get_movie_strings(row[0])
         for name in names:
+            uri_name = ""
             while True:
                 try:
                     uri_name = from_dbpedia.get_movie_uri_from_dbpedia(name)
