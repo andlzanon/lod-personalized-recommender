@@ -32,4 +32,8 @@ def get_movie_uri_from_dbpedia(movie_name: str):
 
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
-    return results["results"]["bindings"][0].get("uri").get("value")
+    try:
+        uri = results["results"]["bindings"][0].get("uri").get("value")
+    except IndexError:
+        uri = ""
+    return uri
