@@ -1,13 +1,24 @@
 import pandas as pd
 from preprocessing import dbpedia_utils as from_dbpedia
 
+ml_small_path = "./datasets/ml-latest-small/movies.csv"
+uri_ml_small_path = "./generated_files/dbpedia/uri_dbpedia_movielens_small.csv"
+
 
 def read_movie_info():
     """
     Function that reads the name of the movies of the small movielens dataset
     :return: pandas DataFrame with the movieId column as index and title as value
     """
-    return pd.read_csv("./datasets/ml-latest-small/movies.csv", usecols=['movieId', 'title']).set_index(['movieId'])
+    return pd.read_csv(ml_small_path, usecols=['movieId', 'title']).set_index(['movieId'])
+
+
+def read_uri_info():
+    """
+    Function that reads the name of the movies of the small movielens dataset
+    :return: pandas DataFrame with the movieId column as index and title as value
+    """
+    return pd.read_csv(uri_ml_small_path).set_index(['movieId'])
 
 
 def __get_movie_strings(full_name: str):
@@ -20,10 +31,14 @@ def __get_movie_strings(full_name: str):
     :return: a list with all possible movie names on dbpedia
     """
 
-    # remove year of string
-    all_names = full_name.split(" (")
-    all_names = all_names[:-1]
-    format_names = [all_names[0]]
+    # remove year of string, if there is no year, then return the full name
+    try:
+        all_names = full_name.split(" (")
+        all_names = all_names[:-1]
+        format_names = [all_names[0]]
+    except IndexError:
+        return [full_name]
+
     if len(all_names) > 1:
         for i in range(1, len(all_names)):
             # get names on a.k.a parenthesis, else get name between parenthesis
@@ -46,8 +61,8 @@ def __get_movie_strings(full_name: str):
 def generate_movies_uri_dbpedia_dataset():
     """
     Function that generates the dataset with movieId, title and uri from dbpedia by invoking, for every title of movie
-    the function get_movie_uri_from_dbpedia. Because the API can cause timeout, the DBPedia API is called until it
-    successfully works
+    the function get_movie_uri_from_dbpedia. Because the API can cause timeout, the DBPedia API is called 10 times until
+    it successfully works, if it does not, then the dataset is saved in disk with the current state of the dataset
     :return: A DataFrame with movieId, title and uri from dbpedia
     """
 
@@ -59,10 +74,19 @@ def generate_movies_uri_dbpedia_dataset():
         names = __get_movie_strings(row[0])
         for name in names:
             uri_name = ""
+            n = 0
             while True:
                 try:
                     uri_name = from_dbpedia.get_movie_uri_from_dbpedia(name)
-                except:
+                except Exception as e:
+                    n = n + 1
+                    print("n:" + str(n) + " Exception: " + str(e))
+
+                    if n == 10:
+                        full_movies = pd.concat([movies, movies_uri], axis=1)
+                        full_movies.to_csv(uri_ml_small_path, index=True)
+                        break
+
                     continue
                 break
 
@@ -72,5 +96,5 @@ def generate_movies_uri_dbpedia_dataset():
                 break
 
     full_movies = pd.concat([movies, movies_uri], axis=1)
-    full_movies.to_csv("./generated_files/dbpedia/uri_dbpedia_movielens_small", index=True)
+    full_movies.to_csv(uri_ml_small_path, index=True)
     print("Finished Obtaining the URIs of the small MovieLens dataset")
