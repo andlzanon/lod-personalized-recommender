@@ -1,12 +1,16 @@
 import pandas as pd
+import time
 from preprocessing import dbpedia_utils as from_dbpedia
+from preprocessing import wikidata_utils as from_wikidata
 
 ml_small_path = "./datasets/ml-latest-small/movies.csv"
 link_ml_small_path = "./datasets/ml-latest-small/links.csv"
-uri_ml_small_path = "./generated_files/dbpedia/uri_dbpedia_movielens_small.csv"
-nan_ml_small_path = "./generated_files/dbpedia/nan_uri_dbpedia_movielens_small.csv"
-final_ml_small_path = "./generated_files/dbpedia/final_uri_dbpedia_movielens_small.csv"
 
+db_uri_ml_small_path = "./generated_files/dbpedia/ml-latest-small/uri_dbpedia_movielens_small.csv"
+db_nan_ml_small_path = "./generated_files/dbpedia/ml-latest-small/nan_uri_dbpedia_movielens_small.csv"
+db_final_ml_small_path = "./generated_files/dbpedia/ml-latest-small/final_uri_dbpedia_movielens_small.csv"
+
+wikidata_props_ml_small = "./generated_files/wikidata/props_wikidata_movielens_small.csv"
 
 def read_movie_info():
     """
@@ -30,7 +34,7 @@ def read_uri_info():
     the generate_movies_uri_dbpedia_dataset function
     :return: pandas DataFrame with the movieId column as index and title and uri as value
     """
-    return pd.read_csv(uri_ml_small_path,).set_index(['movieId'])
+    return pd.read_csv(db_uri_ml_small_path, ).set_index(['movieId'])
 
 
 def read_nan_info():
@@ -39,7 +43,7 @@ def read_nan_info():
     the generate_recovery_uri_dbpedia function
     :return: pandas DataFrame with the movieId column as index and title as value
     """
-    return pd.read_csv(nan_ml_small_path).set_index(['movieId'])
+    return pd.read_csv(db_nan_ml_small_path).set_index(['movieId'])
 
 
 def read_final_sml_dbpedia_dataset():
@@ -47,7 +51,7 @@ def read_final_sml_dbpedia_dataset():
     Function that reads the name of the movies of the small movielens dataset
     :return: pandas DataFrame with the movieId column as index and title as value
     """
-    return pd.read_csv(final_ml_small_path).set_index(['movieId'])
+    return pd.read_csv(db_final_ml_small_path).set_index(['movieId'])
 
 
 def __get_movie_strings(full_name: str):
@@ -113,7 +117,7 @@ def generate_movies_uri_dbpedia_dataset():
 
                     if n == 10:
                         full_movies = pd.concat([movies, movies_uri], axis=1)
-                        full_movies.to_csv(uri_ml_small_path, index=True)
+                        full_movies.to_csv(db_uri_ml_small_path, index=True)
                         break
 
                     continue
@@ -125,7 +129,7 @@ def generate_movies_uri_dbpedia_dataset():
                 break
 
     full_movies = pd.concat([movies, movies_uri], axis=1)
-    full_movies.to_csv(uri_ml_small_path, index=True)
+    full_movies.to_csv(db_uri_ml_small_path, index=True)
     print("Finished Obtaining the URIs of the small MovieLens dataset")
 
 
@@ -173,7 +177,8 @@ def generate_recovery_uri_dbpedia():
 
             if uri_name != "":
                 movies_nan_uri.at[index, 'uri'] = uri_name
-                print("id: " + str(index) + " uri: " + str(uri_name) + " movie name: " + movies_nan_uri.loc[index, 'title'])
+                print("id: " + str(index) + " uri: " + str(uri_name) + " movie name: " + movies_nan_uri.loc[
+                    index, 'title'])
                 break
             else:
                 print("id: " + str(index) + " URI not found for name \"" + name + "\"")
@@ -192,4 +197,43 @@ def merge_dbpedia_dataset():
     nan_uris = read_nan_info()
 
     final = uris.fillna(nan_uris)
-    final.to_csv(final_ml_small_path, index=True)
+    final.to_csv(db_final_ml_small_path, index=True)
+
+
+def extract_wikidata_prop():
+    """
+    Obtain all the relevant triples of the movies from the wikidata and output the percentage of coverage from all the
+    movies on the dataset
+    :return: a csv file with all properties related to the movies form the latest small movielens dataset
+    """
+
+    # read movies link dataset and add the full imdbid column that matches with the wikidata format "ttXXXXXXX"
+    all_movies = read_movie_info()
+    links = read_links_info()
+    s_all_movies = len(all_movies)
+    links['full_imdbId'] = links['imdbId'].apply(lambda x: "tt" + str(format(x, '07d')))
+
+    # create output, final dataframe with all properties of movies
+    all_movie_props = pd.DataFrame(columns=['movieId', 'title', 'prop', 'obj'])
+
+    # obtaind properties of movies in 300 movies batches
+    begin = 0
+    end = 350
+    total = len(links)
+
+    # Obtain data from wikidata
+    print("Start obtaining movie data")
+    while end <= total:
+        results = from_wikidata.get_movie_data_from_wikidata(links.iloc[begin:end])
+        all_movie_props = all_movie_props.append(results)
+        print("From " + str(begin) + " to " + str(end - 1) + " obtained from Wikidata")
+        begin = end
+        end = end + 300
+        time.sleep(60)
+    print("End obtaining movie data")
+
+    # save output
+    all_movie_props.to_csv(wikidata_props_ml_small, mode='w', header=True, index=False)
+    print("Coverage: " + str(len(all_movie_props['movieId'].unique())) + " obtained of " + str(s_all_movies)
+          + ". Percentage: " + str(len(all_movie_props['movieId'].unique()) / s_all_movies))
+    print('Output file generated')
