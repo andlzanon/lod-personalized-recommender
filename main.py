@@ -1,3 +1,3 @@
-from preprocessing import movielens_small_utils as mls
+from preprocessing import slip_and_cross_validation as split
 
-mls.extract_wikidata_prop()
+split.cross_validation_ml_small(rs=42)
