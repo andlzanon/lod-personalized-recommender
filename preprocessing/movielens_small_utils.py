@@ -3,7 +3,9 @@ import time
 from preprocessing import dbpedia_utils as from_dbpedia
 from preprocessing import wikidata_utils as from_wikidata
 
-ml_small_path = "./datasets/ml-latest-small/movies.csv"
+ml_small_path = "./datasets/ml-latest-small/ratings_notime.csv"
+original_ml_small_path = "./datasets/ml-latest-small/ratings.csv"
+movies_ml_small_path = "./datasets/ml-latest-small/movies.csv"
 link_ml_small_path = "./datasets/ml-latest-small/links.csv"
 
 db_uri_ml_small_path = "./generated_files/dbpedia/ml-latest-small/uri_dbpedia_movielens_small.csv"
@@ -12,12 +14,13 @@ db_final_ml_small_path = "./generated_files/dbpedia/ml-latest-small/final_uri_db
 
 wikidata_props_ml_small = "./generated_files/wikidata/props_wikidata_movielens_small.csv"
 
+
 def read_movie_info():
     """
     Function that reads the name of the movies of the small movielens dataset
     :return: pandas DataFrame with the movieId column as index and title as value
     """
-    return pd.read_csv(ml_small_path, usecols=['movieId', 'title']).set_index(['movieId'])
+    return pd.read_csv(movies_ml_small_path, usecols=['movieId', 'title']).set_index(['movieId'])
 
 
 def read_links_info():
@@ -52,6 +55,23 @@ def read_final_sml_dbpedia_dataset():
     :return: pandas DataFrame with the movieId column as index and title as value
     """
     return pd.read_csv(db_final_ml_small_path).set_index(['movieId'])
+
+
+def read_user_item_interaction():
+    """
+    Function that reads the user interactions with the movies of the small movielens dataset
+    :return: pandas DataFrame of the dataset
+    """
+    return pd.read_csv(ml_small_path, usecols=['userId','movieId','rating'])
+
+
+def drop_timestamp():
+    """
+    Function that removes the timestamp of the dataset
+    :return: csv file of the dataset without the timestamp column
+    """
+    df = pd.read_csv(original_ml_small_path, usecols=['userId','movieId','rating'])
+    df.to_csv(ml_small_path, header=None, index=False)
 
 
 def __get_movie_strings(full_name: str):
