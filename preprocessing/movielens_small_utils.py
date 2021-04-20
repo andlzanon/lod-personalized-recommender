@@ -13,6 +13,7 @@ db_nan_ml_small_path = "./generated_files/dbpedia/ml-latest-small/nan_uri_dbpedi
 db_final_ml_small_path = "./generated_files/dbpedia/ml-latest-small/final_uri_dbpedia_movielens_small.csv"
 
 wikidata_props_ml_small = "./generated_files/wikidata/props_wikidata_movielens_small.csv"
+dbpedia_props_ml_small = "./generated_files/dbpedia/ml-latest-small/props_dbpedia_movielens_small.csv"
 
 
 def read_movie_info():
@@ -49,7 +50,7 @@ def read_nan_info():
     return pd.read_csv(db_nan_ml_small_path).set_index(['movieId'])
 
 
-def read_final_sml_dbpedia_dataset():
+def read_final_uri_dbpedia_dataset():
     """
     Function that reads the name of the movies of the small movielens dataset
     :return: pandas DataFrame with the movieId column as index and title as value
@@ -257,3 +258,33 @@ def extract_wikidata_prop():
     print("Coverage: " + str(len(all_movie_props['movieId'].unique())) + " obtained of " + str(s_all_movies)
           + ". Percentage: " + str(len(all_movie_props['movieId'].unique()) / s_all_movies))
     print('Output file generated')
+
+
+def obtain_dbpedia_props():
+    """
+    Function that obtains the properties of all movies from the dbpedia
+    :param movies_set: data set of movies with columns movie id and movie dbpedia uri
+    :param cols: columns of data frame with all movie properties
+    :return: a data frame with all movie properties
+    """
+    movies_uri_set = read_final_uri_dbpedia_dataset()
+    movies_uri_set = movies_uri_set[movies_uri_set['uri'].notnull()]
+    all_movie_props = pd.DataFrame(columns=['movie_id', 'prop', 'obj'])
+    for movie_id, row in movies_uri_set.iterrows():
+        movie_uri = row[1]
+        n = 0
+        while True:
+            try:
+                props_list_dic = from_dbpedia.get_props_of_movie_from_dbpedia(movie_id, movie_uri)
+                all_movie_props = all_movie_props.append(props_list_dic, ignore_index=True)
+                print("Obtained data of movie: " + str(movie_id))
+            except Exception as e:
+                print(e)
+                n = n + 1
+                if n == 10:
+                    print("Number of tries exceeded, the file will be saved...")
+                    all_movie_props.to_csv(dbpedia_props_ml_small, mode='w', header=True, index=False)
+                    return
+            break
+
+    all_movie_props.to_csv(dbpedia_props_ml_small, mode='w', header=True, index=False)
