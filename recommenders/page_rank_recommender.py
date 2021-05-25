@@ -1,12 +1,13 @@
 import pandas as pd
 import networkx as nx
-from recommenders import BaseRecommender
+import re
+from recommenders.base_recommender import BaseRecommender
 
 
 class PageRankRecommnder(BaseRecommender):
 
-    def __init__(self, folder_path: str, output_filename: str, rank_size: int, col_names: list,
-                 prop_set_path: pd.DataFrame, node_weighs=None):
+    def __init__(self, folder_path: str, output_filename: str, rank_size: int, prop_set_path: str,
+                 col_names=None, node_weighs=None):
         """
         Page Rank Recommender constructor
         :param folder_path: folder of the test and train files
@@ -18,14 +19,17 @@ class PageRankRecommnder(BaseRecommender):
         :param node_weighs: list of weights on the personalization for the Personalized Page Rank, the order is movie
             weight, properties related to movie weight and then all the other node weights
         """
-        super().__init__(folder_path, output_filename, rank_size, col_names)
 
+        if col_names is None:
+            col_names = ['user_id', 'movie_id', 'feedback']
         if node_weighs is None:
             node_weighs = [0.8, 0, 0.2]
 
+        super().__init__(folder_path, output_filename, rank_size, col_names)
+
         self.prop_set_path = prop_set_path
         self.prop_set = pd.read_csv(self.prop_set_path, header=0)
-        self.prop_set = self.prop_set.set_index(self.prop_set.columns[0], usecols=self.prop_set_path)
+        self.prop_set = self.prop_set.set_index(self.prop_set.columns[0])
         self.node_weights = node_weighs
 
         self.graph = self.__build_graph()
@@ -65,7 +69,7 @@ class PageRankRecommnder(BaseRecommender):
         """
 
         # get watched movies and transform it into the node name
-        watched = self.train_set.loc[user]
+        watched = self.train_set.loc[user]['movie_id'].to_list()
         movie_codes = ['M' + str(x) for x in watched]
         n_watched_movies = len(movie_codes)
         n_all = self.graph.number_of_nodes()
@@ -80,30 +84,33 @@ class PageRankRecommnder(BaseRecommender):
             else:
                 personalization[node] = self.node_weights[2] / (n_all - n_watched_movies)
 
-            if self.node_weights[1] > 0:
-                props = []
-                for movie in watched:
-                    props = props.append(self.prop_set[movie]['obj'])
+        if self.node_weights[1] > 0:
+            props = []
+            for movie in watched:
+                props = props + self.prop_set.loc[movie]['obj'].to_list()
 
-                n_props = len(props)
-                for p in props:
-                    personalization[p] = self.node_weights[1] / n_props
+            props = set(props)
+            n_props = len(props)
+            props
+            for p in props:
+                personalization[p] = self.node_weights[1] / n_props
 
         # run page rank
         page_rank = nx.pagerank_scipy(self.graph, personalization=personalization, max_iter=1000)
 
         # order by page rank score
-        all_movies = [x[1:] for x in self.graph.nodes if x.startswith('M')]
-        all_movies = set(all_movies)
-        ordered_movies = pd.DataFrame(0, index=all_movies, columns=['user', 'item', 'score'])
-        for m in all_movies:
-            m_id = int(m)
-            score = page_rank[m_id]
-            ordered_movies = ordered_movies.append({'user': user, 'item': m_id, score: score}, ignore_index=True)
+        ordered_nodes = dict(sorted(page_rank.items(), key=lambda item: item[1], reverse=True))
+        top_n = []
+        n = 0
+        i = 0
+        while n < self.rank_size:
+            key = list(ordered_nodes.keys())[i]
+            if re.match("M(\d+)+$", key) and key not in movie_codes:
+                top_n.append((user, int(key[1:]), page_rank[key]))
+                n = n + 1
+            i = i + 1
 
-        ordered_movies = ordered_movies.sort_values(by=['score'], ascending=False)
-
-        return ordered_movies[:self.rank_size]
+        return top_n
 
     def run(self):
         """
@@ -116,6 +123,7 @@ class PageRankRecommnder(BaseRecommender):
 
         for u in users:
             ranked_items = self.predict(u)
-            results = pd.concat([results, ranked_items])
+            results = pd.concat([results, pd.DataFrame(ranked_items, columns=cols)], ignore_index=True)
+            print("User: " + str(u))
 
         results.to_csv(self.output_path, mode='w', header=False, index=False)

@@ -23,7 +23,7 @@ class BaseRecommender(object):
         self.test_set.columns = self.col_names
         self.test_set = self.test_set.set_index(self.test_set.columns[0])
 
-        self.train_set = pd.read_csv(self.train_set, header=None)
+        self.train_set = pd.read_csv(self.train_path, header=None)
         self.train_set.columns = self.col_names
         self.train_set = self.train_set.set_index(self.train_set.columns[0])
 
