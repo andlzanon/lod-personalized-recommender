@@ -1,5 +1,5 @@
 import pandas as pd
-
+from caserec.evaluation.item_recommendation import ItemRecommendationEvaluation
 
 class BaseRecommender(object):
     def __init__(self, folder_path: str, output_filename: str, rank_size: int, col_names: list):
@@ -35,3 +35,6 @@ class BaseRecommender(object):
 
     def run(self):
         pass
+
+    def evaluate(self) -> dict:
+        return ItemRecommendationEvaluation(sep=',').evaluate_with_files(self.output_path, self.test_path)

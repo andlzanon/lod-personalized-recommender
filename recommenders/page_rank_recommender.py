@@ -43,19 +43,19 @@ class PageRankRecommnder(BaseRecommender):
         :return: networkx graph with users, movies and properties from the dbpedia or wikidata
         """
 
-        user_item_set = self.test_set.copy()
+        user_item_set = self.train_set.copy()
         edgelist = pd.DataFrame(columns=['origin', 'destination'])
 
-        user_item_set['origin'] = ['U' + x for x in user_item_set[user_item_set.columns[0]].astype(str)]
-        user_item_set['destination'] = ['M' + x for x in user_item_set[user_item_set.columns[1]].astype(str)]
+        user_item_set['origin'] = ['U' + x for x in user_item_set.index.astype(str)]
+        user_item_set['destination'] = ['M' + x for x in user_item_set[user_item_set.columns[0]].astype(str)]
 
-        edgelist = pd.concat([edgelist, user_item_set[['origin', 'destination']]])
+        edgelist = pd.concat([edgelist, user_item_set[['origin', 'destination']]], ignore_index=True)
 
         item_prop_copy = self.prop_set.copy()
         item_prop_copy['origin'] = ['M' + x for x in item_prop_copy.index.astype(str)]
         item_prop_copy['destination'] = item_prop_copy['obj']
 
-        edgelist = pd.concat([edgelist, item_prop_copy[['origin', 'destination']]])
+        edgelist = pd.concat([edgelist, item_prop_copy[['origin', 'destination']]], ignore_index=True)
 
         G = nx.from_pandas_edgelist(edgelist, 'origin', 'destination')
 
