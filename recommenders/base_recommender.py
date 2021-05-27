@@ -14,7 +14,8 @@ class BaseRecommender(object):
         self.folder_path = folder_path
         self.test_path = self.folder_path + "/test.dat"
         self.train_path = self.folder_path + "/train.dat"
-        self.output_path = self.folder_path + "/" + output_filename
+        self.output_filename = output_filename
+        self.output_path = self.folder_path + "/outputs/" + output_filename
         self.col_names = col_names
         self.rank_size = rank_size
 
@@ -35,6 +36,3 @@ class BaseRecommender(object):
 
     def run(self):
         pass
-
-    def evaluate(self) -> dict:
-        return ItemRecommendationEvaluation(sep=',').evaluate_with_files(self.output_path, self.test_path)
