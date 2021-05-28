@@ -87,11 +87,15 @@ class PageRankRecommnder(BaseRecommender):
         if self.node_weights[1] > 0:
             props = []
             for movie in watched:
-                props = props + self.prop_set.loc[movie]['obj'].to_list()
+                try:
+                    props = props + self.prop_set.loc[movie]['obj'].to_list()
+                except AttributeError:
+                    props = props + [self.prop_set.loc[movie]['obj']]
+                except KeyError:
+                    continue
 
             props = set(props)
             n_props = len(props)
-            props
             for p in props:
                 personalization[p] = self.node_weights[1] / n_props
 
