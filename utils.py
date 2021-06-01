@@ -9,8 +9,8 @@ def cross_validation_ml_small(rs: int):
     :param rs: random state integer arbitrary number
     :return: folders created on the dataset repository
     """
-    SplitDatabase(input_file="./datasets/ml-latest-small/ratings_notime.csv",
-                  dir_folds="./datasets/ml-latest-small/", as_binary=True, binary_col=2,
+    SplitDatabase(input_file="./datasets/ml-latest-small/ratings.csv",
+                  dir_folds="./datasets/ml-latest-small/", as_binary=True, binary_col=2, header=1,
                   sep_read=',', sep_write=',', n_splits=10).k_fold_cross_validation(random_state=rs)
 
 

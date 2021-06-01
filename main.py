@@ -13,22 +13,24 @@ fold0_test = "./datasets/ml-latest-small/folds/0/test.dat"
 # ml_small.extract_wikidata_prop()
 
 # Page rank weights 80/20
-# pr_rec8020 = pagerank.PageRankRecommnder("./datasets/ml-latest-small/folds/0", "wikidata_page_rank8020.csv", 10,
-#                                      "./generated_files/wikidata/props_wikidata_movielens_small.csv")
+#pr_rec8020 = pagerank.PageRankRecommnder("./datasets/ml-latest-small/folds/0", "wikidata_page_rank8020.csv", 10,
+#                                        "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+#                                        cols_used=[0, 1, 2], col_names=['user_id', 'movie_id', 'feedback'])
 
-# pr_rec8020.run()
+#pr_rec8020.run()
 
-#utils.evaluate("Page Rank 80/20 Algorithm", pr_rec.output_path, fold0_test,
-#               "./datasets/ml-latest-small/folds/0/results/" + pr_rec.output_filename)
+#utils.evaluate("Page Rank 80/20 Algorithm", pr_rec8020.output_path, fold0_test,
+#               "./datasets/ml-latest-small/folds/0/results/" + pr_rec8020.output_filename)
 
 
 # Page Rank 40/40/20
-# pr2_rec = pagerank.PageRankRecommnder("./datasets/ml-latest-small/folds/0", "wikidata_page_rank404020.csv", 10,
+#pr2_rec = pagerank.PageRankRecommnder("./datasets/ml-latest-small/folds/0", "wikidata_page_rank404020.csv", 10,
 #                                      "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+#                                      cols_used=[0, 1, 2], col_names=['user_id', 'movie_id', 'feedback'],
 #                                      node_weighs=[0.4, 0.4, 0.2])
 
-# pr2_rec.run()
-# utils.evaluate("Page Rank 80/20 Algorithm", pr2_rec.output_path, fold0_test,
+#pr2_rec.run()
+#utils.evaluate("Page Rank 80/20 Algorithm", pr2_rec.output_path, fold0_test,
 #               "./datasets/ml-latest-small/folds/0/results/" + pr2_rec.output_filename)
 
 

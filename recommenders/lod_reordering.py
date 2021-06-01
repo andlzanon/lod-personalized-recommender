@@ -80,8 +80,16 @@ class LODPersonalizedReordering(object):
 
             # reorder rec
             user_semantic_profile = self.__user_semantic_profile(movies_watched)
+            sem_dist = self.__semantic_path_distance(movies_watched, movies_recommended, user_semantic_profile)
+            sem_dist['score'] = pd.DataFrame(sem_dist['path'].to_list()).sum(1)
+            sem_dist_matrix = sem_dist.pivot(index='historic', columns='recommended', values='score')
+            reordered_movies = pd.DataFrame(sem_dist_matrix.sum().sort_values(ascending=False))
+            reordered_movies = reordered_movies.reset_index()
+            reordered_movies['user_id'] = u
+            reordered_movies.columns = ['movie_id', 'score', 'user_id']
+            reorder = pd.concat([reorder, reordered_movies], ignore_index=True)
 
-            # generate explanations
+            print("end")
 
         reorder.to_csv(self.output_path, mode='w', header=False, index=False)
 
@@ -117,3 +125,23 @@ class LODPersonalizedReordering(object):
         fav_prop = watched_props['score'].to_dict()
 
         return fav_prop
+
+    def __semantic_path_distance(self, historic: list, recommeded: list, semantic_profile: dict) -> pd.DataFrame:
+        sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path'])
+        historic_codes = ['M' + str(m) for m in historic]
+        recommeded_codes = ['M' + str(m) for m in recommeded]
+        watched_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
+        subgraph = self.graph.subgraph(historic_codes + recommeded_codes + watched_props)
+
+        for hm in historic:
+            hm_node = 'M' + str(hm)
+            for rm in recommeded:
+                rm_name = 'M' + str(rm)
+                paths = nx.all_shortest_paths(subgraph, source=hm_node, target=rm_name)
+                paths = [list(map(semantic_profile.get, p[1::2])) for p in paths]
+                values = [sum(values) / len(values) for values in paths]
+                sem_path_dist = sem_path_dist.append({'historic': hm, 'recommended': rm, 'path': paths[np.argmax(values)]},
+                                                ignore_index=True)
+                print("Historic: " + str(hm) + " Recommended: " + str(rm))
+
+        return sem_path_dist

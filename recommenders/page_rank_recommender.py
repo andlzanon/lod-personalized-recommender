@@ -6,7 +6,7 @@ from recommenders.base_recommender import BaseRecommender
 
 class PageRankRecommnder(BaseRecommender):
 
-    def __init__(self, folder_path: str, output_filename: str, rank_size: int, prop_set_path: str,
+    def __init__(self, folder_path: str, output_filename: str, rank_size: int, prop_set_path: str, cols_used=None,
                  col_names=None, node_weighs=None):
         """
         Page Rank Recommender constructor
@@ -20,12 +20,12 @@ class PageRankRecommnder(BaseRecommender):
             weight, properties related to movie weight and then all the other node weights
         """
 
-        if col_names is None:
-            col_names = ['user_id', 'movie_id', 'feedback']
+        if cols_used is None:
+            cols_used = [0, 1, 2]
         if node_weighs is None:
             node_weighs = [0.8, 0, 0.2]
 
-        super().__init__(folder_path, output_filename, rank_size, col_names)
+        super().__init__(folder_path, output_filename, rank_size, cols_used, col_names)
 
         self.prop_set_path = prop_set_path
         self.prop_set = pd.read_csv(self.prop_set_path, header=0)
@@ -69,7 +69,11 @@ class PageRankRecommnder(BaseRecommender):
         """
 
         # get watched movies and transform it into the node name
-        watched = self.train_set.loc[user]['movie_id'].to_list()
+        try:
+            watched = self.train_set.loc[user]['movie_id'].to_list()
+        except AttributeError:
+            watched = list(self.train_set.loc[user])[:-1]
+
         movie_codes = ['M' + str(x) for x in watched]
         n_watched_movies = len(movie_codes)
         n_all = self.graph.number_of_nodes()
