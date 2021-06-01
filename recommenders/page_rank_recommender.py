@@ -13,11 +13,12 @@ class PageRankRecommnder(BaseRecommender):
         :param folder_path: folder of the test and train files
         :param output_filename: name of the output file
         :param rank_size: number of recommended items to a user in the test set
+        :param cols_used: columns that the recommender algorithm will user from the original dataset
         :param col_names: name of the columns of test and train set
-        :param prop_set_path: movie property dbpedia or wikidata set, on the file the first row is the movie id and the
+        :param prop_set_path: item property dbpedia or wikidata set, on the file the first row is the item id and the
             property column is called 'obj'
-        :param node_weighs: list of weights on the personalization for the Personalized Page Rank, the order is movie
-            weight, properties related to movie weight and then all the other node weights
+        :param node_weighs: list of weights on the personalization for the Personalized Page Rank, the order is item
+            weight, properties related to item weight and then all the other node weights
         """
 
         if cols_used is None:
@@ -37,22 +38,22 @@ class PageRankRecommnder(BaseRecommender):
     def __build_graph(self) -> nx.Graph:
         """
         Build a graph with the information from the test set and the wikidata or dbpedia set to create
-        a graph with users, movies and property nodes e.g.: user 1 watched the movie Inception with Di Caprio as an actor
-        therefore, on the graph there is a three nodes, one for each entity (user, movie and actor/property) and three
-        edges, one connecting user to movie and other movie to property: user 1 --> Inception --> Di Caprio
-        :return: networkx graph with users, movies and properties from the dbpedia or wikidata
+        a graph with users, items and property nodes e.g.: user 1 interacted the item Inception with Di Caprio as an actor
+        therefore, on the graph there is a three nodes, one for each entity (user, item and actor/property) and three
+        edges, one connecting user to item and other item to property: user 1 --> Inception --> Di Caprio
+        :return: networkx graph with users, items and properties from the dbpedia or wikidata
         """
 
         user_item_set = self.train_set.copy()
         edgelist = pd.DataFrame(columns=['origin', 'destination'])
 
         user_item_set['origin'] = ['U' + x for x in user_item_set.index.astype(str)]
-        user_item_set['destination'] = ['M' + x for x in user_item_set[user_item_set.columns[0]].astype(str)]
+        user_item_set['destination'] = ['I' + x for x in user_item_set[user_item_set.columns[0]].astype(str)]
 
         edgelist = pd.concat([edgelist, user_item_set[['origin', 'destination']]], ignore_index=True)
 
         item_prop_copy = self.prop_set.copy()
-        item_prop_copy['origin'] = ['M' + x for x in item_prop_copy.index.astype(str)]
+        item_prop_copy['origin'] = ['I' + x for x in item_prop_copy.index.astype(str)]
         item_prop_copy['destination'] = item_prop_copy['obj']
 
         edgelist = pd.concat([edgelist, item_prop_copy[['origin', 'destination']]], ignore_index=True)
@@ -63,38 +64,38 @@ class PageRankRecommnder(BaseRecommender):
 
     def predict(self, user: int):
         """
-        Predict top movies for user
+        Predict top items for user
         :param user: user id of the user to recommend to
-        :return: top 10 movies of the recommendation algorithm
+        :return: top n items of the recommendation algorithm
         """
 
-        # get watched movies and transform it into the node name
+        # get historic items and transform it into the node name
         try:
-            watched = self.train_set.loc[user]['movie_id'].to_list()
+            historic = self.train_set.loc[user][self.cols_used[1]].to_list()
         except AttributeError:
-            watched = list(self.train_set.loc[user])[:-1]
+            historic = list(self.train_set.loc[user])[:-1]
 
-        movie_codes = ['M' + str(x) for x in watched]
-        n_watched_movies = len(movie_codes)
+        items_codes = ['I' + str(x) for x in historic]
+        n_items = len(items_codes)
         n_all = self.graph.number_of_nodes()
 
         # generate personalization dict to pass as parameter on page rank by dividing the 1 total into
-        # the movies the user wachted, properties related to theses movies and all the other nodes
+        # the items the user iteracted, properties related to theses items and all the other nodes
         personalization = {}
 
         for node in self.graph.nodes:
-            if node in movie_codes:
-                personalization[node] = self.node_weights[0] / n_watched_movies
+            if node in items_codes:
+                personalization[node] = self.node_weights[0] / n_items
             else:
-                personalization[node] = self.node_weights[2] / (n_all - n_watched_movies)
+                personalization[node] = self.node_weights[2] / (n_all - n_items)
 
         if self.node_weights[1] > 0:
             props = []
-            for movie in watched:
+            for i in historic:
                 try:
-                    props = props + self.prop_set.loc[movie]['obj'].to_list()
+                    props = props + self.prop_set.loc[i]['obj'].to_list()
                 except AttributeError:
-                    props = props + [self.prop_set.loc[movie]['obj']]
+                    props = props + [self.prop_set.loc[i]['obj']]
                 except KeyError:
                     continue
 
@@ -113,7 +114,7 @@ class PageRankRecommnder(BaseRecommender):
         i = 0
         while n < self.rank_size:
             key = list(ordered_nodes.keys())[i]
-            if re.match("M(\d+)+$", key) and key not in movie_codes:
+            if re.match("I(\d+)+$", key) and key not in items_codes:
                 top_n.append((user, int(key[1:]), page_rank[key]))
                 n = n + 1
             i = i + 1

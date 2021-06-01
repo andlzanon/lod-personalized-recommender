@@ -53,6 +53,11 @@ fold0_test = "./datasets/ml-latest-small/folds/0/test.dat"
 reord = lod_reordering.LODPersonalizedReordering(fold0_train,
                     "./datasets/ml-latest-small/folds/0/outputs/wikidata_page_rank8020.csv",
                     "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                    ['movieId','title','prop','obj'])
+                    cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
+                    prop_cols=['movieId','title','prop','obj'], policy='random', p_items=0.1)
 
 reord.reorder()
+
+utils.evaluate("Reorder Page Rank 80/20 Algorithm",
+               "./datasets/ml-latest-small/folds/0/outputs/wikidata_page_rank8020_lodreorder.csv",
+               fold0_test, "./datasets/ml-latest-small/folds/0/results/wikidata_page_rank8020_lodreorder_random.csv")

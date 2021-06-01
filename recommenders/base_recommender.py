@@ -8,6 +8,7 @@ class BaseRecommender(object):
          :param folder_path: folder of the test and train files
          :param output_filename: name of the output file
          :param rank_size: number of recommended items to a user in the test set
+         :param cols_used: columns that the recommender algorithm will user from the original dataset
          :param col_names: name of the columns of test and train set where index 0 is user_id, 1 is movie_id and
           2 is interaction
          """

@@ -15,6 +15,14 @@ def cross_validation_ml_small(rs: int):
 
 
 def evaluate(alg_name: str, prediction_file: str, test_file: str, output_file: str):
+    """
+    Evaluate the output file
+    :param alg_name:
+    :param prediction_file:
+    :param test_file:
+    :param output_file:
+    :return:
+    """
     results = ItemRecommendationEvaluation(sep=',').evaluate_with_files(prediction_file, test_file)
 
     f = open(output_file, "w")
