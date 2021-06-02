@@ -14,15 +14,16 @@ def cross_validation_ml_small(rs: int):
                   sep_read=',', sep_write=',', n_splits=10).k_fold_cross_validation(random_state=rs)
 
 
-def evaluate(alg_name: str, prediction_file: str, test_file: str, output_file: str):
+def evaluate(alg_name: str, prediction_file: str, test_file: str):
     """
     Evaluate the output file
     :param alg_name:
     :param prediction_file:
     :param test_file:
-    :param output_file:
     :return:
     """
+
+    output_file = prediction_file.replace('outputs', 'results')
     results = ItemRecommendationEvaluation(sep=',').evaluate_with_files(prediction_file, test_file)
 
     f = open(output_file, "w")
