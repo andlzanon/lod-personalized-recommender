@@ -71,7 +71,7 @@ class PageRankRecommnder(BaseRecommender):
 
         # get historic items and transform it into the node name
         try:
-            historic = self.train_set.loc[user][self.cols_used[1]].to_list()
+            historic = self.train_set.loc[user][self.col_names[1]].to_list()
         except AttributeError:
             historic = list(self.train_set.loc[user])[:-1]
 

@@ -76,10 +76,12 @@ class PathReordering(LODPersonalizedReordering):
 
             if self.hybrid:
                 output_rec = self.output_rec_set.loc[u].set_index('item_id')
-                for i in items_recommended:
-                    curr_score = float(reordered_items[(reordered_items['item_id']) == i]['score'])
-                    reordered_items[(reordered_items['item_id']) == i]['score'] = curr_score * float(output_rec.loc[i])
+                for i in items_recommended[:10]:
+                    curr_score = float(reordered_items.loc[(reordered_items['item_id']) == i, 'score'])
+                    rec_score = float(output_rec.loc[i])
+                    reordered_items.loc[(reordered_items['item_id']) == i, 'score'] = curr_score * rec_score
 
+                reordered_items = reordered_items.fillna(0)
                 reordered_items = reordered_items.sort_values(by='score', ascending=False)
 
             reorder = pd.concat([reorder, reordered_items], ignore_index=True)
@@ -96,6 +98,7 @@ class PathReordering(LODPersonalizedReordering):
         """
         sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path'])
         historic_codes = ['I' + str(i) for i in historic]
+        recommeded = recommeded[:10]
         recommeded_codes = ['I' + str(i) for i in recommeded]
         historic_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
         subgraph = self.graph.subgraph(historic_codes + recommeded_codes + historic_props)
@@ -114,7 +117,7 @@ class PathReordering(LODPersonalizedReordering):
                 except nx.exception.NetworkXNoPath:
                     sem_path_dist = sem_path_dist.append({'historic': hm, 'recommended': rm, 'path': []},
                                                          ignore_index=True)
-                # print("Historic: " + str(hm) + " Recommended: " + str(rm))
+                print("Historic: " + str(hm) + " Recommended: " + str(rm))
 
         return sem_path_dist
 
