@@ -47,21 +47,40 @@ bprmf_output_file = "datasets/ml-latest-small/folds/0/outputs/bprmf.csv"
 # BprMF(fold0_train, fold0_test, sep=',', output_file=bprmf_output_file, rank_length=20).compute()
 # utils.evaluate("BPR-MF Algorithm", bprmf_output_file, fold0_test)
 
-prop_reord = PropReordering(fold0_train,
-                            "./datasets/ml-latest-small/folds/0/outputs/bprmf.csv",
-                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
-                            prop_cols=['movieId', 'title', 'prop', 'obj'], hybrid=True)
+#prop_reord = PropReordering(fold0_train,
+#                            "./datasets/ml-latest-small/folds/0/outputs/bprmf.csv",
+#                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+#                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
+#                            prop_cols=['movieId', 'title', 'prop', 'obj'], hybrid=True)
 
 # prop_reord.reorder()
 # utils.evaluate("BPRMF Prop Reorder Algorithm", prop_reord.output_path, fold0_test)
 
 
+#path_reord = PathReordering(fold0_train,
+#                            "./datasets/ml-latest-small/folds/0/outputs/bprmf.csv",
+#                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+#                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
+#                            prop_cols=['movieId', 'title', 'prop', 'obj'], p_items=0.1, policy='last', hybrid=True)
+
+#path_reord.reorder()
+#utils.evaluate("Reorder Path MEAN BPRMF Algorithm", path_reord.output_path, fold0_test)
+
+
+#path_reord = PathReordering(fold0_train,
+#                            "./datasets/ml-latest-small/folds/0/outputs/wikidata_page_rank8020.csv",
+#                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+#                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
+#                            prop_cols=['movieId', 'title', 'prop', 'obj'], p_items=0.1, policy='last', hybrid=True)
+
+#path_reord.reorder()
+#utils.evaluate("Reorder Path Page Rank 80/20 Algorithm", path_reord.output_path, fold0_test)
+
 path_reord = PathReordering(fold0_train,
-                            "./datasets/ml-latest-small/folds/0/outputs/wikidata_page_rank404020.csv",
+                            "./datasets/ml-latest-small/folds/0/outputs/userknn.csv",
                             "./generated_files/wikidata/props_wikidata_movielens_small.csv",
                             cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
                             prop_cols=['movieId', 'title', 'prop', 'obj'], p_items=0.1, policy='last', hybrid=True)
 
 path_reord.reorder()
-utils.evaluate("Reorder Path MEAN Page Rank 40/20/20 Algorithm", path_reord.output_path, fold0_test)
+utils.evaluate("Reorder Path USER KNN Algorithm", path_reord.output_path, fold0_test)
