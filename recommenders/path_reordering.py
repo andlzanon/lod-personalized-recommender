@@ -21,7 +21,8 @@ class PathReordering(LODPersonalizedReordering):
                        'last' for the last interacted items, 'first' for the first interacted items and 'random' for
                        the random interacted items
         :param p_items: percentage from 0 to 1 of items to consider in the policy. E.g. policy last and p_items = 0.1,
-                        then the paths will consider only the last 0.1 * len(items inteacted)
+                        then the paths will consider only the last 0.1 * len(items inteacted). If p_items is bigger than 1
+                        it will use the policy of the p_items of the user historic
         :param hybrid: if the reorder of the recommendations should [True] or not consider the score from the recommender
         :param n_sentences: number of paths to generate the sentence of explanation
         """
@@ -56,7 +57,7 @@ class PathReordering(LODPersonalizedReordering):
             except AttributeError:
                 items_historic = list(self.train_set.loc[u][self.cols_used[1]])[:-1]
 
-            items_recommended = list(self.output_rec_set.loc[u][self.output_cols[1]])
+            items_recommended = list(self.output_rec_set.loc[u][self.output_cols[1]])[:10]
 
             # get semantic profile and extract the best paths from the suggested item to the recommended
             user_semantic_profile = self.user_semantic_profile(items_historic)
@@ -76,7 +77,7 @@ class PathReordering(LODPersonalizedReordering):
 
             if self.hybrid:
                 output_rec = self.output_rec_set.loc[u].set_index('item_id')
-                for i in items_recommended[:10]:
+                for i in items_recommended:
                     curr_score = float(reordered_items.loc[(reordered_items['item_id']) == i, 'score'])
                     rec_score = float(output_rec.loc[i])
                     reordered_items.loc[(reordered_items['item_id']) == i, 'score'] = curr_score * rec_score
@@ -98,7 +99,6 @@ class PathReordering(LODPersonalizedReordering):
         """
         sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path'])
         historic_codes = ['I' + str(i) for i in historic]
-        recommeded = recommeded[:10]
         recommeded_codes = ['I' + str(i) for i in recommeded]
         historic_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
         subgraph = self.graph.subgraph(historic_codes + recommeded_codes + historic_props)
@@ -110,11 +110,11 @@ class PathReordering(LODPersonalizedReordering):
                 try:
                     paths = nx.all_shortest_paths(subgraph, source=hm_node, target=rm_name)
                     paths = [list(map(semantic_profile.get, p[1::2])) for p in paths]
-                    values = [sum(values) / len(values) for values in paths]
+                    values = [sum(values) / len(values) for values in paths if len(values) > 0]
                     sem_path_dist = sem_path_dist.append(
                         {'historic': hm, 'recommended': rm, 'path': paths[np.argmax(values)]},
                         ignore_index=True)
-                except nx.exception.NetworkXNoPath:
+                except (nx.exception.NetworkXNoPath, ValueError):
                     sem_path_dist = sem_path_dist.append({'historic': hm, 'recommended': rm, 'path': []},
                                                          ignore_index=True)
                 print("Historic: " + str(hm) + " Recommended: " + str(rm))
@@ -123,13 +123,17 @@ class PathReordering(LODPersonalizedReordering):
 
     def __items_by_policy(self, historic: list):
         """
-        Function that returns items the p_items percentage of the total number of historic items based
+        Function that returns items the p_items percentage or quntity of the total number of historic items based
         :param historic: items in the historic ordered by the last column of the dataset
         :return: cutout list of the historic based on the policy and the percentage of items to consider
         """
-        n = int(self.p_items * len(historic))
-        if n < 10:
-            n = 10
+
+        if self.p_items > 1:
+            n = self.p_items
+        else:
+            n = int(self.p_items * len(historic))
+            if n < 10:
+                n = 10
 
         if self.policy == 'all':
             return historic
