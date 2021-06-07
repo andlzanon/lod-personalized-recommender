@@ -6,7 +6,7 @@ import networkx as nx
 class LODPersonalizedReordering(object):
 
     def __init__(self, train_file: str, output_rec_file: str, output_name: str, prop_path: str, prop_cols: list, cols_used: list,
-                hybrid: bool, n_sentences: int):
+                n_reorder: int, hybrid: bool, n_sentences: int):
         """
         LOD personalized reordering class does not extend the base recommender because it does not recommend items.
         Instead it reorders them based on the best explanations to the item. Therefore, initially a semantic profile
@@ -22,6 +22,7 @@ class LODPersonalizedReordering(object):
         :param n_sentences: number of paths to generate the sentence of explanation
         """
         self.cols_used = cols_used
+        self.n_reorder = n_reorder
 
         self.train_file = train_file
         self.train_set = pd.read_csv(self.train_file, header=None)

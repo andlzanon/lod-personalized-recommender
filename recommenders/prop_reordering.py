@@ -3,7 +3,7 @@ from recommenders.lod_reordering import LODPersonalizedReordering
 
 
 class PropReordering(LODPersonalizedReordering):
-    def __init__(self, train_file: str, output_rec_file: str, prop_path: str, prop_cols: list, cols_used: list,
+    def __init__(self, train_file: str, output_rec_file: str, prop_path: str, prop_cols: list, cols_used: list, n_reorder: int,
                  hybrid=False, n_sentences=3):
         """
         Path Reordering class: this algorithm will reorder the output of other recommendation algorithm based on the
@@ -18,12 +18,12 @@ class PropReordering(LODPersonalizedReordering):
         :param n_sentences: number of paths to generate the sentence of explanation
         """
 
-        self.output_name = 'propmean'
+        self.output_name = 'prop[reorder=' + str(n_reorder) + "]"
 
         if hybrid:
             self.output_name = self.output_name + "_hybrid"
 
-        super().__init__(train_file, output_rec_file, self.output_name, prop_path, prop_cols, cols_used,
+        super().__init__(train_file, output_rec_file, self.output_name, prop_path, prop_cols, cols_used, n_reorder,
                          hybrid, n_sentences)
 
     def reorder(self):
@@ -44,7 +44,7 @@ class PropReordering(LODPersonalizedReordering):
             except AttributeError:
                 items_historic = list(self.train_set.loc[u][self.cols_used[1]])[:-1]
 
-            items_recommended = list(self.output_rec_set.loc[u][self.output_cols[1]])
+            items_recommended = list(self.output_rec_set.loc[u][self.output_cols[1]])[:self.n_reorder]
 
             # get semantic profile and extract the best paths from the suggested item to the recommended
             user_semantic_profile = self.user_semantic_profile(items_historic)
