@@ -1,4 +1,4 @@
---- KNN Algorithm --- 
+--- User KNN Algorithm --- 
 PREC@1 0.2
 RECALL@1 0.007176
 NDCG@1 0.2

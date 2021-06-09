@@ -1,4 +1,4 @@
---- Page Rank 80/20 Algorithm --- 
+--- Page Rank 40/20/20 Algorithm --- 
 PREC@1 0.197347
 RECALL@1 0.018421
 NDCG@1 0.197347

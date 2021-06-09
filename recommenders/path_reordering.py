@@ -31,6 +31,9 @@ class PathReordering(LODPersonalizedReordering):
         self.p_items = p_items
         self.output_name = 'path[policy=' + str(policy) + "_items=" + str(p_items).replace('.', '') + "_reorder=" + str(n_reorder) + "]"
 
+        if self.policy == 'random':
+            random.setstate(42)
+
         if hybrid:
             self.output_name = self.output_name[:-1] + "_hybrid]"
 

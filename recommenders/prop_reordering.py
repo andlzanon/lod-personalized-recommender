@@ -21,7 +21,7 @@ class PropReordering(LODPersonalizedReordering):
         self.output_name = 'prop[reorder=' + str(n_reorder) + "]"
 
         if hybrid:
-            self.output_name = self.output_name + "_hybrid"
+            self.output_name = self.output_name[:-1] + "_hybrid]"
 
         super().__init__(train_file, output_rec_file, self.output_name, prop_path, prop_cols, cols_used, n_reorder,
                          hybrid, n_sentences)
