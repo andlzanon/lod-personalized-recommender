@@ -1,4 +1,4 @@
---- Reorder Path USER KNN Algorithm --- 
+--- Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10 --- 
 PREC@1 0.20398
 RECALL@1 0.017074
 NDCG@1 0.20398

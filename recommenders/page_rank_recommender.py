@@ -126,6 +126,7 @@ class PageRankRecommnder(BaseRecommender):
         Predict items for all users on test set and save on file
         :return: file with columns user, item and score
         """
+        print(self.output_filename)
         cols = ['user', 'item', 'score']
         results = pd.DataFrame(columns=cols)
         users = self.test_set.index.unique()

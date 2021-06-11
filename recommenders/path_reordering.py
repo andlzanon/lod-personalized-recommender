@@ -51,6 +51,8 @@ class PathReordering(LODPersonalizedReordering):
                                 'item_id': pd.Series([], dtype=int),
                                 'score': pd.Series([], dtype=float)})
 
+        print(self.output_name)
+
         for u in self.output_rec_set.index.unique():
             print("User: " + str(u))
             # get items that the user interacted and recommended by an algorithm
@@ -120,7 +122,7 @@ class PathReordering(LODPersonalizedReordering):
                 except (nx.exception.NetworkXNoPath, ValueError):
                     sem_path_dist = sem_path_dist.append({'historic': hm, 'recommended': rm, 'path': []},
                                                          ignore_index=True)
-                print("Historic: " + str(hm) + " Recommended: " + str(rm))
+                #print("Historic: " + str(hm) + " Recommended: " + str(rm))
 
         return sem_path_dist
 

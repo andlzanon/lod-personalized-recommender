@@ -1,4 +1,4 @@
---- Prop Reorder Algorithm reorder=10 --- 
+--- Prop Reorder Algorithm reorder=20 --- 
 PREC@1 0.245439
 RECALL@1 0.027964
 NDCG@1 0.245439

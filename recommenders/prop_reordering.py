@@ -35,6 +35,8 @@ class PropReordering(LODPersonalizedReordering):
         """
         reorder = pd.DataFrame()
 
+        print(self.output_name)
+
         for u in self.output_rec_set.index.unique():
             print("User: " + str(u))
             # get items that the user interacted and recommended by an algorithm
