@@ -15,45 +15,35 @@ def run_experiments(fold: str, n_folds: int, baseline: list, proposed: list):
         train_file = fold + str(i) + "/train.dat"
         test_file = fold + str(i) + "/test.dat"
 
+        # 1 - Most Popular Algorithm
+        most_pop_output_file = fold + str(i) + "/outputs/mostpop.csv"
         if baseline[0]:
-            # 1 - Most Popular Algorithm
-            most_pop_output_file = fold + str(i) + "/outputs/mostpop.csv"
             MostPopular(train_file, test_file, sep=',', output_file=most_pop_output_file, rank_length=20).compute()
             utils.evaluate("Most Pop Algorithm", most_pop_output_file, test_file)
-            output_names.add(most_pop_output_file.split("/")[-1])
+        output_names.add(most_pop_output_file.split("/")[-1])
 
+        # 2 - BPR MF
+        bprmf_output_file = fold + str(i) + "/outputs/bprmf.csv"
         if baseline[1]:
-            # 2 - BPR MF
-            bprmf_output_file = fold + str(i) + "/outputs/bprmf.csv"
             BprMF(train_file, test_file, sep=',', output_file=bprmf_output_file, rank_length=20, random_seed=42).compute()
             utils.evaluate("BPR-MF Algorithm", bprmf_output_file, test_file)
-            output_names.add(bprmf_output_file.split("/")[-1])
+        output_names.add(bprmf_output_file.split("/")[-1])
 
+        # 3 - User KNN
+        knn_output_file = fold + str(i) + "/outputs/userknn.csv"
         if baseline[2]:
-            # 3 - User KNN
-            knn_output_file = fold + str(i) + "/outputs/userknn.csv"
             UserKNN(train_file, test_file, sep=",", output_file=knn_output_file, rank_length=20).compute()
             utils.evaluate("User KNN Algorithm", knn_output_file, test_file)
-            output_names.add(knn_output_file.split("/")[-1])
+        output_names.add(knn_output_file.split("/")[-1])
 
+        # 4 - PageRank params: weights=[80, 0, 20]
+        pr = pagerank.PageRankRecommnder(fold + str(i), "wikidata_page_rank8020.csv", 20,
+                                         "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+                                         cols_used=[0, 1, 2], col_names=['user_id', 'movie_id', 'feedback'])
         if baseline[3]:
-            # 4 - PageRank params: weights=[80, 0, 20]
-            pr = pagerank.PageRankRecommnder(fold + str(i), "wikidata_page_rank8020.csv", 20,
-                                             "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                                             cols_used=[0, 1, 2], col_names=['user_id', 'movie_id', 'feedback'])
             pr.run()
             utils.evaluate("Page Rank 80/20 Algorithm", pr.output_path, test_file)
-            output_names.add(pr.output_path.split("/")[-1])
-
-        if baseline[4]:
-            # 5 - PageRank params: weights=[40,20,20]
-            pr2 = pagerank.PageRankRecommnder(fold + str(i), "wikidata_page_rank404020.csv", 20,
-                                              "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                                              cols_used=[0, 1, 2], col_names=['user_id', 'movie_id', 'feedback'],
-                                              node_weighs=[0.4, 0.4, 0.2])
-            pr2.run()
-            utils.evaluate("Page Rank 40/20/20 Algorithm", pr2.output_path, test_file)
-            output_names.add(pr2.output_path.split("/")[-1])
+        output_names.add(pr.output_path.split("/")[-1])
 
     for i in range(n_folds + 1):
 
@@ -96,19 +86,7 @@ def run_experiments(fold: str, n_folds: int, baseline: list, proposed: list):
                                test_file)
 
         if proposed[3]:
-            # 9 - Path reorder params: reorder=10, policy=last, p_items=0.1
-            for output_file in output_files:
-                path_reord = PathReordering(train_file, output_file,
-                                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
-                                            prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=20, p_items=0.1,
-                                            policy='last', hybrid=True)
-                path_reord.reorder()
-                utils.evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=20", path_reord.output_path,
-                               test_file)
-
-        if proposed[4]:
-            # 10 - Path reorder params: reorder=10, policy=random, p_items=0.1
+            # 9 - Path reorder params: reorder=10, policy=random, p_items=0.1
             for output_file in output_files:
                 path_reord = PathReordering(train_file, output_file,
                                             "./generated_files/wikidata/props_wikidata_movielens_small.csv",
@@ -119,10 +97,45 @@ def run_experiments(fold: str, n_folds: int, baseline: list, proposed: list):
                 utils.evaluate("Reorder Path USER KNN Algorithm p_items=0.1, policy=random, n_reorder=10",
                                path_reord.output_path, test_file)
 
+        if proposed[4]:
+            # 10 - Path reorder params: reorder=10, policy=last, p_items=0.1, not hybrid
+            for output_file in output_files:
+                path_reord = PathReordering(train_file, output_file,
+                                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+                                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
+                                            prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=10, p_items=0.1,
+                                            policy='last', hybrid=False)
+                path_reord.reorder()
+                utils.evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10 not hybrid", path_reord.output_path,
+                               test_file)
+
+        if proposed[5]:
+            # 11 - Prop reorder params: reorder=10, not hybrid
+            for output_file in output_files:
+                prop_reord = PropReordering(train_file, output_file,
+                                              "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+                                              cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
+                                              n_reorder=10,
+                                              prop_cols=['movieId', 'title', 'prop', 'obj'], hybrid=False)
+                prop_reord.reorder()
+                utils.evaluate("Prop Reorder Algorithm reorder=10 not hybrid", prop_reord.output_path, test_file)
+
+        if proposed[6]:
+            # 10 - Path reorder params: reorder=10, policy=last, p_items=0.1, not hybrid
+            for output_file in output_files:
+                path_reord = PathReordering(train_file, output_file,
+                                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+                                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
+                                            prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=20, p_items=0.1,
+                                            policy='last', hybrid=False)
+                path_reord.reorder()
+                utils.evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10 not hybrid", path_reord.output_path,
+                               test_file)
+
 
 # utils.cross_validation_ml_small(rs=42)
 # ml_small.extract_wikidata_prop()
 # utils.split_dataset_by_timestamp("./datasets/ml-latest-small/ratings.csv", 0.1,
 #   "./datasets/ml-latest-small/folds/timed")
 folds_path = "./datasets/ml-latest-small/folds/"
-run_experiments(folds_path, 9, [1, 1, 1, 1, 1], [1, 1, 1, 1, 1])
+run_experiments(folds_path, 9, [1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1])
