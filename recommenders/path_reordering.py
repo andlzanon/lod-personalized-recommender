@@ -34,7 +34,7 @@ class PathReordering(LODPersonalizedReordering):
             n_reorder) + "]"
 
         if self.policy == 'random':
-            random.setstate(42)
+            random.seed(42)
 
         if hybrid:
             self.output_name = self.output_name[:-1] + "_hybrid]"
@@ -58,11 +58,7 @@ class PathReordering(LODPersonalizedReordering):
         for u in self.output_rec_set.index.unique():
             print("User: " + str(u))
             # get items that the user interacted and recommended by an algorithm
-            if self.train_set.columns[-1] == 'timestamp':
-                items_historic = self.train_set.loc[u].sort_values(by=[self.cols_used[-2], self.cols_used[-1]],
-                                                                   ascending=False)
-            else:
-                items_historic = self.train_set.loc[u].sort_values(by=self.cols_used[-1], ascending=False)
+            items_historic = self.train_set.loc[u].sort_values(by=self.cols_used[-1], ascending=False)
 
             try:
                 items_historic = items_historic[self.cols_used[1]].to_list()

@@ -134,8 +134,8 @@ def run_experiments(fold: str, n_folds: int, baseline: list, proposed: list):
                                train_file, test_file)
 
 
-# utils.cross_validation_ml_small(rs=42)
+utils.cross_validation_ml_small(rs=42)
 # ml_small.extract_wikidata_prop()
 
 folds_path = "./datasets/ml-latest-small/folds/"
-run_experiments(folds_path, 9, [1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1])
+run_experiments(folds_path, 9, [0, 0, 0, 0, 0], [0, 0, 0, 1, 0])
