@@ -38,6 +38,7 @@ class LODPersonalizedReordering(object):
         self.prop_path = prop_path
         self.prop_cols = prop_cols
         self.prop_set = pd.read_csv(self.prop_path, usecols=self.prop_cols)
+        self.prop_set = self.prop_set.dropna()
         self.prop_set = self.prop_set.set_index(self.prop_cols[0])
 
         self.hybrid = hybrid
@@ -68,7 +69,7 @@ class LODPersonalizedReordering(object):
 
         item_prop_copy = self.prop_set.copy()
         item_prop_copy['origin'] = ['I' + x for x in item_prop_copy.index.astype(str)]
-        item_prop_copy['destination'] = item_prop_copy['obj']
+        item_prop_copy['destination'] = item_prop_copy[self.prop_set.columns[-1]]
 
         edgelist = pd.concat([edgelist, item_prop_copy[['origin', 'destination']]], ignore_index=True)
 
@@ -98,25 +99,25 @@ class LODPersonalizedReordering(object):
 
         # create npi, i and n columns
         interacted_props = self.prop_set.loc[self.prop_set.index.isin(historic)].copy()
-        interacted_props['npi'] = interacted_props.groupby('obj')['obj'].transform('count')
+        interacted_props['npi'] = interacted_props.groupby(self.prop_set.columns[-1])[self.prop_set.columns[-1]].transform('count')
         interacted_props['i'] = len(historic)
         interacted_props['n'] = len(self.prop_set.index.unique())
 
         # get items per property on full dbpedia/wikidata by dropping the duplicates with same item id and prop value
         # therefore, a value that repeats in the same item is ignored
-        items_per_obj = self.prop_set.reset_index().drop_duplicates(subset=[self.prop_set.columns[0], 'obj']).set_index(
-            'obj')
-        df_dict = items_per_obj.index.value_counts()
+        items_per_obj = self.prop_set.reset_index().drop_duplicates(subset=[self.prop_set.columns[0], self.prop_set.columns[-1]]).set_index(
+            self.prop_set.columns[-1])
+        df_dict = items_per_obj.index.value_counts().to_dict()
 
         # generate the dft column based on items per property and score column base on all new created columns
-        interacted_props['dft'] = interacted_props.apply(lambda x: df_dict[x['obj']], axis=1)
+        interacted_props['dft'] = interacted_props.apply(lambda x: df_dict[x[self.prop_set.columns[-1]]], axis=1)
 
         interacted_props['score'] = (interacted_props['npi'] / interacted_props['i']) * (
             np.log(interacted_props['n'] / interacted_props['dft']))
 
         # generate the dict
         interacted_props.reset_index(inplace=True)
-        interacted_props = interacted_props.set_index('obj')
+        interacted_props = interacted_props.set_index(self.prop_set.columns[-1])
         fav_prop = interacted_props['score'].to_dict()
 
         return fav_prop

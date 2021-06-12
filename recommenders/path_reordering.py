@@ -6,7 +6,8 @@ from recommenders.lod_reordering import LODPersonalizedReordering
 
 
 class PathReordering(LODPersonalizedReordering):
-    def __init__(self, train_file: str, output_rec_file: str, prop_path: str, prop_cols: list, cols_used: list, n_reorder: int,
+    def __init__(self, train_file: str, output_rec_file: str, prop_path: str, prop_cols: list, cols_used: list,
+                 n_reorder: int,
                  policy: str, p_items: float, hybrid=False, n_sentences=3):
         """
         Path Reordering class: this algorithm will reorder the output of other recommendation algorithm based on the
@@ -29,7 +30,8 @@ class PathReordering(LODPersonalizedReordering):
 
         self.policy = policy
         self.p_items = p_items
-        self.output_name = 'path[policy=' + str(policy) + "_items=" + str(p_items).replace('.', '') + "_reorder=" + str(n_reorder) + "]"
+        self.output_name = 'path[policy=' + str(policy) + "_items=" + str(p_items).replace('.', '') + "_reorder=" + str(
+            n_reorder) + "]"
 
         if self.policy == 'random':
             random.setstate(42)
@@ -56,7 +58,12 @@ class PathReordering(LODPersonalizedReordering):
         for u in self.output_rec_set.index.unique():
             print("User: " + str(u))
             # get items that the user interacted and recommended by an algorithm
-            items_historic = self.train_set.loc[u].sort_values(by=self.cols_used[-1], ascending=False)
+            if self.train_set.columns[-1] == 'timestamp':
+                items_historic = self.train_set.loc[u].sort_values(by=[self.cols_used[-2], self.cols_used[-1]],
+                                                                   ascending=False)
+            else:
+                items_historic = self.train_set.loc[u].sort_values(by=self.cols_used[-1], ascending=False)
+
             try:
                 items_historic = items_historic[self.cols_used[1]].to_list()
             except AttributeError:
@@ -115,14 +122,14 @@ class PathReordering(LODPersonalizedReordering):
                 try:
                     paths = nx.all_shortest_paths(subgraph, source=hm_node, target=rm_name)
                     paths = [list(map(semantic_profile.get, p[1::2])) for p in paths]
-                    values = [sum(values) / len(values) for values in paths if len(values) > 0]
+                    values = [sum(values) / len(values) for values in paths if len(values) > 0 or values is None]
                     sem_path_dist = sem_path_dist.append(
                         {'historic': hm, 'recommended': rm, 'path': paths[np.argmax(values)]},
                         ignore_index=True)
                 except (nx.exception.NetworkXNoPath, ValueError):
                     sem_path_dist = sem_path_dist.append({'historic': hm, 'recommended': rm, 'path': []},
                                                          ignore_index=True)
-                #print("Historic: " + str(hm) + " Recommended: " + str(rm))
+                # print("Historic: " + str(hm) + " Recommended: " + str(rm))
 
         return sem_path_dist
 

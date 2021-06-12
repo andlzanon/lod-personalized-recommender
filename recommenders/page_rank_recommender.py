@@ -16,7 +16,7 @@ class PageRankRecommnder(BaseRecommender):
         :param cols_used: columns that the recommender algorithm will user from the original dataset
         :param col_names: name of the columns of test and train set
         :param prop_set_path: item property dbpedia or wikidata set, on the file the first row is the item id and the
-            property column is called 'obj'
+            property column is the last column. Therefore, the dataset must in the format item_id, prop, value
         :param node_weighs: list of weights on the personalization for the Personalized Page Rank, the order is item
             weight, properties related to item weight and then all the other node weights
         """
@@ -54,7 +54,7 @@ class PageRankRecommnder(BaseRecommender):
 
         item_prop_copy = self.prop_set.copy()
         item_prop_copy['origin'] = ['I' + x for x in item_prop_copy.index.astype(str)]
-        item_prop_copy['destination'] = item_prop_copy['obj']
+        item_prop_copy['destination'] = item_prop_copy[self.prop_set.columns[-1]]
 
         edgelist = pd.concat([edgelist, item_prop_copy[['origin', 'destination']]], ignore_index=True)
 
@@ -93,9 +93,9 @@ class PageRankRecommnder(BaseRecommender):
             props = []
             for i in historic:
                 try:
-                    props = props + self.prop_set.loc[i]['obj'].to_list()
+                    props = props + self.prop_set.loc[i][self.prop_set.columns[-1]].to_list()
                 except AttributeError:
-                    props = props + [self.prop_set.loc[i]['obj']]
+                    props = props + [self.prop_set.loc[i][self.prop_set.columns[-1]]]
                 except KeyError:
                     continue
 
@@ -114,7 +114,7 @@ class PageRankRecommnder(BaseRecommender):
         i = 0
         while n < self.rank_size:
             key = list(ordered_nodes.keys())[i]
-            if re.match("I(\d+)+$", key) and key not in items_codes:
+            if re.match("I(\d+)+$", str(key)) and key not in items_codes:
                 top_n.append((user, int(key[1:]), page_rank[key]))
                 n = n + 1
             i = i + 1
