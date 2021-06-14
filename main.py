@@ -8,12 +8,13 @@ from recommenders.path_reordering import PathReordering
 import utils
 
 
-def run_experiments(fold: str, n_folds: int, baseline: list, proposed: list):
+def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, proposed: list):
     """
     Run experiments for the quantity of folds passed by in the parameter n_folds. E.g. if 10 then will run for all folds
     if 6 it will run from fold 0 to 5, etc
     :param fold: path of the folds
-    :param n_folds: quantity of folds to evaluate
+    :param start_fold: folds to start evaluation to evaluate
+    :param end_fold: fold to end evaluation
     :param baseline: binary list for evaluating the current 4 recsys (MostPop, BPR-MF, User-KNN, PageRank).
         The PageRank will run for DBPedia and Wikidata graphs but will only run the reorders on the Wikidata
     :param proposed: binary list to run the proposed reorder by property and by path. Is currently running 5 reorders
@@ -23,7 +24,7 @@ def run_experiments(fold: str, n_folds: int, baseline: list, proposed: list):
     output_names = set([])
 
     # BASELINES
-    for i in range(n_folds + 1):
+    for i in range(start_fold, end_fold + 1):
         train_file = fold + str(i) + "/train.dat"
         test_file = fold + str(i) + "/test.dat"
 
@@ -68,7 +69,7 @@ def run_experiments(fold: str, n_folds: int, baseline: list, proposed: list):
         # output_names.add(pr.output_path.split("/")[-1])
 
     # REORDERS
-    for i in range(n_folds + 1):
+    for i in range(start_fold, end_fold + 1):
 
         train_file = fold + str(i) + "/train.dat"
         test_file = fold + str(i) + "/test.dat"
@@ -134,8 +135,9 @@ def run_experiments(fold: str, n_folds: int, baseline: list, proposed: list):
                                train_file, test_file)
 
 
-utils.cross_validation_ml_small(rs=42)
+#utils.cross_validation_ml_small(rs=42)
 # ml_small.extract_wikidata_prop()
 
 folds_path = "./datasets/ml-latest-small/folds/"
-run_experiments(folds_path, 9, [0, 0, 0, 0, 0], [0, 0, 0, 1, 0])
+run_experiments(folds_path, 9, 9, [0, 0, 0, 0, 0], [0, 0, 0, 1, 0])
+utils.statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "userknn", folds_path, ["MAP", "NDCG", "COVERAGE"])
