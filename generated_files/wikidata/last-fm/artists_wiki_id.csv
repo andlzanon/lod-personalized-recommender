@@ -1,0 +1,684 @@
+wiki_id,id,name
+http://www.wikidata.org/entity/Q853545,1,MALICE MIZER
+http://www.wikidata.org/entity/Q703936,2,Diary of Dreams
+http://www.wikidata.org/entity/Q160111,3,Carpathian Forest
+http://www.wikidata.org/entity/Q163604,4,Moi dix Mois
+http://www.wikidata.org/entity/Q2290242,5,Bella Morte
+http://www.wikidata.org/entity/Q914074,6,Moonspell
+http://www.wikidata.org/entity/Q186327,7,Marilyn Manson
+http://www.wikidata.org/entity/Q379852,8,DIR EN GREY
+http://www.wikidata.org/entity/Q266782,9,Combichrist
+http://www.wikidata.org/entity/Q1545680,10,Grendel
+http://www.wikidata.org/entity/Q395327,11,Agonoize
+http://www.wikidata.org/entity/Q272260,12,Behemoth
+http://www.wikidata.org/entity/Q1431398,13,Hocico
+http://www.wikidata.org/entity/Q58207,15,Dimmu Borgir
+http://www.wikidata.org/entity/Q654778,16,London After Midnight
+http://www.wikidata.org/entity/Q1807574,17,Psyclon Nine
+http://www.wikidata.org/entity/Q1927889,18,The Crüxshadows
+http://www.wikidata.org/entity/Q596117,19,:wumpscut:
+http://www.wikidata.org/entity/Q124720,20,Limbonic Art
+http://www.wikidata.org/entity/Q1507027,22,xotox
+http://www.wikidata.org/entity/Q1143750,23,The Kovenant
+http://www.wikidata.org/entity/Q1401828,24,Feindflug
+http://www.wikidata.org/entity/Q487479,25,Cradle of Filth
+http://www.wikidata.org/entity/Q325359,27,Laibach
+http://www.wikidata.org/entity/Q152761,28,Gorgoroth
+http://www.wikidata.org/entity/Q91533,30,And One
+http://www.wikidata.org/entity/Q460499,31,Amduscia
+http://www.wikidata.org/entity/Q640503,32,Covenant
+http://www.wikidata.org/entity/Q1656463,34,Icon of Coil
+http://www.wikidata.org/entity/Q1351424,36,KMFDM
+http://www.wikidata.org/entity/Q665745,37,Funker Vogt
+http://www.wikidata.org/entity/Q4037070,38,Dawn of Ashes
+http://www.wikidata.org/entity/Q545686,39,Sopor Aeternus & The Ensemble of Shadows
+http://www.wikidata.org/entity/Q941421,40,The Faint
+http://www.wikidata.org/entity/Q697508,44,Das Ich
+http://www.wikidata.org/entity/Q609782,45,Mindless Self Indulgence
+http://www.wikidata.org/entity/Q7315,46,Pyotr Ilyich Tchaikovsky
+http://www.wikidata.org/entity/Q181341,47,Emperor
+http://www.wikidata.org/entity/Q567714,48,Anorexia Nervosa
+http://www.wikidata.org/entity/Q769263,49,Reaper
+http://www.wikidata.org/entity/Q1422104,50,Gothminister
+http://www.wikidata.org/entity/Q58381,51,Duran Duran
+http://www.wikidata.org/entity/Q749019,52,Morcheeba
+http://www.wikidata.org/entity/Q116227,53,Air
+http://www.wikidata.org/entity/Q952337,54,Hooverphonic
+http://www.wikidata.org/entity/Q11998,55,Kylie Minogue
+http://www.wikidata.org/entity/Q546930,57,Thievery Corporation
+http://www.wikidata.org/entity/Q168555,58,Goldfrapp
+http://www.wikidata.org/entity/Q7753700,59,New Order
+http://www.wikidata.org/entity/Q1758107,60,Matt Bianco
+http://www.wikidata.org/entity/Q595705,61,Talk Talk
+http://www.wikidata.org/entity/Q1506813,62,Prefab Sprout
+http://www.wikidata.org/entity/Q485512,63,Enigma
+http://www.wikidata.org/entity/Q45188,65,Coldplay
+http://www.wikidata.org/entity/Q542071,66,Faithless
+http://www.wikidata.org/entity/Q1744,67,Madonna
+http://www.wikidata.org/entity/Q617671,68,Icehouse
+http://www.wikidata.org/entity/Q658182,69,Sade
+http://www.wikidata.org/entity/Q14045,70,Moby
+http://www.wikidata.org/entity/Q202550,71,Dido
+http://www.wikidata.org/entity/Q482964,72,Depeche Mode
+http://www.wikidata.org/entity/Q444573,74,Basia
+http://www.wikidata.org/entity/Q694873,75,Camouflage
+http://www.wikidata.org/entity/Q624661,76,Electronic
+http://www.wikidata.org/entity/Q130311,77,George Michael
+http://www.wikidata.org/entity/Q656080,78,The Adventures
+http://www.wikidata.org/entity/Q664789,79,Fiction Factory
+http://www.wikidata.org/entity/Q117522,80,Groove Armada
+http://www.wikidata.org/entity/Q191352,81,Portishead
+http://www.wikidata.org/entity/Q452166,82,Marc Almond
+http://www.wikidata.org/entity/Q1105240,83,Cock Robin
+http://www.wikidata.org/entity/Q573168,84,Cut Copy
+http://www.wikidata.org/entity/Q16011,85,Spandau Ballet
+http://www.wikidata.org/entity/Q156322,86,Katie Melua
+http://www.wikidata.org/entity/Q1180767,87,Deacon Blue
+http://www.wikidata.org/entity/Q189991,88,Gorillaz
+http://www.wikidata.org/entity/Q19848,89,Lady Gaga
+http://www.wikidata.org/entity/Q285472,90,Kosheen
+http://www.wikidata.org/entity/Q453812,91,Nik Kershaw
+http://www.wikidata.org/entity/Q7936980,92,Vitamin Z
+http://www.wikidata.org/entity/Q104326,93,Jean-Michel Jarre
+http://www.wikidata.org/entity/Q97624508,94,Ministry of Sound
+http://www.wikidata.org/entity/Q339430,95,Simply Red
+http://www.wikidata.org/entity/Q106648,96,Fleetwood Mac
+http://www.wikidata.org/entity/Q192587,97,Duffy
+http://www.wikidata.org/entity/Q174933,98,Japan
+http://www.wikidata.org/entity/Q489801,99,INXS
+http://www.wikidata.org/entity/Q650496,100,ABC
+http://www.wikidata.org/entity/Q15053723,102,Segue
+http://www.wikidata.org/entity/Q714325,103,Max Richter
+http://www.wikidata.org/entity/Q5057807,104,Celer
+http://www.wikidata.org/entity/Q376968,107,Burial
+http://www.wikidata.org/entity/Q770687,113,Dustin O'Halloran
+http://www.wikidata.org/entity/Q18244587,115,Nebulo
+http://www.wikidata.org/entity/Q243639,120,Deru
+http://www.wikidata.org/entity/Q18720103,121,Lukid
+http://www.wikidata.org/entity/Q703201,126,The Notwist
+http://www.wikidata.org/entity/Q314765,129,Aless
+http://www.wikidata.org/entity/Q3934875,139,Richard Skelton
+http://www.wikidata.org/entity/Q38276244,140,Matryoshka
+http://www.wikidata.org/entity/Q872190,146,Hird
+http://www.wikidata.org/entity/Q1133600,151,Deep Forest
+http://www.wikidata.org/entity/Q213923,152,Porcupine Tree
+http://www.wikidata.org/entity/Q703348,153,De/Vision
+http://www.wikidata.org/entity/Q44190,154,Radiohead
+http://www.wikidata.org/entity/Q47875,155,Robbie Williams
+http://www.wikidata.org/entity/Q259295,156,VAST
+http://www.wikidata.org/entity/Q2831,157,Michael Jackson
+http://www.wikidata.org/entity/Q716158,158,עברי לידר
+http://www.wikidata.org/entity/Q484427,159,The Cure
+http://www.wikidata.org/entity/Q733103,160,אביב גפן
+http://www.wikidata.org/entity/Q47122,161,Enrique Iglesias
+http://www.wikidata.org/entity/Q1118535,162,God Is an Astronaut
+http://www.wikidata.org/entity/Q381722,163,Pink Floyd
+http://www.wikidata.org/entity/Q1986182,164,יוני בלוך
+http://www.wikidata.org/entity/Q925481,165,Planet Funk
+http://www.wikidata.org/entity/Q483810,166,The Cranberries
+http://www.wikidata.org/entity/Q464109,167,Scissor Sisters
+http://www.wikidata.org/entity/Q5218676,168,דניאל סלומון
+http://www.wikidata.org/entity/Q5418308,169,אביתר בנאי
+http://www.wikidata.org/entity/Q286724,170,Mew
+http://www.wikidata.org/entity/Q28963,171,Stereophonics
+http://www.wikidata.org/entity/Q485673,172,Garbage
+http://www.wikidata.org/entity/Q1427795,173,Placebo
+http://www.wikidata.org/entity/Q548994,174,Infected Mushroom
+http://www.wikidata.org/entity/Q903496,175,Delerium
+http://www.wikidata.org/entity/Q1979711,176,Scorpions
+http://www.wikidata.org/entity/Q2267644,177,Rock Star Supernova
+http://www.wikidata.org/entity/Q541599,178,Dolores O'Riordan
+http://www.wikidata.org/entity/Q331748,179,Tommy Lee
+http://www.wikidata.org/entity/Q16633348,180,Roxette
+http://www.wikidata.org/entity/Q750593,181,Paradise Lost
+http://www.wikidata.org/entity/Q484311,182,Keane
+http://www.wikidata.org/entity/Q202041,183,Jamiroquai
+http://www.wikidata.org/entity/Q130799,184,James Blunt
+http://www.wikidata.org/entity/Q101592,185,Reamonn
+http://www.wikidata.org/entity/Q880812,186,Blackfield
+http://www.wikidata.org/entity/Q156305,187,a-ha
+http://www.wikidata.org/entity/Q18557,188,Opeth
+http://www.wikidata.org/entity/Q725517,189,Poets of the Fall
+http://www.wikidata.org/entity/Q551569,190,Muse
+http://www.wikidata.org/entity/Q1438730,191,OneRepublic
+http://www.wikidata.org/entity/Q2808,192,Elton John
+http://www.wikidata.org/entity/Q269091,193,Tears for Fears
+http://www.wikidata.org/entity/Q724783,194,The Tiger Lillies
+http://www.wikidata.org/entity/Q915714,195,Bright Eyes
+http://www.wikidata.org/entity/Q692668,196,Beirut
+http://www.wikidata.org/entity/Q184805,197,Tom Waits
+http://www.wikidata.org/entity/Q45165,198,System of a Down
+http://www.wikidata.org/entity/Q58608,199,Arcade Fire
+http://www.wikidata.org/entity/Q46644,200,Gogol Bordello
+http://www.wikidata.org/entity/Q909810,201,Ленинград
+http://www.wikidata.org/entity/Q587705,202,CAKE
+http://www.wikidata.org/entity/Q886396,203,Blur
+http://www.wikidata.org/entity/Q311964,204,Damien Rice
+http://www.wikidata.org/entity/Q503783,205,Andrew Bird
+http://www.wikidata.org/entity/Q32826,206,Beck
+http://www.wikidata.org/entity/Q170599,207,Arctic Monkeys
+http://www.wikidata.org/entity/Q797992,208,Babyshambles
+http://www.wikidata.org/entity/Q483285,209,My Chemical Romance
+http://www.wikidata.org/entity/Q205838,210,Bloc Party
+http://www.wikidata.org/entity/Q930112,211,The Decemberists
+http://www.wikidata.org/entity/Q392,212,Bob Dylan
+http://www.wikidata.org/entity/Q1666,213,Jacques Brel
+http://www.wikidata.org/entity/Q1179673,214,DeVotchKa
+http://www.wikidata.org/entity/Q215855,215,Jeff Buckley
+http://www.wikidata.org/entity/Q1481379,216,Sparklehorse
+http://www.wikidata.org/entity/Q16414,217,Death Cab for Cutie
+http://www.wikidata.org/entity/Q1888514,218,Man Man
+http://www.wikidata.org/entity/Q201514,219,M. Ward
+http://www.wikidata.org/entity/Q10708,220,Red Hot Chili Peppers
+http://www.wikidata.org/entity/Q61584,221,Travis
+http://www.wikidata.org/entity/Q431355,222,Modest Mouse
+http://www.wikidata.org/entity/Q806235,223,Band of Horses
+http://www.wikidata.org/entity/Q331790,225,Interpol
+http://www.wikidata.org/entity/Q1243718,226,Queens of the Stone Age
+http://www.wikidata.org/entity/Q1299,227,The Beatles
+http://www.wikidata.org/entity/Q192486,228,Kings of Leon
+http://www.wikidata.org/entity/Q220730,229,The Killers
+http://www.wikidata.org/entity/Q47871,230,Green Day
+http://www.wikidata.org/entity/Q223443,231,Devendra Banhart
+http://www.wikidata.org/entity/Q843228,232,Sunset Rubdown
+http://www.wikidata.org/entity/Q11647,233,Nine Inch Nails
+http://www.wikidata.org/entity/Q7040129,234,Nirvana
+http://www.wikidata.org/entity/Q1724219,235,Eels
+http://www.wikidata.org/entity/Q684537,236,Clap Your Hands Say Yeah
+http://www.wikidata.org/entity/Q188668,237,Thom Yorke
+http://www.wikidata.org/entity/Q357418,238,Massive Attack
+http://www.wikidata.org/entity/Q233229,239,Keyshia Cole
+http://www.wikidata.org/entity/Q155412,241,Toni Braxton
+http://www.wikidata.org/entity/Q10272040,242,Elo da Corrente
+http://www.wikidata.org/entity/Q7705984,243,Teta Lando
+http://www.wikidata.org/entity/Q2525354,245,Bob Marley & The Wailers
+http://www.wikidata.org/entity/Q217087,246,Adriana Calcanhotto
+http://www.wikidata.org/entity/Q862843,247,Maxwell
+http://www.wikidata.org/entity/Q1382233,248,Pharoahe Monch
+http://www.wikidata.org/entity/Q286022,249,Common
+http://www.wikidata.org/entity/Q409,250,Bob Marley
+http://www.wikidata.org/entity/Q34389,251,Whitney Houston
+http://www.wikidata.org/entity/Q271874,252,Tamia
+http://www.wikidata.org/entity/Q482907,253,Bryan Adams
+http://www.wikidata.org/entity/Q1638859,254,Lokua Kanza
+http://www.wikidata.org/entity/Q688952,255,Nach
+http://www.wikidata.org/entity/Q2437762,256,Kid Abelha
+http://www.wikidata.org/entity/Q131814,258,Tina Turner
+http://www.wikidata.org/entity/Q277512,259,9th Wonder
+http://www.wikidata.org/entity/Q3937955,260,Floetry
+http://www.wikidata.org/entity/Q51960,261,Marisa Monte
+http://www.wikidata.org/entity/Q228909,262,Mary J. Blige
+http://www.wikidata.org/entity/Q232592,263,Jill Scott
+http://www.wikidata.org/entity/Q266080,264,Sara Tavares
+http://www.wikidata.org/entity/Q5105,265,Céline Dion
+http://www.wikidata.org/entity/Q223875,266,Erykah Badu
+http://www.wikidata.org/entity/Q42904,267,Nas
+http://www.wikidata.org/entity/Q311256,268,Richard Marx
+http://www.wikidata.org/entity/Q1260713,269,Dru Hill
+http://www.wikidata.org/entity/Q235980,270,Maria Bethânia
+http://www.wikidata.org/entity/Q38875,271,Mos Def
+http://www.wikidata.org/entity/Q236318,272,Faith Evans
+http://www.wikidata.org/entity/Q158641,273,Avant
+http://www.wikidata.org/entity/Q241660,275,Angie Stone
+http://www.wikidata.org/entity/Q1573981,276,Gang Starr
+http://www.wikidata.org/entity/Q736274,277,Papa Wemba
+http://www.wikidata.org/entity/Q6107,278,2Pac
+http://www.wikidata.org/entity/Q3013427,279,Brandy
+http://www.wikidata.org/entity/Q3470592,280,Sam the Kid
+http://www.wikidata.org/entity/Q5245894,281,Dealema
+http://www.wikidata.org/entity/Q894495,282,Boss AC
+http://www.wikidata.org/entity/Q1131864,283,Ana Carolina
+http://www.wikidata.org/entity/Q905438,284,Dilated Peoples
+http://www.wikidata.org/entity/Q131324,285,Janet Jackson
+http://www.wikidata.org/entity/Q273049,286,Peter Tosh
+http://www.wikidata.org/entity/Q678906,287,Monica
+http://www.wikidata.org/entity/Q61107744,288,Rihanna
+http://www.wikidata.org/entity/Q11975,289,Britney Spears
+http://www.wikidata.org/entity/Q215300,290,Jordin Sparks
+http://www.wikidata.org/entity/Q483507,291,Kelly Clarkson
+http://www.wikidata.org/entity/Q41594,292,Christina Aguilera
+http://www.wikidata.org/entity/Q213521,293,Ashlee Simpson
+http://www.wikidata.org/entity/Q183519,294,Leona Lewis
+http://www.wikidata.org/entity/Q193697,296,Sugababes
+http://www.wikidata.org/entity/Q310580,297,David Cook
+http://www.wikidata.org/entity/Q121507,301,Alicia Keys
+http://www.wikidata.org/entity/Q277551,303,Panic at the Disco
+http://www.wikidata.org/entity/Q214831,304,David Archuleta
+http://www.wikidata.org/entity/Q229282,305,Katharine McPhee
+http://www.wikidata.org/entity/Q134541,306,Black Eyed Peas
+http://www.wikidata.org/entity/Q233946,307,Kate Voegele
+http://www.wikidata.org/entity/Q230514,308,Kat DeLuna
+http://www.wikidata.org/entity/Q1060468,309,Danity Kane
+http://www.wikidata.org/entity/Q80424,310,Nelly Furtado
+http://www.wikidata.org/entity/Q212906,311,Natasha Bedingfield
+http://www.wikidata.org/entity/Q72832,312,Cassie
+http://www.wikidata.org/entity/Q236523,313,Allison Iraheta
+http://www.wikidata.org/entity/Q272915,314,Ciara
+http://www.wikidata.org/entity/Q380799,315,Matt Pokora
+http://www.wikidata.org/entity/Q130742,316,Alanis Morissette
+http://www.wikidata.org/entity/Q152453,317,Keri Hilson
+http://www.wikidata.org/entity/Q122020,318,Hilary Duff
+http://www.wikidata.org/entity/Q180004,320,Fergie
+http://www.wikidata.org/entity/Q134233,321,Jonas Brothers
+http://www.wikidata.org/entity/Q161877,322,Ashanti
+http://www.wikidata.org/entity/Q756220,323,The Saturdays
+http://www.wikidata.org/entity/Q524822,324,Cobra Starship
+http://www.wikidata.org/entity/Q215219,326,JoJo
+http://www.wikidata.org/entity/Q155700,327,Chris Brown
+http://www.wikidata.org/entity/Q8298,328,David Guetta
+http://www.wikidata.org/entity/Q43432,329,Justin Timberlake
+http://www.wikidata.org/entity/Q214227,330,T.I.
+http://www.wikidata.org/entity/Q15935,331,Kanye West
+http://www.wikidata.org/entity/Q184249,332,Kelly Rowland
+http://www.wikidata.org/entity/Q30449,333,Avril Lavigne
+http://www.wikidata.org/entity/Q155123,334,No Angels
+http://www.wikidata.org/entity/Q265202,335,Sandy
+http://www.wikidata.org/entity/Q66751,336,Vanessa Petruo
+http://www.wikidata.org/entity/Q45302,337,Alexander
+http://www.wikidata.org/entity/Q822393,338,Queensberry
+http://www.wikidata.org/entity/Q71566,339,Fady Maalouf
+http://www.wikidata.org/entity/Q118133,340,Cher
+http://www.wikidata.org/entity/Q77807,341,Barbara Schöneberger
+http://www.wikidata.org/entity/Q228860,342,Colbie Caillat
+http://www.wikidata.org/entity/Q153538,343,Annett Louisan
+http://www.wikidata.org/entity/Q26876,344,Taylor Swift
+http://www.wikidata.org/entity/Q465160,345,Nadja Benaissa
+http://www.wikidata.org/entity/Q31164,346,Lena
+http://www.wikidata.org/entity/Q73623,347,Cassandra Steen
+http://www.wikidata.org/entity/Q157079,348,Wir sind Helden
+http://www.wikidata.org/entity/Q102385,349,The Pussycat Dolls
+http://www.wikidata.org/entity/Q30773,350,Monrose
+http://www.wikidata.org/entity/Q32595,351,Gabrielle
+http://www.wikidata.org/entity/Q212772,352,Cheryl Cole
+http://www.wikidata.org/entity/Q784453,353,Milow
+http://www.wikidata.org/entity/Q63664,354,Sarah Connor
+http://www.wikidata.org/entity/Q192515,355,Jason Mraz
+http://www.wikidata.org/entity/Q39639,356,Brad Paisley
+http://www.wikidata.org/entity/Q7000,357,Silbermond
+http://www.wikidata.org/entity/Q1231783,358,Diyana
+http://www.wikidata.org/entity/Q288258,359,Maria Mena
+http://www.wikidata.org/entity/Q131433,360,Shania Twain
+http://www.wikidata.org/entity/Q1200415,364,Sugarland
+http://www.wikidata.org/entity/Q78518,365,Christina Stürmer
+http://www.wikidata.org/entity/Q297097,366,Jack Johnson
+http://www.wikidata.org/entity/Q4905017,367,BIG BANG
+http://www.wikidata.org/entity/Q483527,368,김종국
+http://www.wikidata.org/entity/Q451142,369,2PM
+http://www.wikidata.org/entity/Q515273,370,Katatonia
+http://www.wikidata.org/entity/Q1523075,371,Skillet
+http://www.wikidata.org/entity/Q429046,373,Jay Park
+http://www.wikidata.org/entity/Q188111,375,浜崎あゆみ
+http://www.wikidata.org/entity/Q862588,376,UVERworld
+http://www.wikidata.org/entity/Q261,377,Linkin Park
+http://www.wikidata.org/entity/Q1777698,378,Evanescence
+http://www.wikidata.org/entity/Q270652,379,中島美嘉
+http://www.wikidata.org/entity/Q735023,380,Blackmore's Night
+http://www.wikidata.org/entity/Q999313,382,BUCK-TICK
+http://www.wikidata.org/entity/Q201669,383,Bad Religion
+http://www.wikidata.org/entity/Q3247658,384,Fairuz
+http://www.wikidata.org/entity/Q187553,385,T.M.Revolution
+http://www.wikidata.org/entity/Q858880,386,Cascada
+http://www.wikidata.org/entity/Q487262,387,TRAX
+http://www.wikidata.org/entity/Q44398,389,Enya
+http://www.wikidata.org/entity/Q44606,390,GACKT
+http://www.wikidata.org/entity/Q1519088,391,Sinamore
+http://www.wikidata.org/entity/Q2902030,393,Super Junior
+http://www.wikidata.org/entity/Q313654,394,山下智久
+http://www.wikidata.org/entity/Q374160,395,NEWS
+http://www.wikidata.org/entity/Q218866,396,L'Arc~en~Ciel
+http://www.wikidata.org/entity/Q626440,399,嵐
+http://www.wikidata.org/entity/Q2554593,401,RENTRER EN SOI
+http://www.wikidata.org/entity/Q214237,403,The All-American Rejects
+http://www.wikidata.org/entity/Q489575,404,백지영
+http://www.wikidata.org/entity/Q485679,405,The Rasmus
+http://www.wikidata.org/entity/Q306122,406,HYDE
+http://www.wikidata.org/entity/Q641255,408,Crossfade
+http://www.wikidata.org/entity/Q495577,409,G-Dragon
+http://www.wikidata.org/entity/Q21575485,410,GD&TOP
+http://www.wikidata.org/entity/Q482477,412,blink-182
+http://www.wikidata.org/entity/Q17209001,413,After School
+http://www.wikidata.org/entity/Q2552212,414,Wasted Land
+http://www.wikidata.org/entity/Q878232,415,Laith Al-Deen
+http://www.wikidata.org/entity/Q177451,416,The National
+http://www.wikidata.org/entity/Q5169918,417,Cordel do Fogo Encantado
+http://www.wikidata.org/entity/Q483828,418,Sigur Rós
+http://www.wikidata.org/entity/Q304130,419,Tokyo Police Club
+http://www.wikidata.org/entity/Q6950292,421,Móveis Coloniais de Acaju
+http://www.wikidata.org/entity/Q10331617,422,Mombojó
+http://www.wikidata.org/entity/Q810695,423,Bat for Lashes
+http://www.wikidata.org/entity/Q211583,424,The Strokes
+http://www.wikidata.org/entity/Q641858,425,Yeah Yeah Yeahs
+http://www.wikidata.org/entity/Q389689,426,Rilo Kiley
+http://www.wikidata.org/entity/Q1146764,427,The Cribs
+http://www.wikidata.org/entity/Q214350,428,The Libertines
+http://www.wikidata.org/entity/Q7545449,429,The Smiths
+http://www.wikidata.org/entity/Q237548,430,Kate Nash
+http://www.wikidata.org/entity/Q607581,431,Wolf Parade
+http://www.wikidata.org/entity/Q840882,432,Klaxons
+http://www.wikidata.org/entity/Q616642,433,Broken Social Scene
+http://www.wikidata.org/entity/Q1053608,434,Spoon
+http://www.wikidata.org/entity/Q2905411,435,Black Lips
+http://www.wikidata.org/entity/Q184217,436,The Smashing Pumpkins
+http://www.wikidata.org/entity/Q1417467,437,She & Him
+http://www.wikidata.org/entity/Q10339848,438,O Teatro Mágico
+http://www.wikidata.org/entity/Q1582170,439,Los Hermanos
+http://www.wikidata.org/entity/Q547272,440,Animal Collective
+http://www.wikidata.org/entity/Q172763,441,Joy Division
+http://www.wikidata.org/entity/Q554657,442,The Tallest Man on Earth
+http://www.wikidata.org/entity/Q1762436,443,The Rakes
+http://www.wikidata.org/entity/Q306130,444,múm
+http://www.wikidata.org/entity/Q357340,445,Bon Iver
+http://www.wikidata.org/entity/Q3928454,446,Ra Ra Riot
+http://www.wikidata.org/entity/Q207898,447,Manu Chao
+http://www.wikidata.org/entity/Q705434,448,Art Brut
+http://www.wikidata.org/entity/Q3396185,449,Poney Express
+http://www.wikidata.org/entity/Q782916,450,She Wants Revenge
+http://www.wikidata.org/entity/Q2613632,451,Local Natives
+http://www.wikidata.org/entity/Q10333178,452,Mundo Livre S/A
+http://www.wikidata.org/entity/Q157327,453,Silverchair
+http://www.wikidata.org/entity/Q315650,454,Jónsi
+http://www.wikidata.org/entity/Q191842,456,Jesse McCartney
+http://www.wikidata.org/entity/Q301818,457,Aaron Carter
+http://www.wikidata.org/entity/Q34086,458,Justin Bieber
+http://www.wikidata.org/entity/Q2026639,460,Noize MC
+http://www.wikidata.org/entity/Q4235,461,Miley Cyrus
+http://www.wikidata.org/entity/Q143332,462,Blue
+http://www.wikidata.org/entity/Q493710,463,Savage Garden
+http://www.wikidata.org/entity/Q229496,464,3OH!3
+http://www.wikidata.org/entity/Q168992,465,Jessica Simpson
+http://www.wikidata.org/entity/Q33605,466,Ke$ha
+http://www.wikidata.org/entity/Q527055,467,Darren Hayes
+http://www.wikidata.org/entity/Q165911,468,Usher
+http://www.wikidata.org/entity/Q214466,469,Nick Carter
+http://www.wikidata.org/entity/Q456190,470,nevershoutnever!
+http://www.wikidata.org/entity/Q864991,471,Metro Station
+http://www.wikidata.org/entity/Q175097,472,3 Doors Down
+http://www.wikidata.org/entity/Q3762041,473,Dream Street
+http://www.wikidata.org/entity/Q154222,474,Craig David
+http://www.wikidata.org/entity/Q380799,476,M. Pokora
+http://www.wikidata.org/entity/Q254840,477,Daniel Merriweather
+http://www.wikidata.org/entity/Q35918,478,ВИА Гра
+http://www.wikidata.org/entity/Q3790267,480,Guf
+http://www.wikidata.org/entity/Q485825,481,Simple Plan
+http://www.wikidata.org/entity/Q472891,482,Jeremih
+http://www.wikidata.org/entity/Q937386,483,Centr
+http://www.wikidata.org/entity/Q193710,484,Ne-Yo
+http://www.wikidata.org/entity/Q294979,485,Kelis
+http://www.wikidata.org/entity/Q40585,486,30 Seconds to Mars
+http://www.wikidata.org/entity/Q833283,487,The Birthday Massacre
+http://www.wikidata.org/entity/Q486825,488,Three Days Grace
+http://www.wikidata.org/entity/Q240767,489,Limp Bizkit
+http://www.wikidata.org/entity/Q461448,490,Seether
+http://www.wikidata.org/entity/Q493729,491,Fort Minor
+http://www.wikidata.org/entity/Q916973,492,Funeral for a Friend
+http://www.wikidata.org/entity/Q18852,493,Lostprophets
+http://www.wikidata.org/entity/Q1001450,494,Finch
+http://www.wikidata.org/entity/Q7785612,495,This Beautiful Republic
+http://www.wikidata.org/entity/Q45188,496,Cold
+http://www.wikidata.org/entity/Q254371,497,Papa Roach
+http://www.wikidata.org/entity/Q473466,498,Paramore
+http://www.wikidata.org/entity/Q215125,499,Flyleaf
+http://www.wikidata.org/entity/Q485385,500,Bullet for My Valentine
+http://www.wikidata.org/entity/Q488562,501,Angels & Airwaves
+http://www.wikidata.org/entity/Q77265,502,LaFee
+http://www.wikidata.org/entity/Q258546,503,In Flames
+http://www.wikidata.org/entity/Q712432,504,HIM
+http://www.wikidata.org/entity/Q5276002,505,Digital Summer
+http://www.wikidata.org/entity/Q487396,506,Anathema
+http://www.wikidata.org/entity/Q664871,507,Saosin
+http://www.wikidata.org/entity/Q926397,508,Tracktor Bowling
+http://www.wikidata.org/entity/Q2005871,509,Pitchshifter
+http://www.wikidata.org/entity/Q494743,510,P.O.D.
+http://www.wikidata.org/entity/Q10708270,511,U2
+http://www.wikidata.org/entity/Q485039,512,Deftones
+http://www.wikidata.org/entity/Q866410,514,Ill Niño
+http://www.wikidata.org/entity/Q1095015,515,Clan of Xymox
+http://www.wikidata.org/entity/Q80304,517,Korn
+http://www.wikidata.org/entity/Q57138,518,Within Temptation
+http://www.wikidata.org/entity/Q491892,519,Static-X
+http://www.wikidata.org/entity/Q631226,520,Fluke
+http://www.wikidata.org/entity/Q507833,521,happysad
+http://www.wikidata.org/entity/Q625529,522,Lacrimosa
+http://www.wikidata.org/entity/Q44903,523,Lindsay Lohan
+http://www.wikidata.org/entity/Q483379,525,Gwen Stefani
+http://www.wikidata.org/entity/Q200002,526,La Roux
+http://www.wikidata.org/entity/Q207177,528,Pixie Lott
+http://www.wikidata.org/entity/Q661103,530,Alphabeat
+http://www.wikidata.org/entity/Q313370,531,Taio Cruz
+http://www.wikidata.org/entity/Q178943,532,Little Boots
+http://www.wikidata.org/entity/Q3347888,533,Oasis
+http://www.wikidata.org/entity/Q43259,534,No Doubt
+http://www.wikidata.org/entity/Q216899,535,Sophie Ellis-Bextor
+http://www.wikidata.org/entity/Q485220,536,Good Charlotte
+http://www.wikidata.org/entity/Q847970,537,The Used
+http://www.wikidata.org/entity/Q182223,538,Maroon 5
+http://www.wikidata.org/entity/Q12831,539,Gossip
+http://www.wikidata.org/entity/Q485811,540,Fall Out Boy
+http://www.wikidata.org/entity/Q462102,542,Pitty
+http://www.wikidata.org/entity/Q167696,543,Nicole Scherzinger
+http://www.wikidata.org/entity/Q190231,544,Adam Lambert
+http://www.wikidata.org/entity/Q213538,545,Flo Rida
+http://www.wikidata.org/entity/Q219939,546,The Ting Tings
+http://www.wikidata.org/entity/Q299138,547,Kid Cudi
+http://www.wikidata.org/entity/Q31164,548,Ellie Goulding
+http://www.wikidata.org/entity/Q904921,549,The Sonics
+http://www.wikidata.org/entity/Q847191,550,The Fleshtones
+http://www.wikidata.org/entity/Q1424584,552,The Barracudas
+http://www.wikidata.org/entity/Q188713,554,The Kinks
+http://www.wikidata.org/entity/Q106928110,555,The Swingin' Neckbreakers
+http://www.wikidata.org/entity/Q12711512,556,The Strollers
+http://www.wikidata.org/entity/Q83626,557,The Fuzztones
+http://www.wikidata.org/entity/Q18246484,558,The Maharajas
+http://www.wikidata.org/entity/Q7569854,559,Southern Culture on the Skids
+http://www.wikidata.org/entity/Q7771729,561,The Untamed Youth
+http://www.wikidata.org/entity/Q1441712,562,The Who
+http://www.wikidata.org/entity/Q222628,563,Small Faces
+http://www.wikidata.org/entity/Q206466,564,Mahalia Jackson
+http://www.wikidata.org/entity/Q44780,565,Howlin' Wolf
+http://www.wikidata.org/entity/Q181483,566,Jackie Wilson
+http://www.wikidata.org/entity/Q295919,567,Sam Cooke
+http://www.wikidata.org/entity/Q217839,569,Otis Redding
+http://www.wikidata.org/entity/Q82222,570,Little Richard
+http://www.wikidata.org/entity/Q463184,571,LaVern Baker
+http://www.wikidata.org/entity/Q544387,572,Ray Charles
+http://www.wikidata.org/entity/Q2298743,573,The Detroit Cobras
+http://www.wikidata.org/entity/Q237527,574,Big Mama Thornton
+http://www.wikidata.org/entity/Q125121,575,Aretha Franklin
+http://www.wikidata.org/entity/Q189758,576,Marvin Gaye
+http://www.wikidata.org/entity/Q144669,577,Ruth Brown
+http://www.wikidata.org/entity/Q5950,578,James Brown
+http://www.wikidata.org/entity/Q276609,579,Big Maybelle
+http://www.wikidata.org/entity/Q220707,580,Muddy Waters
+http://www.wikidata.org/entity/Q356598,581,Elmore James
+http://www.wikidata.org/entity/Q454692,582,Sonny Boy Williamson
+http://www.wikidata.org/entity/Q44570,583,John Lee Hooker
+http://www.wikidata.org/entity/Q178134,584,The Isley Brothers
+http://www.wikidata.org/entity/Q5921,585,Chuck Berry
+http://www.wikidata.org/entity/Q918447,586,Professor Longhair
+http://www.wikidata.org/entity/Q438106,587,Sister Rosetta Tharpe
+http://www.wikidata.org/entity/Q2846286,589,Andre Williams
+http://www.wikidata.org/entity/Q367447,590,Louis Prima
+http://www.wikidata.org/entity/Q1785,591,Charles Aznavour
+http://www.wikidata.org/entity/Q23848,592,Ennio Morricone
+http://www.wikidata.org/entity/Q736099,593,Renato Carosone
+http://www.wikidata.org/entity/Q1364657,594,The Pretty Things
+http://www.wikidata.org/entity/Q1545459,597,The Easybeats
+http://www.wikidata.org/entity/Q7738411,598,The Gruesomes
+http://www.wikidata.org/entity/Q5383,599,David Bowie
+http://www.wikidata.org/entity/Q44587,601,Prince
+http://www.wikidata.org/entity/Q361881,602,Iron & Wine
+http://www.wikidata.org/entity/Q223161,603,Aphex Twin
+http://www.wikidata.org/entity/Q849299,604,Kings of Convenience
+http://www.wikidata.org/entity/Q214039,605,Beastie Boys
+http://www.wikidata.org/entity/Q315107,606,José González
+http://www.wikidata.org/entity/Q192353,607,Jethro Tull
+http://www.wikidata.org/entity/Q1412030,608,Tortoise
+http://www.wikidata.org/entity/Q211588,609,Nick Drake
+http://www.wikidata.org/entity/Q6851373,610,Miles Davis
+http://www.wikidata.org/entity/Q587705,611,The Sea and Cake
+http://www.wikidata.org/entity/Q205001,612,Talking Heads
+http://www.wikidata.org/entity/Q1699646,613,John Coltrane
+http://www.wikidata.org/entity/Q142701,614,Pearl Jam
+http://www.wikidata.org/entity/Q210428,615,Elliott Smith
+http://www.wikidata.org/entity/Q553861,616,Squarepusher
+http://www.wikidata.org/entity/Q1052139,617,The Roots
+http://www.wikidata.org/entity/Q691568,618,Belle and Sebastian
+http://www.wikidata.org/entity/Q300602,619,A Tribe Called Quest
+http://www.wikidata.org/entity/Q5980258,620,Pulp
+http://www.wikidata.org/entity/Q1780979,621,The Album Leaf
+http://www.wikidata.org/entity/Q319502,622,Sufjan Stevens
+http://www.wikidata.org/entity/Q5134916,623,Clogs
+http://www.wikidata.org/entity/Q1416023,624,Great Lake Swimmers
+http://www.wikidata.org/entity/Q109612,625,Thelonious Monk
+http://www.wikidata.org/entity/Q1430158,627,Saint Etienne
+http://www.wikidata.org/entity/Q312018,629,of Montreal
+http://www.wikidata.org/entity/Q633,630,Neil Young
+http://www.wikidata.org/entity/Q11898,631,Einstürzende Neubauten
+http://www.wikidata.org/entity/Q578270,632,Explosions in the Sky
+http://www.wikidata.org/entity/Q720993,634,Μιχάλης Χατζηγιάννης
+http://www.wikidata.org/entity/Q641550,635,Teen Angels
+http://www.wikidata.org/entity/Q211337,636,Ivi Adamou
+http://www.wikidata.org/entity/Q183008,637,Helena Paparizou
+http://www.wikidata.org/entity/Q229465,638,Kalomoira
+http://www.wikidata.org/entity/Q223462,639,Milan Stanković
+http://www.wikidata.org/entity/Q170697,641,Laura Pausini
+http://www.wikidata.org/entity/Q919930,642,Banghra
+http://www.wikidata.org/entity/Q7036119,643,Nikolas Metaxas
+http://www.wikidata.org/entity/Q12349,644,Inna
+http://www.wikidata.org/entity/Q211528,646,RBD
+http://www.wikidata.org/entity/Q58975,647,Eleftheria Eleftheriou
+http://www.wikidata.org/entity/Q606439,648,Antonis Remos
+http://www.wikidata.org/entity/Q5102037,650,Giorgos Papadopoulos
+http://www.wikidata.org/entity/Q785765,651,Funky G
+http://www.wikidata.org/entity/Q236047,652,Hadise
+http://www.wikidata.org/entity/Q2616634,654,Onirama
+http://www.wikidata.org/entity/Q220826,655,Jessy Matador
+http://www.wikidata.org/entity/Q123471,657,Paolo Meneguzzi
+http://www.wikidata.org/entity/Q1355807,659,Erreway
+http://www.wikidata.org/entity/Q42904,660,Dima Bilan
+http://www.wikidata.org/entity/Q1817405,662,Tamta
+http://www.wikidata.org/entity/Q60970,663,Sakis Rouvas
+http://www.wikidata.org/entity/Q113349,664,Karolina
+http://www.wikidata.org/entity/Q158124,667,Evridiki
+http://www.wikidata.org/entity/Q478814,668,Mando
+http://www.wikidata.org/entity/Q12007,669,Eric Saade
+http://www.wikidata.org/entity/Q228593,670,Safura
+http://www.wikidata.org/entity/Q2985510,671,Alkistis Protopsalti
+http://www.wikidata.org/entity/Q2393742,672,Denise Rosenthal
+http://www.wikidata.org/entity/Q3556306,673,Christos Dantis
+http://www.wikidata.org/entity/Q311267,674,Darin
+http://www.wikidata.org/entity/Q190957,676,Yohanna
+http://www.wikidata.org/entity/Q1647148,677,Kostas Martakis
+http://www.wikidata.org/entity/Q721992,680,The Veronicas
+http://www.wikidata.org/entity/Q592983,682,Lights
+http://www.wikidata.org/entity/Q215215,683,John Mayer
+http://www.wikidata.org/entity/Q1573477,685,Nick Jonas & The Administration
+http://www.wikidata.org/entity/Q726076,686,Selena Gomez & the Scene
+http://www.wikidata.org/entity/Q909731,687,All Time Low
+http://www.wikidata.org/entity/Q282714,688,Honor Society
+http://www.wikidata.org/entity/Q217360,689,Florence + the Machine
+http://www.wikidata.org/entity/Q234174,690,Marina & the Diamonds
+http://www.wikidata.org/entity/Q207938,691,Owl City
+http://www.wikidata.org/entity/Q274157,692,Mitchel Musso
+http://www.wikidata.org/entity/Q610377,693,Hey Monday
+http://www.wikidata.org/entity/Q295502,694,Darren Criss
+http://www.wikidata.org/entity/Q9064903,695,Push Play
+http://www.wikidata.org/entity/Q2529057,696,The Pierces
+http://www.wikidata.org/entity/Q47227,697,Sia
+http://www.wikidata.org/entity/Q231492,699,Esmée Denters
+http://www.wikidata.org/entity/Q895897,700,Boyce Avenue
+http://www.wikidata.org/entity/Q34424,701,Shakira
+http://www.wikidata.org/entity/Q271119,702,Ester Dean
+http://www.wikidata.org/entity/Q869367,703,The xx
+http://www.wikidata.org/entity/Q837300,704,The Pretty Reckless
+http://www.wikidata.org/entity/Q290485,705,Engenheiros do Hawaii
+http://www.wikidata.org/entity/Q27593,706,AC/DC
+http://www.wikidata.org/entity/Q5964490,707,Metallica
+http://www.wikidata.org/entity/Q2085006,708,Capital Inicial
+http://www.wikidata.org/entity/Q268160,709,The White Stripes
+http://www.wikidata.org/entity/Q727736,710,Black Label Society
+http://www.wikidata.org/entity/Q185343,711,Mark Knopfler
+http://www.wikidata.org/entity/Q25432054,712,Dire Straits
+http://www.wikidata.org/entity/Q1532382,713,Gotthard
+http://www.wikidata.org/entity/Q738110,714,Legião Urbana
+http://www.wikidata.org/entity/Q134969,715,R.E.M.
+http://www.wikidata.org/entity/Q192308,716,Kaiser Chiefs
+http://www.wikidata.org/entity/Q218255,717,Electric Light Orchestra
+http://www.wikidata.org/entity/Q42775,718,Johnny Cash
+http://www.wikidata.org/entity/Q646036,719,Orishas
+http://www.wikidata.org/entity/Q976882,720,Social Distortion
+http://www.wikidata.org/entity/Q526885,721,Wim Mertens
+http://www.wikidata.org/entity/Q219472,722,ATB
+http://www.wikidata.org/entity/Q842415,723,Buena Vista Social Club
+http://www.wikidata.org/entity/Q133151,724,Ozzy Osbourne
+http://www.wikidata.org/entity/Q1808409,725,Titãs
+http://www.wikidata.org/entity/Q484421,726,Apocalyptica
+http://www.wikidata.org/entity/Q165846,727,Era
+http://www.wikidata.org/entity/Q48187,728,Eric Clapton
+http://www.wikidata.org/entity/Q1444497,729,Sacred Spirit
+http://www.wikidata.org/entity/Q189635,730,Eagles
+http://www.wikidata.org/entity/Q2328030,731,1200 Micrograms
+http://www.wikidata.org/entity/Q332032,732,Alice Cooper
+http://www.wikidata.org/entity/Q1203,733,John Lennon
+http://www.wikidata.org/entity/Q1225,734,Bruce Springsteen
+http://www.wikidata.org/entity/Q10695776,735,The Rolling Stones
+http://www.wikidata.org/entity/Q988845,736,Eliades Ochoa
+http://www.wikidata.org/entity/Q1360643,737,Trans-Siberian Orchestra
+http://www.wikidata.org/entity/Q524788,739,Lulu Santos
+http://www.wikidata.org/entity/Q625917,743,Nadja
+http://www.wikidata.org/entity/Q247237,744,Autechre
+http://www.wikidata.org/entity/Q66131,746,Salem
+http://www.wikidata.org/entity/Q2556934,747,Carbon Based Lifeforms
+http://www.wikidata.org/entity/Q722778,748,Boards of Canada
+http://www.wikidata.org/entity/Q5048886,749,Casino Versus Japan
+http://www.wikidata.org/entity/Q346565,750,Bill Withers
+http://www.wikidata.org/entity/Q43834,751,Jesu
+http://www.wikidata.org/entity/Q7833,752,Boris
+http://www.wikidata.org/entity/Q268007,754,Maximum the Hormone
+http://www.wikidata.org/entity/Q254285,755,65daysofstatic
+http://www.wikidata.org/entity/Q70730,756,Arovane
+http://www.wikidata.org/entity/Q766824,757,Crystal Castles
+http://www.wikidata.org/entity/Q1967587,758,Психея
+http://www.wikidata.org/entity/Q727394,761,Asian Dub Foundation
+http://www.wikidata.org/entity/Q12072688,762,the Chemodan
+http://www.wikidata.org/entity/Q166883,763,Mono
+http://www.wikidata.org/entity/Q197230,764,16 Horsepower
+http://www.wikidata.org/entity/Q4493066,766,Ben Frost
+http://www.wikidata.org/entity/Q3776709,767,Gridlock
+http://www.wikidata.org/entity/Q912581,768,Enter Shikari
+http://www.wikidata.org/entity/Q829828,769,Isis
+http://www.wikidata.org/entity/Q163597,770,HORSE the band
+http://www.wikidata.org/entity/Q6056833,772,Proem
+http://www.wikidata.org/entity/Q4044509,774,Mooncake
+http://www.wikidata.org/entity/Q50975,777,The Crystal Method
+http://www.wikidata.org/entity/Q18690056,778,Ochre
+http://www.wikidata.org/entity/Q494784,779,Bring Me The Horizon
+http://www.wikidata.org/entity/Q1392941,781,Fail Emotions
+http://www.wikidata.org/entity/Q2658292,782,Solar Fields
+http://www.wikidata.org/entity/Q729067,784,Jackson and His Computer Band
+http://www.wikidata.org/entity/Q128010,785,Fear Factory
+http://www.wikidata.org/entity/Q187832,786,Mandy Moore
+http://www.wikidata.org/entity/Q202536,787,Paulina Rubio
+http://www.wikidata.org/entity/Q1523270,788,Fey
+http://www.wikidata.org/entity/Q188461,789,Dannii Minogue
+http://www.wikidata.org/entity/Q233959,790,Belinda
+http://www.wikidata.org/entity/Q254023,791,Marie Serneholt
+http://www.wikidata.org/entity/Q171235,792,Thalía
+http://www.wikidata.org/entity/Q157448,794,A*Teens
+http://www.wikidata.org/entity/Q388035,795,Gloria Trevi
+http://www.wikidata.org/entity/Q4766903,796,Anna Carina
+http://www.wikidata.org/entity/Q188401,797,Emily Osment
+http://www.wikidata.org/entity/Q19845,798,Geri Halliwell
+http://www.wikidata.org/entity/Q208392,800,Atomic Kitten
+http://www.wikidata.org/entity/Q24791,801,5ive
+http://www.wikidata.org/entity/Q169461,802,Anahí
+http://www.wikidata.org/entity/Q24791,803,Five
+http://www.wikidata.org/entity/Q1166257,804,Darkest Hour
+http://www.wikidata.org/entity/Q282855,805,Parkway Drive
+http://www.wikidata.org/entity/Q257615,806,Soilwork
+http://www.wikidata.org/entity/Q699004,807,Crematory
+http://www.wikidata.org/entity/Q246352,808,Rise Against
+http://www.wikidata.org/entity/Q908712,809,The Black Dahlia Murder
+http://www.wikidata.org/entity/Q654147,810,All That Remains
+http://www.wikidata.org/entity/Q157026,812,Dark Tranquillity
+http://www.wikidata.org/entity/Q693583,813,As I Lay Dying

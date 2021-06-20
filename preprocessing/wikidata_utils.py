@@ -50,11 +50,140 @@ def get_movie_data_from_wikidata(slice_movie_set: pd.DataFrame):
     sparql.setQuery(query)
     sparql.setReturnFormat(JSON)
     results = sparql.query().convert()
-    results_dic = results_to_dict(slice_movie_set, results)
+    results_dic = results_movies_to_dict(slice_movie_set, results)
     return results_dic
 
 
-def results_to_dict(slice_movie_set: pd.DataFrame, props_movie: dict):
+def get_entity_by_name(artist_id: str, artist_name: str):
+    endpoint_url = "https://query.wikidata.org/sparql"
+    low_artist_name = artist_name.lower()
+
+    query = """
+    SELECT DISTINCT
+      ?item
+    WHERE 
+    {  
+      {
+          VALUES ?instance {wd:Q215380 wd:Q5741069 wd:Q56816954 wd:Q9212979 wd:Q9212979 wd:Q3736859}.
+          ?item wdt:P31 ?instance .
+          ?item rdfs:label ?name .
+          FILTER(CONTAINS(LCASE(?name), \"""" + low_artist_name + """\" @en)).
+      } 
+      UNION
+      {
+          VALUES ?professions {wd:Q177220 wd:Q639669}
+          ?item wdt:P31 wd:Q5 .
+          ?item wdt:P106 ?professions .
+          ?item rdfs:label ?name .
+          FILTER(CONTAINS(LCASE(?name), \"""" + low_artist_name + """\" @en)).
+      }
+      
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } .
+   } 
+   LIMIT 1"""
+
+    user_agent = "WikidataExplanationBotIntegration/1.0 https://www.wikidata.org/wiki/User:Andrelzan) " \
+                 "wiki-bot-explanation-integration/1.0"
+
+    sparql = SPARQLWrapper(endpoint_url, agent=user_agent)
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+
+    filter_props = []
+    for line in results["results"]["bindings"]:
+        wiki_id = line["item"]["value"]
+        results_dic = {"wiki_id": wiki_id, "id": artist_id, "name": artist_name}
+        filter_props.append(results_dic)
+
+    return filter_props
+
+
+def get_artists_data_by_id_wikidata(slice_artist_set: pd.DataFrame):
+    """
+    Function that returns the data of artists based on their lastfm-id
+    :param slice_artist_set: slice of the dataset with last-fm artists ids
+    :returns dictionary with results
+    """
+    artist_set = slice_artist_set.copy()
+    artist_set['lastfm_id'] = slice_artist_set['url'].str.split('/').str[-1]
+    lastfm_list = artist_set['lastfm_id'].to_list()
+
+    lastfm_ids = ""
+    for i in range(0, len(lastfm_list)):
+        id = lastfm_list[i]
+        lastfm_ids += " ""\"""" + id + """\" """
+        lowerid = id.lower()
+        lastfm_ids += " ""\"""" + lowerid + """\" """
+
+    endpoint_url = "https://query.wikidata.org/sparql"
+
+    query = """
+    SELECT DISTINCT
+      ?itemLabel
+      ?propertyItemLabel
+      ?valueLabel ?lastfmId
+    WHERE 
+    {
+      ?item wdt:P3192 ?lastfmId .
+      ?item ?propertyRel ?value.
+      VALUES ?lastfmId {""" + lastfm_ids + """} .
+      ?propertyItem wikibase:directClaim ?propertyRel .
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } .
+      FILTER( 
+        ?propertyRel = wdt:P19|| ?propertyRel = wdt:P1412 || ?propertyRel = wdt:P103 ||
+        ?propertyRel = wdt:P101 || ?propertyRel = wdt:P463 || ?propertyRel = wdt:P937 ||
+        ?propertyRel = wdt:P412 || ?propertyRel =  wdt:P69|| ?propertyRel = wdt:P140 ||
+        ?propertyRel = wdt:P3828 || ?propertyRel =  wdt:P641 || ?propertyRel =  wdt:P710 ||
+        ?propertyRel =  wdt:P571 ||  ?propertyRel =  wdt:P17 || ?propertyRel =  wdt:P740 || 
+        ?propertyRel = wdt:P2031 || ?propertyRel =  wdt:P495|| ?propertyRel =  wdt:P1411 ||
+        ?propertyRel =  wdt:P358 || ?propertyRel =  wdt:P136|| ?propertyRel =  wdt:P264 || 
+        ?propertyRel =  wdt:P800 ||  ?propertyRel =  wdt:P737 || ?propertyRel =  wdt:P166 || 
+        ?propertyRel =  wdt:P1875 ||  ?propertyRel =  wdt:P527|| ?propertyRel =  wdt:P21 || 
+        ?propertyRel =  wdt:P27 || ?propertyRel =  wdt:P569|| ?propertyRel =  wdt:P106 || 
+        ?propertyRel =  wdt:P1303 || ?propertyRel = wdt:P551 || ?propertyRel = wdt:P1037 )
+    }
+    ORDER BY ?lastfmId
+    """
+
+    user_agent = "WikidataBotIntegration/1.0 https://www.wikidata.org/wiki/User:Andrelzan) "
+
+    sparql = SPARQLWrapper(endpoint_url, agent=user_agent)
+    sparql.setQuery(query)
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+    results_dic = results_artists_to_dict(artist_set, results)
+    return results_dic
+
+
+def results_artists_to_dict(slice_artist_set, props_artists):
+    slice_artist_set.reset_index(level=0, inplace=True)
+    slice_artist_set = slice_artist_set.set_index("lastfm_id")
+
+    filter_props = []
+    for line in props_artists["results"]["bindings"]:
+        m_title = line["itemLabel"]["value"]
+        m_prop = line["propertyItemLabel"]["value"]
+        m_obj = line["valueLabel"]["value"]
+        m_lastfmid = line["lastfmId"]["value"]
+
+        try:
+            id = slice_artist_set.loc[m_lastfmid, 'id']
+        except KeyError:
+            sep = m_lastfmid.split("+")
+            sep = [w.capitalize() for w in sep]
+            lastfm_id = "+".join(sep)
+            id = slice_artist_set.loc[lastfm_id, 'id']
+
+        dict_props = {"id": id, "lastfm_id": m_lastfmid, "artist": m_title,
+                      "prop": m_prop,
+                      "obj": m_obj}
+        filter_props.append(dict_props)
+
+    return filter_props
+
+
+def results_movies_to_dict(slice_movie_set: pd.DataFrame, props_movie: dict):
     """
     Function that returns vector of dictionaries with the results from the dbpedia to insert into data frame of all
     movie properties
@@ -75,7 +204,8 @@ def results_to_dict(slice_movie_set: pd.DataFrame, props_movie: dict):
         m_obj = line["valueLabel"]["value"]
         m_imdb = line["imdbId"]["value"]
 
-        dict_props = {"movieId": slice_movie_set.loc[m_imdb, 'movieId'], "imdbId": m_imdb, "title": m_title, "prop": m_prop,
+        dict_props = {"movieId": slice_movie_set.loc[m_imdb, 'movieId'], "imdbId": m_imdb, "title": m_title,
+                      "prop": m_prop,
                       "obj": m_obj}
         filter_props.append(dict_props)
 

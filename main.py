@@ -1,11 +1,13 @@
 from preprocessing import movielens_small_utils as ml_small
+from preprocessing import lastfm_utils as fm
 from caserec.recommenders.item_recommendation.most_popular import MostPopular
 from caserec.recommenders.item_recommendation.userknn import UserKNN
 from caserec.recommenders.item_recommendation.bprmf import BprMF
 from recommenders import page_rank_recommender as pagerank
 from recommenders.prop_reordering import PropReordering
 from recommenders.path_reordering import PathReordering
-import utils
+from evaluation_utils import evaluate
+from evaluation_utils import statistical_relevance
 
 
 def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, proposed: list):
@@ -32,7 +34,7 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
         most_pop_output_file = fold + str(i) + "/outputs/mostpop.csv"
         if baseline[0]:
             MostPopular(train_file, test_file, sep=',', output_file=most_pop_output_file, rank_length=20).compute()
-            utils.evaluate("Most Pop Algorithm", most_pop_output_file, train_file, test_file)
+            evaluate("Most Pop Algorithm", most_pop_output_file, train_file, test_file)
         output_names.add(most_pop_output_file.split("/")[-1])
 
         # 2 - BPR MF
@@ -40,14 +42,14 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
         if baseline[1]:
             BprMF(train_file, test_file, sep=',', output_file=bprmf_output_file, rank_length=20,
                   random_seed=42).compute()
-            utils.evaluate("BPR-MF Algorithm", bprmf_output_file, train_file, test_file)
+            evaluate("BPR-MF Algorithm", bprmf_output_file, train_file, test_file)
         output_names.add(bprmf_output_file.split("/")[-1])
 
         # 3 - User KNN
         knn_output_file = fold + str(i) + "/outputs/userknn.csv"
         if baseline[2]:
             UserKNN(train_file, test_file, sep=",", output_file=knn_output_file, rank_length=20).compute()
-            utils.evaluate("User KNN Algorithm", knn_output_file, train_file, test_file)
+            evaluate("User KNN Algorithm", knn_output_file, train_file, test_file)
         output_names.add(knn_output_file.split("/")[-1])
 
         # 4 - Wikidata PageRank params: weights=[80, 0, 20]
@@ -56,7 +58,7 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
                                          cols_used=[0, 1, 2], col_names=['user_id', 'movie_id', 'feedback'])
         if baseline[3]:
             pr.run()
-            utils.evaluate("Wikidata Page Rank 80/20 Algorithm", pr.output_path, train_file, test_file)
+            evaluate("Wikidata Page Rank 80/20 Algorithm", pr.output_path, train_file, test_file)
         output_names.add(pr.output_path.split("/")[-1])
 
         # 5 - DBPedia PageRank params: weights=[80, 0, 20]
@@ -65,7 +67,7 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
                                          cols_used=[0, 1, 2], col_names=['user_id', 'movie_id', 'feedback'])
         if baseline[4]:
             pr.run()
-            utils.evaluate("DBPedia Page Rank 80/20 Algorithm", pr.output_path, train_file, test_file)
+            evaluate("DBPedia Page Rank 80/20 Algorithm", pr.output_path, train_file, test_file)
         # output_names.add(pr.output_path.split("/")[-1])
 
     # REORDERS
@@ -84,7 +86,7 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
                                             n_reorder=10,
                                             prop_cols=['movieId', 'title', 'prop', 'obj'], hybrid=True)
                 prop_reord.reorder()
-                utils.evaluate("Prop Reorder Algorithm reorder=10", prop_reord.output_path, train_file, test_file)
+                evaluate("Prop Reorder Algorithm reorder=10", prop_reord.output_path, train_file, test_file)
 
         if proposed[1]:
             # 7 - Prop reorder params: reorder=20
@@ -95,7 +97,7 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
                                             n_reorder=20,
                                             prop_cols=['movieId', 'title', 'prop', 'obj'], hybrid=True)
                 prop_reord.reorder()
-                utils.evaluate("Prop Reorder Algorithm reorder=20", prop_reord.output_path, train_file, test_file)
+                evaluate("Prop Reorder Algorithm reorder=20", prop_reord.output_path, train_file, test_file)
 
         if proposed[2]:
             # 8 - Path reorder params: reorder=10, policy=last, p_items=0.1
@@ -106,7 +108,7 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
                                             prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=10, p_items=0.1,
                                             policy='last', hybrid=True)
                 path_reord.reorder()
-                utils.evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10", path_reord.output_path,
+                evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10", path_reord.output_path,
                                train_file, test_file)
 
         if proposed[3]:
@@ -118,7 +120,7 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
                                             prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=10, p_items=0.1,
                                             policy='random', hybrid=True)
                 path_reord.reorder()
-                utils.evaluate("Reorder Path USER KNN Algorithm p_items=0.1, policy=random, n_reorder=10",
+                evaluate("Reorder Path USER KNN Algorithm p_items=0.1, policy=random, n_reorder=10",
                                path_reord.output_path, train_file, test_file)
 
         if proposed[4]:
@@ -130,14 +132,14 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
                                             prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=20, p_items=0.1,
                                             policy='last', hybrid=True)
                 path_reord.reorder()
-                utils.evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10 not hybrid",
+                evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10 not hybrid",
                                path_reord.output_path,
                                train_file, test_file)
 
 
-#utils.cross_validation_ml_small(rs=42)
-# ml_small.extract_wikidata_prop()
+# fm.extract_artistis_wiki_id()
 
+ml_small.cross_validation_ml_small(rs=42)
 folds_path = "./datasets/ml-latest-small/folds/"
-run_experiments(folds_path, 9, 9, [0, 0, 0, 0, 0], [0, 0, 0, 1, 0])
-utils.statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "userknn", folds_path, ["MAP", "NDCG", "COVERAGE"])
+run_experiments(folds_path, 0, 9, [1, 1, 1, 1, 0], [0, 0, 1, 0, 0])
+statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "userknn", folds_path, ["MAP", "NDCG", "COVERAGE"])

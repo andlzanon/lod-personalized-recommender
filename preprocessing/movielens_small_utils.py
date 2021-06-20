@@ -2,8 +2,9 @@ import pandas as pd
 import time
 from preprocessing import dbpedia_utils as from_dbpedia
 from preprocessing import wikidata_utils as from_wikidata
+from caserec.utils.split_database import SplitDatabase
 
-ml_small_path = "./datasets/ml-latest-small/ratings_notime.csv"
+ml_small_path = "./datasets/ml-latest-small/ratings_implicit.csv"
 original_ml_small_path = "./datasets/ml-latest-small/ratings.csv"
 movies_ml_small_path = "./datasets/ml-latest-small/movies.csv"
 link_ml_small_path = "./datasets/ml-latest-small/links.csv"
@@ -63,16 +64,25 @@ def read_user_item_interaction():
     Function that reads the user interactions with the movies of the small movielens dataset
     :return: pandas DataFrame of the dataset
     """
-    return pd.read_csv(ml_small_path, usecols=['userId','movieId','rating'])
+    return pd.read_csv(ml_small_path)
 
 
-def drop_timestamp():
+def implicit_feedback():
     """
-    Function that removes the timestamp of the dataset
-    :return: csv file of the dataset without the timestamp column
+    Function that transform the dataset into implicit feedback
+    :return: csv file of the dataset
     """
-    df = pd.read_csv(original_ml_small_path, usecols=['userId','movieId','rating'])
-    df.to_csv(ml_small_path, header=None, index=False)
+    df = pd.read_csv(original_ml_small_path)
+    df = df[df.rating > 3.5]
+    df = df.set_index('userId')
+    implicit = pd.DataFrame()
+
+    for u in df.index.unique():
+        u_set = df.loc[u]
+        if len(u_set) >= 5:
+            implicit = pd.concat([implicit, u_set.reset_index()], ignore_index=True)
+
+    implicit.to_csv(ml_small_path, header=None, index=False)
 
 
 def __get_movie_strings(full_name: str):
@@ -288,3 +298,15 @@ def obtain_dbpedia_props():
             break
 
     all_movie_props.to_csv(dbpedia_props_ml_small, mode='w', header=True, index=False)
+
+
+def cross_validation_ml_small(rs: int):
+    """
+    Split the dataset into cross validation folders
+    To read the file use the command: df = pd.read_csv("./datasets/ml-latest-small/folds/0/test.dat", header=None)
+    :param rs: random state integer arbitrary number
+    :return: folders created on the dataset repository
+    """
+    SplitDatabase(input_file="./datasets/ml-latest-small/ratings.csv",
+                  dir_folds="./datasets/ml-latest-small/", as_binary=True, binary_col=2, header=1,
+                  sep_read=',', sep_write=',', n_splits=10).k_fold_cross_validation(random_state=rs)
