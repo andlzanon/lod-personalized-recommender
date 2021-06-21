@@ -84,7 +84,6 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
     :return: the statistical relevance of the proposed with the baseline for the metrics chosen for @1, @3, @5 and @10
     """
     ats = [1, 3, 5, 10]
-    div_metrics = ["GINI", "ENTROPY", "COVERAGE"]
 
     base_results = {}
     for m in metrics:
@@ -133,9 +132,8 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
                 wt, wp = wilcoxon(base_list, prop_list)
                 print("p-value with wilcoxon: " + str(wp))
             else:
-                if m not in div_metrics:
-                    wt, wp = wilcoxon(base_list, prop_list)
-                    print("p-value with wilcoxon: " + str(wp))
+                wt, wp = wilcoxon(base_list, prop_list)
+                print("p-value with wilcoxon: " + str(wp))
                 tt, tp = ttest_rel(base_list, prop_list)
                 print("p-value with t-test: " + str(tp))
 
