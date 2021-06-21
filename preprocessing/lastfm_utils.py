@@ -1,5 +1,6 @@
 import pandas as pd
 import time
+import traceback
 import SPARQLWrapper
 import urllib
 from preprocessing import wikidata_utils as from_wikidata
@@ -67,31 +68,27 @@ def extract_artistis_wiki_id():
     total = len(artists)
     artists_id = pd.DataFrame(columns=['wiki_id', 'id', 'name'])
 
-    for i, row in artists.iterrows():
-        id = row[0]
-        name = row[1]
+    print("Start obtaining artists data")
+    begin = 0
+    step = 20
+    end = begin + step
 
+    while end <= total:
         t = 0
         while t < 3:
             try:
-                res = from_wikidata.get_entity_by_name(id, name)
-                artists_id = artists_id.append(res)
+                results = from_wikidata.get_entity_by_name(artists.iloc[begin:end])
 
-                if len(res) > 0:
-                    print("Artist: " + str(name) + " id: " + str(id) + " wiki_id: " + res[0]['wiki_id'] + " on try: " + str(t))
-                else:
-                    print("Artist: " + str(name) + " id: " + str(id))
-
+                artists_id = artists_id.append(results)
+                print("From " + str(begin) + " to " + str(end - 1) + " obtained from Wikidata")
+                begin = end
+                end = end + step
                 break
-            except Exception:
-                t = t + 1
 
-        if t == 3:
-            print("Artist: " + str(name) + " id: " + str(id) + " not found because of error on lib")
-            artists_id.to_csv(artist_wiki_id, mode='w', header=True, index=False)
-            print("Coverage: " + str(len(artists_id['id'].unique())) + " obtained of " + str(total)
-                  + ". Percentage: " + str(len(artists_id['id'].unique()) / total))
-            print('Output file generated')
+            except Exception:
+                traceback.print_exc()
+                t = t + 1
+                end = end - 5
 
         time.sleep(20)
 

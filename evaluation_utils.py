@@ -83,8 +83,9 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
     :param method: method to test the statistical relevance, either 'ttest', 'wilcoxon' or 'both' that is the default value
     :return: the statistical relevance of the proposed with the baseline for the metrics chosen for @1, @3, @5 and @10
     """
-    ats = [1, 3, 5, 10]
+    div_metrics = ["GINI", "ENTROPY", "COVERAGE"]
 
+    ats = [1, 3, 5, 10]
     base_results = {}
     for m in metrics:
         for at in ats:
@@ -115,8 +116,13 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
 
     for m in metrics:
         for at in ats:
+
+            if ("reorder=10" in proposed) and (m in div_metrics) and (at == 10):
+                continue
+
             key = m + "@" + str(at)
             print("---" + key + "---")
+
             base_list = base_results[key]
             print("Results of the baseline algorithm: " + str(base_list) +
                   " mean: " + str(sum(base_list)/len(base_list)) + " -> " + baseline)

@@ -54,33 +54,39 @@ def get_movie_data_from_wikidata(slice_movie_set: pd.DataFrame):
     return results_dic
 
 
-def get_entity_by_name(artist_id: str, artist_name: str):
+def get_entity_by_name(slice_artist_set: pd.DataFrame):
     endpoint_url = "https://query.wikidata.org/sparql"
-    low_artist_name = artist_name.lower()
+    artist_set = slice_artist_set.copy()
+    artist_set['lower_name'] = artist_set['name'].str.lower()
+    artist_set = artist_set.set_index('lower_name')
+
+    filter_sentence = "FILTER("
+    for name in artist_set.index:
+        filter_sentence = filter_sentence + """CONTAINS(LCASE(?name), \"""" + name + """\") || """
+    filter_sentence = filter_sentence[:-4] + ")"
 
     query = """
     SELECT DISTINCT
-      ?item
+      ?item ?name
     WHERE 
     {  
       {
-          VALUES ?instance {wd:Q215380 wd:Q5741069 wd:Q56816954 wd:Q9212979 wd:Q9212979 wd:Q3736859}.
+          VALUES ?instance {wd:Q215380 wd:Q5741069 wd:Q56816954 wd:Q9212979 wd:Q9212979 wd:Q3736859 wd:Q6168416}.
           ?item wdt:P31 ?instance .
           ?item rdfs:label ?name .
-          FILTER(CONTAINS(LCASE(?name), \"""" + low_artist_name + """\" @en)).
-      } 
+          """ + filter_sentence + """} 
       UNION
       {
-          VALUES ?professions {wd:Q177220 wd:Q639669}
+          VALUES ?professions {wd:Q177220 wd:Q639669 wd:Q488205}
           ?item wdt:P31 wd:Q5 .
           ?item wdt:P106 ?professions .
           ?item rdfs:label ?name .
-          FILTER(CONTAINS(LCASE(?name), \"""" + low_artist_name + """\" @en)).
-      }
+          """ + filter_sentence + """} 
       
+      FILTER(LANG(?name) = "en") 
       SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } .
-   } 
-   LIMIT 1"""
+   } ORDER BY ?name
+   """
 
     user_agent = "WikidataExplanationBotIntegration/1.0 https://www.wikidata.org/wiki/User:Andrelzan) " \
                  "wiki-bot-explanation-integration/1.0"
@@ -91,10 +97,20 @@ def get_entity_by_name(artist_id: str, artist_name: str):
     results = sparql.query().convert()
 
     filter_props = []
+    last = ""
     for line in results["results"]["bindings"]:
-        wiki_id = line["item"]["value"]
-        results_dic = {"wiki_id": wiki_id, "id": artist_id, "name": artist_name}
-        filter_props.append(results_dic)
+        try:
+            wiki_id = line["item"]["value"]
+            artist_name = line["name"]["value"]
+            low_name = artist_name.lower()
+            artist_id = int(artist_set.loc[low_name, 'id'])
+            if last != low_name:
+                print("Artist: " + str(artist_name) + " artist_id: " + str(artist_id) + " wiki_id: " + wiki_id)
+                results_dic = {"wiki_id": wiki_id, "id": artist_id, "name": artist_name}
+                filter_props.append(results_dic)
+            last = low_name
+        except KeyError:
+            continue
 
     return filter_props
 
