@@ -142,4 +142,4 @@ fm.extract_artistis_wiki_id()
 #ml_small.cross_validation_ml_small(rs=42)
 #folds_path = "./datasets/ml-latest-small/folds/"
 #run_experiments(folds_path, 0, 9, [1, 1, 1, 1, 0], [0, 0, 1, 0, 0])
-#statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "wikidata_page_rank8020", folds_path, ["MAP", "NDCG", "COVERAGE"])
+#statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "mostpop", folds_path, ["MAP", "NDCG", "COVERAGE"])

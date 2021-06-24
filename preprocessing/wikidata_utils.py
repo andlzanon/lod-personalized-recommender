@@ -1,6 +1,6 @@
-import numpy as np
+import xml.etree.ElementTree as ET
 import pandas as pd
-from SPARQLWrapper import SPARQLWrapper, JSON
+from SPARQLWrapper import SPARQLWrapper, XML, JSON
 
 
 def get_movie_data_from_wikidata(slice_movie_set: pd.DataFrame):
@@ -70,22 +70,25 @@ def get_entity_by_name(slice_artist_set: pd.DataFrame):
       ?item ?name
     WHERE 
     {  
-      {
-          VALUES ?instance {wd:Q215380 wd:Q5741069 wd:Q56816954 wd:Q9212979 wd:Q9212979 wd:Q3736859 wd:Q6168416}.
-          ?item wdt:P31 ?instance .
-          ?item rdfs:label ?name .
-          """ + filter_sentence + """} 
-      UNION
-      {
-          VALUES ?professions {wd:Q177220 wd:Q639669 wd:Q488205}
-          ?item wdt:P31 wd:Q5 .
-          ?item wdt:P106 ?professions .
-          ?item rdfs:label ?name .
-          """ + filter_sentence + """} 
-      
-      FILTER(LANG(?name) = "en") 
-      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } .
-   } ORDER BY ?name
+        {
+            VALUES ?instance {wd:Q215380 wd:Q5741069 wd:Q56816954 wd:Q9212979 wd:Q9212979 wd:Q3736859 wd:Q6168416}.
+            ?item wdt:P31 ?instance .
+            ?item rdfs:label ?name .
+             """ + filter_sentence + """
+            FILTER(LANG(?name) = "en") .
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } 
+        } 
+            UNION 
+        {
+            VALUES ?professions {wd:Q177220 wd:Q639669}
+            ?item wdt:P31 wd:Q5 .
+            ?item wdt:P106 ?professions .
+            ?item rdfs:label ?name .
+            """ + filter_sentence + """
+            FILTER(LANG(?name) = "en") 
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "en" }
+      }
+   } 
    """
 
     user_agent = "WikidataExplanationBotIntegration/1.0 https://www.wikidata.org/wiki/User:Andrelzan) " \
@@ -93,22 +96,32 @@ def get_entity_by_name(slice_artist_set: pd.DataFrame):
 
     sparql = SPARQLWrapper(endpoint_url, agent=user_agent)
     sparql.setQuery(query)
-    sparql.setReturnFormat(JSON)
-    results = sparql.query().convert()
+    sparql.setReturnFormat(XML)
+    sparql.setTimeout(180)
+
+    response = sparql.query()
+    response = response.convert()
+    response_xml = response.toxml(encoding='utf-8')
+    root = ET.fromstring(response_xml)
 
     filter_props = []
-    last = ""
-    for line in results["results"]["bindings"]:
+    used = []
+    for results in root[1]:
+        for result in results:
+            for bindings in result:
+                if bindings.tag.split("}")[-1] == "uri":
+                    wiki_id = bindings.text
+                else:
+                    artist_name = bindings.text
+
         try:
-            wiki_id = line["item"]["value"]
-            artist_name = line["name"]["value"]
             low_name = artist_name.lower()
             artist_id = int(artist_set.loc[low_name, 'id'])
-            if last != low_name:
+            if low_name not in used:
                 print("Artist: " + str(artist_name) + " artist_id: " + str(artist_id) + " wiki_id: " + wiki_id)
                 results_dic = {"wiki_id": wiki_id, "id": artist_id, "name": artist_name}
                 filter_props.append(results_dic)
-            last = low_name
+                used.append(low_name)
         except KeyError:
             continue
 
@@ -157,7 +170,8 @@ def get_artists_data_by_id_wikidata(slice_artist_set: pd.DataFrame):
         ?propertyRel =  wdt:P800 ||  ?propertyRel =  wdt:P737 || ?propertyRel =  wdt:P166 || 
         ?propertyRel =  wdt:P1875 ||  ?propertyRel =  wdt:P527|| ?propertyRel =  wdt:P21 || 
         ?propertyRel =  wdt:P27 || ?propertyRel =  wdt:P569|| ?propertyRel =  wdt:P106 || 
-        ?propertyRel =  wdt:P1303 || ?propertyRel = wdt:P551 || ?propertyRel = wdt:P1037 )
+        ?propertyRel =  wdt:P1303 || ?propertyRel = wdt:P551 || ?propertyRel = wdt:P1037 ||
+        ?propertyRel = wdt:P1344)
     }
     ORDER BY ?lastfmId
     """

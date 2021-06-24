@@ -4,6 +4,7 @@ import traceback
 import SPARQLWrapper
 import urllib
 from preprocessing import wikidata_utils as from_wikidata
+from xml.parsers.expat import ExpatError
 
 lastfm_path = "./datasets/hetrec2011-lastfm-2k/user_artists.dat"
 artistis_path = "./datasets/hetrec2011-lastfm-2k/artists.dat"
@@ -75,22 +76,32 @@ def extract_artistis_wiki_id():
 
     while end <= total:
         t = 0
-        while t < 3:
+        c = 0
+        while t < 10:
             try:
                 results = from_wikidata.get_entity_by_name(artists.iloc[begin:end])
-
-                artists_id = artists_id.append(results)
-                print("From " + str(begin) + " to " + str(end - 1) + " obtained from Wikidata")
+                artists_id = artists_id.append(results, ignore_index=True)
+                print("From " + str(begin) + " to " + str(end - 1) + " obtained from Wikidata on t = " + str(t))
                 begin = end
                 end = end + step
+                c = c + 1
+                t = 0
                 break
 
-            except Exception:
+            except Exception as e:
+                print("#### ERROR ####")
+                print(e)
                 traceback.print_exc()
                 t = t + 1
-                end = end - 5
+                end = end - 1
 
-        time.sleep(20)
+            time.sleep(20)
+
+        if c % 5 == 0:
+            print("### FILE SAVED ###")
+            artists_id.to_csv(artist_wiki_id, mode='w', header=True, index=False)
+            if t >= 20:
+                break
 
     artists_id.to_csv(artist_wiki_id, mode='w', header=True, index=False)
     print("Coverage: " + str(len(artists_id['id'].unique())) + " obtained of " + str(total)
