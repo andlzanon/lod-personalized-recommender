@@ -3,6 +3,7 @@ import time
 import traceback
 import SPARQLWrapper
 import urllib
+from SPARQLWrapper.SPARQLExceptions import QueryBadFormed
 from preprocessing import wikidata_utils as from_wikidata
 from xml.parsers.expat import ExpatError
 
@@ -20,6 +21,14 @@ def read_artists() -> pd.DataFrame:
     :return: df with file data
     """
     return pd.read_csv(artistis_path, sep='\t')
+
+
+def read_artists_uri() -> pd.DataFrame:
+    """
+    Function that read the file artists.dat from the last-fm dataset
+    :return: df with file data
+    """
+    return pd.read_csv(artist_wiki_id, sep=',')
 
 
 def extract_wikidata_prop():
@@ -67,45 +76,47 @@ def extract_artistis_wiki_id():
     # read movies link dataset and add the full imdbid column that matches with the wikidata format "ttXXXXXXX"
     artists = read_artists()
     total = len(artists)
-    artists_id = pd.DataFrame(columns=['wiki_id', 'id', 'name'])
+
+    try:
+        artists_id = read_artists_uri()
+        last_name = str(artists_id.iloc[-1]['name']).lower()
+        begin = artists.loc[(artists['name'].str.lower() == last_name)].index.values[0] + 1
+    except Exception:
+        artists_id = pd.DataFrame(columns=['wiki_id', 'id', 'name'])
+        begin = 0
 
     print("Start obtaining artists data")
-    begin = 0
     step = 20
     end = begin + step
+    print("begin: " + str(begin) + ", step: " + str(step))
+    t = 0
+    c = 0
 
     while end <= total:
-        t = 0
-        c = 0
-        while t < 10:
-            try:
-                results = from_wikidata.get_entity_by_name(artists.iloc[begin:end])
+        try:
+            results = from_wikidata.get_entity_by_name(artists.iloc[begin:end])
+            if len(results) > 0:
                 artists_id = artists_id.append(results, ignore_index=True)
-                print("From " + str(begin) + " to " + str(end - 1) + " obtained from Wikidata on t = " + str(t))
-                begin = end
-                end = end + step
-                c = c + 1
-                t = 0
-                break
+            print("From " + str(begin) + " to " + str(end - 1) + " obtained from Wikidata on t = " + str(t))
+            begin = end
+            end = end + step
+            t = 0
+            c = c + 1
 
-            except Exception as e:
-                print("#### ERROR ####")
-                print(e)
-                traceback.print_exc()
-                t = t + 1
-                end = end - 1
+        except Exception as e:
+            print("#### ERROR ####")
+            print(e)
+            t = t + 1
+            c = c + 1
+            #traceback.print_exc()
 
-            time.sleep(20)
-
-        if c % 5 == 0:
-            print("### FILE SAVED ###")
+        if c % step == 0:
+            print("#### SAVING FILE ####")
             artists_id.to_csv(artist_wiki_id, mode='w', header=True, index=False)
-            if t >= 20:
-                break
+
+        time.sleep(20)
 
     artists_id.to_csv(artist_wiki_id, mode='w', header=True, index=False)
     print("Coverage: " + str(len(artists_id['id'].unique())) + " obtained of " + str(total)
           + ". Percentage: " + str(len(artists_id['id'].unique()) / total))
     print('Output file generated')
-
-

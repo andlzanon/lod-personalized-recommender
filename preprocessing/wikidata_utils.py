@@ -1,5 +1,7 @@
+import xml
 import xml.etree.ElementTree as ET
 import pandas as pd
+import re
 from SPARQLWrapper import SPARQLWrapper, XML, JSON
 
 
@@ -62,6 +64,10 @@ def get_entity_by_name(slice_artist_set: pd.DataFrame):
 
     filter_sentence = "FILTER("
     for name in artist_set.index:
+        name_t = name.translate({ord(c): " " for c in "!@#$^\"*()[]{};:,./<>?\|`~-=_+"})
+        name_s = re.sub("([^\x00-\x7F])+", " ", name)
+        if name != name_t or name != name_s:
+            continue
         filter_sentence = filter_sentence + """CONTAINS(LCASE(?name), \"""" + name + """\") || """
     filter_sentence = filter_sentence[:-4] + ")"
 
@@ -80,7 +86,7 @@ def get_entity_by_name(slice_artist_set: pd.DataFrame):
         } 
             UNION 
         {
-            VALUES ?professions {wd:Q177220 wd:Q639669}
+            VALUES ?professions {wd:Q488205 wd:Q753110 wd:Q177220 wd:Q639669}
             ?item wdt:P31 wd:Q5 .
             ?item wdt:P106 ?professions .
             ?item rdfs:label ?name .
@@ -99,13 +105,15 @@ def get_entity_by_name(slice_artist_set: pd.DataFrame):
     sparql.setReturnFormat(XML)
     sparql.setTimeout(180)
 
-    response = sparql.query()
-    response = response.convert()
-    response_xml = response.toxml(encoding='utf-8')
-    root = ET.fromstring(response_xml)
+    try:
+        response = sparql.query()
+        response = response.convert()
+        response_xml = response.toxml(encoding='utf-8')
+        root = ET.fromstring(response_xml)
+    except xml.parsers.expat.ExpatError:
+        return []
 
     filter_props = []
-    used = []
     for results in root[1]:
         for result in results:
             for bindings in result:
@@ -117,11 +125,9 @@ def get_entity_by_name(slice_artist_set: pd.DataFrame):
         try:
             low_name = artist_name.lower()
             artist_id = int(artist_set.loc[low_name, 'id'])
-            if low_name not in used:
-                print("Artist: " + str(artist_name) + " artist_id: " + str(artist_id) + " wiki_id: " + wiki_id)
-                results_dic = {"wiki_id": wiki_id, "id": artist_id, "name": artist_name}
-                filter_props.append(results_dic)
-                used.append(low_name)
+            print("Artist: " + str(artist_name) + " artist_id: " + str(artist_id) + " wiki_id: " + wiki_id)
+            results_dic = {"wiki_id": wiki_id, "id": artist_id, "name": artist_name}
+            filter_props.append(results_dic)
         except KeyError:
             continue
 
