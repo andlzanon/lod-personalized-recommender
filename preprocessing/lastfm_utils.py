@@ -1,18 +1,21 @@
 import pandas as pd
 import time
-import traceback
+import requests
 import SPARQLWrapper
 import urllib
 from SPARQLWrapper.SPARQLExceptions import QueryBadFormed
 from preprocessing import wikidata_utils as from_wikidata
+import traceback
 from xml.parsers.expat import ExpatError
 
 lastfm_path = "./datasets/hetrec2011-lastfm-2k/user_artists.dat"
 artistis_path = "./datasets/hetrec2011-lastfm-2k/artists.dat"
+artist_dbpedia_id = "./datasets/hetrec2011-lastfm-2k/mappingLinkedData.tsv"
 
 artist_prop_lastid = "./generated_files/wikidata/last-fm/props_artists_id.csv"
 artist_wiki_id = "./generated_files/wikidata/last-fm/artists_wiki_id.csv"
 artist_prop = "./generated_files/wikidata/last-fm/props_artists.csv"
+final_artist_uri = "./generated_files/wikidata/last-fm/final_artists_wiki_id.csv"
 
 
 def read_artists() -> pd.DataFrame:
@@ -23,12 +26,124 @@ def read_artists() -> pd.DataFrame:
     return pd.read_csv(artistis_path, sep='\t')
 
 
+def read_dbpedia_uri() -> pd.DataFrame:
+    """
+    Function that reads the file containing the mapping from artist id to DPPedia uri.
+    This dataset is with full credit to the Information Systems Lab @ Polytechnic University of Bari
+    (https://github.com/sisinflab/LinkedDatasets/blob/master/last_fm/mappingLinkedData.tsv)
+    :return:
+    """
+    df = pd.read_csv(artist_dbpedia_id, sep='\t')
+    df.columns = ['id', 'uri']
+    return df
+
+
 def read_artists_uri() -> pd.DataFrame:
     """
     Function that read the file artists.dat from the last-fm dataset
     :return: df with file data
     """
     return pd.read_csv(artist_wiki_id, sep=',')
+
+
+def merge_uri():
+    """
+    Function that validates the and merges the artists uri obtained with the ones from the dbpedia obtained by the
+    sisinf lab
+    :return: final dataset with the wikidata uri
+    """
+
+    # create final dataset, the valid column indicates if the base extracted by the sisinf lab and by me match
+    # and read datasets
+    merge = pd.DataFrame(columns=['id', 'uri', 'valid'])
+    wikidata_uris = read_artists_uri()
+    wikidata_uris = wikidata_uris.set_index('id')
+
+    dbpedia_uris = read_dbpedia_uri()
+    dbpedia_uris = dbpedia_uris.set_index('id')
+
+    artists = read_artists()
+    total = len(artists)
+
+    # set params and url for api call
+    url = "https://www.wikidata.org/w/api.php"
+    params = {'action': 'wbgetentities', 'sites': 'enwiki', 'format': 'json'}
+
+    # get all unique ids in both datasets
+    artists = list(set(list(dbpedia_uris.index.unique()) + list(wikidata_uris.index.unique())))
+    for artist in artists:
+        # try to get the wikidata id from the dbpedia and check validation in our base
+        dict = {'id': artist}
+        try:
+            dbpedia_artist = dbpedia_uris.loc[artist]
+            title = dbpedia_artist['uri'].split("/")[-1]
+            params['titles'] = title
+            req = requests.get(url=url, params=params)
+            resp = req.json()
+            wiki_entity = list(resp['entities'].keys())[0]
+            valid = 1
+            if wiki_entity != '-1':
+                # if finds the first entity on our base validates, if don't find and there are more keys is not valid
+                try:
+                    if len(wikidata_uris[(wikidata_uris['wiki_id'] == 'http://www.wikidata.org/entity/' + wiki_entity)]) == 1:
+                        valid = 1
+                except KeyError:
+                    if len(list(resp['entities'].keys())) > 1:
+                        valid = 0
+                    print("Wiki Id not found")
+
+                dict['uri'] = wiki_entity
+                dict['valid'] = valid
+                print("id: " + str(dict['id']) + " uri: " + str(dict['uri']) + " valid: " + str(dict['valid']))
+                merge = merge.append(dict, ignore_index=True)
+
+            else:
+                try:
+                    wikidata_artist = wikidata_uris.loc[artist]['wiki_id']
+
+                    if type(wikidata_artist) == str:
+                        valid = 1
+                        dict['uri'] = wikidata_artist.split("/")[-1]
+                        dict['valid'] = valid
+                        print("id: " + str(dict['id']) + " uri: " + str(dict['uri']) + " valid: " + str(dict['valid']))
+                        merge = merge.append(dict, ignore_index=True)
+                    else:
+                        valid = 0
+                        for uri in list(wikidata_artist):
+                            dict['uri'] = uri.split("/")[-1]
+                            dict['valid'] = valid
+                            print("id: " + str(dict['id']) + " uri: " + str(dict['uri']) + " valid: " + str(
+                                dict['valid']))
+                            merge = merge.append(dict, ignore_index=True)
+                # enters here if there is a DBPedia URI but there is not an wikidata id associated with it
+                except KeyError:
+                    print("Wikidata id not in both bases. Id: " + str(artist))
+
+        # if not find the id in the dbpedia, get on our base. If there is only one line, tha wikidata is consistent
+        # and the id is validated, if there is more than one line, the ids are not consistent and, therefore, not valid
+        except KeyError:
+            wikidata_artist = wikidata_uris.loc[artist]['wiki_id']
+
+            if type(wikidata_artist) == str:
+                valid = 1
+                dict['uri'] = wikidata_artist.split("/")[-1]
+                dict['valid'] = valid
+                print("id: " + str(dict['id']) + " uri: " + str(dict['uri']) + " valid: " + str(dict['valid']))
+                merge = merge.append(dict, ignore_index=True)
+            else:
+                valid = 0
+                for uri in list(wikidata_artist):
+                    dict['uri'] = uri.split("/")[-1]
+                    dict['valid'] = valid
+                    print("id: " + str(dict['id']) + " uri: " + str(dict['uri']) + " valid: " + str(dict['valid']))
+                    merge = merge.append(dict, ignore_index=True)
+
+        time.sleep(10)
+
+    merge.to_csv(final_artist_uri, mode='w', header=True, index=False)
+    print("Coverage: " + str(len(merge['id'].unique())) + " obtained of " + str(total)
+          + ". Percentage: " + str(len(merge['id'].unique()) / total))
+    print('Output file generated')
 
 
 def extract_wikidata_prop():
