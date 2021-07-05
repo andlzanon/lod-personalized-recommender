@@ -46,6 +46,15 @@ def read_artists_uri() -> pd.DataFrame:
     return pd.read_csv(artist_wiki_id, sep=',')
 
 
+def read_final_artists_uri() -> pd.DataFrame:
+    """
+    Function that reads the file with the final uris, with the merge from the dbpedia and the obtained with the
+    SPARQL query
+    :return: df with file data
+    """
+    return pd.read_csv(final_artist_uri, sep=',')
+
+
 def merge_uri():
     """
     Function that validates the and merges the artists uri obtained with the ones from the dbpedia obtained by the
@@ -138,6 +147,12 @@ def merge_uri():
                     print("id: " + str(dict['id']) + " uri: " + str(dict['uri']) + " valid: " + str(dict['valid']))
                     merge = merge.append(dict, ignore_index=True)
 
+        except requests.exceptions.ConnectionError:
+            merge.to_csv(final_artist_uri, mode='w', header=True, index=False)
+            print("Coverage: " + str(len(merge['id'].unique())) + " obtained of " + str(total)
+                  + ". Percentage: " + str(len(merge['id'].unique()) / total))
+            print('Output file generated')
+
         time.sleep(10)
 
     merge.to_csv(final_artist_uri, mode='w', header=True, index=False)
@@ -155,29 +170,39 @@ def extract_wikidata_prop():
 
     # read artists dataset
     artists = read_artists()
+    uris = read_final_artists_uri()
+
+    artists_dict = artists.set_index('id').to_dict()
+    uris['name'] = uris.apply(lambda x: artists_dict['name'][x['id']], axis=1)
+    uris['lastfm_id'] = uris.apply(lambda x: artists_dict['url'][x['id']], axis=1)
 
     # create output, final dataframe with all properties of artists
-    artists_props = pd.DataFrame(columns=['id', 'artist', 'prop', 'obj', 'lastfm_id'])
+    artists_props = pd.DataFrame(columns=['id', 'artist', 'prop', 'obj', 'wiki_id'])
 
     # obtaind properties of artists in 50 movies batches
     begin = 0
-    end = 50
-    total = len(artists)
+    step = 100
+    end = begin + step
+    total = len(uris)
 
     # Obtain data from wikidata
     print("Start obtaining artists data")
     while end <= total:
         try:
-            results = from_wikidata.get_artists_data_by_id_wikidata(artists.iloc[begin:end])
-        except (SPARQLWrapper.SPARQLExceptions.URITooLong, urllib.error.HTTPError):
+            results = from_wikidata.get_artists_data_by_id_wikidata(uris.iloc[begin:end])
+        except (SPARQLWrapper.SPARQLExceptions.URITooLong, urllib.error.HTTPError) as e:
+            print("--- ERROR ---")
+            print(e)
             end = end - 10
-            results = from_wikidata.get_artists_data_from_id_wikidata(artists.iloc[begin:end])
+            if end <= begin:
+                break
+            results = from_wikidata.get_artists_data_from_id_wikidata(uris.iloc[begin:end])
 
-        artists_props = artists_props.append(results)
+        artists_props = artists_props.append(results, ignore_index=True)
         print("From " + str(begin) + " to " + str(end - 1) + " obtained from Wikidata")
         begin = end
-        end = end + 50
-        time.sleep(10)
+        end = end + step
+        time.sleep(30)
     print("End obtaining movie data")
 
     # save output

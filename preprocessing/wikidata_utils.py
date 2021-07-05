@@ -141,45 +141,37 @@ def get_artists_data_by_id_wikidata(slice_artist_set: pd.DataFrame):
     :returns dictionary with results
     """
     artist_set = slice_artist_set.copy()
-    artist_set['lastfm_id'] = slice_artist_set['url'].str.split('/').str[-1]
-    lastfm_list = artist_set['lastfm_id'].to_list()
 
-    lastfm_ids = ""
-    for i in range(0, len(lastfm_list)):
-        id = lastfm_list[i]
-        lastfm_ids += " ""\"""" + id + """\" """
-        lowerid = id.lower()
-        lastfm_ids += " ""\"""" + lowerid + """\" """
+    values_clause = "VALUES ?item {"
+    for i in range(0, len(artist_set)):
+        values_clause = values_clause + " wd:" + str(artist_set.iloc[i]['uri'])
+    values_clause = values_clause + "} ."
 
     endpoint_url = "https://query.wikidata.org/sparql"
-
     query = """
     SELECT DISTINCT
-      ?itemLabel
-      ?propertyItemLabel
-      ?valueLabel ?lastfmId
-    WHERE 
-    {
-      ?item wdt:P3192 ?lastfmId .
-      ?item ?propertyRel ?value.
-      VALUES ?lastfmId {""" + lastfm_ids + """} .
-      ?propertyItem wikibase:directClaim ?propertyRel .
-      SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } .
-      FILTER( 
-        ?propertyRel = wdt:P19|| ?propertyRel = wdt:P1412 || ?propertyRel = wdt:P103 ||
-        ?propertyRel = wdt:P101 || ?propertyRel = wdt:P463 || ?propertyRel = wdt:P937 ||
-        ?propertyRel = wdt:P412 || ?propertyRel =  wdt:P69|| ?propertyRel = wdt:P140 ||
-        ?propertyRel = wdt:P3828 || ?propertyRel =  wdt:P641 || ?propertyRel =  wdt:P710 ||
-        ?propertyRel =  wdt:P571 ||  ?propertyRel =  wdt:P17 || ?propertyRel =  wdt:P740 || 
-        ?propertyRel = wdt:P2031 || ?propertyRel =  wdt:P495|| ?propertyRel =  wdt:P1411 ||
-        ?propertyRel =  wdt:P358 || ?propertyRel =  wdt:P136|| ?propertyRel =  wdt:P264 || 
-        ?propertyRel =  wdt:P800 ||  ?propertyRel =  wdt:P737 || ?propertyRel =  wdt:P166 || 
-        ?propertyRel =  wdt:P1875 ||  ?propertyRel =  wdt:P527|| ?propertyRel =  wdt:P21 || 
-        ?propertyRel =  wdt:P27 || ?propertyRel =  wdt:P569|| ?propertyRel =  wdt:P106 || 
-        ?propertyRel =  wdt:P1303 || ?propertyRel = wdt:P551 || ?propertyRel = wdt:P1037 ||
-        ?propertyRel = wdt:P1344)
-    }
-    ORDER BY ?lastfmId
+        ?item
+        ?itemLabel
+        ?propertyItemLabel
+        ?valueLabel  
+    WHERE { """ + values_clause + """
+            ?item ?propertyRel ?value.
+            ?propertyItem wikibase:directClaim ?propertyRel .
+            SERVICE wikibase:label { bd:serviceParam wikibase:language "en". } .
+            FILTER( 
+                ?propertyRel = wdt:P19|| ?propertyRel = wdt:P1412 || ?propertyRel = wdt:P103 ||
+                ?propertyRel = wdt:P101 || ?propertyRel = wdt:P463 || ?propertyRel = wdt:P937 ||
+                ?propertyRel = wdt:P412 || ?propertyRel =  wdt:P69|| ?propertyRel = wdt:P140 ||
+                ?propertyRel = wdt:P3828 || ?propertyRel =  wdt:P641 || ?propertyRel =  wdt:P710 ||
+                ?propertyRel =  wdt:P571 ||  ?propertyRel =  wdt:P17 || ?propertyRel =  wdt:P740 || 
+                ?propertyRel = wdt:P2031 || ?propertyRel =  wdt:P495|| ?propertyRel =  wdt:P1411 ||
+                ?propertyRel =  wdt:P136|| ?propertyRel =  wdt:P264 || ?propertyRel = wdt:P1344 ||
+                ?propertyRel =  wdt:P800 ||  ?propertyRel =  wdt:P737 || ?propertyRel =  wdt:P166 || 
+                ?propertyRel =  wdt:P1875 ||  ?propertyRel =  wdt:P527|| ?propertyRel =  wdt:P21 || 
+                ?propertyRel =  wdt:P27 || ?propertyRel =  wdt:P569|| ?propertyRel =  wdt:P106 || 
+                ?propertyRel =  wdt:P1303 || ?propertyRel = wdt:P551 || ?propertyRel = wdt:P1037
+            )
+    } ORDER BY ?item
     """
 
     user_agent = "WikidataBotIntegration/1.0 https://www.wikidata.org/wiki/User:Andrelzan) "
@@ -193,25 +185,21 @@ def get_artists_data_by_id_wikidata(slice_artist_set: pd.DataFrame):
 
 
 def results_artists_to_dict(slice_artist_set, props_artists):
-    slice_artist_set.reset_index(level=0, inplace=True)
-    slice_artist_set = slice_artist_set.set_index("lastfm_id")
+    slice_artist_set = slice_artist_set.set_index("uri")
 
     filter_props = []
     for line in props_artists["results"]["bindings"]:
         m_title = line["itemLabel"]["value"]
         m_prop = line["propertyItemLabel"]["value"]
         m_obj = line["valueLabel"]["value"]
-        m_lastfmid = line["lastfmId"]["value"]
+        m_code = line["item"]["value"].split("/")[-1]
 
         try:
-            id = slice_artist_set.loc[m_lastfmid, 'id']
+            id = int(slice_artist_set.loc[m_code, 'id'])
         except KeyError:
-            sep = m_lastfmid.split("+")
-            sep = [w.capitalize() for w in sep]
-            lastfm_id = "+".join(sep)
-            id = slice_artist_set.loc[lastfm_id, 'id']
+            print("Wiki Id: " + str(m_code) + " not found")
 
-        dict_props = {"id": id, "lastfm_id": m_lastfmid, "artist": m_title,
+        dict_props = {"id": id, "wiki_id": m_code, "artist": m_title,
                       "prop": m_prop,
                       "obj": m_obj}
         filter_props.append(dict_props)
