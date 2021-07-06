@@ -7,10 +7,11 @@ import traceback
 lastfm_path = "./datasets/hetrec2011-lastfm-2k/user_artists.dat"
 artistis_path = "./datasets/hetrec2011-lastfm-2k/artists.dat"
 artist_dbpedia_id = "./datasets/hetrec2011-lastfm-2k/mappingLinkedData.tsv"
+user_artists = "./datasets/hetrec2011-lastfm-2k/user_artists.dat"
+interactions = "./datasets/hetrec2011-lastfm-2k/interactions.csv"
 
-artist_prop_lastid = "./generated_files/wikidata/last-fm/props_artists_id.csv"
 artist_wiki_id = "./generated_files/wikidata/last-fm/artists_wiki_id.csv"
-artist_prop = "./generated_files/wikidata/last-fm/props_artists.csv"
+artist_prop = "./generated_files/wikidata/last-fm/props_artists_id.csv"
 final_artist_uri = "./generated_files/wikidata/last-fm/final_artists_wiki_id.csv"
 
 
@@ -50,6 +51,40 @@ def read_final_artists_uri() -> pd.DataFrame:
     """
     return pd.read_csv(final_artist_uri, sep=',')
 
+
+def read_props_set() -> pd.DataFrame:
+    """
+    Function that reads the property file set
+    :return: df property set
+    """
+    return pd.read_csv(artist_prop, sep=',')
+
+
+def user_artist_filter_interaction(n_inter: int, n_iter_flag=False):
+    """
+    Function that reduces the dataset to contain only the artists that we could obtain data from
+    :param n_inter: minimum number of interactions for each user
+    :param n_iter_flag: flag to filter or not by number of interactions
+    :return: file
+    """
+    interac = pd.read_csv(user_artists, sep='\t')
+    interac = interac.set_index('userID')
+    props = read_props_set()
+
+    filter_interactions = interac[interac['artistID'].isin(list(props['id'].unique()))]
+
+    implicit = pd.DataFrame()
+    if n_iter_flag:
+        for u in filter_interactions.index.unique():
+            u_set = filter_interactions.loc[u]
+            if len(u_set) >= n_inter:
+                implicit = pd.concat([implicit, u_set.reset_index()], ignore_index=True)
+
+        implicit.reset_index()
+        implicit.to_csv(interactions, header=None, index=False)
+
+    filter_interactions = filter_interactions.reset_index()
+    filter_interactions.to_csv(interactions, header=None, index=False)
 
 def merge_uri():
     """

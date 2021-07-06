@@ -137,7 +137,7 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
                                train_file, test_file)
 
 
-fm.extract_wikidata_prop()
+fm.user_artist_filter_interaction(5, False)
 
 #ml_small.cross_validation_ml_small(rs=42)
 #folds_path = "./datasets/ml-latest-small/folds/"
