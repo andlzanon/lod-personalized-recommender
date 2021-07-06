@@ -1,12 +1,8 @@
 import pandas as pd
 import time
 import requests
-import SPARQLWrapper
-import urllib
-from SPARQLWrapper.SPARQLExceptions import QueryBadFormed
 from preprocessing import wikidata_utils as from_wikidata
 import traceback
-from xml.parsers.expat import ExpatError
 
 lastfm_path = "./datasets/hetrec2011-lastfm-2k/user_artists.dat"
 artistis_path = "./datasets/hetrec2011-lastfm-2k/artists.dat"
@@ -170,6 +166,7 @@ def extract_wikidata_prop():
 
     # read artists dataset
     artists = read_artists()
+    n = len(artists['id'].unique())
     uris = read_final_artists_uri()
 
     artists_dict = artists.set_index('id').to_dict()
@@ -181,34 +178,37 @@ def extract_wikidata_prop():
 
     # obtaind properties of artists in 50 movies batches
     begin = 0
-    step = 100
+    step = 150
     end = begin + step
     total = len(uris)
+    t = 0
 
     # Obtain data from wikidata
     print("Start obtaining artists data")
     while end <= total:
         try:
             results = from_wikidata.get_artists_data_by_id_wikidata(uris.iloc[begin:end])
-        except (SPARQLWrapper.SPARQLExceptions.URITooLong, urllib.error.HTTPError) as e:
+            artists_props = artists_props.append(results, ignore_index=True)
+            print("From " + str(begin) + " to " + str(end - 1) + " obtained from Wikidata")
+            begin = end
+            end = end + step
+            t = 0
+        except Exception as e:
             print("--- ERROR ---")
             print(e)
-            end = end - 10
-            if end <= begin:
+            traceback.print_exc()
+            t = t + 1
+            if t == 5:
                 break
-            results = from_wikidata.get_artists_data_from_id_wikidata(uris.iloc[begin:end])
-
-        artists_props = artists_props.append(results, ignore_index=True)
-        print("From " + str(begin) + " to " + str(end - 1) + " obtained from Wikidata")
-        begin = end
-        end = end + step
         time.sleep(30)
-    print("End obtaining movie data")
 
+    artists_props['name'] = artists_props.apply(lambda x: artists_dict['name'][x['id']], axis=1)
+    artists_props = artists_props.sort_values(by='id')
     # save output
+    print("End obtaining movie data")
     artists_props.to_csv(artist_prop_lastid, mode='w', header=True, index=False)
-    print("Coverage: " + str(len(artists_props['id'].unique())) + " obtained of " + str(total)
-          + ". Percentage: " + str(len(artists_props['id'].unique()) / total))
+    print("Coverage: " + str(len(artists_props['id'].unique())) + " obtained of " + str(n)
+          + ". Percentage: " + str(len(artists_props['id'].unique()) / n))
     print('Output file generated')
 
 

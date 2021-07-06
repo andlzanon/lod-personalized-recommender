@@ -195,14 +195,21 @@ def results_artists_to_dict(slice_artist_set, props_artists):
         m_code = line["item"]["value"].split("/")[-1]
 
         try:
-            id = int(slice_artist_set.loc[m_code, 'id'])
-        except KeyError:
+            id = int(slice_artist_set.loc[m_code]['id'])
+            dict_props = {"id": id, "wiki_id": m_code, "artist": m_title,
+                          "prop": m_prop,
+                          "obj": m_obj}
+            filter_props.append(dict_props)
+        except TypeError:
+            ids = list(slice_artist_set.loc[m_code]['id'])
+            for i in range(0, len(ids)):
+                id = ids[i]
+                dict_props = {"id": id, "wiki_id": m_code, "artist": m_title,
+                                "prop": m_prop,
+                                "obj": m_obj}
+                filter_props.append(dict_props)
+        except Exception:
             print("Wiki Id: " + str(m_code) + " not found")
-
-        dict_props = {"id": id, "wiki_id": m_code, "artist": m_title,
-                      "prop": m_prop,
-                      "obj": m_obj}
-        filter_props.append(dict_props)
 
     return filter_props
 
