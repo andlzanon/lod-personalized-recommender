@@ -1,6 +1,7 @@
 import pandas as pd
 import time
 import requests
+from caserec.utils.split_database import SplitDatabase
 from preprocessing import wikidata_utils as from_wikidata
 import traceback
 
@@ -60,6 +61,18 @@ def read_props_set() -> pd.DataFrame:
     return pd.read_csv(artist_prop, sep=',')
 
 
+def cross_validation_lasfm(rs: int):
+    """
+    Split the dataset into cross validation folders
+    To read the file use the command: df = pd.read_csv("./datasets/hetrec2011-lastfm-2k/folds/0/test.dat", header=None)
+    :param rs: random state integer arbitrary number
+    :return: folders created on the dataset repository
+    """
+    SplitDatabase(input_file=interactions,
+                  dir_folds="./datasets/hetrec2011-lastfm-2k/", as_binary=True, binary_col=2,
+                  sep_read=',', sep_write=',', n_splits=10).k_fold_cross_validation(random_state=rs)
+
+
 def user_artist_filter_interaction(n_inter: int, n_iter_flag=False):
     """
     Function that reduces the dataset to contain only the artists that we could obtain data from
@@ -85,6 +98,7 @@ def user_artist_filter_interaction(n_inter: int, n_iter_flag=False):
 
     filter_interactions = filter_interactions.reset_index()
     filter_interactions.to_csv(interactions, header=None, index=False)
+
 
 def merge_uri():
     """

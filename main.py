@@ -137,9 +137,9 @@ def run_experiments(fold: str, start_fold: int, end_fold: int, baseline: list, p
                                train_file, test_file)
 
 
-fm.user_artist_filter_interaction(5, False)
+#fm.user_artist_filter_interaction(5, False)
+fm.cross_validation_lasfm(rs=42)
 
-#ml_small.cross_validation_ml_small(rs=42)
 #folds_path = "./datasets/ml-latest-small/folds/"
 #run_experiments(folds_path, 0, 9, [1, 1, 1, 1, 0], [0, 0, 1, 0, 0])
 #statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "mostpop", folds_path, ["MAP", "NDCG", "COVERAGE"])
