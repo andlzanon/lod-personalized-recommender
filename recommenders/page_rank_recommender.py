@@ -6,17 +6,18 @@ from recommenders.base_recommender import BaseRecommender
 
 class PageRankRecommnder(BaseRecommender):
 
-    def __init__(self, folder_path: str, output_filename: str, rank_size: int, prop_set_path: str, cols_used=None,
-                 col_names=None, node_weighs=None):
+    def __init__(self, folder_path: str, output_filename: str, rank_size: int, prop_set_path: str, prop_cols: list,
+                 cols_used=None, col_names=None, node_weighs=None):
         """
         Page Rank Recommender constructor
         :param folder_path: folder of the test and train files
         :param output_filename: name of the output file
         :param rank_size: number of recommended items to a user in the test set
-        :param cols_used: columns that the recommender algorithm will user from the original dataset
+        :param cols_used: columns that the recommender algorithm will use from the original dataset
         :param col_names: name of the columns of test and train set
         :param prop_set_path: item property dbpedia or wikidata set, on the file the first row is the item id and the
             property column is the last column. Therefore, the dataset must in the format item_id, prop, value
+        :param prop_cols: columns used in the property set
         :param node_weighs: list of weights on the personalization for the Personalized Page Rank, the order is item
             weight, properties related to item weight and then all the other node weights
         """
@@ -29,7 +30,8 @@ class PageRankRecommnder(BaseRecommender):
         super().__init__(folder_path, output_filename, rank_size, cols_used, col_names)
 
         self.prop_set_path = prop_set_path
-        self.prop_set = pd.read_csv(self.prop_set_path, header=0)
+        self.prop_cols = prop_cols
+        self.prop_set = pd.read_csv(self.prop_set_path, usecols=self.prop_cols)
         self.prop_set = self.prop_set.set_index(self.prop_set.columns[0])
         self.node_weights = node_weighs
 
