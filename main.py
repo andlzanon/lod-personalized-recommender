@@ -264,10 +264,10 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baseline: 
                          train_file, test_file)
 
 
-# fm.user_artist_filter_interaction(5, False)
-# fm.cross_validation_lasfm(rs=42)
+fm.user_artist_filter_interaction(5, n_iter_flag=True)
+fm.cross_validation_lasfm(rs=42)
 
-folds_path_ml = "./datasets/ml-latest-small/folds/"
+# folds_path_ml = "./datasets/ml-latest-small/folds/"
 folds_path_lastfm = "./datasets/hetrec2011-lastfm-2k/folds/"
 
 run_experiments_lastfm(folds_path_lastfm, 0, 9, [1, 1, 1, 1], [0, 0, 1, 0, 0])

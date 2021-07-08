@@ -95,6 +95,7 @@ def user_artist_filter_interaction(n_inter: int, n_iter_flag=False):
 
         implicit.reset_index()
         implicit.to_csv(interactions, header=None, index=False)
+        return
 
     filter_interactions = filter_interactions.reset_index()
     filter_interactions.to_csv(interactions, header=None, index=False)
