@@ -183,7 +183,7 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baseline: 
             evaluate("User KNN Algorithm", knn_output_file, train_file, test_file)
             output_names.add(knn_output_file.split("/")[-1])
         if reorder is not None and reorder[2] == 1:
-            output_names.add(most_pop_output_file.split("/")[-1])
+            output_names.add(knn_output_file.split("/")[-1])
 
         # 4 - Wikidata PageRank params: weights=[80, 0, 20]
         pr = pagerank.PageRankRecommnder(fold + str(i), "wikidata_page_rank8020.csv", 20,
@@ -264,11 +264,11 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baseline: 
                          train_file, test_file)
 
 
-fm.user_artist_filter_interaction(5, n_iter_flag=True)
-fm.cross_validation_lasfm(rs=42)
+#fm.user_artist_filter_interaction(5, n_iter_flag=True)
+#fm.cross_validation_lasfm(rs=42)
 
 # folds_path_ml = "./datasets/ml-latest-small/folds/"
 folds_path_lastfm = "./datasets/hetrec2011-lastfm-2k/folds/"
 
-run_experiments_lastfm(folds_path_lastfm, 0, 9, [1, 1, 1, 1], [0, 0, 1, 0, 0])
+run_experiments_lastfm(folds_path_lastfm, 0, 9, [0, 0, 0, 0], [0, 0, 1, 0, 0], [1, 1, 1, 1])
 statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "mostpop", folds_path_lastfm, ["MAP", "NDCG", "COVERAGE"])
