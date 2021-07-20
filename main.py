@@ -267,8 +267,9 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baseline: 
 #fm.user_artist_filter_interaction(5, n_iter_flag=True)
 #fm.cross_validation_lasfm(rs=42)
 
-# folds_path_ml = "./datasets/ml-latest-small/folds/"
+folds_path_ml = "./datasets/ml-latest-small/folds/"
 folds_path_lastfm = "./datasets/hetrec2011-lastfm-2k/folds/"
 
-run_experiments_lastfm(folds_path_lastfm, 0, 9, [0, 0, 0, 0], [0, 0, 1, 0, 0], [1, 1, 1, 1])
-statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "mostpop", folds_path_lastfm, ["MAP", "NDCG", "COVERAGE"])
+#run_experiments_lastfm(folds_path_lastfm, 0, 9, [0, 0, 0, 0], [0, 0, 1, 0, 0], [1, 1, 1, 1])
+statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "bprmf", folds_path_lastfm,
+                      ["MAP", "NDCG", "GINI", "ENTROPY", "COVERAGE"], save=False)

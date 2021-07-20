@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 from caserec.evaluation.item_recommendation import ItemRecommendationEvaluation
+from openpyxl import load_workbook
 from pygini import gini
 from scipy.stats import entropy
 from scipy.stats import ttest_rel
@@ -73,7 +74,7 @@ def evaluate_diversity(prediction_file: str, train_file: str):
     return div
 
 
-def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: list, method='both'):
+def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: list, method='both', save=False):
     """
     Function that calculates the statistical relevance with p_value
     :param proposed: proposed method final name. e.g.: path[policy=last_items=01_reorder=10]
@@ -81,9 +82,14 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
     :param dataset: path to the folds of the chosen dataset. e.g. "./datasets/ml-latest-small/folds/"
     :param metrics: list with the methods do analyse from the list ["PREC, RECALL", "MAP", "NDCG", "GINI", "ENTROPY", "COVERAGE"]
     :param method: method to test the statistical relevance, either 'ttest', 'wilcoxon' or 'both' that is the default value
+    :param save: flag to save file in dataset directory
     :return: the statistical relevance of the proposed with the baseline for the metrics chosen for @1, @3, @5 and @10
     """
     div_metrics = ["GINI", "ENTROPY", "COVERAGE"]
+    results = pd.DataFrame(columns=['METRIC',
+                                    'PROPOSED NAME', 'PROPOSED MEAN',
+                                    'BASELINE NAME', 'BASELINE MEAN',
+                                    'WILCOXON', 'TTEST'])
 
     ats = [1, 3, 5, 10]
     base_results = {}
@@ -124,13 +130,17 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
             print("---" + key + "---")
 
             base_list = base_results[key]
+            base_mean = sum(base_list)/len(base_list)
             print("Results of the baseline algorithm: " + str(base_list) +
-                  " mean: " + str(sum(base_list)/len(base_list)) + " -> " + baseline)
+                  " mean: " + str(base_mean) + " -> " + baseline)
 
             prop_list = prop_results[key]
+            prop_mean = sum(prop_list)/len(prop_list)
             print("Results of the proposed algorithm: " + str(prop_list) +
-                  " mean: " + str(sum(prop_list)/len(prop_list)) + " -> " + proposed)
+                  " mean: " + str(prop_mean) + " -> " + proposed)
 
+            wp = None
+            tp = None
             if method == 'ttest':
                 tt, tp = ttest_rel(base_list, prop_list)
                 print("p-value with t-test: " + str(tp))
@@ -142,6 +152,22 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
                 print("p-value with wilcoxon: " + str(wp))
                 tt, tp = ttest_rel(base_list, prop_list)
                 print("p-value with t-test: " + str(tp))
+
+            results = results.append({'METRIC': key,
+                            'PROPOSED NAME': proposed, 'PROPOSED MEAN': prop_mean,
+                            'BASELINE NAME': base_mean, 'BASELINE MEAN': baseline,
+                            'WILCOXON': wp, 'TTEST': tp}, ignore_index=True)
+
+    if save:
+        p = dataset[:-6] + "results_" + proposed + ".xlsx"
+        book = load_workbook(p)
+        writer = pd.ExcelWriter(p, mode='r+')
+        writer.book = book
+        writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
+        results.to_excel(writer, sheet_name=baseline, index=False)
+        writer.save()
+        writer.close()
+        print("--- FILE SAVE AT " + p + "---")
 
 
 def file_to_df(file_path: str, algorithm: str):
