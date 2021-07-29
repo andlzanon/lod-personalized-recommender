@@ -273,7 +273,7 @@ folds_path_ml = "./datasets/ml-latest-small/folds/"
 folds_path_lastfm = "./datasets/hetrec2011-lastfm-2k/folds/"
 
 ncf_rec = ncf.NCF(folds_path_ml + str(0), "ncf.csv", rank_size=20, factors=32, layers=[64, 32, 16, 8],
-                  epochs=5, neg_smp_train=4, neg_smp_test=99, cols_used=[0, 1, 2],
+                  epochs=10, neg_smp_train=4, neg_smp_test=100, cols_used=[0, 1, 2],
                   col_names=['user_id', 'movie_id', 'feedback'],
                   model_path=folds_path_ml + str(0) + "/model.pt", batch_size=256, seed=42, model_disk='w')
 ncf_rec.train()

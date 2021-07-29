@@ -9,7 +9,8 @@ class PageRankRecommnder(BaseRecommender):
     def __init__(self, folder_path: str, output_filename: str, rank_size: int, prop_set_path: str, prop_cols: list,
                  cols_used=None, col_names=None, node_weighs=None):
         """
-        Page Rank Recommender constructor
+        Page Rank Recommender constructor.
+        This algorithm is proposed on the paper https://doi.org/10.1007/978-3-319-58068-5_11
         :param folder_path: folder of the test and train files
         :param output_filename: name of the output file
         :param rank_size: number of recommended items to a user in the test set

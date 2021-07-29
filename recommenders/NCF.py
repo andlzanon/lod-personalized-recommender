@@ -15,19 +15,21 @@ class NCF(BaseRecommender):
                  epochs: int, neg_smp_train: int, neg_smp_test: int, p=0.4, batch_size=256, cols_used=None,
                  col_names=None, model_path=None, seed=42, model_disk=None):
         """
-        Neural Collaborative Filtering Recommender constructor
+        Neural Collaborative Filtering Recommender constructor. This algorithm is proposed on the paper https://doi.org/10.1145/3038912.3052569
         :param folder_path: folder of the test and train files
         :param output_filename: name of the output file
         :param rank_size: number of recommended items to a user in the test set
-        :param cols_used: columns that the recommender algorithm will use from the original dataset
         :param factors: number of factors
-        :param layers: list wit number of neuros per layer
+        :param layers: list wit number of neurons per layer
+        :param epochs: number of epochs
+        :param neg_smp_train: number of negative samples per positive sample
+        :param neg_smp_test: number of negative samples on test set per user.
         :param p: dropout probability value
         :param batch_size: batch size for training
-        :param epochs: number of epochs
+        :param cols_used: columns that the recommender algorithm will use from the original dataset
         :param col_names: name of the columns of test and train set
         :param model_path: path to trained model
-        :param model_disk: 'r' to read model from model_path and 'w' to write model to model_path
+        :param model_disk: 'r' to read model from model_path and 'w' to write model
         """
 
         if cols_used is None:
@@ -48,6 +50,7 @@ class NCF(BaseRecommender):
         random.seed(self.seed)
 
         print("Params: epochs: " + str(self.epochs) + ", batch size: " + str(self.batch_size))
+
         self.all_items = list(set(list(self.test_set[self.col_names[1]].unique()) +
                                   list(self.train_set[self.col_names[1]].unique())))
         self.all_users = list(set(list(self.test_set.index.unique()) + list(self.train_set.index.unique())))
@@ -55,9 +58,11 @@ class NCF(BaseRecommender):
         self.model = NCFRecommender(max(self.all_users) + 1, max(self.all_items) + 1, factors=self.factors,
                                     layers=self.layers, p=self.p)
 
+        # check to load model from disk
         if self.model_disk == 'r' and self.model_path is not None:
             self.model.load_state_dict(torch.load(model_path))
 
+        # try to read train and test sets, if error, generates the files
         try:
             self.train_neg = pd.read_csv(self.folder_path + "/train_neg.csv", header=None)
             self.train_neg.columns = self.col_names
@@ -71,26 +76,39 @@ class NCF(BaseRecommender):
             self.train_neg, self.test_neg = self.leave_one_out()
 
     def leave_one_out(self):
+        """
+        Function that changes the the split of the folder from 0.9 to train and 0.1 to test to leave only the last
+        interaction of the test to the test set along with n_neg_test random samples. The train set "receives" the other
+        interactions of the test and for every positive interaction n_neg_train for every positive interaction is added
+        :return: new train and test sets
+        """
         train_neg = self.train_set.copy().reset_index()
         test_neg = pd.DataFrame(columns=self.col_names)
 
+        # pass all the interactions for the test set excluding the last for each user, only if there is more thant one
         for user in self.test_set.index.unique():
             t_user = self.test_set.loc[user]
             if type(t_user) != pd.Series:
                 train_neg = pd.concat([train_neg, t_user.reset_index().iloc[:-1]], ignore_index=True)
                 test_neg = test_neg.append(pd.Series(t_user.reset_index().iloc[-1].to_dict()), ignore_index=True)
             else:
-                test_neg = test_neg.append(pd.Series({self.col_names[0]: user,
-                                                      self.col_names[1]: t_user[self.col_names[1]],
-                                                      self.col_names[2]: t_user[self.col_names[2]]}), ignore_index=True)
+                test_neg = test_neg.append(t_user.append(pd.Series({self.col_names[0]: user})), ignore_index=True)
 
-        train_neg = self.add_negative_smp_train(train_neg.set_index(self.col_names[0]), test_neg.set_index(self.col_names[0]))
-        test_neg = self.add_negative_smp_test(train_neg, test_neg.set_index(self.col_names[0]))
+        # add negative samples to test and train
+        test_neg = self.add_negative_smp_test(train_neg.set_index(self.col_names[0]),
+                                              test_neg.set_index(self.col_names[0]))
+        train_neg = self.add_negative_smp_train(train_neg.set_index(self.col_names[0]),
+                                                test_neg)
+
         return train_neg, test_neg
 
     def add_negative_smp_train(self, train: pd.DataFrame, test: pd.DataFrame) -> pd.DataFrame:
         """
-        Function that adds negative sampling to the train set in order to help the neural net actually knows wich items to set as 1
+        Function that adds n_neg_train negative samples per positive interaction on the train set
+        without adding negative samples from test positive interactions
+        :param train: train dataframe with interactions
+        :param test: test dataframe with only one interaction for every user
+        :returns train set shuffled and with negative samples
         """
 
         print("----- ADDING NEGATIVE SAMPLES TO TRAIN -----")
@@ -105,14 +123,14 @@ class NCF(BaseRecommender):
             print(u)
 
             seen = train.loc[u][item_name]
-            if type(seen) != int:
+            if not isinstance(seen, (int, np.integer)):
                 seen = seen.tolist()
             else:
                 seen = [seen]
 
             try:
                 valid = test.loc[u][item_name]
-                if type(valid) != int:
+                if not isinstance(valid, (int, np.integer)):
                     valid = valid.tolist()
                 else:
                     valid = [valid]
@@ -124,19 +142,24 @@ class NCF(BaseRecommender):
             n = 0
             neg_sample = random.choice(self.all_items)
             while n < neg_smp_usr:
-                if (type(seen) == list and neg_sample not in seen) or (type(seen) == int and neg_sample != seen):
+                if neg_sample not in seen:
                     output = output.append(pd.Series({item_name: neg_sample, interaction_name: 0}, name=u))
                     n = n + 1
                 neg_sample = random.choice(self.all_items)
 
-        output.reset_index().sort_values(by=[self.col_names[0]]).to_csv(self.folder_path + "/train_neg.csv",
-                                                                        mode='w', header=False, index=False)
+        output = output.reset_index().sort_values(by=[self.col_names[0]])
+        output.to_csv(self.folder_path + "/train_neg.csv", mode='w', header=False, index=False)
+        output = output.set_index(self.col_names[0])
         output = output.sample(frac=1, random_state=self.seed)
         return output
 
     def add_negative_smp_test(self, train: pd.DataFrame, test: pd.DataFrame) -> pd.DataFrame:
         """
-        Function that adds negative sampling to the train set in order to help the neural net actually knows wich items to set as 1
+        Function that adds n_neg_test negative samples per user on the test set
+        without adding negative samples from train positive interactions
+        :param train: train dataframe with interactions
+        :param test: test dataframe with only one interaction for every user
+        :returns test set with negative samples
         """
 
         print("----- ADDING NEGATIVE SAMPLES TO TEST -----")
@@ -150,14 +173,14 @@ class NCF(BaseRecommender):
             print(u)
 
             seen = test.loc[u][item_name]
-            if type(seen) != int:
+            if not isinstance(seen, (int, np.integer)):
                 seen = seen.tolist()
             else:
                 seen = [seen]
 
             try:
                 valid = train.loc[u][item_name]
-                if type(valid) != int:
+                if not isinstance(valid, (int, np.integer)):
                     valid = valid.tolist()
                 else:
                     valid = [valid]
@@ -169,16 +192,22 @@ class NCF(BaseRecommender):
             n = 0
             neg_sample = random.choice(self.all_items)
             while n < neg_smp_usr:
-                if (type(seen) == list and neg_sample not in seen) or (type(seen) == int and neg_sample != seen):
+                if neg_sample not in seen:
                     output = output.append(pd.Series({item_name: neg_sample, interaction_name: 0}, name=u))
                     n = n + 1
                 neg_sample = random.choice(self.all_items)
 
-        output.reset_index().sort_values(by=[self.col_names[0]]).to_csv(self.folder_path + "/test_neg.csv",
-                                                                        mode='w', header=False, index=False)
+        output = output.reset_index().sort_values(by=[self.col_names[0]])
+        output.to_csv(self.folder_path + "/test_neg.csv", mode='w', header=False, index=False)
+        output = output.set_index(self.col_names[0])
         return output
 
     def train(self):
+        """
+        Function that trains the NCF model
+        :return: model trained
+        """
+
         if self.model_disk == 'r' and self.model_path is not None:
             print("Model loaded. Already trained")
             return
@@ -209,16 +238,22 @@ class NCF(BaseRecommender):
         print("----- END TRAINING MODEL -----")
 
     def predict(self, user: int):
+        """
+        Function that makes the predictions for the user based on the positive and negative interactions on the
+        test set. The objective is that the only positive interaction on the test appears on the top N ranked items
+        :param user: user to make predictions to
+        :return: list of tuples with user, item and score to add to ranked dataframe with all users predictions
+        """
         dic = {}
         historic = self.train_neg.loc[user][self.col_names[1]]
 
-        if type(historic) != int:
+        if not isinstance(historic, (int, np.integer)):
             historic = historic.tolist()
         else:
             historic = [historic]
 
         items_eval = self.test_neg.loc[user][self.col_names[1]]
-        if type(items_eval) != int:
+        if not isinstance(items_eval, (int, np.integer)):
             items_eval = items_eval.tolist()
         else:
             items_eval = [items_eval]
@@ -240,6 +275,10 @@ class NCF(BaseRecommender):
         return top_n
 
     def run(self):
+        """
+        Run the model and make the predictions for all users
+        :return: file with ranked items to all users
+        """
         print(self.output_filename)
         cols = ['user', 'item', 'score']
         results = pd.DataFrame(columns=cols)

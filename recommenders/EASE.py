@@ -9,21 +9,22 @@ class EASE(BaseRecommender):
     def __init__(self, folder_path: str, output_filename: str, rank_size: int, cols_used: list, col_names: list,
                  lambda_: float):
         """
-
+        EASE Recommender constructor.
+        This algorithm is proposed on the paper: https://dl.acm.org/doi/abs/10.1145/3308558.3313710
         :param folder_path:
         :param output_filename:
         :param rank_size:
         :param cols_used:
         :param col_names:
-        :param lambda_:
+        :param lambda_: only parameter of the recommender system
         """
         super().__init__(folder_path, output_filename, rank_size, cols_used, col_names)
         self.lambda_ = lambda_
 
     def train(self):
         """
-
-        :return:
+        Training the algorithm following the steps provided by the paper
+        :return: prediction matrix
         """
         df = self.train_set.reset_index()
         user_item = df.pivot(index=self.col_names[0], columns=self.col_names[1], values=self.col_names[2])
@@ -44,13 +45,13 @@ class EASE(BaseRecommender):
 
     def predict(self, user: int):
         """
-
-        :param user:
-        :return:
+        Function that makes the predictions for the user by obtaining the line associated to the user and ordering
+        :param user: user id to make predictions for
+        :return: list of tuples with items ordered
         """
 
         historic = self.train_set.loc[user][self.col_names[1]]
-        if type(historic) != np.int64:
+        if not isinstance(historic, (int, np.integer)):
             historic = historic.tolist()
         else:
             historic = [historic]
@@ -69,6 +70,10 @@ class EASE(BaseRecommender):
         return top_n
 
     def run(self):
+        """
+        Run the model and make the predictions for all users
+        :return: file with ranked items to all users
+        """
         print(self.output_filename)
         cols = ['user', 'item', 'score']
         results = pd.DataFrame(columns=cols)
