@@ -4,6 +4,8 @@ from evaluation_utils import statistical_relevance
 from caserec.recommenders.item_recommendation.most_popular import MostPopular
 from caserec.recommenders.item_recommendation.userknn import UserKNN
 from caserec.recommenders.item_recommendation.bprmf import BprMF
+from recommenders import NCF as ncf
+from recommenders import EASE as ease
 from recommenders import page_rank_recommender as pagerank
 from recommenders.prop_reordering import PropReordering
 from recommenders.path_reordering import PathReordering
@@ -42,7 +44,7 @@ def run_experiments_ml(fold: str, start_fold: int, end_fold: int, baseline: list
         # 2 - BPR MF
         bprmf_output_file = fold + str(i) + "/outputs/bprmf.csv"
         if baseline[1]:
-            BprMF(train_file, test_file, sep=',', output_file=bprmf_output_file, rank_length=20,
+            BprMF(train_file, test_file, sep=',', output_file=bprmf_output_file, rank_length=20, factors=32,
                   random_seed=42).compute()
             evaluate("BPR-MF Algorithm", bprmf_output_file, train_file, test_file)
             output_names.add(bprmf_output_file.split("/")[-1])
@@ -169,7 +171,7 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baseline: 
         # 2 - BPR MF
         bprmf_output_file = fold + str(i) + "/outputs/bprmf.csv"
         if baseline[1]:
-            BprMF(train_file, test_file, sep=',', output_file=bprmf_output_file, rank_length=20,
+            BprMF(train_file, test_file, sep=',', output_file=bprmf_output_file, rank_length=20, factors=32,
                   random_seed=42).compute()
             evaluate("BPR-MF Algorithm", bprmf_output_file, train_file, test_file)
             output_names.add(bprmf_output_file.split("/")[-1])
@@ -264,12 +266,30 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baseline: 
                          train_file, test_file)
 
 
-#fm.user_artist_filter_interaction(5, n_iter_flag=True)
-#fm.cross_validation_lasfm(rs=42)
+# fm.user_artist_filter_interaction(5, n_iter_flag=True)
+# fm.cross_validation_lasfm(rs=42)
 
 folds_path_ml = "./datasets/ml-latest-small/folds/"
 folds_path_lastfm = "./datasets/hetrec2011-lastfm-2k/folds/"
 
-#run_experiments_lastfm(folds_path_lastfm, 0, 9, [0, 0, 0, 0], [0, 0, 1, 0, 0], [1, 1, 1, 1])
-statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "bprmf", folds_path_lastfm,
-                      ["MAP", "NDCG", "GINI", "ENTROPY", "COVERAGE"], save=False)
+ncf_rec = ncf.NCF(folds_path_ml + str(0), "ncf.csv", rank_size=20, factors=32, layers=[64, 32, 16, 8],
+                  epochs=5, neg_smp_train=4, neg_smp_test=99, cols_used=[0, 1, 2],
+                  col_names=['user_id', 'movie_id', 'feedback'],
+                  model_path=folds_path_ml + str(0) + "/model.pt", batch_size=256, seed=42, model_disk='w')
+ncf_rec.train()
+ncf_rec.run()
+
+evaluate("NCF",
+         ncf_rec.output_path,
+         "./datasets/ml-latest-small/folds/0/train.dat", "./datasets/ml-latest-small/folds/0/test.dat")
+
+#ease = ease.EASE(folds_path_ml + str(0), "ease.csv", rank_size=20, cols_used=[0, 1, 2],
+#                  col_names=['user_id', 'movie_id', 'feedback'], lambda_=500)
+#ease.train()
+#ease.run()
+#evaluate("EASE", ease.output_path, "./datasets/ml-latest-small/folds/0/train.dat",
+#         "./datasets/ml-latest-small/folds/0/test.dat")
+
+# run_experiments_lastfm(folds_path_lastfm, 0, 9, [0, 0, 0, 0], [0, 0, 1, 0, 0], [1, 1, 1, 1])
+# statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "bprmf", folds_path_lastfm,
+#                      ["MAP", "NDCG", "GINI", "ENTROPY", "COVERAGE"], save=False)
