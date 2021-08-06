@@ -7,21 +7,24 @@ from caserec.recommenders.item_recommendation.bprmf import BprMF
 from recommenders import NCF as ncf
 from recommenders import EASE as ease
 from recommenders import page_rank_recommender as pagerank
-from recommenders.prop_reordering import PropReordering
 from recommenders.path_reordering import PathReordering
 from evaluation_utils import evaluate
+import argparse
 
 
-def run_experiments_ml(fold: str, start_fold: int, end_fold: int, baseline: list, proposed: list, reorder=None):
+def run_experiments_ml(fold: str, start_fold: int, end_fold: int, baselines: list, reorders=None, n_reorder=10,
+                       p_items=0.1, policy='last'):
     """
     Run experiments for the movie-lens 100k dataset for the quantity of folds passed by in the parameter n_folds.
-    E.g. if 10 then will run for all folds if 6 it will run from fold 0 to 5, etc
+    E.g. if 9 then will run for all folds if 6 it will run from fold 0 to 5, etc
     :param fold: path of the folds
     :param start_fold: folds to start evaluation to evaluate
     :param end_fold: fold to end evaluation
-    :param baseline: binary list for evaluating the current 4 recsys (MostPop, BPR-MF, User-KNN, PageRank).
-    :param proposed: binary list to run the proposed reorder by property and by path. Is currently running 5 reorders
-    :param reorder: binary list to reorder recommender algorithms that had run already
+    :param baselines: list for evaluating the current 6 recsys (MostPop, BPRMF, UserKNN, PageRank, NCF and EASE).
+    :param reorders: list to reorder recommender algorithms that had run already
+    :param n_reorder: quantity of items to reorder
+    :param p_items: percentage of items from historic to build semantic profile
+    :param policy: policy to choose items
     :return: folds evaluated by accuracy and diversity metrics
     """
 
@@ -34,30 +37,27 @@ def run_experiments_ml(fold: str, start_fold: int, end_fold: int, baseline: list
 
         # 1 - Most Popular Algorithm
         most_pop_output_file = fold + str(i) + "/outputs/mostpop.csv"
-        if baseline[0]:
+        if 'MostPop' in baselines:
             MostPopular(train_file, test_file, sep=',', output_file=most_pop_output_file, rank_length=20).compute()
             evaluate("Most Pop Algorithm", most_pop_output_file, train_file, test_file)
-            output_names.add(most_pop_output_file.split("/")[-1])
-        if reorder is not None and reorder[0] == 1:
+        if reorders is not None and 'MostPop' in reorders:
             output_names.add(most_pop_output_file.split("/")[-1])
 
         # 2 - BPR MF
         bprmf_output_file = fold + str(i) + "/outputs/bprmf.csv"
-        if baseline[1]:
+        if 'BPRMF' in baselines:
             BprMF(train_file, test_file, sep=',', output_file=bprmf_output_file, rank_length=20, factors=32,
                   random_seed=42).compute()
             evaluate("BPR-MF Algorithm", bprmf_output_file, train_file, test_file)
-            output_names.add(bprmf_output_file.split("/")[-1])
-        if reorder is not None and reorder[1] == 1:
+        if reorders is not None and 'BPRMF' in reorders:
             output_names.add(bprmf_output_file.split("/")[-1])
 
         # 3 - User KNN
         knn_output_file = fold + str(i) + "/outputs/userknn.csv"
-        if baseline[2]:
+        if 'UserKNN' in baselines:
             UserKNN(train_file, test_file, sep=",", output_file=knn_output_file, rank_length=20).compute()
             evaluate("User KNN Algorithm", knn_output_file, train_file, test_file)
-            output_names.add(knn_output_file.split("/")[-1])
-        if reorder is not None and reorder[2] == 1:
+        if reorders is not None and 'UserKNN' in reorders:
             output_names.add(knn_output_file.split("/")[-1])
 
         # 4 - Wikidata PageRank params: weights=[80, 0, 20]
@@ -65,12 +65,33 @@ def run_experiments_ml(fold: str, start_fold: int, end_fold: int, baseline: list
                                          "./generated_files/wikidata/props_wikidata_movielens_small.csv",
                                          node_weighs=[0.8, 0, 0.2], prop_cols=['movieId', 'title', 'prop', 'obj'],
                                          cols_used=[0, 1, 2], col_names=['user_id', 'movie_id', 'feedback'])
-        if baseline[3]:
+        if 'PageRank' in baselines:
             pr.run()
             evaluate("Wikidata Page Rank 80/20 Algorithm", pr.output_path, train_file, test_file)
+        if reorders is not None and 'PageRank' in reorders:
             output_names.add(pr.output_path.split("/")[-1])
-        if reorder is not None and reorder[3] == 1:
-            output_names.add(pr.output_path.split("/")[-1])
+
+        # 5 - Neural Collaborative Filtering
+        ncf_rec = ncf.NCF(fold + str(i), "ncf.csv", rank_size=20, factors=32, layers=[64, 32, 16, 8],
+                          epochs=10, neg_smp_train=4, neg_smp_test=100, cols_used=[0, 1, 2],
+                          col_names=['user_id', 'movie_id', 'feedback'],
+                          model_path=folds_path_ml + str(0) + "/model.pt", batch_size=256, seed=42, model_disk='w')
+        if 'NCF' in baselines:
+            ncf_rec.train()
+            ncf_rec.run()
+            evaluate("Neural Collaborative Filtering", ncf_rec.output_path, train_file, test_file)
+        if reorders is not None and 'NCF' in reorders:
+            output_names.add(ncf_rec.output_path.split("/")[-1])
+
+        # 6 - EASE Algorithm
+        ease_rec = ease.EASE(fold + str(i), "ease.csv", rank_size=20, cols_used=[0, 1, 2],
+                             col_names=['user_id', 'movie_id', 'feedback'], lambda_=500)
+        if 'EASE' in reorders:
+            ease_rec.train()
+            ease_rec.run()
+            evaluate("EASE", ease_rec.output_path, train_file, test_file)
+        if reorders is not None and 'EASE' in reorders:
+            output_names.add(ease_rec.output_path.split("/")[-1])
 
     # REORDERS
     for i in range(start_fold, end_fold + 1):
@@ -79,76 +100,31 @@ def run_experiments_ml(fold: str, start_fold: int, end_fold: int, baseline: list
         test_file = fold + str(i) + "/test.dat"
         output_files = [fold + str(i) + "/outputs/" + name for name in output_names]
 
-        if proposed[0]:
-            # 6 - Prop reorder params: reorder=10
-            for output_file in output_files:
-                prop_reord = PropReordering(train_file, output_file,
-                                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
-                                            n_reorder=10,
-                                            prop_cols=['movieId', 'title', 'prop', 'obj'], hybrid=True)
-                prop_reord.reorder()
-                evaluate("Prop Reorder Algorithm reorder=10", prop_reord.output_path, train_file, test_file)
-
-        if proposed[1]:
-            # 7 - Prop reorder params: reorder=20
-            for output_file in output_files:
-                prop_reord = PropReordering(train_file, output_file,
-                                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
-                                            n_reorder=20,
-                                            prop_cols=['movieId', 'title', 'prop', 'obj'], hybrid=True)
-                prop_reord.reorder()
-                evaluate("Prop Reorder Algorithm reorder=20", prop_reord.output_path, train_file, test_file)
-
-        if proposed[2]:
-            # 8 - Path reorder params: reorder=10, policy=last, p_items=0.1
-            for output_file in output_files:
-                path_reord = PathReordering(train_file, output_file,
-                                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
-                                            prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=10, p_items=0.1,
-                                            policy='last', hybrid=True)
-                path_reord.reorder()
-                evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10", path_reord.output_path,
-                         train_file, test_file)
-
-        if proposed[3]:
-            # 9 - Path reorder params: reorder=10, policy=random, p_items=0.1
-            for output_file in output_files:
-                path_reord = PathReordering(train_file, output_file,
-                                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
-                                            prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=10, p_items=0.1,
-                                            policy='random', hybrid=True)
-                path_reord.reorder()
-                evaluate("Reorder Path USER KNN Algorithm p_items=0.1, policy=random, n_reorder=10",
-                         path_reord.output_path, train_file, test_file)
-
-        if proposed[4]:
-            # 10 - Path reorder params: reorder=10, policy=last, p_items=0.1, not hybrid
-            for output_file in output_files:
-                path_reord = PathReordering(train_file, output_file,
-                                            "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                                            cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
-                                            prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=20, p_items=0.1,
-                                            policy='last', hybrid=True)
-                path_reord.reorder()
-                evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10 not hybrid",
-                         path_reord.output_path,
-                         train_file, test_file)
+        # Path reorder
+        for output_file in output_files:
+            path_reord = PathReordering(train_file, output_file,
+                                        "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+                                        cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
+                                        prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=n_reorder,
+                                        p_items=p_items, policy=policy, hybrid=True)
+            path_reord.reorder()
+            evaluate("Reorder Path Algorithm p_items="+str(p_items)+"policy="+str(policy)+"n_reorder="+str(n_reorder),
+                     path_reord.output_path, train_file, test_file)
 
 
-def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baseline: list, proposed: list, reorder=None):
+def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baselines: list, reorders=None, n_reorder=10,
+                           p_items=0.1, policy='last'):
     """
     Run experiments for the lastfm dataset for the quantity of folds passed by in the parameter n_folds.
     E.g. if 10 then will run for all folds if 6 it will run from fold 0 to 5, etc
     :param fold: path of the folds
     :param start_fold: folds to start evaluation to evaluate
     :param end_fold: fold to end evaluation
-    :param baseline: binary list for evaluating the current 4 recsys (MostPop, BPR-MF, User-KNN, PageRank).
-    :param proposed: binary list to run the proposed reorder by property and by path. Is currently running 5 reorders
-    :param reorder: binary list to reorder recommender algorithms that had run already
+    :param baselines: list for evaluating the current 6 recsys (MostPop, BPRMF, UserKNN, PageRank, NCF and EASE).
+    :param reorders: list to reorder recommender algorithms that had run already
+    :param n_reorder: quantity of items to reorder
+    :param p_items: percentage of items from historic to build semantic profile
+    :param policy: policy to choose items
     :return: folds evaluated by accuracy and diversity metrics
     """
 
@@ -161,30 +137,27 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baseline: 
 
         # 1 - Most Popular Algorithm
         most_pop_output_file = fold + str(i) + "/outputs/mostpop.csv"
-        if baseline[0]:
+        if 'MostPop' in baselines:
             MostPopular(train_file, test_file, sep=',', output_file=most_pop_output_file, rank_length=20).compute()
             evaluate("Most Pop Algorithm", most_pop_output_file, train_file, test_file)
-            output_names.add(most_pop_output_file.split("/")[-1])
-        if reorder is not None and reorder[0] == 1:
+        if reorders is not None and 'MostPop' in reorders:
             output_names.add(most_pop_output_file.split("/")[-1])
 
         # 2 - BPR MF
         bprmf_output_file = fold + str(i) + "/outputs/bprmf.csv"
-        if baseline[1]:
+        if 'BPRMF' in baselines:
             BprMF(train_file, test_file, sep=',', output_file=bprmf_output_file, rank_length=20, factors=32,
                   random_seed=42).compute()
             evaluate("BPR-MF Algorithm", bprmf_output_file, train_file, test_file)
-            output_names.add(bprmf_output_file.split("/")[-1])
-        if reorder is not None and reorder[1] == 1:
+        if reorders is not None and 'BPRMF' in reorders:
             output_names.add(bprmf_output_file.split("/")[-1])
 
         # 3 - User KNN
         knn_output_file = fold + str(i) + "/outputs/userknn.csv"
-        if baseline[2]:
+        if 'UserKNN' in baselines:
             UserKNN(train_file, test_file, sep=",", output_file=knn_output_file, rank_length=20).compute()
             evaluate("User KNN Algorithm", knn_output_file, train_file, test_file)
-            output_names.add(knn_output_file.split("/")[-1])
-        if reorder is not None and reorder[2] == 1:
+        if reorders is not None and 'UserKNN' in reorders:
             output_names.add(knn_output_file.split("/")[-1])
 
         # 4 - Wikidata PageRank params: weights=[80, 0, 20]
@@ -192,12 +165,33 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baseline: 
                                          "./generated_files/wikidata/last-fm/props_artists_id.csv",
                                          node_weighs=[0.8, 0, 0.2], prop_cols=['id', 'artist', 'prop', 'obj'],
                                          cols_used=[0, 1, 2], col_names=['user_id', 'artist_id', 'feedback'])
-        if baseline[3]:
+        if 'PageRank' in baselines:
             pr.run()
             evaluate("Wikidata Page Rank 80/20 Algorithm", pr.output_path, train_file, test_file)
+        if reorders is not None and 'PageRank' in reorders == 1:
             output_names.add(pr.output_path.split("/")[-1])
-        if reorder is not None and reorder[3] == 1:
-            output_names.add(pr.output_path.split("/")[-1])
+
+        # 5 - Neural Collaborative Filtering
+        ncf_rec = ncf.NCF(fold + str(i), "ncf.csv", rank_size=20, factors=32, layers=[64, 32, 16, 8],
+                          epochs=10, neg_smp_train=4, neg_smp_test=100, cols_used=[0, 1, 2],
+                          col_names=['user_id', 'artist_id', 'feedback'],
+                          model_path=folds_path_ml + str(0) + "/model.pt", batch_size=256, seed=42, model_disk='w')
+        if 'NCF' in baselines:
+            ncf_rec.train()
+            ncf_rec.run()
+            evaluate("Neural Collaborative Filtering", ncf_rec.output_path, train_file, test_file)
+        if reorders is not None and 'NCF' in reorders:
+            output_names.add(ncf_rec.output_path.split("/")[-1])
+
+        # 6 - EASE Algorithm
+        ease_rec = ease.EASE(fold + str(i), "ease.csv", rank_size=20, cols_used=[0, 1, 2],
+                             col_names=['user_id', 'artist_id', 'feedback'], lambda_=500)
+        if 'EASE' in baselines:
+            ease_rec.train()
+            ease_rec.run()
+            evaluate("EASE", ease_rec.output_path, train_file, test_file)
+        if reorders is not None and 'EASE' in reorders:
+            output_names.add(ease_rec.output_path.split("/")[-1])
 
     # REORDERS
     for i in range(start_fold, end_fold + 1):
@@ -206,90 +200,111 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baseline: 
         test_file = fold + str(i) + "/test.dat"
         output_files = [fold + str(i) + "/outputs/" + name for name in output_names]
 
-        if proposed[0]:
-            # 6 - Prop reorder params: reorder=10
-            for output_file in output_files:
-                prop_reord = PropReordering(train_file, output_file,
-                                            "./generated_files/wikidata/last-fm/props_artists_id.csv",
-                                            cols_used=['user_id', 'artist_id', 'interaction'],
-                                            n_reorder=10,
-                                            prop_cols=['id', 'artist', 'prop', 'obj'], hybrid=True)
-                prop_reord.reorder()
-                evaluate("Prop Reorder Algorithm reorder=10", prop_reord.output_path, train_file, test_file)
-
-        if proposed[1]:
-            # 7 - Prop reorder params: reorder=20
-            for output_file in output_files:
-                prop_reord = PropReordering(train_file, output_file,
-                                            "./generated_files/wikidata/last-fm/props_artists_id.csv",
-                                            cols_used=['user_id', 'artist_id', 'interaction'],
-                                            n_reorder=20,
-                                            prop_cols=['id', 'artist', 'prop', 'obj'], hybrid=True)
-                prop_reord.reorder()
-                evaluate("Prop Reorder Algorithm reorder=20", prop_reord.output_path, train_file, test_file)
-
-        if proposed[2]:
-            # 8 - Path reorder params: reorder=10, policy=last, p_items=0.1
-            for output_file in output_files:
-                path_reord = PathReordering(train_file, output_file,
-                                            "./generated_files/wikidata/last-fm/props_artists_id.csv",
-                                            cols_used=['user_id', 'artist_id', 'interaction'],
-                                            prop_cols=['id', 'artist', 'prop', 'obj'], n_reorder=10, p_items=0.1,
-                                            policy='last', hybrid=True)
-                path_reord.reorder()
-                evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10", path_reord.output_path,
-                         train_file, test_file)
-
-        if proposed[3]:
-            # 9 - Path reorder params: reorder=10, policy=random, p_items=0.1
-            for output_file in output_files:
-                path_reord = PathReordering(train_file, output_file,
-                                            "./generated_files/wikidata/last-fm/props_artists_id.csv",
-                                            cols_used=['user_id', 'artist_id', 'interaction'],
-                                            prop_cols=['id', 'artist', 'prop', 'obj'], n_reorder=10, p_items=0.1,
-                                            policy='random', hybrid=True)
-                path_reord.reorder()
-                evaluate("Reorder Path USER KNN Algorithm p_items=0.1, policy=random, n_reorder=10",
-                         path_reord.output_path, train_file, test_file)
-
-        if proposed[4]:
-            # 10 - Path reorder params: reorder=10, policy=last, p_items=0.1, not hybrid
-            for output_file in output_files:
-                path_reord = PathReordering(train_file, output_file,
-                                            "./generated_files/wikidata/last-fm/props_artists_id.csv",
-                                            cols_used=['user_id', 'artist_id', 'interaction'],
-                                            prop_cols=['id', 'artist', 'prop', 'obj'], n_reorder=20, p_items=0.1,
-                                            policy='last', hybrid=True)
-                path_reord.reorder()
-                evaluate("Reorder Path Algorithm p_items=0.1, policy=last, n_reorder=10 not hybrid",
-                         path_reord.output_path,
-                         train_file, test_file)
+        # Path reorder
+        for output_file in output_files:
+            path_reord = PathReordering(train_file, output_file,
+                                        "./generated_files/wikidata/last-fm/props_artists_id.csv",
+                                        cols_used=['user_id', 'artist_id', 'interaction'],
+                                        prop_cols=['id', 'artist', 'prop', 'obj'], n_reorder=n_reorder, p_items=p_items,
+                                        policy=policy, hybrid=True)
+            path_reord.reorder()
+            evaluate("Reorder Path Algorithm p_items="+str(p_items)+"policy="+str(policy)+"n_reorder="+str(n_reorder),
+                     path_reord.output_path, train_file, test_file)
 
 
-# fm.user_artist_filter_interaction(5, n_iter_flag=True)
-# fm.cross_validation_lasfm(rs=42)
+parser = argparse.ArgumentParser()
+
+# required arguments
+parser.add_argument("--mode",
+                    type=str,
+                    default="run",
+                    required=True,
+                    help="Set 'run' to run experiments and 'validate' to run statistical relevance tests")
+parser.add_argument("--dataset",
+                    type=str,
+                    default="ml",
+                    required=True,
+                    help="Data set. Either 'ml' for the movielens dataset or 'lastfm' for the lastfm dataset")
+
+# run commands
+parser.add_argument("--begin",
+                    type=int,
+                    default=0,
+                    help="Fold to start the experiment")
+parser.add_argument("--end",
+                    type=int,
+                    default=9,
+                    help="Fold to end the experiment")
+parser.add_argument("--alg",
+                    type=str,
+                    default="MostPop BPRMF UserKNN PageRank NCF EASE",
+                    help="Algoritms to run separated by space. E.g.: MostPop BPRMF UserKNN PageRank NCF EASE."
+                         "Only works on the 'run' mode")
+parser.add_argument("--reord",
+                    type=str,
+                    default="MostPop BPRMF UserKNN PageRank NCF EASE",
+                    help="Algoritms to reorder separated by space. E.g.: MostPop BPRMF UserKNN PageRank NCF EASE."
+                         "Only works on the 'run' mode")
+parser.add_argument("--nreorder",
+                    type=int,
+                    default=10,
+                    help="Number of recommendations to reorder. Works on the 'run' mode")
+parser.add_argument("--pitems",
+                    type=float,
+                    default=0.1,
+                    help="Set of items to build user semantic profile. Only works on the 'run' mode.")
+parser.add_argument("--policy",
+                    type=str,
+                    default='last',
+                    help="Policy to extract set of items to build semantic profile. 'all' to get all items, 'last' for"
+                         "the last interacted, 'first' for the first interacted, 'random' for random items."
+                         "Only works on the 'run' mode.")
+
+# validate commands
+parser.add_argument("--baseline",
+                    type=str,
+                    default="userknn",
+                    help="Name of the file without extension of the baseline to validate results. "
+                         "E.g.: 'bprmf'. Only works on the 'validation' mode.")
+parser.add_argument("--sufix",
+                    type=str,
+                    default="path[policy=last_items=01_reorder=10_hybrid]",
+                    help="Reorder sufix on result file after the string of the baseline. "
+                         "E.g.: path[policy=last_items=01_reorder=10_hybrid]. Only works on the 'validation' mode.")
+parser.add_argument("--metrics",
+                    type=str,
+                    default="PREC RECALL MAP NDCG GINI ENTROPY AGG_DIV COVERAGE'",
+                    help="Metrics to evaluate the statistical relevance. "
+                         "E.g.: PREC RECALL MAP NDCG GINI ENTROPY AGG_DIV COVERAGE."
+                         "Only works on the 'validation' mode.")
+parser.add_argument("--method",
+                    type=str,
+                    default='wilcoxon',
+                    help="Statistical relevance test. Either 'ttest', 'wilcoxon' or 'both'. "
+                         "Only works on the 'validation' mode.")
+parser.add_argument("--save",
+                    type=bool,
+                    default=False,
+                    help="Boolean argument to save or not result in file. Only works on the 'validation' mode.")
+
+# parse arguments
+args = parser.parse_args()
 
 folds_path_ml = "./datasets/ml-latest-small/folds/"
 folds_path_lastfm = "./datasets/hetrec2011-lastfm-2k/folds/"
 
-ncf_rec = ncf.NCF(folds_path_ml + str(0), "ncf.csv", rank_size=20, factors=32, layers=[64, 32, 16, 8],
-                  epochs=10, neg_smp_train=4, neg_smp_test=100, cols_used=[0, 1, 2],
-                  col_names=['user_id', 'movie_id', 'feedback'],
-                  model_path=folds_path_ml + str(0) + "/model.pt", batch_size=256, seed=42, model_disk='w')
-ncf_rec.train()
-ncf_rec.run()
+if args.mode == "run" and args.dataset == "ml":
+    run_experiments_ml(folds_path_ml, args.begin, args.end, args.alg.split(), args.reord.split(),
+                       args.nreorder, args.pitems, args.policy)
 
-evaluate("NCF",
-         ncf_rec.output_path,
-         "./datasets/ml-latest-small/folds/0/train.dat", "./datasets/ml-latest-small/folds/0/test.dat")
+if args.mode == "run" and args.dataset == "lastfm":
+    run_experiments_lastfm(folds_path_lastfm, args.begin, args.end, args.alg.split(), args.reord.split(),
+                           args.nreorder, args.pitems, args.policy)
 
-#ease = ease.EASE(folds_path_ml + str(0), "ease.csv", rank_size=20, cols_used=[0, 1, 2],
-#                  col_names=['user_id', 'movie_id', 'feedback'], lambda_=500)
-#ease.train()
-#ease.run()
-#evaluate("EASE", ease.output_path, "./datasets/ml-latest-small/folds/0/train.dat",
-#         "./datasets/ml-latest-small/folds/0/test.dat")
+if args.mode == "validate" and args.dataset == "ml":
+    statistical_relevance(args.sufix, args.baseline, folds_path_ml,
+                          args.metrics.split(), method=args.method, save=args.save)
 
-# run_experiments_lastfm(folds_path_lastfm, 0, 9, [0, 0, 0, 0], [0, 0, 1, 0, 0], [1, 1, 1, 1])
-# statistical_relevance("path[policy=last_items=01_reorder=10_hybrid]", "bprmf", folds_path_lastfm,
-#                      ["MAP", "NDCG", "GINI", "ENTROPY", "COVERAGE"], save=False)
+if args.mode == "validate" and args.dataset == "lastfm":
+    statistical_relevance(args.sufix, args.baseline, folds_path_lastfm,
+                          args.metrics.split(), method=args.method, save=args.save)

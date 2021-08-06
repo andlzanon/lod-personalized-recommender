@@ -4,7 +4,7 @@ from preprocessing import dbpedia_utils as from_dbpedia
 from preprocessing import wikidata_utils as from_wikidata
 from caserec.utils.split_database import SplitDatabase
 
-ml_small_path = "./datasets/ml-latest-small/ratings_implicit.csv"
+ml_small_path = "./datasets/ml-latest-small/interactions.csv"
 original_ml_small_path = "./datasets/ml-latest-small/ratings.csv"
 movies_ml_small_path = "./datasets/ml-latest-small/movies.csv"
 link_ml_small_path = "./datasets/ml-latest-small/links.csv"
@@ -67,22 +67,29 @@ def read_user_item_interaction():
     return pd.read_csv(ml_small_path)
 
 
-def implicit_feedback():
+def user_artist_filter_interaction(n_inter: int, n_iter_flag=False):
     """
-    Function that transform the dataset into implicit feedback
-    :return: csv file of the dataset
+    :param n_inter: minimum number of interactions for each user
+    :param n_iter_flag: flag to filter or not by number of interactions
+    :return: file
     """
-    df = pd.read_csv(original_ml_small_path)
-    df = df[df.rating > 3.5]
-    df = df.set_index('userId')
+    interac = pd.read_csv(original_ml_small_path)
+    interac = interac.set_index('userId')
+    props = pd.read_csv(wikidata_props_ml_small)
+
+    filter_interactions = interac[interac['movieId'].isin(list(props['movieId'].unique()))]
+
     implicit = pd.DataFrame()
+    if n_iter_flag:
+        for u in filter_interactions.index.unique():
+            u_set = filter_interactions.loc[u]
+            if len(u_set) >= n_inter:
+                implicit = pd.concat([implicit, u_set.reset_index()], ignore_index=True)
 
-    for u in df.index.unique():
-        u_set = df.loc[u]
-        if len(u_set) >= 5:
-            implicit = pd.concat([implicit, u_set.reset_index()], ignore_index=True)
+        implicit.to_csv(ml_small_path, header=None, index=False)
+        return
 
-    implicit.to_csv(ml_small_path, header=None, index=False)
+    filter_interactions.to_csv(ml_small_path, header=None, index=False)
 
 
 def __get_movie_strings(full_name: str):
@@ -307,6 +314,6 @@ def cross_validation_ml_small(rs: int):
     :param rs: random state integer arbitrary number
     :return: folders created on the dataset repository
     """
-    SplitDatabase(input_file="./datasets/ml-latest-small/ratings.csv",
-                  dir_folds="./datasets/ml-latest-small/", as_binary=True, binary_col=2, header=1,
+    SplitDatabase(input_file="./datasets/ml-latest-small/interactions.csv",
+                  dir_folds="./datasets/ml-latest-small/", as_binary=True, binary_col=2,
                   sep_read=',', sep_write=',', n_splits=10).k_fold_cross_validation(random_state=rs)

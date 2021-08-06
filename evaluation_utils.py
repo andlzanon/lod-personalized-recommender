@@ -20,8 +20,12 @@ def evaluate(alg_name: str, prediction_file: str, train_file: str, test_file: st
 
     output_file = prediction_file.replace('outputs', 'results')
     accurate_metrics = ItemRecommendationEvaluation(sep=',').evaluate_with_files(prediction_file, test_file)
-    diver_metrics = evaluate_diversity(prediction_file, train_file)
-    print(diver_metrics)
+    if "ncf" not in prediction_file:
+        diver_metrics = evaluate_diversity(prediction_file, train_file)
+    else:
+        diver_metrics = {}
+
+    # print(diver_metrics)
 
     f = open(output_file, "w")
     f.write("--- " + alg_name + " --- \n")
@@ -65,8 +69,10 @@ def evaluate_diversity(prediction_file: str, train_file: str):
 
         g = gini(np.array(probs))
         en = entropy(probs, base=10)
-        cov = len(l) / total_items
+        agg_div = len(l)
+        cov = agg_div / total_items
 
+        div['AGG_DIV@' + str(at)] = agg_div
         div['GINI@' + str(at)] = g
         div['ENTROPY@' + str(at)] = en
         div['COVERAGE@' + str(at)] = cov
@@ -80,12 +86,13 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
     :param proposed: proposed method final name. e.g.: path[policy=last_items=01_reorder=10]
     :param baseline: baseline name e.g.: bprmf, knn, mostpop, wikidata_page_rank8020
     :param dataset: path to the folds of the chosen dataset. e.g. "./datasets/ml-latest-small/folds/"
-    :param metrics: list with the methods do analyse from the list ["PREC, RECALL", "MAP", "NDCG", "GINI", "ENTROPY", "COVERAGE"]
+    :param metrics: list with the methods do analyse from the list
+                    ["PREC, RECALL", "MAP", "NDCG", "GINI", "ENTROPY", "AGG_DIV", "COVERAGE"]
     :param method: method to test the statistical relevance, either 'ttest', 'wilcoxon' or 'both' that is the default value
     :param save: flag to save file in dataset directory
     :return: the statistical relevance of the proposed with the baseline for the metrics chosen for @1, @3, @5 and @10
     """
-    div_metrics = ["GINI", "ENTROPY", "COVERAGE"]
+    div_metrics = ["GINI", "ENTROPY", "COVERAGE", "AGG_DIV"]
     results = pd.DataFrame(columns=['METRIC',
                                     'PROPOSED NAME', 'PROPOSED MEAN',
                                     'BASELINE NAME', 'BASELINE MEAN',

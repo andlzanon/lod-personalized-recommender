@@ -93,11 +93,9 @@ def user_artist_filter_interaction(n_inter: int, n_iter_flag=False):
             if len(u_set) >= n_inter:
                 implicit = pd.concat([implicit, u_set.reset_index()], ignore_index=True)
 
-        implicit.reset_index()
         implicit.to_csv(interactions, header=None, index=False)
         return
 
-    filter_interactions = filter_interactions.reset_index()
     filter_interactions.to_csv(interactions, header=None, index=False)
 
 
@@ -256,7 +254,7 @@ def extract_wikidata_prop():
     artists_props = artists_props.sort_values(by='id')
     # save output
     print("End obtaining movie data")
-    artists_props.to_csv(artist_prop_lastid, mode='w', header=True, index=False)
+    artists_props.to_csv(artist_prop, mode='w', header=True, index=False)
     print("Coverage: " + str(len(artists_props['id'].unique())) + " obtained of " + str(n)
           + ". Percentage: " + str(len(artists_props['id'].unique()) / n))
     print('Output file generated')
