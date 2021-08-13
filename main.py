@@ -168,7 +168,7 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baselines:
         if 'PageRank' in baselines:
             pr.run()
             evaluate("Wikidata Page Rank 80/20 Algorithm", pr.output_path, train_file, test_file)
-        if reorders is not None and 'PageRank' in reorders == 1:
+        if reorders is not None and 'PageRank' in reorders:
             output_names.add(pr.output_path.split("/")[-1])
 
         # 5 - Neural Collaborative Filtering
@@ -237,12 +237,12 @@ parser.add_argument("--end",
                     help="Fold to end the experiment")
 parser.add_argument("--alg",
                     type=str,
-                    default="MostPop BPRMF UserKNN PageRank NCF EASE",
+                    default="None",
                     help="Algoritms to run separated by space. E.g.: MostPop BPRMF UserKNN PageRank NCF EASE."
                          "Only works on the 'run' mode")
 parser.add_argument("--reord",
                     type=str,
-                    default="MostPop BPRMF UserKNN PageRank NCF EASE",
+                    default="None",
                     help="Algoritms to reorder separated by space. E.g.: MostPop BPRMF UserKNN PageRank NCF EASE."
                          "Only works on the 'run' mode")
 parser.add_argument("--nreorder",
@@ -273,7 +273,7 @@ parser.add_argument("--sufix",
                          "E.g.: path[policy=last_items=01_reorder=10_hybrid]. Only works on the 'validation' mode.")
 parser.add_argument("--metrics",
                     type=str,
-                    default="PREC RECALL MAP NDCG GINI ENTROPY AGG_DIV COVERAGE'",
+                    default="PREC RECALL MAP NDCG GINI ENTROPY AGG_DIV COVERAGE",
                     help="Metrics to evaluate the statistical relevance. "
                          "E.g.: PREC RECALL MAP NDCG GINI ENTROPY AGG_DIV COVERAGE."
                          "Only works on the 'validation' mode.")
