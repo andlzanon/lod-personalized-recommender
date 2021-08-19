@@ -86,7 +86,7 @@ def run_experiments_ml(fold: str, start_fold: int, end_fold: int, baselines: lis
         # 6 - EASE Algorithm
         ease_rec = ease.EASE(fold + str(i), "ease.csv", rank_size=20, cols_used=[0, 1, 2],
                              col_names=['user_id', 'movie_id', 'feedback'], lambda_=500)
-        if 'EASE' in reorders:
+        if 'EASE' in baselines:
             ease_rec.train()
             ease_rec.run()
             evaluate("EASE", ease_rec.output_path, train_file, test_file)

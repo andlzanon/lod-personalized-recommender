@@ -49,7 +49,7 @@ class NCF(BaseRecommender):
         self.neg_smp_test = neg_smp_test
         random.seed(self.seed)
 
-        print("Params: epochs: " + str(self.epochs) + ", batch size: " + str(self.batch_size))
+        # print("Params: epochs: " + str(self.epochs) + ", batch size: " + str(self.batch_size))
 
         self.all_items = list(set(list(self.test_set[self.col_names[1]].unique()) +
                                   list(self.train_set[self.col_names[1]].unique())))
@@ -72,7 +72,7 @@ class NCF(BaseRecommender):
             self.test_neg = pd.read_csv(self.folder_path + "/test_neg.csv", header=None)
             self.test_neg.columns = self.col_names
             self.test_neg = self.test_neg.set_index(self.col_names[0])
-            print("--- TRAIN FILE AND TEST FILE READ SUCCESSFULLY ---")
+            # print("--- TRAIN FILE AND TEST FILE READ SUCCESSFULLY ---")
         except FileNotFoundError:
             self.train_neg, self.test_neg = self.leave_one_out()
 
