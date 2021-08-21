@@ -150,4 +150,8 @@ class PathReordering(LODPersonalizedReordering):
         if self.policy == 'first':
             return historic[(-1 * n):]
         if self.policy == 'random':
-            return random.sample(historic, n)
+            try:
+                items = random.sample(historic, n)
+            except ValueError:
+                items = random.sample(historic, len(historic))
+            return items
