@@ -167,10 +167,13 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
 
     if save:
         p = dataset[:-6] + "results_" + proposed + ".xlsx"
-        book = load_workbook(p)
-        writer = pd.ExcelWriter(p, mode='r+')
-        writer.book = book
-        writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
+        try:
+            book = load_workbook(p)
+            writer = pd.ExcelWriter(p, mode='r+')
+            writer.book = book
+            writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
+        except FileNotFoundError:
+            writer = pd.ExcelWriter(p, mode='w+')
         results.to_excel(writer, sheet_name=baseline, index=False)
         writer.save()
         writer.close()
