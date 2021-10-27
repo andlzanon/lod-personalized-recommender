@@ -97,6 +97,126 @@ class PathReordering(LODPersonalizedReordering):
 
         reorder.to_csv(self.output_path, mode='w', header=False, index=False)
 
+    def reorder_with_path(self, h_min: int, h_max: int, max_users: int):
+        """
+        Function that reorders the recommendations made by the recommendation algorithm based on an adapted TF-IDF to
+        the LOD, where the words of a document are the values of properties of the items the user iteracted and all the
+        documents are all items properties
+        :return: file with recommendations for every user reordered
+        """
+
+        print(self.output_name)
+        n_users = 0
+        for u in self.output_rec_set.index.unique():
+            # get items that the user interacted and recommended by an algorithm
+            items_historic = self.train_set.loc[u].sort_values(by=self.cols_used[-1], ascending=False)
+
+            if len(items_historic) <= h_min or len(items_historic) >= h_max:
+                continue
+            if n_users == max_users:
+                break
+
+            n_users = n_users + 1
+
+            try:
+                items_historic = items_historic[self.cols_used[1]].to_list()
+            except AttributeError:
+                items_historic = list(self.train_set.loc[u][self.cols_used[1]])[:-1]
+
+            print("\nUser: " + str(u))
+            print("Items interacted by the user")
+            for i in items_historic:
+                movie_name = self.prop_set.loc[i].iloc[0,0]
+                print("Item id: " + str(i) + " Name: " + movie_name)
+
+            items_recommended = list(self.output_rec_set.loc[u][self.output_cols[1]])[:self.n_reorder]
+
+            print("\nTop " + str(self.n_reorder) + " recommended")
+            for i in items_recommended:
+                movie_name = self.prop_set.loc[i].iloc[0, 0]
+                print("Item id: " + str(i) + " Name: " + movie_name)
+
+            # get semantic profile and extract the best paths from the suggested item to the recommended
+            user_semantic_profile = self.user_semantic_profile(items_historic)
+
+            print("\nUsers favorites attributes on the kG")
+            s_user_sem_pro = dict(sorted(user_semantic_profile.items(), key=lambda item: item[1], reverse=True))
+            n = 0
+            for k in s_user_sem_pro.keys():
+                if n < 5:
+                    print(k)
+                    n = n + 1
+                else:
+                    break
+
+            items_historic_cutout = self.__items_by_policy(items_historic)
+            # new items interacted based on policy and percentage
+            sem_dist = self.__semantic_path_distance(items_historic_cutout, items_recommended, user_semantic_profile)
+
+            # create column with the sum of paths, pivot to create a matrix with interacted items by recommended
+            # and reorder the recommended items by the sum of the columns
+            sem_dist['score'] = pd.DataFrame(sem_dist['path'].to_list()).mean(1)
+            sem_dist_matrix = sem_dist.pivot(index='historic', columns='recommended', values='score')
+            reordered_items = pd.DataFrame(sem_dist_matrix.mean().sort_values(ascending=False))
+            reordered_items = reordered_items.reset_index()
+            reordered_items['user_id'] = u
+            reordered_items.columns = ['item_id', 'score', 'user_id']
+
+            if self.hybrid:
+                output_rec = self.output_rec_set.loc[u].set_index('item_id')
+                for i in items_recommended:
+                    curr_score = float(reordered_items.loc[(reordered_items['item_id']) == i, 'score'])
+                    rec_score = float(output_rec.loc[i])
+                    reordered_items.loc[(reordered_items['item_id']) == i, 'score'] = curr_score * rec_score
+
+                reordered_items = reordered_items.fillna(0)
+                reordered_items = reordered_items.sort_values(by='score', ascending=False)
+
+            print("\nReordered Recommendations")
+            reorder_rank = list(reordered_items['item_id'])
+            for i in reorder_rank:
+                movie_name = self.prop_set.loc[i].iloc[0, 0]
+                print("Item id: " + str(i) + " Name: " + movie_name)
+
+            sem_dist = sem_dist.set_index('recommended')
+            for i in reorder_rank:
+                print("\nPaths for the Recommended Item: " + str(i))
+                paths_rec = sem_dist.loc[i].sort_values(by='score', ascending=False)
+                k = 0
+                # first path
+                hist_item = paths_rec.iloc[k, 0]
+                node_value = paths_rec.iloc[k, 1]
+                node_name = []
+                for v in node_value:
+                    node_name.append(
+                        list(user_semantic_profile.keys())[list(user_semantic_profile.values()).index(v)])
+
+                origin = "origin: \"" + self.prop_set.loc[hist_item].iloc[0, 0] + "\""
+                path_sentence = " nodes: "
+                for n in node_name:
+                    path_sentence = path_sentence + "\"" + n + "\" "
+                destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
+                print(origin + path_sentence + destination)
+
+                # check for others with same value
+                k = k + 1
+                value = paths_rec.iloc[k, 2]
+                while paths_rec.iloc[k, 2] == value:
+                    hist_item = paths_rec.iloc[k, 0]
+                    node_value = paths_rec.iloc[k, 1]
+                    node_name = []
+                    for v in node_value:
+                        node_name.append(
+                            list(user_semantic_profile.keys())[list(user_semantic_profile.values()).index(v)])
+
+                    origin = "origin: \"" + self.prop_set.loc[hist_item].iloc[0, 0] + "\""
+                    path_sentence = " nodes: "
+                    for n in node_name:
+                        path_sentence = path_sentence + "\"" + n + "\""
+                    destination = " destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
+                    print(origin + path_sentence + destination)
+                    k = k + 1
+
     def __semantic_path_distance(self, historic: list, recommeded: list, semantic_profile: dict) -> pd.DataFrame:
         """
         Get the best path based on the semantic profile from all the historic items to the recommended ones
