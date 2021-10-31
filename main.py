@@ -220,14 +220,18 @@ def run_explanations_ml(fold: str, n_fold: int, reorders=None, n_reorder=10, p_i
     Run experiments for the movie-lens 100k dataset for the quantity of folds passed by in the parameter n_folds.
     E.g. if 9 then will run for all folds if 6 it will run from fold 0 to 5, etc
     :param fold: path of the folds
-    :param start_fold: folds to start evaluation to evaluate
-    :param end_fold: fold to end evaluation
-    :param baselines: list for evaluating the current 6 recsys (MostPop, BPRMF, UserKNN, PageRank, NCF and EASE).
+    :param n_fold: number of the fold to generate explanations to users
     :param reorders: list to reorder recommender algorithms that had run already
     :param n_reorder: quantity of items to reorder
     :param p_items: percentage of items from historic to build semantic profile
     :param policy: policy to choose items
-    :return: folds evaluated by accuracy and diversity metrics
+    :param: h_min: minimum number of users' historic items to generate the recommendations and explanations to, if a
+        user has a smaller number of interacted items than this parameter the algorithm will not generate explanations
+    :param: h_max: maximum number of users' historic items to generate the recommendations and explanations to, if a
+        user has a bigger number of interacted items than this parameter the algorithm will not generate explanations
+    :param: max_users: maximum number of user to generate explanations to, when the program reaches max_number it stops
+    :return: users are displayed on console with interacted items, recommended items, semantic profile, reordered items
+        and explanation paths for each recommended item
     """
 
     output_names = set([])
@@ -288,17 +292,21 @@ def run_explanations_ml(fold: str, n_fold: int, reorders=None, n_reorder=10, p_i
 def run_explanations_lastfm(fold: str, n_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
                         h_max=20, max_users=1):
     """
-    Run experiments for the lastfm dataset for the quantity of folds passed by in the parameter n_folds.
+    Run explanation experiments for the lastfm dataset for the quantity of folds passed by in the parameter n_folds.
     E.g. if 10 then will run for all folds if 6 it will run from fold 0 to 5, etc
     :param fold: path of the folds
-    :param start_fold: folds to start evaluation to evaluate
-    :param end_fold: fold to end evaluation
-    :param baselines: list for evaluating the current 6 recsys (MostPop, BPRMF, UserKNN, PageRank, NCF and EASE).
+    :param n_fold: number of the fold to generate explanations to users
     :param reorders: list to reorder recommender algorithms that had run already
     :param n_reorder: quantity of items to reorder
     :param p_items: percentage of items from historic to build semantic profile
     :param policy: policy to choose items
-    :return: folds evaluated by accuracy and diversity metrics
+    :param: h_min: minimum number of users' historic items to generate the recommendations and explanations to, if a
+        user has a smaller number of interacted items than this parameter the algorithm will not generate explanations
+    :param: h_max: maximum number of users' historic items to generate the recommendations and explanations to, if a
+        user has a bigger number of interacted items than this parameter the algorithm will not generate explanations
+    :param: max_users: maximum number of user to generate explanations to, when the program reaches max_number it stops
+    :return: users are displayed on console with interacted items, recommended items, semantic profile, reordered items
+        and explanation paths for each recommended item
     """
 
     output_names = set([])
@@ -362,7 +370,8 @@ parser.add_argument("--mode",
                     type=str,
                     default="run",
                     required=True,
-                    help="Set 'run' to run experiments and 'validate' to run statistical relevance tests")
+                    help="Set 'run' to run experiments, 'validate' to run statistical relevance tests and "
+                         "'explanation' to generate explanation paths to users")
 parser.add_argument("--dataset",
                     type=str,
                     default="ml",
@@ -391,17 +400,17 @@ parser.add_argument("--reord",
 parser.add_argument("--nreorder",
                     type=int,
                     default=10,
-                    help="Number of recommendations to reorder. Works on the 'run' mode")
+                    help="Number of recommendations to reorder. Only works on the 'run' and 'explanation' modes.")
 parser.add_argument("--pitems",
                     type=float,
                     default=0.1,
-                    help="Set of items to build user semantic profile. Only works on the 'run' mode.")
+                    help="Set of items to build user semantic profile. Only works on the 'run' and 'explanation' modes.")
 parser.add_argument("--policy",
                     type=str,
                     default='last',
                     help="Policy to extract set of items to build semantic profile. 'all' to get all items, 'last' for"
                          "the last interacted, 'first' for the first interacted, 'random' for random items."
-                         "Only works on the 'run' mode.")
+                         "Only works on the 'run' and 'explanation' modes.")
 
 # validate commands
 parser.add_argument("--baseline",
@@ -434,7 +443,7 @@ parser.add_argument("--save",
 parser.add_argument("--fold",
                     type=int,
                     default=0,
-                    help="Fold to consider when generating explanations")
+                    help="Fold to consider when generating explanations. Only works on 'explanation' mode")
 
 parser.add_argument("--min",
                     type=int,
@@ -449,7 +458,7 @@ parser.add_argument("--max",
 parser.add_argument("--max_users",
                     type=int,
                     default=1,
-                    help="Maximum number of users to generate explanations to")
+                    help="Maximum number of users to generate explanations to. Works on the 'explanation' mode.")
 
 # parse arguments
 args = parser.parse_args()

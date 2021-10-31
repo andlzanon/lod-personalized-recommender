@@ -100,8 +100,12 @@ class PathReordering(LODPersonalizedReordering):
     def reorder_with_path(self, h_min: int, h_max: int, max_users: int):
         """
         Function that reorders the recommendations made by the recommendation algorithm based on an adapted TF-IDF to
-        the LOD, where the words of a document are the values of properties of the items the user iteracted and all the
-        documents are all items properties
+        the LOD and generate the explanation paths
+        :param: h_min: minimum number of users' historic items to generate the recommendations and explanations to, if a
+        user has a smaller number of interacted items than this parameter the algorithm will not generate explanations
+        :param: h_max: maximum number of users' historic items to generate the recommendations and explanations to, if a
+        user has a bigger number of interacted items than this parameter the algorithm will not generate explanations
+        :param: max_users: maximum number of user to generate explanations to
         :return: file with recommendations for every user reordered
         """
 

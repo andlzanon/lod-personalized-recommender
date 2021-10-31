@@ -28,7 +28,7 @@ We used [Anaconda](https://www.anaconda.com/) to run the experiments. The versio
 ### Command-Line Arguments to Run Experiments
 The command line arguments to run experiments are:
 
-* mode:  Set 'run' to run experiments and 'validate' to run statistical relevance tests;
+* mode:  Set 'run' to run experiments, 'validate' to run statistical relevance tests and ;
 
 * dataset: Either 'ml' for the small movielens dataset or 'lastfm' for the lastfm dataset;
 
@@ -54,9 +54,18 @@ The command line arguments to run experiments are:
 
 * method: Statistical relevance test. Either 'ttest', 'wilcoxon' or 'both'. Only works on the 'validation' mode.
 
-* save: Boolean argument to save or not result in file
+* save: Boolean argument to save or not result in file. Only works on the 'validation' mode.
 
-Therefore there are two main commands: the 'run' that is responsable of running an experiment and the 'validate' to run a statistical relevance test comparison of a baseline with a proposed metric.
+* fold: Fold to consider when generating explanations. Only works on 'explanation' mode.
+
+* min: Minimum number of user interacted items to explain. Works on the 'explanation' mode.
+
+* max: Maximum number of user interacted items to explain. Works on the 'explanation' mode.
+
+* max_users: Maximum number of users to generate explanations to. Works on the 'explanation' mode.
+
+Therefore there are three main commands: the 'run' that is responsable of running an experiment, the 'validate' to run a statistical relevance test comparison of a baseline with a proposed metric and 
+the 'explanation' mode that generates to a fold recommendations just like the run, but it prints on the console the items names, the semantic profile and the explanation paths.  
 
 ### Examples
 
@@ -72,5 +81,10 @@ To run a statistical relevance test use the following command in which the bprmf
 
     python main.py --mode=validate --dataset=lastfm --sufix=path[policy=last_items=01_reorder=10_hybrid] --baseline=bprmf --method="both" --save=False --metrics="MAP NDCG GINI ENTROPY COVERAGE"
 
+To run an explanation experiment for the lastfm dataset for the PageRank algorithm to users a maximum of 2 users that have at least 0 interactions and a max of 20 interactions:
 
+    python main.py --mode=explanation --dataset=lastfm --fold=0 --reord="PageRank" --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=20 --max_users=2
 
+To run an explanation experiment for the movielens dataset for the PageRank algorithm to users a maximum of 2 users that have at least 0 interactions and a max of 20 interactions:
+
+    python main.py --mode=explanation --dataset=ml --fold=0 --reord="PageRank" --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=20 --max_users=2
