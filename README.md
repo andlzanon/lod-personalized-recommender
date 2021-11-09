@@ -5,14 +5,6 @@ This algorithm aims to improve recommendation engine's accuracy and generate exp
 
 ## Reproduction
 ### Libraries
-To install the libraries used in this project use one of the commands: 
-    
-    pip install <lib>==<version>
-    pip install requirements
-    
-To install the CaseRecommender library use the command (this is a necessary step when using the requirements file to install dependencies):
-    
-    pip install -U git+git://github.com/caserec/CaseRecommender.git
 
 * [numpy 1.21.1](https://numpy.org/)
 * [pandas 1.0.4](https://pandas.pydata.org/)
@@ -20,13 +12,29 @@ To install the CaseRecommender library use the command (this is a necessary step
 * [networkx 2.5.1](https://github.com/networkx/networkx) 
 * [pygini 1.0.1](https://github.com/mckib2/pygini)
 * [requests 2.25.1](https://github.com/psf/requests)
+* [PyTorch 1.1.0](https://pytorch.org/)
 * [SPARQLWrapper 1.8.5](https://github.com/RDFLib/sparqlwrapper)
 * [CaseRecommender 1.1.0](https://github.com/caserec/CaseRecommender)
+
+### Enviroment
+To install the libraries used in this project, use the command: 
+    
+    pip install requirements
+
+Or create a conda enviroment with the following command:
+
+    conda create --name <env> --file requirements.txt
+    
+After this step it is necessary to install the CaseRecommender library with the command:
+    
+    pip install -U git+git://github.com/caserec/CaseRecommender.git
 
 We used [Anaconda](https://www.anaconda.com/) to run the experiments. The version of Python used was the [3.7.3](https://www.python.org/downloads/release/python-373/).
 
 ### Command-Line Arguments to Run Experiments
-The command line arguments to run experiments are:
+You can run experiments with command line arguments. 
+
+The documentation of each arguments follows bellow along with examples that was the commands used in the experiments:
 
 * mode:  Set 'run' to run experiments, 'validate' to run statistical relevance tests and ;
 
