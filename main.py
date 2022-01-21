@@ -215,7 +215,7 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baselines:
 
 
 def run_explanations_ml(fold: str, n_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
-                        h_max=20, max_users=1):
+                        h_max=20, max_users=1, expl_alg='max'):
     """
     Run experiments for the movie-lens 100k dataset for the quantity of folds passed by in the parameter n_folds.
     E.g. if 9 then will run for all folds if 6 it will run from fold 0 to 5, etc
@@ -286,11 +286,11 @@ def run_explanations_ml(fold: str, n_fold: int, reorders=None, n_reorder=10, p_i
                                     cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
                                     prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=n_reorder,
                                     p_items=p_items, policy=policy, hybrid=True)
-        path_reord.reorder_with_path(h_min, h_max, max_users)
+        path_reord.reorder_with_path(h_min, h_max, max_users, expl_alg)
 
 
 def run_explanations_lastfm(fold: str, n_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
-                        h_max=20, max_users=1):
+                        h_max=20, max_users=1, expl_alg='max'):
     """
     Run explanation experiments for the lastfm dataset for the quantity of folds passed by in the parameter n_folds.
     E.g. if 10 then will run for all folds if 6 it will run from fold 0 to 5, etc
@@ -360,7 +360,7 @@ def run_explanations_lastfm(fold: str, n_fold: int, reorders=None, n_reorder=10,
                                     cols_used=['user_id', 'artist_id', 'interaction'],
                                     prop_cols=['id', 'artist', 'prop', 'obj'], n_reorder=n_reorder, p_items=p_items,
                                     policy=policy, hybrid=True)
-        path_reord.reorder_with_path(h_min, h_max, max_users)
+        path_reord.reorder_with_path(h_min, h_max, max_users, expl_alg)
 
 
 parser = argparse.ArgumentParser()
@@ -460,6 +460,12 @@ parser.add_argument("--max_users",
                     default=1,
                     help="Maximum number of users to generate explanations to. Works on the 'explanation' mode.")
 
+parser.add_argument("--expl_alg",
+                    type=str,
+                    default="max",
+                    help="algorithm to explain recommendations. Either max, diverse or explod. Works only on "
+                         "'explanation' mode.")
+
 # parse arguments
 args = parser.parse_args()
 
@@ -484,8 +490,8 @@ if args.mode == "validate" and args.dataset == "lastfm":
 
 if args.mode == "explanation" and args.dataset == "ml":
     run_explanations_ml(folds_path_ml, args.fold, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
-                        args.max, args.max_users)
+                        args.max, args.max_users, args.expl_alg)
 
 if args.mode == "explanation" and args.dataset == "lastfm":
     run_explanations_lastfm(folds_path_lastfm, args.fold, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
-                        args.max, args.max_users)
+                        args.max, args.max_users, args.expl_alg)
