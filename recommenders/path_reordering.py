@@ -287,23 +287,50 @@ class PathReordering(LODPersonalizedReordering):
                 k = k + 1
 
     def __diverse_ranked_paths(self, ranked_items: list, semantic_distance: pd.DataFrame, semantic_profile: dict):
-        paths_rec = []
+
+        high_values = self.__diverse_ordered_properties(ranked_items, semantic_distance)
+
+        for i in high_values.index:
+            # first path
+            node_value = high_values.loc[i][1]
+            print("\nPaths for the Recommended Item: " + str(i))
+            node_name = []
+            for v in node_value:
+                node_name.append(
+                    list(semantic_profile.keys())[list(semantic_profile.values()).index(v)])
+
+            origin = ""
+            # check for others with same value
+            hscore = high_values.loc[i][2]
+            rec_rows = semantic_distance.loc[i]
+            hscore_rows = rec_rows[rec_rows['score'] == hscore]
+            for r in hscore_rows.iterrows():
+                hist_item = r[1][0]
+                origin = origin + "\"" + self.prop_set.loc[hist_item].iloc[0, 0] + "\"; "
+            origin = origin[:-2]
+
+            path_sentence = " nodes: "
+            for n in node_name:
+                path_sentence = path_sentence + "\"" + n + "\" "
+            destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
+            print(origin + path_sentence + destination)
+
+    def __diverse_ordered_properties(self, ranked_items: list, semantic_distance: pd.DataFrame):
         high_values = pd.DataFrame()
         for i in ranked_items:
-            print("\nPaths for the Recommended Item: " + str(i))
             sem_dist = semantic_distance.loc[i].sort_values(by='score', kind="quicksort", ascending=False)
-            paths_rec.append(sem_dist)
-            row = sem_dist.iloc[0]
+            row = sem_dist.iloc[0].copy()
             row["rec"] = i
             high_values = high_values.append(row.to_dict(), ignore_index=True)
 
         # create counter that represents the next index to check for multiple values and df with the max value
         high_values = high_values.set_index('rec')
         count = 0
+        max_size = len(ranked_items)
         maximum = high_values['score'].sort_values(ascending=False).iloc[count]
         df_max = high_values[high_values['score'] == maximum]
         # while the count is not the last row
-        while count < len(ranked_items) - 1:
+        while count < max_size - 1:
             if len(list(df_max['score'])) == 1:
                 order_values = high_values['score'].sort_values(ascending=False)
                 count = list(order_values).index(maximum) + 1
@@ -318,56 +345,32 @@ class PathReordering(LODPersonalizedReordering):
                 index = scores.index(maximum) + 1
                 if index < len(scores):
                     next_value = scores[index]
-                    row = sem_dist[sem_dist['score'] == next_value].iloc[0]
+                    row = sem_dist[sem_dist['score'] == next_value].iloc[0].copy()
                     row["rec"] = i
                     second_high = second_high.append(row.to_dict(), ignore_index=True)
 
             # substitute for every item except the last (otherwise the explanation value would not be the max possible)
             # the next biggest value with the current max that has conflicts
-            second_high = second_high.sort_values(by="score", kind="quicksort", ascending=False)
-            second_high = second_high.set_index('rec')
-            for i in second_high.index[:-1]:
-                high_values.loc[i] = second_high.loc[i]
+            try:
+                second_high = second_high.sort_values(by="score", kind="quicksort", ascending=False)
+                second_high = second_high.set_index('rec')
+                sub_list = second_high.index[:-1]
+                # if there is only one value to substitute
+                if len(second_high) == 1:
+                    sub_list = second_high.index
 
-            # get next max to check for conflicts
-            order_values = high_values['score'].sort_values(ascending=False)
-            count = list(order_values).index(maximum) + 1
-            maximum = order_values.iloc[count]
-            df_max = high_values[high_values['score'] == maximum]
-        
-        # TODO: implement explanations
-        for i in ranked_items:
-            k = 0
-            # first path
-            hist_item = paths_rec.iloc[k, 0]
-            node_value = paths_rec.iloc[k, 1]
-            node_name = []
-            for v in node_value:
-                node_name.append(
-                    list(semantic_profile.keys())[list(semantic_profile.values()).index(v)])
+                for i in sub_list:
+                    high_values.loc[i] = second_high.loc[i]
 
-            origin = "origin: \"" + self.prop_set.loc[hist_item].iloc[0, 0] + "\""
-            path_sentence = " nodes: "
-            for n in node_name:
-                path_sentence = path_sentence + "\"" + n + "\" "
-            destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
-            print(origin + path_sentence + destination)
+                # get next max to check for conflicts
+                order_values = high_values['score'].sort_values(ascending=False)
+                count = list(order_values).index(maximum) + 1
+                maximum = order_values.iloc[count]
+                df_max = high_values[high_values['score'] == maximum]
+            except KeyError:
+                second_high = self.__diverse_ordered_properties(list(df_max.index), semantic_distance)
+                for i in second_high.index:
+                    high_values.loc[i] = second_high.loc[i]
+                break
 
-            # check for others with same value
-            k = k + 1
-            value = paths_rec.iloc[k, 2]
-            while paths_rec.iloc[k, 2] == value:
-                hist_item = paths_rec.iloc[k, 0]
-                node_value = paths_rec.iloc[k, 1]
-                node_name = []
-                for v in node_value:
-                    node_name.append(
-                        list(semantic_profile.keys())[list(semantic_profile.values()).index(v)])
-
-                origin = "origin: \"" + self.prop_set.loc[hist_item].iloc[0, 0] + "\""
-                path_sentence = " nodes: "
-                for n in node_name:
-                    path_sentence = path_sentence + "\"" + n + "\""
-                destination = " destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
-                print(origin + path_sentence + destination)
-                k = k + 1
+        return high_values
