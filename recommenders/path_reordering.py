@@ -184,9 +184,11 @@ class PathReordering(LODPersonalizedReordering):
 
             sem_dist = sem_dist.set_index('recommended')
             if expl_alg == 'max':
-                self.__best_ranked_pahts(reorder_rank, sem_dist, user_semantic_profile)
+                self.__best_ranked_paths(reorder_rank, sem_dist, user_semantic_profile)
             elif expl_alg == 'diverse':
                 self.__diverse_ranked_paths(reorder_rank, sem_dist, user_semantic_profile)
+            elif expl_alg == 'explod':
+                self.__explod_ranked_paths(reorder_rank, items_historic, user_semantic_profile)
 
     def __semantic_path_distance(self, historic: list, recommeded: list, semantic_profile: dict) -> pd.DataFrame:
         """
@@ -247,7 +249,7 @@ class PathReordering(LODPersonalizedReordering):
                 items = random.sample(historic, len(historic))
             return items
 
-    def __best_ranked_pahts(self, ranked_items: list, semantic_distance: pd.DataFrame, semantic_profile: dict):
+    def __best_ranked_paths(self, ranked_items: list, semantic_distance: pd.DataFrame, semantic_profile: dict):
         for i in ranked_items:
             print("\nPaths for the Recommended Item: " + str(i))
             paths_rec = semantic_distance.loc[i].sort_values(by='score', ascending=False)
@@ -374,3 +376,44 @@ class PathReordering(LODPersonalizedReordering):
                 break
 
         return high_values
+
+    def __explod_ranked_paths(self, ranked_items: list, items_historic: list, semantic_profile: dict):
+        # get properties from historic and recommended items
+        hist_props = self.prop_set.loc[items_historic]
+
+        for r in ranked_items:
+            rec_props = self.prop_set.loc[r]
+
+            # check properties on both sets
+            intersection = pd.Series(list(set(hist_props['obj']).intersection(set(rec_props['obj']))))
+
+            # get properties with max value
+            max = -1
+            max_props = []
+            for pi in intersection:
+                value = semantic_profile[pi]
+                if value > max:
+                    max = value
+                    max_props.clear()
+                    max_props.append(pi)
+                elif value == max:
+                    max_props.append(pi)
+
+            # build sentence
+            hist_names = hist_props[hist_props['obj'].isin(max_props)]['title'].unique()
+            rec_name = rec_props[rec_props['obj'].isin(max_props)]['title'].unique()[0]
+
+            print("\nPaths for the Recommended Item: " + str(r))
+            origin = ""
+            # check for others with same value
+            for i in hist_names:
+                origin = origin + "\"" + i + "\"; "
+            origin = origin[:-2]
+
+            path_sentence = " nodes: "
+            for n in max_props:
+                path_sentence = path_sentence + "\"" + n + "\" "
+            destination = "destination: \"" + rec_name + "\""
+            print(origin + path_sentence + destination)
+
+
