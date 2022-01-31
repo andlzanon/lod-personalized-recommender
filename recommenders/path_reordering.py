@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 from recommenders.lod_reordering import LODPersonalizedReordering
+from scipy.stats import entropy
 
 
 class PathReordering(LODPersonalizedReordering):
@@ -108,9 +109,12 @@ class PathReordering(LODPersonalizedReordering):
         :param: max_users: maximum number of user to generate explanations to
         :return: file with recommendations for every user reordered
         """
-
         print(self.output_name)
         n_users = 0
+        m_items = []
+        m_props = []
+        total_items = {}
+        total_props = {}
         for u in self.output_rec_set.index.unique():
             # get items that the user interacted and recommended by an algorithm
             items_historic = self.train_set.loc[u].sort_values(by=self.cols_used[-1], ascending=False)
@@ -183,12 +187,34 @@ class PathReordering(LODPersonalizedReordering):
                 print("Item id: " + str(i) + " Name: " + movie_name)
 
             sem_dist = sem_dist.set_index('recommended')
+            items, props = [], []
             if expl_alg == 'max':
-                self.__best_ranked_paths(reorder_rank, sem_dist, user_semantic_profile)
+                items, props = self.__best_ranked_paths(reorder_rank, sem_dist, user_semantic_profile)
             elif expl_alg == 'diverse':
-                self.__diverse_ranked_paths(reorder_rank, sem_dist, user_semantic_profile)
+                items, props = self.__diverse_ranked_paths(reorder_rank, sem_dist, user_semantic_profile)
             elif expl_alg == 'explod':
-                self.__explod_ranked_paths(reorder_rank, items_historic, user_semantic_profile)
+                items, props = self.__explod_ranked_paths(reorder_rank, items_historic, user_semantic_profile)
+
+            total_items = dict(list(total_items.items()) + list(items.items()))
+            m_items.append(len(items))
+            total_props = dict(list(total_props.items()) + list(props.items()))
+            m_props.append(len(props))
+
+        print("\n --- " + expl_alg + " explanation metrics --- ")
+        print("Mean historic items per user: " + str(np.array(m_items).mean()))
+        print("Std historic items per user: " + str(np.array(m_items).std()))
+        print("Mean properties used per user: " + str(np.array(m_props).mean()))
+        print("Std properties used per user: " + str(np.array(m_props).std()))
+        print("Number of items used: " + str(len(total_items)))
+        print("Number of props used: " + str(len(total_props)))
+        t_items = len(self.train_set[self.train_set.columns[0]].unique())
+        t_props = len(self.prop_set[self.prop_set.columns[-1]].unique())
+        items_distr = list(total_items.values())
+        props_distr = list(total_props.values())
+        item_probs = items_distr + [0 for i in range(0, t_items - len(items_distr))]
+        props_probs = props_distr + [0 for i in range(0, t_props - len(props_distr))]
+        print("Items entropy: " + str(entropy(item_probs)))
+        print("Props entropy: " + str(entropy(props_probs)))
 
     def __semantic_path_distance(self, historic: list, recommeded: list, semantic_profile: dict) -> pd.DataFrame:
         """
@@ -250,6 +276,8 @@ class PathReordering(LODPersonalizedReordering):
             return items
 
     def __best_ranked_paths(self, ranked_items: list, semantic_distance: pd.DataFrame, semantic_profile: dict):
+        hist_items = {}
+        nodes = {}
         for i in ranked_items:
             print("\nPaths for the Recommended Item: " + str(i))
             paths_rec = semantic_distance.loc[i].sort_values(by='score', ascending=False)
@@ -262,10 +290,13 @@ class PathReordering(LODPersonalizedReordering):
                 node_name.append(
                     list(semantic_profile.keys())[list(semantic_profile.values()).index(v)])
 
-            origin = "origin: \"" + self.prop_set.loc[hist_item].iloc[0, 0] + "\""
+            item = self.prop_set.loc[hist_item].iloc[0, 0]
+            origin = "origin: \"" + item + "\""
+            hist_items = self.__add_dict(hist_items, item)
             path_sentence = " nodes: "
             for n in node_name:
                 path_sentence = path_sentence + "\"" + n + "\" "
+                nodes = self.__add_dict(nodes, n)
             destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
             print(origin + path_sentence + destination)
 
@@ -280,16 +311,23 @@ class PathReordering(LODPersonalizedReordering):
                     node_name.append(
                         list(semantic_profile.keys())[list(semantic_profile.values()).index(v)])
 
-                origin = "origin: \"" + self.prop_set.loc[hist_item].iloc[0, 0] + "\""
+                item = self.prop_set.loc[hist_item].iloc[0, 0]
+                origin = "origin: \"" + item + "\""
+                hist_items = self.__add_dict(hist_items, item)
+
                 path_sentence = " nodes: "
                 for n in node_name:
                     path_sentence = path_sentence + "\"" + n + "\""
+                    nodes = self.__add_dict(nodes, n)
                 destination = " destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
                 print(origin + path_sentence + destination)
                 k = k + 1
 
-    def __diverse_ranked_paths(self, ranked_items: list, semantic_distance: pd.DataFrame, semantic_profile: dict):
+        return hist_items, nodes
 
+    def __diverse_ranked_paths(self, ranked_items: list, semantic_distance: pd.DataFrame, semantic_profile: dict):
+        hist_items = {}
+        nodes = {}
         high_values = self.__diverse_ordered_properties(ranked_items, semantic_distance)
 
         for i in high_values.index:
@@ -308,14 +346,19 @@ class PathReordering(LODPersonalizedReordering):
             hscore_rows = rec_rows[rec_rows['score'] == hscore]
             for r in hscore_rows.iterrows():
                 hist_item = r[1][0]
-                origin = origin + "\"" + self.prop_set.loc[hist_item].iloc[0, 0] + "\"; "
+                item = self.prop_set.loc[hist_item].iloc[0, 0]
+                origin = origin + "\"" + item + "\"; "
+                hist_items = self.__add_dict(hist_items, item)
             origin = origin[:-2]
 
             path_sentence = " nodes: "
             for n in node_name:
                 path_sentence = path_sentence + "\"" + n + "\" "
+                nodes = self.__add_dict(nodes, n)
             destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
             print(origin + path_sentence + destination)
+
+        return hist_items, nodes
 
     def __diverse_ordered_properties(self, ranked_items: list, semantic_distance: pd.DataFrame):
         high_values = pd.DataFrame()
@@ -380,6 +423,8 @@ class PathReordering(LODPersonalizedReordering):
     def __explod_ranked_paths(self, ranked_items: list, items_historic: list, semantic_profile: dict):
         # get properties from historic and recommended items
         hist_props = self.prop_set.loc[items_historic]
+        hist_items = {}
+        nodes = {}
 
         for r in ranked_items:
             rec_props = self.prop_set.loc[r]
@@ -408,12 +453,22 @@ class PathReordering(LODPersonalizedReordering):
             # check for others with same value
             for i in hist_names:
                 origin = origin + "\"" + i + "\"; "
+                hist_items = self.__add_dict(hist_items, i)
             origin = origin[:-2]
 
             path_sentence = " nodes: "
             for n in max_props:
                 path_sentence = path_sentence + "\"" + n + "\" "
+                nodes = self.__add_dict(nodes, n)
             destination = "destination: \"" + rec_name + "\""
             print(origin + path_sentence + destination)
 
+        return hist_items, nodes
 
+    def __add_dict(self, d: dict, key) -> dict:
+        try:
+            d[key] = d[key] + 1
+        except KeyError:
+            d[key] = 1
+
+        return d

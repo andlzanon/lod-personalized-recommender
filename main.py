@@ -214,7 +214,7 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baselines:
                      path_reord.output_path, train_file, test_file)
 
 
-def run_explanations_ml(fold: str, n_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
+def run_sample_explanations_ml(fold: str, n_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
                         h_max=20, max_users=1, expl_alg='max'):
     """
     Run experiments for the movie-lens 100k dataset for the quantity of folds passed by in the parameter n_folds.
@@ -289,7 +289,7 @@ def run_explanations_ml(fold: str, n_fold: int, reorders=None, n_reorder=10, p_i
         path_reord.reorder_with_path(h_min, h_max, max_users, expl_alg)
 
 
-def run_explanations_lastfm(fold: str, n_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
+def run_sample_explanations_lastfm(fold: str, n_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
                         h_max=20, max_users=1, expl_alg='max'):
     """
     Run explanation experiments for the lastfm dataset for the quantity of folds passed by in the parameter n_folds.
@@ -370,8 +370,9 @@ parser.add_argument("--mode",
                     type=str,
                     default="run",
                     required=True,
-                    help="Set 'run' to run experiments, 'validate' to run statistical relevance tests and "
-                         "'explanation' to generate explanation paths to users")
+                    help="Set 'run' to run experiments, 'validate' to run statistical relevance tests, "
+                         "'explanation' to generate explanation paths to users and explanation_sample"
+                         " to run the explanation experiments")
 parser.add_argument("--dataset",
                     type=str,
                     default="ml",
@@ -488,10 +489,10 @@ if args.mode == "validate" and args.dataset == "lastfm":
     statistical_relevance(args.sufix, args.baseline, folds_path_lastfm,
                           args.metrics.split(), method=args.method, save=args.save)
 
-if args.mode == "explanation" and args.dataset == "ml":
-    run_explanations_ml(folds_path_ml, args.fold, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
+if args.mode == "explanation_sample" and args.dataset == "ml":
+    run_sample_explanations_ml(folds_path_ml, args.fold, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
                         args.max, args.max_users, args.expl_alg)
 
-if args.mode == "explanation" and args.dataset == "lastfm":
-    run_explanations_lastfm(folds_path_lastfm, args.fold, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
+if args.mode == "explanation_sample" and args.dataset == "lastfm":
+    run_sample_explanations_lastfm(folds_path_lastfm, args.fold, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
                         args.max, args.max_users, args.expl_alg)
