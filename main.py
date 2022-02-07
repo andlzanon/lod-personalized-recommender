@@ -214,13 +214,14 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baselines:
                      path_reord.output_path, train_file, test_file)
 
 
-def run_sample_explanations_ml(fold: str, n_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
-                        h_max=20, max_users=1, expl_alg='max'):
+def run_explanations_experiments_ml(fold: str, start_fold: int, end_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
+                        h_max=0, max_users=1, expl_alg='diverse', reorder=1):
     """
-    Run experiments for the movie-lens 100k dataset for the quantity of folds passed by in the parameter n_folds.
-    E.g. if 9 then will run for all folds if 6 it will run from fold 0 to 5, etc
+    Run explanation experiments for the movie-lens 100k dataset for the quantity of folds passed by in the parameter n_folds.
+    E.g. if 9 then will run for all folds if 6 it will run from fold 0 to 5, etc.
     :param fold: path of the folds
-    :param n_fold: number of the fold to generate explanations to users
+    :param start_fold: folds to start evaluation to evaluate
+    :param end_fold: fold to end evaluation
     :param reorders: list to reorder recommender algorithms that had run already
     :param n_reorder: quantity of items to reorder
     :param p_items: percentage of items from historic to build semantic profile
@@ -230,6 +231,9 @@ def run_sample_explanations_ml(fold: str, n_fold: int, reorders=None, n_reorder=
     :param: h_max: maximum number of users' historic items to generate the recommendations and explanations to, if a
         user has a bigger number of interacted items than this parameter the algorithm will not generate explanations
     :param: max_users: maximum number of user to generate explanations to, when the program reaches max_number it stops
+    :param: expl_alg: explanation algorithm to run experiments. Either 'diverse', 'max' or 'explod'
+    :param: reorder: if reorder is 1 then the explanation module will explain the reordered recommendations
+        if is 0 then the explations will be generated for the base recommendation algorithm
     :return: users are displayed on console with interacted items, recommended items, semantic profile, reordered items
         and explanation paths for each recommended item
     """
@@ -239,63 +243,71 @@ def run_sample_explanations_ml(fold: str, n_fold: int, reorders=None, n_reorder=
     # BASELINES
 
     # 1 - Most Popular Algorithm
-    most_pop_output_file = fold + str(n_fold) + "/outputs/mostpop.csv"
     if reorders is not None and 'MostPop' in reorders:
-        output_names.add(most_pop_output_file.split("/")[-1])
+        for f in range(start_fold, end_fold+1):
+            most_pop_output_file = fold + str(f) + "/outputs/mostpop.csv"
+            output_names.add(most_pop_output_file.split("/")[-1])
 
     # 2 - BPR MF
-    bprmf_output_file = fold + str(n_fold) + "/outputs/bprmf.csv"
     if reorders is not None and 'BPRMF' in reorders:
-        output_names.add(bprmf_output_file.split("/")[-1])
+        for f in range(start_fold, end_fold+1):
+            bprmf_output_file = fold + str(f) + "/outputs/bprmf.csv"
+            output_names.add(bprmf_output_file.split("/")[-1])
 
     # 3 - User KNN
-    knn_output_file = fold + str(n_fold) + "/outputs/userknn.csv"
     if reorders is not None and 'UserKNN' in reorders:
-        output_names.add(knn_output_file.split("/")[-1])
+        for f in range(start_fold, end_fold+1):
+            knn_output_file = fold + str(f) + "/outputs/userknn.csv"
+            output_names.add(knn_output_file.split("/")[-1])
 
     # 4 - Wikidata PageRank params: weights=[80, 0, 20]
-    pr = pagerank.PageRankRecommnder(fold + str(n_fold), "wikidata_page_rank8020.csv", 20,
-                                     "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                                     node_weighs=[0.8, 0, 0.2], prop_cols=['movieId', 'title', 'prop', 'obj'],
-                                     cols_used=[0, 1, 2], col_names=['user_id', 'movie_id', 'feedback'])
     if reorders is not None and 'PageRank' in reorders:
-        output_names.add(pr.output_path.split("/")[-1])
+        for f in range(start_fold, end_fold+1):
+            pr = pagerank.PageRankRecommnder(fold + str(f), "wikidata_page_rank8020.csv", 20,
+                                             "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+                                             node_weighs=[0.8, 0, 0.2], prop_cols=['movieId', 'title', 'prop', 'obj'],
+                                             cols_used=[0, 1, 2], col_names=['user_id', 'movie_id', 'feedback'])
+            output_names.add(pr.output_path.split("/")[-1])
 
     # 5 - Neural Collaborative Filtering
-    ncf_rec = ncf.NCF(fold + str(n_fold), "ncf.csv", rank_size=20, factors=32, layers=[64, 32, 16, 8],
-                      epochs=10, neg_smp_train=4, neg_smp_test=100, cols_used=[0, 1, 2],
-                      col_names=['user_id', 'movie_id', 'feedback'],
-                      model_path=folds_path_ml + str(0) + "/model.pt", batch_size=256, seed=42, model_disk='w')
     if reorders is not None and 'NCF' in reorders:
-        output_names.add(ncf_rec.output_path.split("/")[-1])
+        for f in range(start_fold, end_fold+1):
+            ncf_rec = ncf.NCF(fold + str(f), "ncf.csv", rank_size=20, factors=32, layers=[64, 32, 16, 8],
+                              epochs=10, neg_smp_train=4, neg_smp_test=100, cols_used=[0, 1, 2],
+                              col_names=['user_id', 'movie_id', 'feedback'],
+                              model_path=folds_path_ml + str(0) + "/model.pt", batch_size=256, seed=42, model_disk='w')
+            output_names.add(ncf_rec.output_path.split("/")[-1])
 
     # 6 - EASE Algorithm
-    ease_rec = ease.EASE(fold + str(n_fold), "ease.csv", rank_size=20, cols_used=[0, 1, 2],
-                         col_names=['user_id', 'movie_id', 'feedback'], lambda_=500)
     if reorders is not None and 'EASE' in reorders:
-        output_names.add(ease_rec.output_path.split("/")[-1])
+        for f in range(start_fold, end_fold+1):
+            ease_rec = ease.EASE(fold + str(f), "ease.csv", rank_size=20, cols_used=[0, 1, 2],
+                                 col_names=['user_id', 'movie_id', 'feedback'], lambda_=500)
+            output_names.add(ease_rec.output_path.split("/")[-1])
 
     # REORDERS
-    train_file = fold + str(n_fold) + "/train.dat"
-    output_files = [fold + str(n_fold) + "/outputs/" + name for name in output_names]
+    for f in range(start_fold, end_fold+1):
+        train_file = fold + str(f) + "/train.dat"
+        output_files = [fold + str(f) + "/outputs/" + name for name in output_names]
 
-    # Path reorder
-    for output_file in output_files:
-        path_reord = PathReordering(train_file, output_file,
-                                    "./generated_files/wikidata/props_wikidata_movielens_small.csv",
-                                    cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
-                                    prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=n_reorder,
-                                    p_items=p_items, policy=policy, hybrid=True)
-        path_reord.reorder_with_path(h_min, h_max, max_users, expl_alg)
+        # Path reorder
+        for output_file in output_files:
+            path_reord = PathReordering(train_file, output_file,
+                                        "./generated_files/wikidata/props_wikidata_movielens_small.csv",
+                                        cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
+                                        prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=n_reorder,
+                                        p_items=p_items, policy=policy, hybrid=True)
+            path_reord.reorder_with_path(fold + str(f), h_min, h_max, max_users, expl_alg, reorder)
 
 
-def run_sample_explanations_lastfm(fold: str, n_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
-                        h_max=20, max_users=1, expl_alg='max'):
+def run_explanations_experiments_lastfm(fold: str, start_fold: int, end_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
+                        h_max=0, max_users=1, expl_alg='diverse', reorder=1):
     """
     Run explanation experiments for the lastfm dataset for the quantity of folds passed by in the parameter n_folds.
     E.g. if 10 then will run for all folds if 6 it will run from fold 0 to 5, etc
     :param fold: path of the folds
-    :param n_fold: number of the fold to generate explanations to users
+    :param start_fold: folds to start evaluation to evaluate
+    :param end_fold: fold to end evaluation
     :param reorders: list to reorder recommender algorithms that had run already
     :param n_reorder: quantity of items to reorder
     :param p_items: percentage of items from historic to build semantic profile
@@ -305,6 +317,9 @@ def run_sample_explanations_lastfm(fold: str, n_fold: int, reorders=None, n_reor
     :param: h_max: maximum number of users' historic items to generate the recommendations and explanations to, if a
         user has a bigger number of interacted items than this parameter the algorithm will not generate explanations
     :param: max_users: maximum number of user to generate explanations to, when the program reaches max_number it stops
+    :param: expl_alg: explanation algorithm to run experiments. Either 'diverse', 'max' or 'explod'
+    :param: reorder: if reorder is 1 then the explanation module will explain the reordered recommendations
+        if is 0 then the explations will be generated for the base recommendation algorithm
     :return: users are displayed on console with interacted items, recommended items, semantic profile, reordered items
         and explanation paths for each recommended item
     """
@@ -313,54 +328,61 @@ def run_sample_explanations_lastfm(fold: str, n_fold: int, reorders=None, n_reor
 
     # BASELINES
     # 1 - Most Popular Algorithm
-    most_pop_output_file = fold + str(n_fold) + "/outputs/mostpop.csv"
     if reorders is not None and 'MostPop' in reorders:
-        output_names.add(most_pop_output_file.split("/")[-1])
+        for f in range(start_fold, end_fold + 1):
+            most_pop_output_file = fold + str(f) + "/outputs/mostpop.csv"
+            output_names.add(most_pop_output_file.split("/")[-1])
 
     # 2 - BPR MF
-    bprmf_output_file = fold + str(n_fold) + "/outputs/bprmf.csv"
     if reorders is not None and 'BPRMF' in reorders:
-        output_names.add(bprmf_output_file.split("/")[-1])
+        for f in range(start_fold, end_fold + 1):
+            bprmf_output_file = fold + str(f) + "/outputs/bprmf.csv"
+            output_names.add(bprmf_output_file.split("/")[-1])
 
     # 3 - User KNN
-    knn_output_file = fold + str(n_fold) + "/outputs/userknn.csv"
     if reorders is not None and 'UserKNN' in reorders:
-        output_names.add(knn_output_file.split("/")[-1])
+        for f in range(start_fold, end_fold + 1):
+            knn_output_file = fold + str(f) + "/outputs/userknn.csv"
+            output_names.add(knn_output_file.split("/")[-1])
 
     # 4 - Wikidata PageRank params: weights=[80, 0, 20]
-    pr = pagerank.PageRankRecommnder(fold + str(n_fold), "wikidata_page_rank8020.csv", 20,
-                                     "./generated_files/wikidata/last-fm/props_artists_id.csv",
-                                     node_weighs=[0.8, 0, 0.2], prop_cols=['id', 'artist', 'prop', 'obj'],
-                                     cols_used=[0, 1, 2], col_names=['user_id', 'artist_id', 'feedback'])
     if reorders is not None and 'PageRank' in reorders:
-        output_names.add(pr.output_path.split("/")[-1])
+        for f in range(start_fold, end_fold + 1):
+            pr = pagerank.PageRankRecommnder(fold + str(f), "wikidata_page_rank8020.csv", 20,
+                                             "./generated_files/wikidata/last-fm/props_artists_id.csv",
+                                             node_weighs=[0.8, 0, 0.2], prop_cols=['id', 'artist', 'prop', 'obj'],
+                                             cols_used=[0, 1, 2], col_names=['user_id', 'artist_id', 'feedback'])
+            output_names.add(pr.output_path.split("/")[-1])
 
     # 5 - Neural Collaborative Filtering
-    ncf_rec = ncf.NCF(fold + str(n_fold), "ncf.csv", rank_size=20, factors=32, layers=[64, 32, 16, 8],
-                      epochs=10, neg_smp_train=4, neg_smp_test=100, cols_used=[0, 1, 2],
-                      col_names=['user_id', 'artist_id', 'feedback'],
-                      model_path=folds_path_ml + str(0) + "/model.pt", batch_size=256, seed=42, model_disk='w')
     if reorders is not None and 'NCF' in reorders:
-        output_names.add(ncf_rec.output_path.split("/")[-1])
+        for f in range(start_fold, end_fold + 1):
+            ncf_rec = ncf.NCF(fold + str(f), "ncf.csv", rank_size=20, factors=32, layers=[64, 32, 16, 8],
+                              epochs=10, neg_smp_train=4, neg_smp_test=100, cols_used=[0, 1, 2],
+                              col_names=['user_id', 'artist_id', 'feedback'],
+                              model_path=folds_path_ml + str(0) + "/model.pt", batch_size=256, seed=42, model_disk='w')
+            output_names.add(ncf_rec.output_path.split("/")[-1])
 
     # 6 - EASE Algorithm
-    ease_rec = ease.EASE(fold + str(n_fold), "ease.csv", rank_size=20, cols_used=[0, 1, 2],
-                         col_names=['user_id', 'artist_id', 'feedback'], lambda_=500)
     if reorders is not None and 'EASE' in reorders:
-        output_names.add(ease_rec.output_path.split("/")[-1])
+        for f in range(start_fold, end_fold + 1):
+            ease_rec = ease.EASE(fold + str(f), "ease.csv", rank_size=20, cols_used=[0, 1, 2],
+                                 col_names=['user_id', 'artist_id', 'feedback'], lambda_=500)
+            output_names.add(ease_rec.output_path.split("/")[-1])
 
     # REORDERS
-    train_file = fold + str(n_fold) + "/train.dat"
-    output_files = [fold + str(n_fold) + "/outputs/" + name for name in output_names]
+    for f in range(start_fold, end_fold + 1):
+        train_file = fold + str(f) + "/train.dat"
+        output_files = [fold + str(f) + "/outputs/" + name for name in output_names]
 
-    # Path reorder
-    for output_file in output_files:
-        path_reord = PathReordering(train_file, output_file,
-                                    "./generated_files/wikidata/last-fm/props_artists_id.csv",
-                                    cols_used=['user_id', 'artist_id', 'interaction'],
-                                    prop_cols=['id', 'artist', 'prop', 'obj'], n_reorder=n_reorder, p_items=p_items,
-                                    policy=policy, hybrid=True)
-        path_reord.reorder_with_path(h_min, h_max, max_users, expl_alg)
+        # Path reorder
+        for output_file in output_files:
+            path_reord = PathReordering(train_file, output_file,
+                                        "./generated_files/wikidata/last-fm/props_artists_id.csv",
+                                        cols_used=['user_id', 'artist_id', 'interaction'],
+                                        prop_cols=['id', 'artist', 'prop', 'obj'], n_reorder=n_reorder, p_items=p_items,
+                                        policy=policy, hybrid=True)
+            path_reord.reorder_with_path(fold + str(f), h_min, h_max, max_users, expl_alg, reorder)
 
 
 parser = argparse.ArgumentParser()
@@ -441,10 +463,6 @@ parser.add_argument("--save",
                     help="Boolean argument to save or not result in file. Only works on the 'validation' mode.")
 
 # reorder commdands
-parser.add_argument("--fold",
-                    type=int,
-                    default=0,
-                    help="Fold to consider when generating explanations. Only works on 'explanation' mode")
 
 parser.add_argument("--min",
                     type=int,
@@ -453,17 +471,23 @@ parser.add_argument("--min",
 
 parser.add_argument("--max",
                     type=int,
-                    default=20,
+                    default=0,
                     help="Maximum number of user interacted items to explain. Works on the 'explanation' mode")
 
 parser.add_argument("--max_users",
                     type=int,
-                    default=1,
+                    default=0,
                     help="Maximum number of users to generate explanations to. Works on the 'explanation' mode.")
+
+
+parser.add_argument("--reordered_recs",
+                    type=int,
+                    default=1,
+                    help="Explain baseline or reordered algorithm. Works on the 'explanation' mode.")
 
 parser.add_argument("--expl_alg",
                     type=str,
-                    default="max",
+                    default="diverse",
                     help="algorithm to explain recommendations. Either max, diverse or explod. Works only on "
                          "'explanation' mode.")
 
@@ -489,10 +513,10 @@ if args.mode == "validate" and args.dataset == "lastfm":
     statistical_relevance(args.sufix, args.baseline, folds_path_lastfm,
                           args.metrics.split(), method=args.method, save=args.save)
 
-if args.mode == "explanation_sample" and args.dataset == "ml":
-    run_sample_explanations_ml(folds_path_ml, args.fold, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
-                        args.max, args.max_users, args.expl_alg)
+if args.mode == "explanation" and args.dataset == "ml":
+    run_explanations_experiments_ml(folds_path_ml, args.begin, args.end, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
+                        args.max, args.max_users, args.expl_alg, args.reordered_recs)
 
-if args.mode == "explanation_sample" and args.dataset == "lastfm":
-    run_sample_explanations_lastfm(folds_path_lastfm, args.fold, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
-                        args.max, args.max_users, args.expl_alg)
+if args.mode == "explanation" and args.dataset == "lastfm":
+    run_explanations_experiments_lastfm(folds_path_lastfm, args.begin, args.end, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
+                        args.max, args.max_users, args.expl_alg, args.reordered_recs)

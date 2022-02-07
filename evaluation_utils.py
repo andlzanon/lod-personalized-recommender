@@ -200,3 +200,62 @@ def file_to_df(file_path: str, algorithm: str):
             df = df.append({'alg': algorithm, '@': at, 'metric': metric, 'value': value}, ignore_index=True)
     f.close()
     return df
+
+
+def evaluate_explanations(file_name: str, m_items: list, m_props: list, total_items: dict, total_props: dict,
+                          train_set: pd.DataFrame, prop_set: pd.DataFrame):
+    """
+    Diversity of explanation metrics. We will use 10 metrics: mean and std item and prop user diversity
+    total item and prop aggregate diversity and entropy and gini
+    :param file_name: the name of the results file
+    :param m_items: distribution of different historic items shown to user in explanations
+    :param m_props:distribution of different KG props shown to user in explanations
+    :param total_items: dict of items, quantity of times used in explanations
+    :param total_props: dict of prop, quantity of times used in explanations
+    :param train_set: pandas dataframe of the train set
+    :param prop_set: pandas dataframe of the properties extracted from the KG
+    :return: file saved with metrics
+    """
+    t_items = len(train_set[train_set.columns[0]].unique())
+    t_props = len(prop_set[prop_set.columns[-1]].unique())
+    items_distr = list(total_items.values())
+    props_distr = list(total_props.values())
+    item_probs = items_distr + [0 for i in range(0, t_items - len(items_distr))]
+    props_probs = props_distr + [0 for i in range(0, t_props - len(props_distr))]
+
+    mean_useritem_aggr = "Mean user item aggregate diversity: " + str(np.array(m_items).mean())
+    std_useritem_aggr = "Std user item aggregate diversity: " + str(np.array(m_items).std())
+    mean_userprop_aggr = "Mean user property aggregate diversity: " + str(np.array(m_props).mean())
+    std_userprop_aggr = "Std user property aggregate diversity: " + str(np.array(m_props).std())
+    total_items_str = "Total items aggregate diversity: " + str(len(total_items))
+    total_props_str = "Total property aggregate diversity: " + str(len(total_props))
+    ientropy = "Items entropy: " + str(entropy(item_probs))
+    pentropy = "Props entropy: " + str(entropy(props_probs))
+    igini = "Items Gini index: " + str(gini(np.array(item_probs, dtype=np.float64)))
+    pgini = "Props Gini index: " + str(gini(np.array(props_probs, dtype=np.float64)))
+
+    f = open(file_name, mode="w", encoding='utf-8')
+    f.write(file_name + "\n")
+    f.write(mean_useritem_aggr + "\n")
+    f.write(std_useritem_aggr + "\n")
+    f.write(mean_userprop_aggr + "\n")
+    f.write(std_userprop_aggr + "\n")
+    f.write(total_items_str + "\n")
+    f.write(total_props_str + "\n")
+    f.write(ientropy + "\n")
+    f.write(pentropy + "\n")
+    f.write(igini + "\n")
+    f.write(pgini + "\n")
+    f.close()
+
+    print("\n" + file_name)
+    print(mean_useritem_aggr)
+    print(std_useritem_aggr)
+    print(mean_userprop_aggr)
+    print(std_userprop_aggr)
+    print(total_items_str)
+    print(total_props_str)
+    print(ientropy)
+    print(pentropy)
+    print(igini)
+    print(pgini)
