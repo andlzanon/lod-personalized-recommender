@@ -3,9 +3,9 @@ import random
 import numpy as np
 import pandas as pd
 import networkx as nx
+from pandas.core.indexing import IndexingError
 
 from recommenders.lod_reordering import LODPersonalizedReordering
-from scipy.stats import entropy
 import evaluation_utils as eval
 
 
@@ -119,12 +119,12 @@ class PathReordering(LODPersonalizedReordering):
         results_file_name = fold + "/results/explanations/" + self.output_path.split("/")[-1]
         results_title_l = results_file_name.split("/")
         results_title = '/'.join(results_title_l[:-1])
-        results_title = results_title + "/reordered_recs=" + str(reordered) + "_" + results_title_l[-1]
+        results_title = results_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_ " + results_title_l[-1]
 
         output_file_name = fold + "/outputs/explanations/" + self.output_path.split("/")[-1]
         output_title_l = output_file_name.split("/")
         output_title = '/'.join(output_title_l[:-1])
-        output_title = output_title + "/reordered_recs=" + str(reordered) + "_" + output_title_l[-1]
+        output_title = output_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + output_title_l[-1]
         f = open(output_title, mode="w", encoding='utf-8')
         f.write(output_title + "\n")
 
@@ -162,12 +162,6 @@ class PathReordering(LODPersonalizedReordering):
                 print("Item id: " + str(i) + " Name: " + movie_name)
                 f.write("Item id: " + str(i) + " Name: " + movie_name + "\n")
             items_recommended = list(self.output_rec_set.loc[u][self.output_cols[1]])[:self.n_reorder]
-
-            print("\nTop " + str(self.n_reorder) + " recommended")
-            for i in items_recommended:
-                movie_name = self.prop_set.loc[i].iloc[0, 0]
-                print("Item id: " + str(i) + " Name: " + movie_name)
-                f.write("Item id: " + str(i) + " Name: " + movie_name + "\n")
 
             # get semantic profile and extract the best paths from the suggested item to the recommended
             user_semantic_profile = self.user_semantic_profile(items_historic)
@@ -233,12 +227,10 @@ class PathReordering(LODPersonalizedReordering):
             sem_dist = sem_dist.set_index('recommended')
             sem_dist = sem_dist.fillna(0)
             items, props = [], []
-            if expl_alg == 'max':
-                items, props = self.__best_ranked_paths(item_rank, sem_dist, user_semantic_profile, f)
-            elif expl_alg == 'diverse':
-                items, props = self.__diverse_ranked_paths(item_rank, sem_dist, user_semantic_profile, f)
+            if expl_alg == 'diverse':
+                items, props = self.__diverse_ranked_paths(item_rank, sem_dist, user_semantic_profile, u, f)
             elif expl_alg == 'explod':
-                items, props = self.__explod_ranked_paths(item_rank, items_historic, user_semantic_profile, f)
+                items, props = self.__explod_ranked_paths(item_rank, items_historic, user_semantic_profile, u, f)
             f.write("\n")
 
             total_items = dict(list(total_items.items()) + list(items.items()))
@@ -309,69 +301,8 @@ class PathReordering(LODPersonalizedReordering):
                 items = random.sample(historic, len(historic))
             return items
 
-    def __best_ranked_paths(self, ranked_items: list, semantic_distance: pd.DataFrame, semantic_profile: dict, file: _io.TextIOWrapper):
-        """
-        Explanation method that obtains the most relevant path based on the property value and show to user
-        :param ranked_items: list of the recommended items
-        :param semantic_distance: dataframe with paths from historic to recommended items
-        :param semantic_profile: dictionary with property as key and score as value
-        :param file: file to write explanations
-        :return: historic items and properties used in explanations
-        """
-        hist_items = {}
-        nodes = {}
-        for i in ranked_items:
-            print("\nPaths for the Recommended Item: " + str(i))
-            file.write("\nPaths for the Recommended Item: " + str(i) + "\n")
-            paths_rec = semantic_distance.loc[i].sort_values(by='score', ascending=False)
-            k = 0
-            # obtain best path
-            hist_item = paths_rec.iloc[k, 0]
-            node_value = paths_rec.iloc[k, 1]
-            node_name = []
-            for v in node_value:
-                node_name.append(
-                    list(semantic_profile.keys())[list(semantic_profile.values()).index(v)])
-
-            # create sentence
-            item = self.prop_set.loc[hist_item].iloc[0, 0]
-            origin = "origin: \"" + item + "\""
-            hist_items = self.__add_dict(hist_items, item)
-            path_sentence = " nodes: "
-            for n in node_name:
-                path_sentence = path_sentence + "\"" + n + "\" "
-                nodes = self.__add_dict(nodes, n)
-            destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
-            print(origin + path_sentence + destination)
-            file.write(origin + path_sentence + destination)
-
-            # check for others with same value
-            k = k + 1
-            value = paths_rec.iloc[k, 2]
-            while paths_rec.iloc[k, 2] == value:
-                hist_item = paths_rec.iloc[k, 0]
-                node_value = paths_rec.iloc[k, 1]
-                node_name = []
-                for v in node_value:
-                    node_name.append(
-                        list(semantic_profile.keys())[list(semantic_profile.values()).index(v)])
-
-                item = self.prop_set.loc[hist_item].iloc[0, 0]
-                origin = "origin: \"" + item + "\""
-                hist_items = self.__add_dict(hist_items, item)
-
-                path_sentence = " nodes: "
-                for n in node_name:
-                    path_sentence = path_sentence + "\"" + n + "\""
-                    nodes = self.__add_dict(nodes, n)
-                destination = " destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
-                print(origin + path_sentence + destination)
-                file.write(origin + path_sentence + destination)
-                k = k + 1
-
-        return hist_items, nodes
-
-    def __diverse_ranked_paths(self, ranked_items: list, semantic_distance: pd.DataFrame, semantic_profile: dict, file: _io.TextIOWrapper):
+    def __diverse_ranked_paths(self, ranked_items: list, semantic_distance: pd.DataFrame, semantic_profile: dict,
+                               user: int, file: _io.TextIOWrapper):
         """
         Generate explanations to recommendations considering the max value varying the properties shown to the user
         the logic to this explanation is to order all paths to recommended items and resolve the conflicts (when there
@@ -380,6 +311,7 @@ class PathReordering(LODPersonalizedReordering):
         :param ranked_items: list of the recommended items
         :param semantic_distance: dataframe with paths from historic to recommended items
         :param semantic_profile: dictionary with property as key and score as value
+        :param user: user id of user to show explanations to
         :param file: file to write explanations
         :return: historic items and properties used in explanations
         """
@@ -401,9 +333,18 @@ class PathReordering(LODPersonalizedReordering):
             hscore = high_values.loc[i][2]
             rec_rows = semantic_distance.loc[i]
             hscore_rows = rec_rows[rec_rows['score'] == hscore]
-            for r in hscore_rows.iterrows():
-                hist_item = r[1][0]
-                item = self.prop_set.loc[hist_item].iloc[0, 0]
+            if len(hscore_rows) > 3:
+                user_df = self.train_set.loc[user]
+                user_item = user_df[user_df[user_df.columns[0]].isin(list(hscore_rows[hscore_rows.columns[0]].unique()))]
+                hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+            else:
+                hist_ids = list(hscore_rows[hscore_rows.columns[0]])
+
+            for r in hist_ids:
+                try:
+                    item = self.prop_set.loc[r].iloc[0, 0]
+                except IndexingError:
+                    item = self.prop_set.loc[r].iloc[0]
                 origin = origin + "\"" + item + "\"; "
                 hist_items = self.__add_dict(hist_items, item)
             origin = origin[:-2]
@@ -490,12 +431,14 @@ class PathReordering(LODPersonalizedReordering):
 
         return high_values
 
-    def __explod_ranked_paths(self, ranked_items: list, items_historic: list, semantic_profile: dict, file: _io.TextIOWrapper):
+    def __explod_ranked_paths(self, ranked_items: list, items_historic: list, semantic_profile: dict,
+                              user: int, file: _io.TextIOWrapper):
         """
         Build explanation to recommendations based on the ExpLOD, method, explained in https://dl.acm.org/doi/abs/10.1145/2959100.2959173
         :param ranked_items: list of the recommended items
         :param items_historic: list of historic items
         :param semantic_profile: dictionary with property as key and score as value
+        :param user: user id of user to show explanations to
         :param file: file to write explanations
         :return: historic items and properties used in explanations
         """
@@ -524,11 +467,14 @@ class PathReordering(LODPersonalizedReordering):
                     max_props.append(pi)
 
             # build sentence
-            hist_names = hist_props[hist_props['obj'].isin(max_props)]['title'].unique()
-            rec_name = rec_props[rec_props['obj'].isin(max_props)]['title'].unique()[0]
+            user_df = self.train_set.loc[user]
+            user_item = user_df[user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(max_props)].index.unique()))]
+            hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+            hist_names = hist_props.loc[hist_ids]['title'].unique()
+            rec_name = self.prop_set.loc[r]['title'].unique()[0]
 
             print("\nPaths for the Recommended Item: " + str(r))
-            file.write("\nPaths for the Recommended Item: " + str(i) + "\n")
+            file.write("\nPaths for the Recommended Item: " + str(r) + "\n")
             origin = ""
             # check for others with same value
             for i in hist_names:

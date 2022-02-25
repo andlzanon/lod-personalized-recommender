@@ -488,7 +488,7 @@ parser.add_argument("--reordered_recs",
 parser.add_argument("--expl_alg",
                     type=str,
                     default="diverse",
-                    help="algorithm to explain recommendations. Either max, diverse or explod. Works only on "
+                    help="Algorithm to explain recommendations. Either max, diverse or explod. Works only on "
                          "'explanation' mode.")
 
 # parse arguments
