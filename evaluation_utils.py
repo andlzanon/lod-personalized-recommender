@@ -259,3 +259,100 @@ def evaluate_explanations(file_name: str, m_items: list, m_props: list, total_it
     print(pentropy)
     print(igini)
     print(pgini)
+
+
+def explanation_file_to_df(file_path: str, algorithm: str):
+    """
+    Function that generates a dataframe with the offline explanations metrics for the algorithm
+    "algorithm" on file "file path"
+    :param file_path: path of the file
+    :param algorithm: name of the algorithm
+    :return: dataframe with offline explanation metrics of the algorithm retrieved from file
+    """
+    df = pd.DataFrame()
+    f = open(file_path, 'r')
+    for l in f.readlines()[1:]:
+        l = l.split("\n")[0]
+        metric_value = l.split(':')
+        if metric_value[0] != metric_value[-1]:
+            metric = metric_value[0]
+            at_value = metric_value[1].split(" ")
+            value = at_value[-1]
+            df = df.append({'alg': algorithm, 'metric': metric, 'value': value}, ignore_index=True)
+            # print(str(metric) + " " + str(value))
+    f.close()
+    return df
+
+
+def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: int):
+    """
+    Compute statistical relevance test for explanations evaluation
+    :param rec_alg: recommendation algorithm used
+    :param dataset: dataset (ml or last-fm)
+    :param reordered: 1 if the recommendations were reordred by proposed reordering system 0 if not
+    :return: excel file with wilcoxon and ttest statistical relevance tests for all metrics
+    """
+    basline_results = []
+    proposed_results = []
+
+    path = "./datasets/"
+    if dataset == "ml":
+        path = path + "ml-latest-small"
+    else:
+        path = path + "hetrec2011-lastfm-2k"
+    path_base = path + "/folds/"
+
+    for i in range(0, 10):
+        path = path_base + str(i) + "/results/explanations/" + "reordered_recs=" + str(reordered)
+        path_baseline = path + "_expl_alg=explod_" + str(rec_alg) + \
+                        "_lodreorder_path[policy=last_items=01_reorder=10_hybrid].csv"
+
+        path_proposed = path + "_expl_alg=diverse_" + str(rec_alg) + \
+                        "_lodreorder_path[policy=last_items=01_reorder=10_hybrid].csv"
+
+        basline_results.append(explanation_file_to_df(path_baseline, "explod").set_index("metric"))
+        proposed_results.append(explanation_file_to_df(path_proposed, "diverse").set_index("metric"))
+        path = path_base
+
+    metrics = list(basline_results[0].index.unique())
+    results_df = pd.DataFrame(columns=["METRIC", "PROPOSED_NAME",
+                                       "PROPOSED_MEAN", "BASELINE_NAME",
+                                       "BASELINE_MEAN", "WILCOXON", "TTEST"])
+    for m in metrics:
+        m_baseline = []
+        m_proposed = []
+        for i in range(0, 10):
+            m_baseline.append(float(basline_results[i].loc[m].value))
+            m_proposed.append(float(proposed_results[i].loc[m].value))
+
+        baseline_mean = np.array(m_baseline).mean()
+        print(m + " baseline results: ", m_baseline)
+        proposed_mean = np.array(m_proposed).mean()
+        print(m + " proposed results: ", m_proposed)
+
+        wt, wp = wilcoxon(m_baseline, m_proposed)
+        print("p-value with wilcoxon: " + str(wp))
+        tt, tp = ttest_rel(m_baseline, m_proposed)
+        print("p-value with t-test: " + str(tp))
+
+        results_df = results_df.append({"METRIC": m, "PROPOSED_NAME": "diverse",
+                                        "PROPOSED_MEAN": proposed_mean,
+                                        "BASELINE_NAME": "explod",
+                                        "BASELINE_MEAN": baseline_mean,
+                                        "WILCOXON": wp, "TTEST": tp}, ignore_index=True)
+
+    p = path_base[:-6] + "explanation_results_reordered=" + str(reordered) + ".xlsx"
+    try:
+        book = load_workbook(p)
+        writer = pd.ExcelWriter(p, mode='r+')
+        writer.book = book
+        writer.sheets = dict((ws.title, ws) for ws in book.worksheets)
+    except FileNotFoundError:
+        writer = pd.ExcelWriter(p, mode='w+')
+    results_df.to_excel(writer, sheet_name=rec_alg, index=False)
+    writer.save()
+    writer.close()
+    print("--- FILE SAVE AT " + p + "---")
+
+
+

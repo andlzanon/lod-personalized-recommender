@@ -36,7 +36,8 @@ You can run experiments with command line arguments.
 
 The documentation of each arguments follows bellow along with examples that was the commands used in the experiments:
 
-* mode:  Set 'run' to run experiments, 'validate' to run statistical relevance tests and ;
+* mode:  Set 'run' to run accuracy experiments, 'validate' to run statistical accuracy relevance tests, 'explanation' to run 
+explanation experiments and 'validate_expl' to run statistical accuracy tests;
 
 * dataset: Either 'ml' for the small movielens dataset or 'lastfm' for the lastfm dataset;
 
@@ -104,4 +105,8 @@ To run an explanation experiments for the lastfm dataset for the diverse explana
 To run an explanation samples for the diverse explanations algorithm on the movielens dataset for the PageRank algorithm for a maximum of 2 users that have at least 0 interactions and a max of 20 interactions. To compare results with the ExpLOD algorithm change the parameter to explod on expl_alg parameter. Change the reordered_recs parameter to explain the reordered recommendations or the baseline algorithm:
 
     python main.py --mode=explanation --dataset=ml --begin=0 --end=1 --reord="PageRank" --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=20 --max_users=2 --expl_alg=diverse --reordered_recs=0
+    
+To evaluate the explanations diversity offline for the PageRank algorithm and movielens dataset use the command:
+    
+    python main.py --mode=validate_expl --baseline=wikidata_page_rank8020 --dataset=ml --reordered_recs=0
 

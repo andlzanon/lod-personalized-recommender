@@ -1,6 +1,6 @@
 from preprocessing import movielens_small_utils as ml_small
 from preprocessing import lastfm_utils as fm
-from evaluation_utils import statistical_relevance
+from evaluation_utils import statistical_relevance, statistical_relevance_explanations
 from caserec.recommenders.item_recommendation.most_popular import MostPopular
 from caserec.recommenders.item_recommendation.userknn import UserKNN
 from caserec.recommenders.item_recommendation.bprmf import BprMF
@@ -520,3 +520,6 @@ if args.mode == "explanation" and args.dataset == "ml":
 if args.mode == "explanation" and args.dataset == "lastfm":
     run_explanations_experiments_lastfm(folds_path_lastfm, args.begin, args.end, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
                         args.max, args.max_users, args.expl_alg, args.reordered_recs)
+
+if args.mode == "validate_expl" and args.dataset == "ml":
+    statistical_relevance_explanations(args.baseline, args.dataset, args.reordered_recs)

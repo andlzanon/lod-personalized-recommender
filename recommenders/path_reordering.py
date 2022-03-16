@@ -119,7 +119,7 @@ class PathReordering(LODPersonalizedReordering):
         results_file_name = fold + "/results/explanations/" + self.output_path.split("/")[-1]
         results_title_l = results_file_name.split("/")
         results_title = '/'.join(results_title_l[:-1])
-        results_title = results_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_ " + results_title_l[-1]
+        results_title = results_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + results_title_l[-1]
 
         output_file_name = fold + "/outputs/explanations/" + self.output_path.split("/")[-1]
         output_title_l = output_file_name.split("/")

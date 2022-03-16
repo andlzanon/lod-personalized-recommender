@@ -1,0 +1,11 @@
+./datasets/ml-latest-small/folds/1/results/explanations/reordered_recs=1_expl_alg=diverse_ bprmf_lodreorder_path[policy=last_items=01_reorder=10_hybrid].csv
+Mean user item aggregate diversity: 9.798360655737705
+Std user item aggregate diversity: 2.7711033372996057
+Mean user property aggregate diversity: 9.036065573770491
+Std user property aggregate diversity: 1.1854352160442112
+Total items aggregate diversity: 2480
+Total property aggregate diversity: 253
+Items entropy: 7.6647894668827
+Props entropy: 5.440075632361423
+Items Gini index: 0.8082498476693527
+Props Gini index: 0.9968921656234486
