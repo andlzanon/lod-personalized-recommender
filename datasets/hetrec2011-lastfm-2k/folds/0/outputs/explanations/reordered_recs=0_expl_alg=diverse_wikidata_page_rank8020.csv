@@ -1,0 +1,235 @@
+./datasets/hetrec2011-lastfm-2k/folds/0/outputs/explanations/reordered_recs=0_expl_alg=diverse_wikidata_page_rank8020.csv
+
+User: 2
+Items interacted by the user
+Item id: 51 Name: Duran Duran
+Item id: 88 Name: Gorillaz
+Item id: 79 Name: Fiction Factory
+Item id: 80 Name: Groove Armada
+Item id: 81 Name: Portishead
+Item id: 82 Name: Marc Almond
+Item id: 83 Name: Cock Robin
+Item id: 84 Name: Cut Copy
+Item id: 85 Name: Spandau Ballet
+Item id: 86 Name: Katie Melua
+Item id: 87 Name: Deacon Blue
+Item id: 89 Name: Lady Gaga
+Item id: 52 Name: Morcheeba
+Item id: 90 Name: Kosheen
+Item id: 91 Name: Nik Kershaw
+Item id: 92 Name: Vitamin Z
+Item id: 94 Name: Ministry of Sound
+Item id: 95 Name: Simply Red
+Item id: 96 Name: Fleetwood Mac
+Item id: 97 Name: Duffy
+Item id: 98 Name: Japan
+Item id: 99 Name: INXS
+Item id: 78 Name: The Adventures
+Item id: 77 Name: George Michael
+Item id: 76 Name: Electronic
+Item id: 75 Name: Camouflage
+Item id: 53 Name: Air
+Item id: 54 Name: Hooverphonic
+Item id: 55 Name: Kylie Minogue
+Item id: 56 Name: Daft Punk
+Item id: 57 Name: Thievery Corporation
+Item id: 58 Name: Goldfrapp
+Item id: 60 Name: Matt Bianco
+Item id: 61 Name: Talk Talk
+Item id: 62 Name: Prefab Sprout
+Item id: 63 Name: Enigma
+Item id: 65 Name: Coldplay
+Item id: 66 Name: Faithless
+Item id: 67 Name: Madonna
+Item id: 68 Name: Icehouse
+Item id: 69 Name: Sade
+Item id: 70 Name: Moby
+Item id: 71 Name: Dido
+Item id: 72 Name: Depeche Mode
+Item id: 74 Name: Basia
+Item id: 100 Name: ABC
+
+Users favorites attributes on the kG
+United Kingdom
+new wave
+pop music
+synth-pop
+London
+
+Recommendations
+Item id: 227 Name: The Beatles
+Item id: 289 Name: Britney Spears
+Item id: 154 Name: Radiohead
+Item id: 288 Name: Rihanna
+Item id: 190 Name: Muse
+Item id: 300 Name: Katy Perry
+Item id: 295 Name: Beyoncé
+Item id: 292 Name: Christina Aguilera
+Item id: 159 Name: The Cure
+Item id: 599 Name: David Bowie
+
+Paths for the Recommended Item: 227.0
+"Cut Copy"; "Marc Almond" nodes: "synth-pop" "pop music" destination: "The Beatles"
+Paths for the Recommended Item: 289.0
+"Cock Robin" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 154.0
+"Cock Robin"; "Duran Duran" nodes: "new wave" "United Kingdom" destination: "Radiohead"
+Paths for the Recommended Item: 288.0
+"Cock Robin"; "Marc Almond" nodes: "new wave" "pop music" destination: "Rihanna"
+Paths for the Recommended Item: 190.0
+"Cut Copy"; "Marc Almond" nodes: "synth-pop" "rock music" destination: "Muse"
+Paths for the Recommended Item: 300.0
+"Marc Almond"; "Katie Melua" nodes: "pop music" destination: "Katy Perry"
+Paths for the Recommended Item: 295.0
+"Fiction Factory"; "Groove Armada"; "Cock Robin" nodes: "Columbia Records" destination: "Beyoncé"
+Paths for the Recommended Item: 292.0
+"Fiction Factory"; "Groove Armada"; "Spandau Ballet"; "Marc Almond" nodes: "United Kingdom" "pop music" destination: "Christina Aguilera"
+Paths for the Recommended Item: 159.0
+"Cock Robin" nodes: "new wave" destination: "The Cure"
+Paths for the Recommended Item: 599.0
+"Duran Duran"; "Fiction Factory"; "Groove Armada" nodes: "United Kingdom" destination: "David Bowie"
+
+User: 5
+Items interacted by the user
+Item id: 53 Name: Air
+Item id: 154 Name: Radiohead
+Item id: 218 Name: Man Man
+Item id: 219 Name: M. Ward
+Item id: 220 Name: Red Hot Chili Peppers
+Item id: 221 Name: Travis
+Item id: 222 Name: Modest Mouse
+Item id: 223 Name: Band of Horses
+Item id: 226 Name: Queens of the Stone Age
+Item id: 227 Name: The Beatles
+Item id: 228 Name: Kings of Leon
+Item id: 229 Name: The Killers
+Item id: 230 Name: Green Day
+Item id: 231 Name: Devendra Banhart
+Item id: 233 Name: list of Nine Inch Nails band members
+Item id: 234 Name: Nirvana
+Item id: 235 Name: Eels
+Item id: 236 Name: Clap Your Hands Say Yeah
+Item id: 237 Name: Thom Yorke
+Item id: 215 Name: Jeff Buckley
+Item id: 214 Name: DeVotchKa
+Item id: 212 Name: Bob Dylan
+Item id: 200 Name: Gogol Bordello
+Item id: 173 Name: Placebo
+Item id: 182 Name: Keane
+Item id: 190 Name: Muse
+Item id: 195 Name: Bright Eyes
+Item id: 196 Name: Beirut
+Item id: 197 Name: Tom Waits
+Item id: 199 Name: Arcade Fire
+Item id: 202 Name: Cake
+Item id: 211 Name: The Decemberists
+Item id: 204 Name: Damien Rice
+Item id: 205 Name: Andrew Bird
+Item id: 206 Name: Beck
+Item id: 207 Name: Arctic Monkeys
+Item id: 208 Name: Babyshambles
+Item id: 209 Name: My Chemical Romance
+Item id: 210 Name: Bloc Party
+Item id: 238 Name: Massive Attack
+
+Users favorites attributes on the kG
+alternative rock
+Shortlist Music Prize
+folk rock
+indie rock
+Grammy Award for Best Rock Performance by a Duo or Group with Vocal
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 65 Name: Coldplay
+Item id: 289 Name: Britney Spears
+Item id: 67 Name: Madonna
+Item id: 533 Name: Oasis
+Item id: 163 Name: Pink Floyd
+Item id: 498 Name: Paramore
+Item id: 300 Name: Katy Perry
+Item id: 72 Name: Depeche Mode
+Item id: 159 Name: The Cure
+
+Paths for the Recommended Item: 89.0
+"Red Hot Chili Peppers" nodes: "MTV Video Music Award for Best Art Direction" destination: "Lady Gaga"
+Paths for the Recommended Item: 65.0
+"The Beatles" nodes: "United Kingdom" destination: "Coldplay"
+Paths for the Recommended Item: 289.0
+"Air"; "Man Man"; "M. Ward" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 67.0
+"The Beatles" nodes: "Rock and Roll Hall of Fame" destination: "Madonna"
+Paths for the Recommended Item: 533.0
+"Modest Mouse"; "Band of Horses" nodes: "indie rock" destination: "Oasis"
+Paths for the Recommended Item: 163.0
+"Queens of the Stone Age"; "Red Hot Chili Peppers" nodes: "alternative rock" "Grammy Award for Best Rock Performance by a Duo or Group with Vocal" destination: "Pink Floyd"
+Paths for the Recommended Item: 498.0
+"Radiohead"; "Red Hot Chili Peppers"; "Travis" nodes: "alternative rock" destination: "Paramore"
+Paths for the Recommended Item: 300.0
+"Travis"; "Red Hot Chili Peppers" nodes: "alternative rock" "MTV Video Music Award for Best Art Direction" destination: "Katy Perry"
+Paths for the Recommended Item: 72.0
+"Air"; "Man Man"; "M. Ward"; "Radiohead" nodes: "United States of America" "alternative rock" destination: "Depeche Mode"
+Paths for the Recommended Item: 159.0
+"Modest Mouse"; "Band of Horses"; "Radiohead" nodes: "indie rock" "alternative rock" destination: "The Cure"
+
+User: 6
+Items interacted by the user
+Item id: 77 Name: George Michael
+Item id: 241 Name: Toni Braxton
+Item id: 266 Name: Erykah Badu
+Item id: 267 Name: Nas
+Item id: 268 Name: Richard Marx
+Item id: 269 Name: Dru Hill
+Item id: 271 Name: Mos Def
+Item id: 272 Name: Faith Evans
+Item id: 275 Name: Angie Stone
+Item id: 276 Name: Gang Starr
+Item id: 277 Name: Papa Wemba
+Item id: 278 Name: Tupac Shakur
+Item id: 280 Name: Sam the Kid
+Item id: 281 Name: Dealema
+Item id: 282 Name: Boss AC
+Item id: 283 Name: Ana Carolina
+Item id: 284 Name: Dilated Peoples
+Item id: 285 Name: Janet Jackson
+Item id: 286 Name: Peter Tosh
+Item id: 265 Name: Céline Dion
+Item id: 264 Name: Sara Tavares
+Item id: 263 Name: Jill Scott
+Item id: 252 Name: Tamia
+Item id: 242 Name: Elo da Corrente
+Item id: 243 Name: Teta Lando
+Item id: 245 Name: Bob Marley and the Wailers
+Item id: 247 Name: Maxwell
+Item id: 248 Name: Pharoahe Monch
+Item id: 249 Name: Common
+Item id: 250 Name: Bob Marley
+Item id: 253 Name: Bryan Adams
+Item id: 262 Name: Mary J. Blige
+Item id: 254 Name: Lokua Kanza
+Item id: 256 Name: Kid Abelha
+Item id: 257 Name: Mariah Carey
+Item id: 258 Name: Tina Turner
+Item id: 259 Name: 9th Wonder
+Item id: 260 Name: Floetry
+Item id: 261 Name: Marisa Monte
+Item id: 287 Name: Monica
+
+Users favorites attributes on the kG
+actor
+soul music
+record producer
+composer
+recording artist
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 289 Name: Britney Spears
+Item id: 295 Name: Beyoncé
+Item id: 67 Name: Madonna
+Item id: 288 Name: Rihanna
+Item id: 300 Name: Katy Perry
+Item id: 292 Name: Christina Aguilera
+Item id: 701 Name: Shakira
+Item id: 227 Name: The Beatles
+Item id: 333 Name: Avril Lavigne

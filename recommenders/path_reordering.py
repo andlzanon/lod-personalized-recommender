@@ -116,12 +116,20 @@ class PathReordering(LODPersonalizedReordering):
         """
 
         # create result and output file names
-        results_file_name = fold + "/results/explanations/" + self.output_path.split("/")[-1]
+        if reordered:
+            results_file_name = fold + "/results/explanations/" + self.output_path.split("/")[-1]
+        else:
+            results_file_name = fold + "/results/explanations/" + self.output_rec_file.split("/")[-1]
+
         results_title_l = results_file_name.split("/")
         results_title = '/'.join(results_title_l[:-1])
         results_title = results_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + results_title_l[-1]
 
-        output_file_name = fold + "/outputs/explanations/" + self.output_path.split("/")[-1]
+        if reordered:
+            output_file_name = fold + "/outputs/explanations/" + self.output_path.split("/")[-1]
+        else:
+            output_file_name = fold + "/outputs/explanations/" + self.output_rec_file.split("/")[-1]
+
         output_title_l = output_file_name.split("/")
         output_title = '/'.join(output_title_l[:-1])
         output_title = output_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + output_title_l[-1]
@@ -212,10 +220,8 @@ class PathReordering(LODPersonalizedReordering):
                     f.write("Item id: " + str(i) + " Name: " + movie_name + "\n")
 
             else:
-                item_rank = pd.read_csv(self.output_path, header=None)
-                item_rank.columns = ["user_id", "item", "score"]
-                item_rank = item_rank.set_index("user_id")
-                item_rank = list(item_rank.loc[u]["item"])
+                item_rank = self.output_rec_set
+                item_rank = list(item_rank.loc[u][:10]["item_id"])
 
                 print("\nRecommendations")
                 f.write("\nRecommendations\n")
@@ -228,7 +234,7 @@ class PathReordering(LODPersonalizedReordering):
             sem_dist = sem_dist.fillna(0)
             items, props = [], []
             if expl_alg == 'diverse':
-                items, props = self.__diverse_ranked_paths(item_rank, sem_dist, user_semantic_profile, u, f)
+                items, props = self.__diverse_ranked_paths(item_rank, sem_dist, user_semantic_profile, u, items_historic, f)
             elif expl_alg == 'explod':
                 items, props = self.__explod_ranked_paths(item_rank, items_historic, user_semantic_profile, u, f)
             f.write("\n")
@@ -302,7 +308,7 @@ class PathReordering(LODPersonalizedReordering):
             return items
 
     def __diverse_ranked_paths(self, ranked_items: list, semantic_distance: pd.DataFrame, semantic_profile: dict,
-                               user: int, file: _io.TextIOWrapper):
+                               user: int, historic_items: list, file: _io.TextIOWrapper):
         """
         Generate explanations to recommendations considering the max value varying the properties shown to the user
         the logic to this explanation is to order all paths to recommended items and resolve the conflicts (when there
@@ -317,13 +323,69 @@ class PathReordering(LODPersonalizedReordering):
         """
         hist_items = {}
         nodes = {}
+
         high_values = self.__diverse_ordered_properties(ranked_items, semantic_distance)
+
+        subgraph = self.graph.subgraph(["I" + str(int(h)) for h in historic_items] +
+                                       ["I" + str(int(h)) for h in list(high_values.index)] +
+                                       list(self.prop_set.loc[historic_items]['obj']))
 
         # display the explanation path for every recommendation
         for i in high_values.index:
-            node_value = high_values.loc[i][1]
+            paths = []
+            path_set = {}
+
+            for j in list(high_values['historic'].unique()):
+                paths = paths + [p for p in nx.all_shortest_paths(subgraph, source="I" + str(int(j)),
+                                                                  target="I" + str(int(i)))]
+
+            for p in paths:
+                path_values = [list(map(semantic_profile.get, p[1::2]))]
+                value = [sum(values) / len(values) for values in path_values if len(values) > 0 or values is None]
+                if value == high_values.loc[i]['score']:
+                    for k in range(0, len(p) - 1, 2):
+                        n = p[k]
+                        if n.startswith("I"):
+                            item_id = int(n[1:])
+                            if item_id != i:
+                                item = list(self.prop_set.loc[item_id][self.prop_set.columns[0]])[0]
+                                try:
+                                    path_set[p[k + 1]].append(item)
+                                except KeyError:
+                                    path_set[p[k + 1]] = [item]
+
+            origin = ""
+            path_sentence = " nodes: "
+            n = 0
+            ind = 0
+            keys_used = []
+            values_used = []
+            while n < 3 and ind < 3:
+                for key in path_set.keys():
+                    try:
+                        ori = path_set[key][ind]
+                        if ori not in values_used:
+                            values_used.append([origin])
+                            origin = origin + "\"" + ori + "\"; "
+                        if key not in keys_used:
+                            path_sentence = path_sentence + "\"" + key + "\" "
+                            keys_used.append(key)
+                        n = n + 1
+                    except IndexError:
+                        ind = ind + 1
+                        continue
+                ind = ind + 1
+
             print("\nPaths for the Recommended Item: " + str(i))
             file.write("\nPaths for the Recommended Item: " + str(i) + "\n")
+
+            origin = origin[:-2]
+            destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
+            print(origin + path_sentence + destination)
+            file.write(origin + path_sentence + destination)
+
+            ### OLD
+            node_value = high_values.loc[i][1]
             node_name = []
             for v in node_value:
                 node_name.append(
@@ -336,7 +398,10 @@ class PathReordering(LODPersonalizedReordering):
             if len(hscore_rows) > 3:
                 user_df = self.train_set.loc[user]
                 user_item = user_df[user_df[user_df.columns[0]].isin(list(hscore_rows[hscore_rows.columns[0]].unique()))]
-                hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+                try:
+                    hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+                except KeyError:
+                    hist_ids = list(user_item.sort_values(by="interaction", ascending=False)[:3][user_item.columns[0]])
             else:
                 hist_ids = list(hscore_rows[hscore_rows.columns[0]])
 
@@ -350,10 +415,20 @@ class PathReordering(LODPersonalizedReordering):
             origin = origin[:-2]
 
             path_sentence = " nodes: "
+            hist_p = self.prop_set.loc[hist_ids]
+            p_all = self.prop_set.loc[historic_items + list(high_values.index)]
             for n in node_name:
+                if n not in list(hist_p['obj']):
+                    try:
+                        item = p_all[p_all['obj'] == n].iloc[0, 0]
+                    except IndexError:
+                        item = p_all[p_all['obj'] == n].iloc[0]
+                    hist_items = self.__add_dict(hist_items, item)
+                    origin = origin + "; \"" + item + "\""
                 path_sentence = path_sentence + "\"" + n + "\" "
                 nodes = self.__add_dict(nodes, n)
-            destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
+                destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
+
             print(origin + path_sentence + destination)
             file.write(origin + path_sentence + destination)
 
@@ -503,5 +578,21 @@ class PathReordering(LODPersonalizedReordering):
             d[key] = d[key] + 1
         except KeyError:
             d[key] = 1
+
+        return d
+
+    def __sub_dict(self, d: dict, key) -> dict:
+        """
+        Function to increment one in the key
+        :param d: dictionary
+        :param key: key to increment value
+        :return: new dictionary
+        """
+        try:
+            d[key] = d[key] - 1
+            if d[key] == 0:
+                del d[key]
+        except KeyError:
+            return d
 
         return d
