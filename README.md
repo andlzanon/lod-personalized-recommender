@@ -92,7 +92,7 @@ To run the Lastfm experiments use the following command line:
 
 To run a statistical relevance test use the following command in which the bprmf baseline is compared to the proposed reordering with policy of last items, percentage of historic items to build user profile of 0.1 and reordering of the top 10 of the baseline:
 
-    python main.py --mode=validate --dataset=lastfm --sufix=path[policy=last_items=01_reorder=10_hybrid] --baseline=bprmf --method="both" --save=False --metrics="MAP NDCG GINI ENTROPY COVERAGE"
+    python main.py --mode=validate --dataset=lastfm --sufix=path[policy=last_items=01_reorder=10_hybrid] --baseline=bprmf --method="both" --save=1 --metrics="MAP AGG_DIV NDCG GINI ENTROPY COVERAGE"
 
 To run an explanation experiments for the movielens dataset for the diverse explanations algorithm run the following command. To compare results with the ExpLOD algorithm change the parameter to explod on expl_alg parameter. Change the reordered_recs parameter to explain the reordered recommendations or the baseline algorithm:
     

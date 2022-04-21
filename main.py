@@ -458,8 +458,8 @@ parser.add_argument("--method",
                     help="Statistical relevance test. Either 'ttest', 'wilcoxon' or 'both'. "
                          "Only works on the 'validation' mode.")
 parser.add_argument("--save",
-                    type=bool,
-                    default=False,
+                    type=int,
+                    default=0,
                     help="Boolean argument to save or not result in file. Only works on the 'validation' mode.")
 
 # reorder commdands
