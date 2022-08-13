@@ -3,7 +3,7 @@ import random
 import numpy as np
 import pandas as pd
 import networkx as nx
-from pandas.core.indexing import IndexingError
+from collections import Counter
 
 from recommenders.lod_reordering import LODPersonalizedReordering
 import evaluation_utils as eval
@@ -239,9 +239,9 @@ class PathReordering(LODPersonalizedReordering):
                 items, props = self.__explod_ranked_paths(item_rank, items_historic, user_semantic_profile, u, f)
             f.write("\n")
 
-            total_items = dict(list(total_items.items()) + list(items.items()))
+            total_items = dict(Counter(total_items)+Counter(items))
             m_items.append(len(items))
-            total_props = dict(list(total_props.items()) + list(props.items()))
+            total_props = dict(Counter(total_props)+Counter(props))
             m_props.append(len(props))
 
         f.close()
@@ -335,100 +335,74 @@ class PathReordering(LODPersonalizedReordering):
             paths = []
             path_set = {}
 
+            # obtain all paths
             for j in list(high_values['historic'].unique()):
                 paths = paths + [p for p in nx.all_shortest_paths(subgraph, source="I" + str(int(j)),
                                                                   target="I" + str(int(i)))]
 
+            # obtain paths with the properties selected by the diverse_ordered_properties method explanations
             for p in paths:
-                path_values = [list(map(semantic_profile.get, p[1::2]))]
-                value = [sum(values) / len(values) for values in path_values if len(values) > 0 or values is None]
-                if value == high_values.loc[i]['score']:
-                    for k in range(0, len(p) - 1, 2):
-                        n = p[k]
-                        if n.startswith("I"):
-                            item_id = int(n[1:])
-                            if item_id != i:
-                                item = list(self.prop_set.loc[item_id][self.prop_set.columns[0]])[0]
-                                try:
-                                    path_set[p[k + 1]].append(item)
-                                except KeyError:
-                                    path_set[p[k + 1]] = [item]
+                path_values = [set(map(semantic_profile.get, p[1::2]))]
+                for value in path_values:
+                    if value == set(high_values.loc[i]['path']):
+                        for k in range(0, len(p) - 1, 2):
+                            n = p[k]
+                            if n.startswith("I"):
+                                item_id = int(n[1:])
+                                if item_id != i:
+                                    try:
+                                        path_set[p[k + 1]].add(item_id)
+                                    except KeyError:
+                                        path_set[p[k + 1]] = {item_id}
 
+            # get items names from ids do generate explanations
+            for k in path_set.keys():
+                s_items = self.train_set.loc[user].sort_values(by='timestamp', kind="quicksort", ascending=False)
+                s_items = s_items[s_items[self.train_set.columns[0]].isin(list(path_set[k]))]
+                item_names = []
+                for h in s_items[s_items.columns[0]].to_list():
+                    item_names.append(list(self.prop_set.loc[h][self.prop_set.columns[0]])[0])
+                path_set[k] = item_names
+
+            # generate sentence using a top of 3 items
             origin = ""
             path_sentence = " nodes: "
             n = 0
-            ind = 0
-            keys_used = []
-            values_used = []
-            while n < 3 and ind < 3:
-                for key in path_set.keys():
-                    try:
-                        ori = path_set[key][ind]
-                        if ori not in values_used:
-                            values_used.append([origin])
-                            origin = origin + "\"" + ori + "\"; "
-                        if key not in keys_used:
-                            path_sentence = path_sentence + "\"" + key + "\" "
-                            keys_used.append(key)
-                        n = n + 1
-                    except IndexError:
-                        ind = ind + 1
-                        continue
-                ind = ind + 1
+            ind = [0 for _ in path_set.keys()]
+            k_ind = 0
+            keys = list(path_set.keys())
+            used_items = []
+            used_props = []
+            end_flag = sum([len(path_set[keys[h]]) <= ind[h] for h in range(0, len(keys))]) == len(keys)
+            while n < 3 and not end_flag:
+                key = keys[k_ind]
+                try:
+                    ori = path_set[key][ind[k_ind]]
+
+                    if ori not in used_items:
+                        origin = origin + "\"" + ori + "\"; "
+                        hist_items = self.__add_dict(hist_items, ori)
+                        used_items.append(ori)
+
+                    if key not in used_props:
+                        path_sentence = path_sentence + "\"" + key + "\" "
+                        nodes = self.__add_dict(nodes, key)
+                        used_props.append(key)
+
+                    n = n + 1
+                except IndexError:
+                    pass
+                ind[k_ind] = ind[k_ind] + 1
+                k_ind = k_ind + 1
+                if k_ind == len(keys):
+                    k_ind = 0
+                end_flag = sum([len(path_set[keys[h]]) <= ind[h] for h in range(0, len(keys))]) == len(keys)
 
             print("\nPaths for the Recommended Item: " + str(i))
             file.write("\nPaths for the Recommended Item: " + str(i) + "\n")
 
             origin = origin[:-2]
             destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
-            print(origin + path_sentence + destination)
-            file.write(origin + path_sentence + destination)
-
-            ### OLD
-            node_value = high_values.loc[i][1]
-            node_name = []
-            for v in node_value:
-                node_name.append(
-                    list(semantic_profile.keys())[list(semantic_profile.values()).index(v)])
-
-            origin = ""
-            hscore = high_values.loc[i][2]
-            rec_rows = semantic_distance.loc[i]
-            hscore_rows = rec_rows[rec_rows['score'] == hscore]
-            if len(hscore_rows) > 3:
-                user_df = self.train_set.loc[user]
-                user_item = user_df[user_df[user_df.columns[0]].isin(list(hscore_rows[hscore_rows.columns[0]].unique()))]
-                try:
-                    hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
-                except KeyError:
-                    hist_ids = list(user_item.sort_values(by="interaction", ascending=False)[:3][user_item.columns[0]])
-            else:
-                hist_ids = list(hscore_rows[hscore_rows.columns[0]])
-
-            for r in hist_ids:
-                try:
-                    item = self.prop_set.loc[r].iloc[0, 0]
-                except IndexingError:
-                    item = self.prop_set.loc[r].iloc[0]
-                origin = origin + "\"" + item + "\"; "
-                hist_items = self.__add_dict(hist_items, item)
-            origin = origin[:-2]
-
-            path_sentence = " nodes: "
-            hist_p = self.prop_set.loc[hist_ids]
-            p_all = self.prop_set.loc[historic_items + list(high_values.index)]
-            for n in node_name:
-                if n not in list(hist_p['obj']):
-                    try:
-                        item = p_all[p_all['obj'] == n].iloc[0, 0]
-                    except IndexError:
-                        item = p_all[p_all['obj'] == n].iloc[0]
-                    hist_items = self.__add_dict(hist_items, item)
-                    origin = origin + "; \"" + item + "\""
-                path_sentence = path_sentence + "\"" + n + "\" "
-                nodes = self.__add_dict(nodes, n)
-                destination = "destination: \"" + self.prop_set.loc[i].iloc[0, 0] + "\""
-
             print(origin + path_sentence + destination)
             file.write(origin + path_sentence + destination)
 
@@ -497,8 +471,6 @@ class PathReordering(LODPersonalizedReordering):
             # if there the conflicts was not resolved (lowest value is a tie) then recursively repeat the best
             # properties only for the items with tie
             except KeyError:
-                if len(second_high) == 0:
-                    break
                 second_high = self.__diverse_ordered_properties(list(df_max.index), semantic_distance)
                 for i in second_high.index:
                     high_values.loc[i] = second_high.loc[i]
