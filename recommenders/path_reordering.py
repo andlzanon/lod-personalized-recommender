@@ -408,11 +408,13 @@ class PathReordering(LODPersonalizedReordering):
 
         return hist_items, nodes
 
-    def __diverse_ordered_properties(self, ranked_items: list, semantic_distance: pd.DataFrame):
+    def __diverse_ordered_properties(self, ranked_items: list, semantic_distance: pd.DataFrame, lowest_flag=False):
         """
         Order the explanation paths in order to maximize value, without or repeating only a few times properites
         :param ranked_items: list of recommended items
         :param semantic_distance: dataframe with paths from historic to recommended items
+        :param lowest_flag: boolean flag that, if True consider on the reordering the lowest valued property
+            as explanation when there is a conflict. If False, replace the lowest value for repetitions
         :return: pandas df with the paths of best unrepeated items
         """
         # order all the paths based on the max value of the props on the path
@@ -471,7 +473,12 @@ class PathReordering(LODPersonalizedReordering):
             # if there the conflicts was not resolved (lowest value is a tie) then recursively repeat the best
             # properties only for the items with tie
             except KeyError:
-                second_high = self.__diverse_ordered_properties(list(df_max.index), semantic_distance)
+                if len(df_max.index) > 1:
+                    second_high = self.__diverse_ordered_properties(list(df_max.index), semantic_distance)
+                    if lowest_flag:
+                        second_high = second_high.sort_values(by="score", kind="quicksort", ascending=False)
+                        lowest_index = second_high.index[-1]
+                        second_high.loc[lowest_index] = df_max.loc[lowest_index]
                 for i in second_high.index:
                     high_values.loc[i] = second_high.loc[i]
                 break
