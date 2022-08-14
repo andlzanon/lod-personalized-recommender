@@ -1,13 +1,13 @@
 # Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data
 
-## Description :pencil:
+## Description 
 This is the source code used for the expriments of the paper: 
 
 >Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data." Knowledge-Based Systems 252 (2022): 109333.
 
-Our reordering algorithm aims to improve or mantain a collaborative filtering recommendation engine's accuracy, while also providing more diversity, coverage and fairness with the ability to generate personalized explanations to the user with the Wikidata Linked Open Data.
+You can find the link to our paper on ScienceDirect [here](https://www.sciencedirect.com/science/article/pii/S0950705122006682). Our reordering algorithm aims to improve or mantain a collaborative filtering recommendation engine's accuracy, while also providing more diversity, coverage and fairness with the ability to generate personalized explanations to the user with the Wikidata Linked Open Data.
 
-## Citation :label:
+## Citation 
 If this repository could be usefull to you, please cite us:
     
     @article{zanon2022balancing,
@@ -25,7 +25,7 @@ If this repository could be usefull to you, please cite us:
     }
 
 
-## Project Organization :card_index_dividers:
+## Project Organization
 
 :file_folder: datasets: file with MovieLens 100k and LastFM datasets, folds of cross validation and experiments outputs and results for all folds
 
@@ -41,10 +41,10 @@ If this repository could be usefull to you, please cite us:
 
 :page_facing_up: requirements.txt: list of library requirements to run the code
 
-## Wikidata extracted metatdata :globe_with_meridians:
+## Wikidata extracted metatdata 
 The files [props_wikidata_movilens_small.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/props_wikidata_movielens_small.csv) and [props_artists_id.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/last-fm/props_artists_id.csv) contains the [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page). metadata extracted using [SPARQLWrapper 1.8.5](https://github.com/RDFLib/sparqlwrapper) library for the [MovieLens 100k dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/ml-latest-small) and the and the [LastFM artist dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/hetrec2011-lastfm-2k). For the MovieLens we extracted metadata from 97% of the movies available and for the LastFM we extracted 66% of the artists available.
 
-## Reproduction :desktop_computer:
+## Reproduction 
 
 All the generated files and results are available in this repository for the [MovieLens 100k database](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/ml-latest-small/folds) and the [LastFM database](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/hetrec2011-lastfm-2k/folds). Bellow are the libraries and command line arguments to reproduce the results of those two folders.
 
@@ -75,7 +75,7 @@ After this step it is necessary to install the CaseRecommender library with the 
 
 We used [Anaconda](https://www.anaconda.com/) to run the experiments. The version of Python used was the [3.7.3](https://www.python.org/downloads/release/python-373/).
 
-## Docummentation :open_book:
+## Docummentation
 
 ### Command-Line Documentation Arguments to Run Experiments 
 You can run experiments with command line arguments. 
