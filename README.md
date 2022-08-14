@@ -1,32 +1,14 @@
 # Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data
 
-## Description
+## Description :pencil:
 This is the source code used for the expriments of the paper: 
 
-    Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data." Knowledge-Based Systems 252 (2022): 109333.
+>Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data." Knowledge-Based Systems 252 (2022): 109333.
 
-This algorithm aims to improve or mantain a collaborative filtering recommendation engine's accuracy, while also providing more diversity, coverage and fairness with the ability to generate personalized explanations to the user throught Linked Open Data.
+Our reordering algorithm aims to improve or mantain a collaborative filtering recommendation engine's accuracy, while also providing more diversity, coverage and fairness with the ability to generate personalized explanations to the user with the Wikidata Linked Open Data.
 
-## Project Organization 
-:file_folder: datasets: file with MovieLens 100k and LastFM datasets
-
-:file_folder: generated_files: files of metadata generated from the Wikidata for items on both datasets
-
-:file_folder: preprocessing: source code for extracting Wikidata metadata and cross validation folder creation
-
-:file_folder: recommenders: implementation of recommender engines and proposed reordering approach. Each file represents one recommendation engine, except the Neural Collaborative Filtering algorithm that has two classes with the NCF prefix. A [base class](https://github.com/andlzanon/lod-personalized-recommender/blob/main/recommenders/base_recommender.py) for all recommenders was also implemented.
-
-:receipt: main.py: main source code to run command line arguments experiments
-
-:receipt: evaluation_utils.py: evaluation of recommender engines source code
-
-:receipt: requirements.txt: list of library requirements to run the code
-
-## Wikidata extracted metatdata
-The files [props_wikidata_movilens_small.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/props_wikidata_movielens_small.csv) and [props_artists_id.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/last-fm/props_artists_id.csv) contains the [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page). metadata extracted using [SPARQLWrapper 1.8.5](https://github.com/RDFLib/sparqlwrapper) library for the [MovieLens 100k dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/ml-latest-small) and the and the [LastFM artist dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/hetrec2011-lastfm-2k). For the MovieLens we extracted metadata from 97% of the movies available and for the LastFM we extracted 66% of the artists available.
-
-## Citation 
-If this repository could be usefull for you, please cite us:
+## Citation :label:
+If this repository could be usefull to you, please cite us:
     
     @article{zanon2022balancing,
         title       = {Balancing the trade-off between accuracy and diversity in
@@ -42,7 +24,27 @@ If this repository could be usefull for you, please cite us:
         publisher   = {Elsevier}
     }
 
-## Reproduction
+
+## Project Organization :card_index_dividers:
+
+:file_folder: datasets: file with MovieLens 100k and LastFM datasets, folds of cross validation and experiments outputs and results for all folds
+
+:file_folder: generated_files: files of metadata generated from the Wikidata for items on both datasets
+
+:file_folder: preprocessing: source code for extracting Wikidata metadata and cross validation folder creation
+
+:file_folder: recommenders: implementation of recommender engines and proposed reordering approach. Each file represents one recommendation engine, except the Neural Collaborative Filtering algorithm that has two classes with the NCF prefix. A [base class](https://github.com/andlzanon/lod-personalized-recommender/blob/main/recommenders/base_recommender.py) for all recommenders was also implemented.
+
+:page_facing_up: main.py: main source code to run command line arguments experiments
+
+:page_facing_up: evaluation_utils.py: evaluation of recommender engines source code
+
+:page_facing_up: requirements.txt: list of library requirements to run the code
+
+## Wikidata extracted metatdata :globe_with_meridians:
+The files [props_wikidata_movilens_small.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/props_wikidata_movielens_small.csv) and [props_artists_id.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/last-fm/props_artists_id.csv) contains the [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page). metadata extracted using [SPARQLWrapper 1.8.5](https://github.com/RDFLib/sparqlwrapper) library for the [MovieLens 100k dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/ml-latest-small) and the and the [LastFM artist dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/hetrec2011-lastfm-2k). For the MovieLens we extracted metadata from 97% of the movies available and for the LastFM we extracted 66% of the artists available.
+
+## Reproduction :desktop_computer:
 
 All the generated files and results are available in this repository for the [MovieLens 100k database](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/ml-latest-small/folds) and the [LastFM database](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/hetrec2011-lastfm-2k/folds). Bellow are the libraries and command line arguments to reproduce the results of those two folders.
 
@@ -73,9 +75,9 @@ After this step it is necessary to install the CaseRecommender library with the 
 
 We used [Anaconda](https://www.anaconda.com/) to run the experiments. The version of Python used was the [3.7.3](https://www.python.org/downloads/release/python-373/).
 
-## Docummentation
+## Docummentation :open_book:
 
-### Command-Line Documentation Arguments to Run Experiments
+### Command-Line Documentation Arguments to Run Experiments 
 You can run experiments with command line arguments. 
 
 The documentation of each arguments follows bellow along with examples that was the commands used in the experiments:
