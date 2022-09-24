@@ -234,7 +234,7 @@ class PathReordering(LODPersonalizedReordering):
             sem_dist = sem_dist.fillna(0)
             items, props = [], []
             if expl_alg == 'diverse':
-                items, props = self.__diverse_ranked_paths(item_rank, sem_dist, user_semantic_profile, u, items_historic, f)
+                items, props = self.__diverse_ranked_paths(item_rank, sem_dist, user_semantic_profile, u, items_historic_cutout, f)
             elif expl_alg == 'explod':
                 items, props = self.__explod_ranked_paths(item_rank, items_historic, user_semantic_profile, u, f)
             f.write("\n")
@@ -473,7 +473,7 @@ class PathReordering(LODPersonalizedReordering):
             # if there the conflicts was not resolved (lowest value is a tie) then recursively repeat the best
             # properties only for the items with tie
             except KeyError:
-                if len(df_max.index) > 1:
+                if len(df_max.index) > 1 and not self.__only_one_value(df_max, semantic_distance):
                     second_high = self.__diverse_ordered_properties(list(df_max.index), semantic_distance)
                     if lowest_flag:
                         second_high = second_high.sort_values(by="score", kind="quicksort", ascending=False)
@@ -484,6 +484,24 @@ class PathReordering(LODPersonalizedReordering):
                 break
 
         return high_values
+
+    def __only_one_value(self, df_max: pd.DataFrame, semantic_distance: pd.DataFrame):
+        """
+        Check if the items to be recommended have only one path to the historical items
+        :param df_max: dataframe with items with explanation conflict
+        :param semantic_distance: dataframe with the semantic distances between historical and recommended items
+        :return: True if there is only one path for all items with explanation conflict, false otherwise
+        """
+        count = 0
+        rec_items = list(df_max.index)
+        for rec_item in rec_items:
+            if len(semantic_distance.loc[rec_item]['score'].unique()) == 1:
+                count = count + 1
+
+        if count == len(rec_items):
+            return True
+        else:
+            return False
 
     def __explod_ranked_paths(self, ranked_items: list, items_historic: list, semantic_profile: dict,
                               user: int, file: _io.TextIOWrapper):
