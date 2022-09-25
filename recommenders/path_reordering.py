@@ -234,7 +234,8 @@ class PathReordering(LODPersonalizedReordering):
             sem_dist = sem_dist.fillna(0)
             items, props = [], []
             if expl_alg == 'diverse':
-                items, props = self.__diverse_ranked_paths(item_rank, sem_dist, user_semantic_profile, u, items_historic_cutout, f)
+                items, props = self.__diverse_ranked_paths(item_rank, sem_dist, user_semantic_profile, u,
+                                                           items_historic_cutout, f)
             elif expl_alg == 'explod':
                 items, props = self.__explod_ranked_paths(item_rank, items_historic, user_semantic_profile, u, f)
             f.write("\n")
@@ -337,8 +338,11 @@ class PathReordering(LODPersonalizedReordering):
 
             # obtain all paths
             for j in list(high_values['historic'].unique()):
-                paths = paths + [p for p in nx.all_shortest_paths(subgraph, source="I" + str(int(j)),
-                                                                  target="I" + str(int(i)))]
+                try:
+                    paths = paths + [p for p in nx.all_shortest_paths(subgraph, source="I" + str(int(j)),
+                                                                      target="I" + str(int(i)))]
+                except nx.exception.NetworkXNoPath:
+                    pass
 
             # obtain paths with the properties selected by the diverse_ordered_properties method explanations
             for p in paths:
