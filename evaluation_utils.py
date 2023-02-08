@@ -6,6 +6,7 @@ from pygini import gini
 from scipy.stats import entropy
 from scipy.stats import ttest_rel
 from scipy.stats import wilcoxon
+from sklearn.preprocessing import MinMaxScaler
 
 
 def evaluate(alg_name: str, prediction_file: str, train_file: str, test_file: str):
@@ -259,6 +260,140 @@ def evaluate_explanations(file_name: str, m_items: list, m_props: list, total_it
     print(pentropy)
     print(igini)
     print(pgini)
+
+
+def lir_metric(beta: float, user: int, items: list, train_set: pd.DataFrame):
+    """
+    Linking Interaction Recency (LIR): metric proposed in https://dl.acm.org/doi/abs/10.1145/3477495.3532041
+    :param beta: parameter for the exponential decay
+    :param user: user id
+    :param items: list of list items used for each recommendation explanation path
+    :param train_set: training set of user item interactions
+    :return: the LIR metric for the user, the lir for every recommendation is the mean of the lir of every recommendation
+        and the lir for every recommendation is the mean of the lir for every item in the explanation path
+    """
+    # get user data
+    interacted = train_set.loc[user]
+    interacted = interacted.reset_index()
+    last_col = interacted.columns[-1]
+    interacted = interacted.sort_values(last_col, ascending=True)
+    interacted["lir"] = -1
+
+    # for every item calculate the exponential decay
+    min = interacted[interacted.columns[last_col]].min()
+    last_value = min
+    last_lir = min
+    for i, row in interacted.iterrows():
+        # if it is min, then lir is the value
+        if row[last_col] == min:
+            interacted.at[i, "lir"] = min
+        # else if the count is the same repeat the sep, otherwise, calculate new sep
+        else:
+            if row[last_col] == last_value:
+                interacted.at[i, "lir"] = last_lir
+            else:
+                lir = (1 - beta) * last_lir + beta * row[last_col]
+                interacted.at[i, "lir"] = int(lir)
+                last_value = row[last_col]
+                last_lir = lir
+
+    scaler = MinMaxScaler()
+    interacted['normalized'] = scaler.fit_transform(
+        np.asarray(interacted[interacted.columns[-1]]).reshape(-1, 1)).reshape(-1)
+
+    # initialize mean variables
+    total_sum = 0
+    total_n = 0
+    for pro_list in items:
+        items_sum = 0
+        items_n = 0
+        for item in pro_list:
+            value = int(interacted[interacted[interacted.columns[0]] == item][last_col])
+            items_sum = items_sum + value
+            items_n = items_n + 1
+
+        total_sum = total_sum + (items_sum/items_n)
+        total_n = total_n + 1
+
+    return total_sum/total_n
+
+
+def sep_metric(beta: float, props: list, prop_set: pd.DataFrame):
+    """
+    Shared Entity Popularity (SEP) metric proposed in https://dl.acm.org/doi/abs/10.1145/3477495.3532041
+    :param beta: parameter for the exponential decay
+    :param props: list of list of properties used for each recommendation explanation path
+    :param prop_set: property set extrated from Wikidata
+    :return: the sep metric for the user, the sep for every recommendation is the mean of the sep of every recommendation
+        and the sep for every recommendation is the mean of the sep for every item in the explanation path
+    """
+
+    # user variables for the mean sep of each explanation and scaler
+    total_sum = 0
+    total_n = 0
+    scaler = MinMaxScaler()
+    # for every list of properties in the user list of explanations
+    for expl_props in props:
+        # explanation variables for the mean sep of each explanation
+        items_sum = 0
+        items_n = 0
+        # for every property list of each explanation
+        for p in expl_props:
+            # obtain the most popular link to of the property e.g. link actor from property Brad Pitt
+            sum_df = pd.DataFrame(prop_set[prop_set["obj"] == p].groupby("prop").count())
+            link = sum_df[sum_df[sum_df.columns[0]] == sum_df.max()[0]].index[0]
+            link_df = prop_set[prop_set["prop"] == link]
+            # generate dataset with property as index and count as column
+            count_link = pd.DataFrame(link_df.groupby("obj").count())
+            count_link = count_link.sort_values(by=count_link.columns[0], ascending=True)
+            count_link = pd.DataFrame(count_link[count_link.columns[0]])
+            # initialize sep column with value -1
+            count_link["sep"] = -1
+
+            # obtain min value so we do not need to calculate every time
+            # and initialize the last value and last lir as min according to the base case
+            min = count_link[count_link.columns[0]].min()
+            last_value = min
+            last_sep = min
+            for i, row in count_link.iterrows():
+                # if it is min, then lir is the value
+                if row[0] == min:
+                    count_link.at[i, "sep"] = min
+                # else if the count is the same repeat the sep, otherwise, calculate new sep
+                else:
+                    if row[0] == last_value:
+                        count_link.at[i, "sep"] = last_sep
+                    else:
+                        sep = (1 - beta) * last_sep + beta * row[0]
+                        count_link.at[i, "sep"] = sep
+                        last_value = row[0]
+                        last_sep = sep
+
+            # generate normalized sep column
+            count_link['normalized'] = scaler.fit_transform(
+                np.asarray(count_link[count_link.columns[-1]]).reshape(-1, 1)).reshape(-1)
+
+            # obtain sep value for the property and calculate mean
+            p_sep_value = count_link.loc[p][-1]
+            items_sum = items_sum + p_sep_value
+            items_n = items_n + 1
+        
+        # calculate total mean
+        total_sum = total_sum + (items_sum / items_n)
+        total_n = total_n + 1
+
+    return total_sum / total_n
+
+
+def etd_metric(explanation_types: list, k: int, total_types: int):
+    """
+    Metric proposed by Ballocu 2022
+    :param explanation_types: list of explanation types used in the explanations
+    :param k: number of recommendations
+    :param total_types: total number of explanation types in the dataset
+    :return: the division between the explanation types in the explanations and the minimum between the k and total_types
+    """
+    return len(set(explanation_types))/(min(k, total_types))
 
 
 def explanation_file_to_df(file_path: str, algorithm: str):
