@@ -1,0 +1,223 @@
+./datasets/ml-latest-small/folds/0/outputs/explanations/reordered_recs=0_expl_alg=diverse_mostpop.csv
+
+User: 1
+Items interacted by the user
+Item id: 2012 Name: Back to the Future Part III
+Item id: 2478 Name: Three Amigos
+Item id: 553 Name: Tombstone
+Item id: 1445 Name: McHale's Navy
+Item id: 157 Name: Canadian Bacon
+Item id: 1298 Name: Pink Floyd – The Wall
+Item id: 780 Name: Independence Day
+Item id: 3053 Name: The Messenger: The Story of Joan of Arc
+Item id: 3448 Name: Good Morning, Vietnam
+Item id: 151 Name: Rob Roy
+Item id: 1090 Name: Platoon
+Item id: 1224 Name: Henry V
+Item id: 5060 Name: MASH
+Item id: 527 Name: Schindler's List
+Item id: 3147 Name: The Green Mile
+Item id: 47 Name: Seven
+Item id: 593 Name: The Silence of the Lambs
+Item id: 3033 Name: Spaceballs
+Item id: 1206 Name: A Clockwork Orange
+Item id: 3702 Name: Mad Max
+Item id: 1240 Name: The Terminator
+Item id: 1270 Name: Back to the Future
+Item id: 2291 Name: Edward Scissorhands
+Item id: 163 Name: Desperado
+Item id: 1226 Name: The Quiet Man
+Item id: 943 Name: The Ghost and Mrs. Muir
+Item id: 1265 Name: Groundhog Day
+Item id: 2338 Name: I Still Know What You Did Last Summer
+Item id: 1644 Name: I Know What You Did Last Summer
+Item id: 3273 Name: Scream 3
+Item id: 3176 Name: The Talented Mr. Ripley
+Item id: 1625 Name: The Game
+Item id: 1092 Name: Basic Instinct
+Item id: 3386 Name: JFK
+Item id: 2657 Name: The Rocky Horror Picture Show
+Item id: 2648 Name: Frankenstein
+Item id: 1258 Name: The Shining
+Item id: 2716 Name: Ghostbusters
+Item id: 1348 Name: Nosferatu
+Item id: 2644 Name: Dracula
+Item id: 2654 Name: The Wolf Man
+Item id: 1219 Name: Psycho
+Item id: 2959 Name: Fight Club
+Item id: 2329 Name: American History X
+Item id: 1208 Name: Apocalypse Now
+Item id: 954 Name: Mr. Smith Goes to Washington
+Item id: 3247 Name: Sister Act
+Item id: 2389 Name: Psycho
+Item id: 2616 Name: Dick Tracy
+Item id: 1620 Name: Kiss the Girls
+Item id: 1805 Name: Wild Things
+Item id: 2985 Name: RoboCop
+Item id: 1804 Name: The Newton Boys
+Item id: 1396 Name: Sneakers
+Item id: 2580 Name: Go
+Item id: 2268 Name: A Few Good Men
+Item id: 296 Name: Pulp Fiction
+Item id: 1617 Name: L.A. Confidential
+Item id: 1089 Name: Reservoir Dogs
+Item id: 1213 Name: Goodfellas
+Item id: 608 Name: Fargo
+Item id: 50 Name: The Usual Suspects
+Item id: 2033 Name: The Black Cauldron
+Item id: 1030 Name: Pete's Dragon
+Item id: 4006 Name: The Transformers: The Movie
+Item id: 1024 Name: The Three Caballeros
+Item id: 2141 Name: An American Tail
+Item id: 2096 Name: Sleeping Beauty
+Item id: 2090 Name: The Rescuers
+Item id: 661 Name: James and the Giant Peach
+Item id: 2139 Name: The Secret of NIMH
+Item id: 2137 Name: Charlotte's Web
+Item id: 1025 Name: The Sword in the Stone
+Item id: 1032 Name: Alice in Wonderland
+Item id: 1282 Name: Fantasia
+Item id: 2761 Name: The Iron Giant
+Item id: 1 Name: Toy Story
+Item id: 1023 Name: Winnie the Pooh and the Blustery Day
+Item id: 736 Name: Twister
+Item id: 1031 Name: Bedknobs and Broomsticks
+Item id: 2094 Name: The Rocketeer
+Item id: 1377 Name: Batman Returns
+Item id: 552 Name: The Three Musketeers
+Item id: 1552 Name: Con Air
+Item id: 2641 Name: Superman II
+Item id: 2450 Name: Howard the Duck
+Item id: 1676 Name: Starship Troopers
+Item id: 2470 Name: "Crocodile" Dundee
+Item id: 2617 Name: The Mummy
+Item id: 2099 Name: Song of the South
+Item id: 362 Name: Rudyard Kipling's The Jungle Book
+Item id: 648 Name: Mission: Impossible
+Item id: 2046 Name: Flight of the Navigator
+Item id: 349 Name: Clear and Present Danger
+Item id: 590 Name: Dances with Wolves
+Item id: 2414 Name: Young Sherlock Holmes
+Item id: 1127 Name: The Abyss
+Item id: 2987 Name: Who Framed Roger Rabbit
+Item id: 3168 Name: Easy Rider
+Item id: 919 Name: The Wizard of Oz
+Item id: 2366 Name: King Kong
+Item id: 70 Name: From Dusk till Dawn (franchise)
+Item id: 733 Name: The Rock
+Item id: 2058 Name: The Negotiator
+Item id: 1049 Name: The Ghost and the Darkness
+Item id: 2640 Name: Superman
+Item id: 3729 Name: Shaft
+Item id: 480 Name: Jurassic Park
+Item id: 3441 Name: Red Dawn
+Item id: 2528 Name: Logan's Run
+Item id: 1408 Name: The Last of the Mohicans
+Item id: 2406 Name: Romancing the Stone
+Item id: 2273 Name: Rush Hour
+Item id: 316 Name: Stargate
+Item id: 2916 Name: Total Recall
+Item id: 1573 Name: Face/Off
+Item id: 1275 Name: Highlander
+Item id: 592 Name: Batman
+Item id: 3527 Name: Predator
+Item id: 3639 Name: The Man with the Golden Gun
+Item id: 2529 Name: Planet of the Apes
+Item id: 2993 Name: Thunderball
+Item id: 2427 Name: The Thin Red Line
+Item id: 6 Name: Heat
+Item id: 2000 Name: Lethal Weapon
+Item id: 2948 Name: From Russia with Love
+Item id: 110 Name: Braveheart
+Item id: 940 Name: The Adventures of Robin Hood
+Item id: 2947 Name: Goldfinger
+Item id: 3703 Name: Mad Max 2
+Item id: 1220 Name: The Blues Brothers
+Item id: 1222 Name: Full Metal Jacket
+Item id: 1291 Name: Indiana Jones and the Last Crusade
+Item id: 457 Name: The Fugitive
+Item id: 2571 Name: The Matrix
+Item id: 2028 Name: Saving Private Ryan
+Item id: 2949 Name: Dr. No
+Item id: 3062 Name: The Longest Day
+Item id: 1197 Name: The Princess Bride
+Item id: 2944 Name: The Dirty Dozen
+Item id: 2692 Name: Run Lola Run
+Item id: 1214 Name: Alien
+Item id: 3793 Name: X-Men
+Item id: 1196 Name: Star Wars: Episode V – The Empire Strikes Back
+Item id: 3439 Name: Teenage Mutant Ninja Turtles II: The Secret of the Ooze
+Item id: 3440 Name: Teenage Mutant Ninja Turtles III
+Item id: 1920 Name: Small Soldiers
+Item id: 3489 Name: Hook
+Item id: 2253 Name: Toys
+Item id: 673 Name: Space Jam
+Item id: 1009 Name: Escape to Witch Mountain
+Item id: 2054 Name: Honey, I Shrunk the Kids
+Item id: 2105 Name: Tron
+Item id: 2143 Name: Legend
+Item id: 3479 Name: Ladyhawke
+Item id: 1967 Name: Labyrinth
+Item id: 2093 Name: Return to Oz
+Item id: 2005 Name: The Goonies
+Item id: 367 Name: The Mask
+Item id: 2161 Name: The NeverEnding Story
+Item id: 2193 Name: Willow
+Item id: 260 Name: Star Wars: Episode IV – A New Hope
+Item id: 2174 Name: Beetlejuice
+Item id: 2872 Name: Excalibur
+Item id: 1097 Name: E.T. the Extra-Terrestrial
+Item id: 1073 Name: Willy Wonka & the Chocolate Factory
+Item id: 3671 Name: Blazing Saddles
+Item id: 923 Name: Citizen Kane
+Item id: 1256 Name: Duck Soup
+Item id: 1793 Name: Welcome to Woop Woop
+Item id: 1080 Name: Monty Python’s Life of Brian
+Item id: 1136 Name: Monty Python and the Holy Grail
+Item id: 2502 Name: Office Space
+Item id: 2542 Name: Lock, Stock and Two Smoking Barrels
+Item id: 3 Name: Grumpier Old Men
+Item id: 1777 Name: The Wedding Singer
+Item id: 3809 Name: What About Bob?
+Item id: 216 Name: Billy Madison
+Item id: 3052 Name: Dogma
+Item id: 500 Name: Mrs. Doubtfire
+Item id: 231 Name: Dumb and Dumber
+Item id: 543 Name: So I Married an Axe Murderer
+Item id: 1042 Name: That Thing You Do!
+Item id: 333 Name: Tommy Boy
+Item id: 2596 Name: SLC Punk!
+Item id: 3450 Name: Grumpy Old Men
+Item id: 1732 Name: The Big Lebowski
+Item id: 3253 Name: Wayne's World
+Item id: 1517 Name: Austin Powers: International Man of Mystery
+Item id: 2395 Name: Rushmore
+Item id: 3243 Name: Encino Man
+Item id: 223 Name: Clerks
+Item id: 2700 Name: South Park: Bigger, Longer & Uncut
+Item id: 356 Name: Forrest Gump
+Item id: 1060 Name: Swingers
+Item id: 235 Name: Ed Wood
+Item id: 2997 Name: Being John Malkovich
+Item id: 1473 Name: Best Men
+Item id: 2858 Name: American Beauty
+Item id: 441 Name: Dazed and Confused
+Item id: 101 Name: Bottle Rocket
+Item id: 3744 Name: Shaft
+Item id: 3617 Name: Road Trip
+Item id: 2826 Name: The 13th Warrior
+Item id: 2628 Name: Star Wars: Episode I – The Phantom Menace
+Item id: 2018 Name: Bambi
+Item id: 1210 Name: Star Wars: Episode VI – Return of the Jedi
+Item id: 804 Name: She's the One
+
+Users favorites attributes on the kG
+Academy Award for Best Sound Mixing
+National Film Registry
+Academy Award for Best Film Editing
+Academy Award for Best Sound Editing
+Academy Award for Best Visual Effects
+
+Recommendations
+Item id: 318 Name: The Shawshank Redemption
+Item id: 589 Name: Terminator 2: Judgment Day

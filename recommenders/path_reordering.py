@@ -123,7 +123,8 @@ class PathReordering(LODPersonalizedReordering):
 
         results_title_l = results_file_name.split("/")
         results_title = '/'.join(results_title_l[:-1])
-        results_title = results_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + results_title_l[-1]
+        results_title = results_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + \
+                        results_title_l[-1]
 
         if reordered:
             output_file_name = fold + "/outputs/explanations/" + self.output_path.split("/")[-1]
@@ -132,7 +133,8 @@ class PathReordering(LODPersonalizedReordering):
 
         output_title_l = output_file_name.split("/")
         output_title = '/'.join(output_title_l[:-1])
-        output_title = output_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + output_title_l[-1]
+        output_title = output_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + \
+                       output_title_l[-1]
         f = open(output_title, mode="w", encoding='utf-8')
         f.write(output_title + "\n")
 
@@ -238,11 +240,14 @@ class PathReordering(LODPersonalizedReordering):
                                                            items_historic_cutout, f)
             elif expl_alg == 'explod':
                 items, props = self.__explod_ranked_paths(item_rank, items_historic, user_semantic_profile, u, f)
+
+            elif expl_alg == 'pem':
+                items, props = self.__pem_ranked_paths(item_rank, items_historic, u, f)
             f.write("\n")
 
-            total_items = dict(Counter(total_items)+Counter(items))
+            total_items = dict(Counter(total_items) + Counter(items))
             m_items.append(len(items))
-            total_props = dict(Counter(total_props)+Counter(props))
+            total_props = dict(Counter(total_props) + Counter(props))
             m_props.append(len(props))
 
         f.close()
@@ -544,7 +549,8 @@ class PathReordering(LODPersonalizedReordering):
 
             # build sentence
             user_df = self.train_set.loc[user]
-            user_item = user_df[user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(max_props)].index.unique()))]
+            user_item = user_df[
+                user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(max_props)].index.unique()))]
             hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
             hist_names = hist_props.loc[hist_ids]['title'].unique()
             rec_name = self.prop_set.loc[r]['title'].unique()[0]
@@ -566,6 +572,156 @@ class PathReordering(LODPersonalizedReordering):
             print(origin + path_sentence + destination)
             file.write(origin + path_sentence + destination)
 
+        return hist_items, nodes
+
+    def __pem_ranked_paths(self, ranked_items: list, items_historic: list, user: int, file: _io.TextIOWrapper):
+        # count historic movies properties considering two levels of hierarchy above
+        hierarchy_df = pd.read_csv("../generated_files/wikidata/props_hierarchy_wikidata_movielens_small.csv")
+        hist_props = self.prop_set.loc[items_historic]
+        hist_props_l = hist_props['obj'].unique().tolist()
+
+        historic_hierarchy_props_l1 = hierarchy_df[hierarchy_df['obj'].isin(hist_props_l)]
+        historic_hierarchy_list_l1 = historic_hierarchy_props_l1['super_obj'].to_list()
+
+        historic_hierarchy_props_l2 = hierarchy_df[hierarchy_df['obj'].isin(historic_hierarchy_list_l1)]
+        historic_hierarchy_list_l2 = historic_hierarchy_props_l2['super_obj'].to_list()
+
+        count_hist_df = hist_props.groupby('obj').count()
+        count_hist_hierarchy_l1 = count_hist_df.merge(historic_hierarchy_props_l1, on='obj', how='right')
+        count_hist_hierarchy_l2 = count_hist_hierarchy_l1.merge(historic_hierarchy_props_l2, left_on='super_obj',
+                                                                right_on='obj', how='right')
+        hist_items = {}
+        nodes = {}
+
+        for r in ranked_items:
+            # count recommended item properties considering two levels of hierarchy above
+            rec_props = self.prop_set.loc[r]
+            rec_props_l = rec_props['obj'].unique().to_list()
+
+            rec_hierarchy_props_l1 = hierarchy_df[hierarchy_df['obj'].isin(rec_props_l)]
+            rec_hierarchy_list_l1 = rec_hierarchy_props_l1['super_obj'].to_list()
+
+            rec_hierarchy_props_l2 = hierarchy_df[hierarchy_df['obj'].isin(rec_hierarchy_props_l1)]
+            rec_hierarchy_list_l2 = rec_hierarchy_props_l2['super_obj'].to_list()
+
+            # obtain all properties from historic hierarchy and recommended hierarchy, then filter to only valids
+            all_user_props = set(hist_props_l + historic_hierarchy_list_l1 + historic_hierarchy_list_l2). \
+                intersection(rec_props_l + rec_hierarchy_list_l1 + rec_hierarchy_list_l2)
+
+            # valid properties are properties from the hierarchy that are from the user profile or recommended hierarchy
+            # and annotate at least one item from the set
+            valid_props = set(all_user_props).intersection(set(self.prop_set['obj'].to_list()))
+
+            # count number of items described by each of valid props
+            count_rec_df = rec_props.groupby('obj').count()
+            count_rec_hierarchy_l1 = count_rec_df.merge(rec_hierarchy_props_l1, on='obj', how='right')
+            count_rec_hierarchy_l2 = count_rec_hierarchy_l1.merge(rec_hierarchy_props_l2, left_on='super_obj',
+                                                                  right_on='obj', how='right')
+            count_rec_hierarchy_l2 = count_rec_hierarchy_l2[['super_obj_x', 'count', 'super_obj_y']]
+            count_rec_hierarchy_l2.columns = ['obj', 'count', 'super_obj']
+
+            all_user = pd.concat([count_hist_hierarchy_l1, count_hist_hierarchy_l2,
+                                  count_rec_hierarchy_l1, count_rec_hierarchy_l2], ignore_index=True)
+            all_user = all_user.groupby('super_obj').count()['count']
+            all_user = pd.concat(
+                [all_user, count_hist_df[count_hist_df.columns[0]], count_rec_df[count_rec_df.columns[0]]])
+            all_user = all_user.loc[list(valid_props)]
+            all_user = all_user.groupby(level=0).sum()
+
+            # remove redundant properties, that are super properties that are described by the same amount of user
+            # liked items compared to their respective child properties
+            node_dicts = {}
+            graph = [historic_hierarchy_props_l1, historic_hierarchy_props_l2,
+                     rec_hierarchy_props_l1, rec_hierarchy_props_l2]
+            for subgraph in graph:
+                for index, row in subgraph.iterrows():
+                    try:
+                        node_dicts[row[1]].add(row[0])
+                    except KeyError:
+                        node_dicts[row[1]] = {row[0]}
+
+            non_redundant = []
+            for obj in all_user.index.to_list():
+                try:
+                    childs = list(node_dicts[obj])
+                except KeyError:
+                    non_redundant.append(obj)
+                    continue
+
+                obj_count = all_user.loc[obj]
+                redundant_f = False
+                while len(childs) > 0:
+                    super_p = childs.pop()
+                    if obj_count == all_user.loc[super_p]:
+                        redundant_f = True
+                        break
+
+                    try:
+                        childs = childs + list(node_dicts[super_p])
+                    except KeyError:
+                        pass
+
+                if not redundant_f:
+                    non_redundant.append(obj)
+
+            # score properties
+            props_catalog = self.prop_set.groupby("obj").count()
+            props_catalog = pd.DataFrame(props_catalog[props_catalog.columns[0]])
+            props_catalog.columns = ['count']
+
+            catalog_hierarchy_props_l1 = hierarchy_df[hierarchy_df['obj'].isin(all_user.index)]
+            catalog_hierarchy_list_l1 = catalog_hierarchy_props_l1['super_obj'].to_list()
+
+            catalog_hierarchy_props_l2 = hierarchy_df[hierarchy_df['obj'].isin(catalog_hierarchy_list_l1)]
+
+            count_catalog_hierarchy_l1 = props_catalog.merge(catalog_hierarchy_props_l1, on='obj', how='right')
+            count_catalog_hierarchy_l2 = count_catalog_hierarchy_l1.merge(catalog_hierarchy_props_l2,
+                                                                          left_on='super_obj',
+                                                                          right_on='obj', how='right')
+            count_catalog_hierarchy_l2 = count_catalog_hierarchy_l2[['super_obj_x', 'count', 'super_obj_y']]
+            count_catalog_hierarchy_l2.columns = ['obj', 'count', 'super_obj']
+            all_catalog = pd.concat([count_catalog_hierarchy_l1, count_catalog_hierarchy_l2], ignore_index=True)
+            all_catalog = pd.DataFrame(all_catalog.groupby("super_obj").sum())
+            all_catalog = pd.concat([all_catalog, props_catalog])
+
+            c = len(self.prop_set.index.unique())
+            iu = len(items_historic)
+            props_rank = {}
+            for p in non_redundant:
+                ipc = all_catalog.loc[p]
+                ipu = all_user.loc[p]
+                props_rank[p] = np.log10(ipc) * ((ipu / iu) / (ipc / c))
+
+            prop_rank_l = list(dict(sorted(props_rank.items(), key=lambda item: item[1], reverse=True)).keys())
+            max_props = [prop_rank_l[0]]
+            max_value = props_rank[max_props]
+            for k in prop_rank_l:
+                if max_value == props_rank[k] and len(max_props) < 3:
+                    max_props.append(k)
+
+            user_df = self.train_set.loc[user]
+            user_item = user_df[
+                user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'] == max_prop].index.unique()))]
+            hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+            hist_names = hist_props.loc[hist_ids]['title'].unique()
+            rec_name = self.prop_set.loc[r]['title'].unique()[0]
+
+            # building explanation
+            print("\nPaths for the Recommended Item: " + str(r))
+            file.write("\nPaths for the Recommended Item: " + str(r) + "\n")
+            origin = ""
+            for i in hist_names:
+                origin = origin + "\"" + i + "\"; "
+                hist_items = self.__add_dict(hist_items, i)
+            origin = origin[:-2]
+
+            path_sentence = " nodes: "
+            for n in max_props:
+                path_sentence = path_sentence + "\"" + n + "\" "
+                nodes = self.__add_dict(nodes, n)
+            destination = "destination: \"" + rec_name + "\""
+            print(origin + path_sentence + destination)
+            file.write(origin + path_sentence + destination)
         return hist_items, nodes
 
     def __add_dict(self, d: dict, key) -> dict:
