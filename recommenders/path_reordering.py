@@ -385,11 +385,8 @@ class PathReordering(LODPersonalizedReordering):
                 s_items = self.train_set.loc[user].sort_values(by='timestamp', kind="quicksort", ascending=False)
                 s_items = s_items[s_items[self.train_set.columns[0]].isin(list(path_set[k]))]
                 item_names = []
-                hist_ids = []
                 for h in s_items[s_items.columns[0]].to_list():
-                    hist_ids.append(h)
                     item_names.append(list(self.prop_set.loc[h][self.prop_set.columns[0]])[0])
-                hist_lists.append(hist_ids)
                 path_set[k] = item_names
 
             # generate sentence using a top of 3 items
@@ -401,6 +398,7 @@ class PathReordering(LODPersonalizedReordering):
             keys = list(path_set.keys())
             used_items = []
             used_props = []
+            hist_ids = []
             end_flag = sum([len(path_set[keys[h]]) <= ind[h] for h in range(0, len(keys))]) == len(keys)
             while n < 3 and not end_flag:
                 key = keys[k_ind]
@@ -408,6 +406,7 @@ class PathReordering(LODPersonalizedReordering):
                     ori = path_set[key][ind[k_ind]]
                     if ori not in used_items:
                         origin = origin + "\"" + ori + "\"; "
+                        hist_ids.append(self.prop_set[self.prop_set['obj'] == ori].index.values[0])
                         hist_items = self.__add_dict(hist_items, ori)
                         used_items.append(ori)
 
@@ -425,6 +424,7 @@ class PathReordering(LODPersonalizedReordering):
                     k_ind = 0
                 end_flag = sum([len(path_set[keys[h]]) <= ind[h] for h in range(0, len(keys))]) == len(keys)
 
+            hist_lists.append(hist_ids)
             prop_lists.append(used_props)
             print("\nPaths for the Recommended Item: " + str(i))
             file.write("\nPaths for the Recommended Item: " + str(i) + "\n")
@@ -465,7 +465,7 @@ class PathReordering(LODPersonalizedReordering):
         # while the count is not the last row, resolve conflicts
         while count < max_size - 1:
             # if there is only one row on max value there is not conflict, base case
-            if len(list(df_max['score'])) == 1:
+            if len(list(df_max['score'].index)) == 1:
                 order_values = high_values['score'].sort_values(ascending=False)
                 count = list(order_values).index(maximum) + 1
                 maximum = order_values.iloc[count]
@@ -489,12 +489,23 @@ class PathReordering(LODPersonalizedReordering):
                 second_high = second_high.sort_values(by="score", kind="quicksort", ascending=False)
                 second_high = second_high.set_index('rec')
                 sub_list = second_high.index[:-1]
+
+                # verify if exist
+                c = 0
+                for i, row in second_high.iterrows():
+                    if len(row[1]) == 0:
+                        c = c + 1
+                if c == len(second_high.index):
+                    raise KeyError("There are not any other values for lowest indexes")
+
                 # if there is only one value to substitute, substitute this value
                 if len(second_high) == 1:
                     sub_list = second_high.index
 
                 for i in sub_list:
-                    high_values.loc[i] = second_high.loc[i]
+                    l = second_high.loc[i]
+                    if len(l) > 0:
+                        high_values.loc[i] = second_high.loc[i]
 
                 # get next max to check for conflicts
                 order_values = high_values['score'].sort_values(ascending=False)
@@ -725,8 +736,13 @@ class PathReordering(LODPersonalizedReordering):
 
         historic_hierarchy_props_l1 = hierarchy_df[hierarchy_df['obj'].isin(hist_props_l)]
         historic_hierarchy_list_l1 = historic_hierarchy_props_l1['super_obj'].to_list()
+        historic_hierarchy_props_l1 = historic_hierarchy_props_l1[
+            historic_hierarchy_props_l1.obj != historic_hierarchy_props_l1.super_obj]
 
         historic_hierarchy_props_l2 = hierarchy_df[hierarchy_df['obj'].isin(historic_hierarchy_list_l1)]
+        historic_hierarchy_props_l2 = historic_hierarchy_props_l2[
+            historic_hierarchy_props_l2.obj != historic_hierarchy_props_l2.super_obj]
+
         historic_hierarchy_list_l2 = historic_hierarchy_props_l2['super_obj'].to_list()
 
         count_hist_df = hist_props[[hist_props.columns[0], hist_props.columns[-1]]].drop_duplicates().groupby(
@@ -748,9 +764,15 @@ class PathReordering(LODPersonalizedReordering):
             rec_props_l = list(rec_props['obj'].unique())
 
             rec_hierarchy_props_l1 = hierarchy_df[hierarchy_df['obj'].isin(rec_props_l)]
+            rec_hierarchy_props_l1 = rec_hierarchy_props_l1[
+                rec_hierarchy_props_l1.obj != rec_hierarchy_props_l1.super_obj]
+
             rec_hierarchy_list_l1 = rec_hierarchy_props_l1['super_obj'].to_list()
 
             rec_hierarchy_props_l2 = hierarchy_df[hierarchy_df['obj'].isin(rec_hierarchy_list_l1)]
+            rec_hierarchy_props_l2 = rec_hierarchy_props_l2[
+                rec_hierarchy_props_l2.obj != rec_hierarchy_props_l2.super_obj]
+
             rec_hierarchy_list_l2 = rec_hierarchy_props_l2['super_obj'].to_list()
 
             # obtain all properties from historic hierarchy and recommended hierarchy, then filter to only valids
@@ -800,7 +822,8 @@ class PathReordering(LODPersonalizedReordering):
 
                 obj_count = all_user_valid.loc[obj]
                 redundant_f = False
-                while len(childs) > 0:
+                n_iter = 0
+                while len(childs) > 0 and n_iter < 100:
                     super_p = childs.pop()
                     if obj_count == all_user.loc[super_p]:
                         redundant_f = True
@@ -810,6 +833,8 @@ class PathReordering(LODPersonalizedReordering):
                         childs = childs + list(node_dicts[super_p])
                     except KeyError:
                         pass
+                    finally:
+                        n_iter = n_iter + 1
 
                 if not redundant_f:
                     non_redundant.append(obj)
@@ -846,16 +871,25 @@ class PathReordering(LODPersonalizedReordering):
                 props_rank[p] = np.log10(ipc) * ((ipu / iu) / (ipc / c))
 
             prop_rank_l = list(dict(sorted(props_rank.items(), key=lambda item: item[1], reverse=True)).keys())
-            max_props = [prop_rank_l[0]]
-            max_value = props_rank[max_props[0]]
-            for k in prop_rank_l[1:]:
-                if max_value == props_rank[k] and len(max_props) < 3:
-                    max_props.append(k)
+            max_prop = [prop_rank_l[0]]
 
             user_df = self.train_set.loc[user]
             user_item = user_df[
-                user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(max_props)].index.unique()))]
+                user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'] == max_prop[0]].index.unique()))]
             hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+            sub_p = [prop_rank_l[0]]
+            while len(hist_ids) == 0:
+                user_item = user_df[
+                        user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(sub_p)].index.unique()))]
+                hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+                new_sub_p = []
+                for p in sub_p:
+                    try:
+                        new_sub_p = new_sub_p + list(node_dicts[p])
+                    except KeyError:
+                        continue
+                sub_p = new_sub_p
+
             hist_lists.append(hist_ids)
             hist_names = hist_props.loc[hist_ids]['title'].unique()
             rec_name = self.prop_set.loc[r]['title'].unique()[0]
@@ -869,11 +903,11 @@ class PathReordering(LODPersonalizedReordering):
                 hist_items = self.__add_dict(hist_items, i)
             origin = origin[:-2]
 
-            prop_lists.append(max_props)
+            prop_lists.append(max_prop)
             path_sentence = " nodes: "
-            for n in max_props:
-                path_sentence = path_sentence + "\"" + n + "\" "
-                nodes = self.__add_dict(nodes, n)
+            n = max_prop[0]
+            path_sentence = path_sentence + "\"" + n + "\" "
+            nodes = self.__add_dict(nodes, n)
             destination = "destination: \"" + rec_name + "\""
             print(origin + path_sentence + destination)
             file.write(origin + path_sentence + destination)
