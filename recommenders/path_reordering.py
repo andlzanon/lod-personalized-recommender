@@ -406,9 +406,9 @@ class PathReordering(LODPersonalizedReordering):
                     ori = path_set[key][ind[k_ind]]
                     if ori not in used_items:
                         origin = origin + "\"" + ori + "\"; "
-                        hist_ids.append(self.prop_set[self.prop_set['obj'] == ori].index.values[0])
                         hist_items = self.__add_dict(hist_items, ori)
                         used_items.append(ori)
+                        hist_ids.append(self.prop_set[self.prop_set[self.prop_set.columns[0]] == ori].index.unique()[0])
 
                     if key not in used_props:
                         path_sentence = path_sentence + "\"" + key + "\" "
@@ -416,7 +416,8 @@ class PathReordering(LODPersonalizedReordering):
                         used_props.append(key)
 
                     n = n + 1
-                except IndexError:
+                except IndexError as e:
+                    print(e)
                     pass
                 ind[k_ind] = ind[k_ind] + 1
                 k_ind = k_ind + 1
