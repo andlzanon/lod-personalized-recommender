@@ -329,12 +329,18 @@ def lir_metric(beta: float, user: int, items: list, train_set: pd.DataFrame):
         items_sum = 0
         items_n = 0
         for item in pro_list:
-            value = int(interacted[interacted[interacted.columns[1]] == item]['normalized'])
-            items_sum = items_sum + value
-            items_n = items_n + 1
+            try:
+                value = int(interacted[interacted[interacted.columns[1]] == item]['normalized'])
+                items_sum = items_sum + value
+                items_n = items_n + 1
+            except TypeError:
+                pass
 
-        total_sum = total_sum + (items_sum/items_n)
-        total_n = total_n + 1
+        try:
+            total_sum = total_sum + (items_sum/items_n)
+            total_n = total_n + 1
+        except ZeroDivisionError:
+            total_n = total_n + 1
 
     return total_sum/total_n
 
@@ -407,8 +413,11 @@ def sep_metric(beta: float, props: list, prop_set: pd.DataFrame, memo_sep: dict)
             items_n = items_n + 1
         
         # calculate total mean
-        total_sum = total_sum + (items_sum / items_n)
-        total_n = total_n + 1
+        try:
+            total_sum = total_sum + (items_sum / items_n)
+            total_n = total_n + 1
+        except ZeroDivisionError:
+            total_n = total_n + 1
 
     return total_sum / total_n
 

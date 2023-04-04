@@ -408,7 +408,19 @@ class PathReordering(LODPersonalizedReordering):
                         origin = origin + "\"" + ori + "\"; "
                         hist_items = self.__add_dict(hist_items, ori)
                         used_items.append(ori)
-                        hist_ids.append(self.prop_set[self.prop_set[self.prop_set.columns[0]] == ori].index.unique()[0])
+                        ids = self.prop_set[self.prop_set[self.prop_set.columns[0]] == ori].index.values
+
+                        found = False
+                        ids = list(set(ids))
+                        j = 0
+                        while j < len(ids) and not found:
+                            if ids[j] in historic_items:
+                                hist_ids.append(ids[j])
+                                found = True
+                            j = j + 1
+
+                        if not found:
+                            hist_ids.append(ids[0])
 
                     if key not in used_props:
                         path_sentence = path_sentence + "\"" + key + "\" "
@@ -416,8 +428,7 @@ class PathReordering(LODPersonalizedReordering):
                         used_props.append(key)
 
                     n = n + 1
-                except IndexError as e:
-                    print(e)
+                except IndexError:
                     pass
                 ind[k_ind] = ind[k_ind] + 1
                 k_ind = k_ind + 1
@@ -492,11 +503,7 @@ class PathReordering(LODPersonalizedReordering):
                 sub_list = second_high.index[:-1]
 
                 # verify if exist
-                c = 0
-                for i, row in second_high.iterrows():
-                    if len(row[1]) == 0:
-                        c = c + 1
-                if c == len(second_high.index):
+                if self.__empty_paths(second_high) == 1:
                     raise KeyError("There are not any other values for lowest indexes")
 
                 # if there is only one value to substitute, substitute this value
@@ -516,14 +523,16 @@ class PathReordering(LODPersonalizedReordering):
             # if there the conflicts was not resolved (lowest value is a tie) then recursively repeat the best
             # properties only for the items with tie
             except KeyError:
-                if len(df_max.index) > 1 and not self.__only_one_value(df_max, semantic_distance):
+                if len(df_max.index) > 1 and len(df_max.index) != len(high_values.index) and \
+                        not self.__only_one_value(df_max, semantic_distance):
                     second_high = self.__diverse_ordered_properties(list(df_max.index), semantic_distance)
                     if lowest_flag:
                         second_high = second_high.sort_values(by="score", kind="quicksort", ascending=False)
                         lowest_index = second_high.index[-1]
                         second_high.loc[lowest_index] = df_max.loc[lowest_index]
-                for i in second_high.index:
-                    high_values.loc[i] = second_high.loc[i]
+                if self.__empty_paths(second_high) == 2:
+                    for i in second_high.index:
+                        high_values.loc[i] = second_high.loc[i]
                 break
 
         return high_values
@@ -545,6 +554,23 @@ class PathReordering(LODPersonalizedReordering):
             return True
         else:
             return False
+
+    def __empty_paths(self, paths_df: pd.DataFrame):
+        """
+        Function that determines if a pandas dataframe with origin, path and destination has empty paths
+        :param paths_df: pandas dataframe with with origin, path and destination as columns
+        :return: 1 if all paths are empty, 2 if all paths are filled, 0 if there are some empty paths
+        """
+        c = 0
+        for i, row in paths_df.iterrows():
+            if len(row[1]) == 0:
+                c = c + 1
+        if c == len(paths_df.index):
+            return 1
+        elif c == 0:
+            return 2
+        else:
+            return 0
 
     def __explod_ranked_paths(self, ranked_items: list, items_historic: list, semantic_profile: dict,
                               user: int, file: _io.TextIOWrapper, memo_sep: dict):
