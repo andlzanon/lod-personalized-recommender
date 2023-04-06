@@ -898,29 +898,35 @@ class PathReordering(LODPersonalizedReordering):
                 props_rank[p] = np.log10(ipc) * ((ipu / iu) / (ipc / c))
 
             prop_rank_l = list(dict(sorted(props_rank.items(), key=lambda item: item[1], reverse=True)).keys())
-            max_prop = [prop_rank_l[0]]
 
-            user_df = self.train_set.loc[user]
-            user_item = user_df[
-                user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'] == max_prop[0]].index.unique()))]
-            hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
-            sub_p = [prop_rank_l[0]]
-            while len(hist_ids) == 0:
+            if len(prop_rank_l) > 0:
+                max_prop = [prop_rank_l[0]]
+                user_df = self.train_set.loc[user]
                 user_item = user_df[
-                        user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(sub_p)].index.unique()))]
+                    user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'] == max_prop[0]].index.unique()))]
                 hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
-                new_sub_p = []
-                for p in sub_p:
-                    try:
-                        new_sub_p = new_sub_p + list(node_dicts[p])
-                    except KeyError:
-                        continue
-                sub_p = new_sub_p
+                sub_p = [prop_rank_l[0]]
+                while len(hist_ids) == 0:
+                    user_item = user_df[
+                            user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(sub_p)].index.unique()))]
+                    hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+                    new_sub_p = []
+                    for p in sub_p:
+                        try:
+                            new_sub_p = new_sub_p + list(node_dicts[p])
+                        except KeyError:
+                            continue
+                    sub_p = new_sub_p
 
-            hist_lists.append(hist_ids)
-            hist_names = hist_props.loc[hist_ids]['title'].unique()
+                hist_lists.append(hist_ids)
+                hist_names = hist_props.loc[hist_ids]['title'].unique()
+            else:
+                max_prop = []
+                hist_ids = self.train_set.loc[user].sort_values(by=self.train_set.columns[-1], ascending=False)[:3][self.train_set.columns[0]]
+                hist_names = hist_props.loc[hist_ids]['title'].unique()
+                hist_lists.append(hist_ids)
+
             rec_name = self.prop_set.loc[r]['title'].unique()[0]
-
             # building explanation
             print("\nPaths for the Recommended Item: " + str(r))
             file.write("\nPaths for the Recommended Item: " + str(r) + "\n")
@@ -932,9 +938,11 @@ class PathReordering(LODPersonalizedReordering):
 
             prop_lists.append(max_prop)
             path_sentence = " nodes: "
-            n = max_prop[0]
-            path_sentence = path_sentence + "\"" + n + "\" "
-            nodes = self.__add_dict(nodes, n)
+            if len(max_prop) > 0:
+                n = max_prop[0]
+                path_sentence = path_sentence + "\"" + n + "\" "
+                nodes = self.__add_dict(nodes, n)
+
             destination = "destination: \"" + rec_name + "\""
             print(origin + path_sentence + destination)
             file.write(origin + path_sentence + destination)
