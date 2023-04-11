@@ -1,0 +1,1064 @@
+./datasets/ml-latest-small/folds/1/outputs/explanations/reordered_recs=0_expl_alg=explod_v2_n_explain=5_userknn.csv
+
+User: 1
+Items interacted by the user
+Item id: 2492 Name: 20 Dates
+Item id: 2012 Name: Back to the Future Part III
+Item id: 2478 Name: Three Amigos
+Item id: 553 Name: Tombstone
+Item id: 157 Name: Canadian Bacon
+Item id: 3053 Name: The Messenger: The Story of Joan of Arc
+Item id: 1298 Name: Pink Floyd – The Wall
+Item id: 780 Name: Independence Day
+Item id: 3448 Name: Good Morning, Vietnam
+Item id: 1224 Name: Henry V
+Item id: 1090 Name: Platoon
+Item id: 5060 Name: MASH
+Item id: 527 Name: Schindler's List
+Item id: 3147 Name: The Green Mile
+Item id: 2353 Name: Enemy of the State
+Item id: 47 Name: Seven
+Item id: 593 Name: The Silence of the Lambs
+Item id: 3033 Name: Spaceballs
+Item id: 3702 Name: Mad Max
+Item id: 1206 Name: A Clockwork Orange
+Item id: 1240 Name: The Terminator
+Item id: 1270 Name: Back to the Future
+Item id: 2291 Name: Edward Scissorhands
+Item id: 163 Name: Desperado
+Item id: 1226 Name: The Quiet Man
+Item id: 943 Name: The Ghost and Mrs. Muir
+Item id: 1265 Name: Groundhog Day
+Item id: 2338 Name: I Still Know What You Did Last Summer
+Item id: 3273 Name: Scream 3
+Item id: 3176 Name: The Talented Mr. Ripley
+Item id: 1625 Name: The Game
+Item id: 3386 Name: JFK
+Item id: 1092 Name: Basic Instinct
+Item id: 2657 Name: The Rocky Horror Picture Show
+Item id: 1258 Name: The Shining
+Item id: 1278 Name: Young Frankenstein
+Item id: 2716 Name: Ghostbusters
+Item id: 2459 Name: The Texas Chain Saw Massacre
+Item id: 2648 Name: Frankenstein
+Item id: 1348 Name: Nosferatu
+Item id: 2654 Name: The Wolf Man
+Item id: 2644 Name: Dracula
+Item id: 1219 Name: Psycho
+Item id: 2959 Name: Fight Club
+Item id: 1208 Name: Apocalypse Now
+Item id: 954 Name: Mr. Smith Goes to Washington
+Item id: 2387 Name: Very Bad Things
+Item id: 3247 Name: Sister Act
+Item id: 2389 Name: Psycho
+Item id: 2616 Name: Dick Tracy
+Item id: 1620 Name: Kiss the Girls
+Item id: 1805 Name: Wild Things
+Item id: 2985 Name: RoboCop
+Item id: 1804 Name: The Newton Boys
+Item id: 1396 Name: Sneakers
+Item id: 2580 Name: Go
+Item id: 2268 Name: A Few Good Men
+Item id: 296 Name: Pulp Fiction
+Item id: 1089 Name: Reservoir Dogs
+Item id: 1213 Name: Goodfellas
+Item id: 50 Name: The Usual Suspects
+Item id: 608 Name: Fargo
+Item id: 2033 Name: The Black Cauldron
+Item id: 1030 Name: Pete's Dragon
+Item id: 4006 Name: The Transformers: The Movie
+Item id: 2116 Name: The Lord of the Rings
+Item id: 1024 Name: The Three Caballeros
+Item id: 1029 Name: Dumbo
+Item id: 2078 Name: The Jungle Book
+Item id: 2141 Name: An American Tail
+Item id: 2090 Name: The Rescuers
+Item id: 2096 Name: Sleeping Beauty
+Item id: 596 Name: Pinocchio
+Item id: 661 Name: James and the Giant Peach
+Item id: 1025 Name: The Sword in the Stone
+Item id: 3034 Name: Robin Hood
+Item id: 2048 Name: The Great Mouse Detective
+Item id: 2137 Name: Charlotte's Web
+Item id: 1032 Name: Alice in Wonderland
+Item id: 2139 Name: The Secret of NIMH
+Item id: 2761 Name: The Iron Giant
+Item id: 2899 Name: Gulliver's Travels
+Item id: 1 Name: Toy Story
+Item id: 1023 Name: Winnie the Pooh and the Blustery Day
+Item id: 552 Name: The Three Musketeers
+Item id: 1031 Name: Bedknobs and Broomsticks
+Item id: 1377 Name: Batman Returns
+Item id: 736 Name: Twister
+Item id: 2094 Name: The Rocketeer
+Item id: 2450 Name: Howard the Duck
+Item id: 2641 Name: Superman II
+Item id: 1552 Name: Con Air
+Item id: 1676 Name: Starship Troopers
+Item id: 362 Name: Rudyard Kipling's The Jungle Book
+Item id: 2099 Name: Song of the South
+Item id: 2617 Name: The Mummy
+Item id: 2470 Name: "Crocodile" Dundee
+Item id: 349 Name: Clear and Present Danger
+Item id: 648 Name: Mission: Impossible
+Item id: 2046 Name: Flight of the Navigator
+Item id: 590 Name: Dances with Wolves
+Item id: 2115 Name: Indiana Jones and the Temple of Doom
+Item id: 1127 Name: The Abyss
+Item id: 2414 Name: Young Sherlock Holmes
+Item id: 3168 Name: Easy Rider
+Item id: 919 Name: The Wizard of Oz
+Item id: 2366 Name: King Kong
+Item id: 3740 Name: Big Trouble in Little China
+Item id: 733 Name: The Rock
+Item id: 2058 Name: The Negotiator
+Item id: 70 Name: From Dusk till Dawn (franchise)
+Item id: 1049 Name: The Ghost and the Darkness
+Item id: 423 Name: Blown Away
+Item id: 3729 Name: Shaft
+Item id: 480 Name: Jurassic Park
+Item id: 1587 Name: Conan the Barbarian
+Item id: 3441 Name: Red Dawn
+Item id: 2528 Name: Logan's Run
+Item id: 2406 Name: Romancing the Stone
+Item id: 2273 Name: Rush Hour
+Item id: 1408 Name: The Last of the Mohicans
+Item id: 316 Name: Stargate
+Item id: 2916 Name: Total Recall
+Item id: 1275 Name: Highlander
+Item id: 1573 Name: Face/Off
+Item id: 3527 Name: Predator
+Item id: 592 Name: Batman
+Item id: 2991 Name: Live and Let Die
+Item id: 2993 Name: Thunderball
+Item id: 2427 Name: The Thin Red Line
+Item id: 2529 Name: Planet of the Apes
+Item id: 6 Name: Heat
+Item id: 2000 Name: Lethal Weapon
+Item id: 2948 Name: From Russia with Love
+Item id: 2947 Name: Goldfinger
+Item id: 940 Name: The Adventures of Robin Hood
+Item id: 1954 Name: Rocky
+Item id: 110 Name: Braveheart
+Item id: 457 Name: The Fugitive
+Item id: 1291 Name: Indiana Jones and the Last Crusade
+Item id: 1222 Name: Full Metal Jacket
+Item id: 3703 Name: Mad Max 2
+Item id: 1220 Name: The Blues Brothers
+Item id: 2571 Name: The Matrix
+Item id: 2028 Name: Saving Private Ryan
+Item id: 2949 Name: Dr. No
+Item id: 1197 Name: The Princess Bride
+Item id: 3062 Name: The Longest Day
+Item id: 2944 Name: The Dirty Dozen
+Item id: 2692 Name: Run Lola Run
+Item id: 3793 Name: X-Men
+Item id: 1198 Name: Raiders of the Lost Ark
+Item id: 1196 Name: Star Wars: Episode V – The Empire Strikes Back
+Item id: 3439 Name: Teenage Mutant Ninja Turtles II: The Secret of the Ooze
+Item id: 3440 Name: Teenage Mutant Ninja Turtles III
+Item id: 1920 Name: Small Soldiers
+Item id: 3489 Name: Hook
+Item id: 2253 Name: Toys
+Item id: 1009 Name: Escape to Witch Mountain
+Item id: 2054 Name: Honey, I Shrunk the Kids
+Item id: 3479 Name: Ladyhawke
+Item id: 2143 Name: Legend
+Item id: 2105 Name: Tron
+Item id: 367 Name: The Mask
+Item id: 2093 Name: Return to Oz
+Item id: 2797 Name: Big
+Item id: 1967 Name: Labyrinth
+Item id: 2161 Name: The NeverEnding Story
+Item id: 2005 Name: The Goonies
+Item id: 1097 Name: E.T. the Extra-Terrestrial
+Item id: 2872 Name: Excalibur
+Item id: 2174 Name: Beetlejuice
+Item id: 260 Name: Star Wars: Episode IV – A New Hope
+Item id: 1073 Name: Willy Wonka & the Chocolate Factory
+Item id: 923 Name: Citizen Kane
+Item id: 1927 Name: All Quiet on the Western Front
+Item id: 1256 Name: Duck Soup
+Item id: 1793 Name: Welcome to Woop Woop
+Item id: 1080 Name: Monty Python’s Life of Brian
+Item id: 1136 Name: Monty Python and the Holy Grail
+Item id: 2502 Name: Office Space
+Item id: 2542 Name: Lock, Stock and Two Smoking Barrels
+Item id: 3 Name: Grumpier Old Men
+Item id: 1777 Name: The Wedding Singer
+Item id: 3809 Name: What About Bob?
+Item id: 3052 Name: Dogma
+Item id: 216 Name: Billy Madison
+Item id: 500 Name: Mrs. Doubtfire
+Item id: 1042 Name: That Thing You Do!
+Item id: 231 Name: Dumb and Dumber
+Item id: 543 Name: So I Married an Axe Murderer
+Item id: 333 Name: Tommy Boy
+Item id: 3450 Name: Grumpy Old Men
+Item id: 2596 Name: SLC Punk!
+Item id: 1732 Name: The Big Lebowski
+Item id: 1580 Name: Men in Black
+Item id: 3253 Name: Wayne's World
+Item id: 1517 Name: Austin Powers: International Man of Mystery
+Item id: 3243 Name: Encino Man
+Item id: 2395 Name: Rushmore
+Item id: 1500 Name: Grosse Pointe Blank
+Item id: 223 Name: Clerks
+Item id: 356 Name: Forrest Gump
+Item id: 1060 Name: Swingers
+Item id: 235 Name: Ed Wood
+Item id: 2997 Name: Being John Malkovich
+Item id: 1473 Name: Best Men
+Item id: 101 Name: Bottle Rocket
+Item id: 2858 Name: American Beauty
+Item id: 441 Name: Dazed and Confused
+Item id: 3744 Name: Shaft
+Item id: 3617 Name: Road Trip
+Item id: 3578 Name: Gladiator
+Item id: 2826 Name: The 13th Warrior
+Item id: 2628 Name: Star Wars: Episode I – The Phantom Menace
+Item id: 2018 Name: Bambi
+Item id: 804 Name: She's the One
+Item id: 1210 Name: Star Wars: Episode VI – Return of the Jedi
+
+Users favorites attributes on the kG
+Academy Award for Best Sound Mixing
+National Film Registry
+fantasy film
+Academy Award for Best Film Editing
+Academy Award for Best Visual Effects
+
+Recommendations
+Item id: 858 Name: The Godfather
+Item id: 1214 Name: Alien
+Item id: 2762 Name: The Sixth Sense
+Item id: 1968 Name: The Breakfast Club
+Item id: 1036 Name: Die Hard
+
+Paths for the Recommended Item: 858
+"Seven"; "The Silence of the Lambs"; "A Clockwork Orange" nodes: "crime film" destination: "The Godfather"
+Paths for the Recommended Item: 1214
+"The Terminator" nodes: "thriller" destination: "Alien"
+Paths for the Recommended Item: 2762
+"Independence Day"; "Enemy of the State"; "Seven" nodes: "thriller film" destination: "The Sixth Sense"
+Paths for the Recommended Item: 1968
+"MASH"; "Schindler's List"; "The Silence of the Lambs" nodes: "National Film Registry" destination: "The Breakfast Club"
+Paths for the Recommended Item: 1036
+"Independence Day"; "Platoon"; "Schindler's List" nodes: "Academy Award for Best Sound Mixing" destination: "Die Hard"
+
+User: 2
+Items interacted by the user
+Item id: 80489 Name: The Town
+Item id: 114060 Name: The Drop
+Item id: 122882 Name: Mad Max: Fury Road
+Item id: 1704 Name: Good Will Hunting
+Item id: 89774 Name: Warrior
+Item id: 80906 Name: Inside Job
+Item id: 86345 Name: Hilarious
+Item id: 68157 Name: Inglourious Basterds
+Item id: 109487 Name: Interstellar
+Item id: 58559 Name: The Dark Knight
+Item id: 333 Name: Tommy Boy
+Item id: 46970 Name: Talladega Nights: The Ballad of Ricky Bobby
+Item id: 60756 Name: Step Brothers
+Item id: 71535 Name: Zombieland
+Item id: 106782 Name: The Wolf of Wall Street
+Item id: 8798 Name: Collateral
+Item id: 6874 Name: Kill Bill Volume 1
+Item id: 77455 Name: Exit Through the Gift Shop
+Item id: 91658 Name: The Girl with the Dragon Tattoo
+Item id: 74458 Name: Shutter Island
+Item id: 91529 Name: The Dark Knight Rises
+Item id: 3578 Name: Gladiator
+Item id: 99114 Name: Django Unchained
+Item id: 115713 Name: Ex Machina
+Item id: 131724 Name: The Jinx
+Item id: 79132 Name: Inception
+Item id: 318 Name: The Shawshank Redemption
+
+Users favorites attributes on the kG
+Christopher Nolan
+Q3772
+Academy Award for Best Supporting Actor
+Hans Zimmer
+Academy Award for Best Sound Editing
+
+Recommendations
+Item id: 2571 Name: The Matrix
+Item id: 2959 Name: Fight Club
+Item id: 4993 Name: The Lord of the Rings: The Fellowship of the Ring
+Item id: 7153 Name: The Lord of the Rings: The Return of the King
+Item id: 356 Name: Forrest Gump
+
+Paths for the Recommended Item: 2571
+"Mad Max: Fury Road"; "Interstellar"; "The Dark Knight" nodes: "Academy Award for Best Visual Effects" destination: "The Matrix"
+Paths for the Recommended Item: 2959
+"Mad Max: Fury Road"; "Inglourious Basterds"; "Interstellar" nodes: "Academy Award for Best Sound Editing" destination: "Fight Club"
+Paths for the Recommended Item: 4993
+"Mad Max: Fury Road"; "Interstellar"; "The Dark Knight" nodes: "Academy Award for Best Visual Effects" destination: "The Lord of the Rings: The Fellowship of the Ring"
+Paths for the Recommended Item: 7153
+"Mad Max: Fury Road"; "Interstellar"; "The Dark Knight" nodes: "Academy Award for Best Visual Effects" destination: "The Lord of the Rings: The Return of the King"
+Paths for the Recommended Item: 356
+"Mad Max: Fury Road"; "Interstellar"; "The Dark Knight" nodes: "Academy Award for Best Visual Effects" destination: "Forrest Gump"
+
+User: 3
+Items interacted by the user
+Item id: 2424 Name: You've Got Mail
+Item id: 5048 Name: Snow Dogs
+Item id: 527 Name: Schindler's List
+Item id: 2090 Name: The Rescuers
+Item id: 3949 Name: Requiem for a Dream
+Item id: 688 Name: Operation Dumbo Drop
+Item id: 1124 Name: On Golden Pond
+Item id: 6238 Name: Green Card
+Item id: 1302 Name: Field of Dreams
+Item id: 2018 Name: Bambi
+Item id: 72378 Name: 2012
+Item id: 3024 Name: Piranha
+Item id: 7899 Name: Master of the Flying Guillotine
+Item id: 5764 Name: Looker
+Item id: 1587 Name: Conan the Barbarian
+Item id: 26409 Name: Parts: The Clonus Horror
+Item id: 5919 Name: Android
+Item id: 70946 Name: Troll 2
+Item id: 4518 Name: The Lair of the White Worm
+Item id: 5181 Name: Hangar 18
+Item id: 5746 Name: Galaxy of Terror
+Item id: 7991 Name: Death Race 2000
+Item id: 6835 Name: Contamination
+Item id: 3210 Name: Fast Times at Ridgemont High
+Item id: 2288 Name: The Thing
+Item id: 1093 Name: The Doors
+Item id: 1272 Name: Patton
+Item id: 647 Name: Courage Under Fire
+Item id: 3703 Name: Mad Max 2
+Item id: 720 Name: Wallace & Gromit: The Best of Aardman Animation
+Item id: 31 Name: Dangerous Minds
+Item id: 1263 Name: The Deer Hunter
+Item id: 914 Name: My Fair Lady
+Item id: 1371 Name: Star Trek: The Motion Picture
+Item id: 2105 Name: Tron
+Item id: 1275 Name: Highlander
+
+Users favorites attributes on the kG
+Academy Award for Best Sound Mixing
+Academy Award for Best Picture
+science fiction film
+Academy Award for Best Director
+Harald Kloser
+
+Recommendations
+Item id: 1196 Name: Star Wars: Episode V – The Empire Strikes Back
+Item id: 2028 Name: Saving Private Ryan
+Item id: 1210 Name: Star Wars: Episode VI – Return of the Jedi
+Item id: 318 Name: The Shawshank Redemption
+Item id: 260 Name: Star Wars: Episode IV – A New Hope
+
+Paths for the Recommended Item: 1196
+"Schindler's List"; "On Golden Pond"; "Bambi" nodes: "Academy Award for Best Sound Mixing" destination: "Star Wars: Episode V – The Empire Strikes Back"
+Paths for the Recommended Item: 2028
+"Schindler's List"; "On Golden Pond"; "Bambi" nodes: "Academy Award for Best Sound Mixing" destination: "Saving Private Ryan"
+Paths for the Recommended Item: 1210
+"Schindler's List"; "On Golden Pond"; "Bambi" nodes: "Academy Award for Best Sound Mixing" destination: "Star Wars: Episode VI – Return of the Jedi"
+Paths for the Recommended Item: 318
+"Schindler's List"; "On Golden Pond"; "Bambi" nodes: "Academy Award for Best Sound Mixing" destination: "The Shawshank Redemption"
+Paths for the Recommended Item: 260
+"Schindler's List"; "On Golden Pond"; "Bambi" nodes: "Academy Award for Best Sound Mixing" destination: "Star Wars: Episode IV – A New Hope"
+
+User: 4
+Items interacted by the user
+Item id: 4246 Name: Bridget Jones's Diary
+Item id: 4741 Name: Together
+Item id: 4381 Name: The Closet
+Item id: 4641 Name: Ghost World
+Item id: 4347 Name: Divided We Fall
+Item id: 4308 Name: Moulin Rouge!
+Item id: 4252 Name: The Circle
+Item id: 4902 Name: The Devil's Backbone
+Item id: 4881 Name: The Man Who Wasn't There
+Item id: 4765 Name: L.I.E.
+Item id: 4967 Name: No Man's Land
+Item id: 4260 Name: The Visit
+Item id: 3809 Name: What About Bob?
+Item id: 2145 Name: Pretty in Pink
+Item id: 2406 Name: Romancing the Stone
+Item id: 1580 Name: Men in Black
+Item id: 708 Name: The Truth About Cats & Dogs
+Item id: 3591 Name: Mr. Mom
+Item id: 21 Name: Get Shorty
+Item id: 45 Name: To Die For
+Item id: 2874 Name: The Pajama Game
+Item id: 2109 Name: The Jerk
+Item id: 351 Name: Corrina, Corrina
+Item id: 4121 Name: Innerspace
+Item id: 2926 Name: Hairspray
+Item id: 1923 Name: There's Something About Mary
+Item id: 1279 Name: Night on Earth
+Item id: 1968 Name: The Breakfast Club
+Item id: 1916 Name: Buffalo '66
+Item id: 2150 Name: The Gods Must Be Crazy
+Item id: 1080 Name: Monty Python’s Life of Brian
+Item id: 1136 Name: Monty Python and the Holy Grail
+Item id: 3317 Name: Wonder Boys
+Item id: 3897 Name: Almost Famous
+Item id: 4014 Name: Chocolat
+Item id: 3408 Name: Erin Brockovich
+Item id: 4029 Name: State and Main
+Item id: 4027 Name: O Brother, Where Art Thou?
+Item id: 4021 Name: Before Night Falls
+Item id: 3851 Name: I'm the One That I Want
+Item id: 3967 Name: Billy Elliot
+Item id: 4033 Name: Thirteen Days
+Item id: 3911 Name: Best in Show
+Item id: 3996 Name: Crouching Tiger, Hidden Dragon
+Item id: 937 Name: Love in the Afternoon
+Item id: 1266 Name: Unforgiven
+Item id: 1860 Name: Character
+Item id: 126 Name: The NeverEnding Story III
+Item id: 3489 Name: Hook
+Item id: 247 Name: Heavenly Creatures
+Item id: 4020 Name: The Gift
+Item id: 450 Name: With Honors
+Item id: 106 Name: Nobody Loves Me
+Item id: 4034 Name: Traffic
+Item id: 4166 Name: Series 7: The Contenders
+Item id: 4144 Name: In the Mood for Love
+Item id: 4239 Name: Blow
+Item id: 4074 Name: The Legend of Rita
+Item id: 2997 Name: Being John Malkovich
+Item id: 595 Name: Beauty and the Beast
+Item id: 2763 Name: The Thomas Crown Affair
+Item id: 3079 Name: Mansfield Park
+Item id: 898 Name: The Philadelphia Story
+Item id: 2395 Name: Rushmore
+Item id: 3255 Name: A League of Their Own
+Item id: 357 Name: Four Weddings and a Funeral
+Item id: 1500 Name: Grosse Pointe Blank
+Item id: 52 Name: Mighty Aphrodite
+Item id: 125 Name: Flirting with Disaster
+Item id: 3358 Name: Defending Your Life
+Item id: 1641 Name: The Full Monty
+Item id: 1914 Name: Smoke Signals
+Item id: 892 Name: Twelfth Night (1996 film)
+Item id: 232 Name: Eat Drink Man Woman
+Item id: 1265 Name: Groundhog Day
+Item id: 2599 Name: Election
+Item id: 1885 Name: The Opposite of Sex
+Item id: 2324 Name: Life is Beautiful
+Item id: 176 Name: Living in Oblivion
+Item id: 3083 Name: All About My Mother
+Item id: 1057 Name: Everyone Says I Love You
+Item id: 1907 Name: Mulan
+Item id: 608 Name: Fargo
+Item id: 2204 Name: Saboteur
+Item id: 2762 Name: The Sixth Sense
+Item id: 593 Name: The Silence of the Lambs
+Item id: 1219 Name: Psycho
+Item id: 2174 Name: Beetlejuice
+Item id: 3204 Name: The Boys from Brazil
+Item id: 3176 Name: The Talented Mr. Ripley
+Item id: 1086 Name: Dial M for Murder
+Item id: 1103 Name: Rebel Without a Cause
+Item id: 2791 Name: Airplane!
+Item id: 1892 Name: A Perfect Murder
+Item id: 1734 Name: Ma vie en rose
+Item id: 1179 Name: The Grifters
+Item id: 2858 Name: American Beauty
+Item id: 3160 Name: Magnolia
+Item id: 3788 Name: Blowup
+Item id: 2336 Name: Elizabeth
+Item id: 3175 Name: Galaxy Quest
+Item id: 539 Name: Sleepless in Seattle
+Item id: 1291 Name: Indiana Jones and the Last Crusade
+Item id: 1196 Name: Star Wars: Episode V – The Empire Strikes Back
+Item id: 1197 Name: The Princess Bride
+Item id: 1198 Name: Raiders of the Lost Ark
+Item id: 1259 Name: Stand by Me
+Item id: 930 Name: Notorious
+Item id: 1188 Name: Strictly Ballroom
+Item id: 342 Name: Muriel's Wedding
+Item id: 265 Name: Like Water for Chocolate
+Item id: 58 Name: Il Postino: The Postman
+Item id: 3508 Name: The Outlaw Josey Wales
+Item id: 3365 Name: The Searchers
+Item id: 3481 Name: High Fidelity
+Item id: 2282 Name: Pecker
+Item id: 1895 Name: Can't Hardly Wait
+Item id: 345 Name: The Adventures of Priscilla, Queen of the Desert
+Item id: 222 Name: Circle of Friends
+Item id: 1704 Name: Good Will Hunting
+Item id: 475 Name: In the Name of the Father
+Item id: 1834 Name: The Spanish Prisoner
+Item id: 1250 Name: The Bridge on the River Kwai
+Item id: 2186 Name: Strangers on a Train
+Item id: 910 Name: Some Like It Hot
+Item id: 912 Name: Casablanca
+Item id: 1391 Name: Mars Attacks!
+Item id: 1077 Name: Sleeper
+Item id: 1046 Name: Beautiful Thing
+Item id: 920 Name: Gone with the Wind
+Item id: 2770 Name: Bowfinger
+Item id: 235 Name: Ed Wood
+Item id: 1466 Name: Donnie Brasco
+Item id: 32 Name: 12 Monkeys
+Item id: 47 Name: Seven
+Item id: 2571 Name: The Matrix
+Item id: 296 Name: Pulp Fiction
+Item id: 1719 Name: The Sweet Hereafter
+Item id: 3044 Name: Dead Again
+Item id: 648 Name: Mission: Impossible
+Item id: 1597 Name: Conspiracy Theory
+Item id: 1732 Name: The Big Lebowski
+Item id: 492 Name: Manhattan Murder Mystery
+Item id: 2467 Name: The Name of the Rose
+Item id: 904 Name: Rear Window
+Item id: 1617 Name: L.A. Confidential
+Item id: 2683 Name: Austin Powers: The Spy Who Shagged Me
+Item id: 1449 Name: Waiting for Guffman
+Item id: 1213 Name: Goodfellas
+Item id: 2203 Name: Shadow of a Doubt
+Item id: 914 Name: My Fair Lady
+Item id: 588 Name: Aladdin
+Item id: 1288 Name: This Is Spinal Tap
+Item id: 1947 Name: West Side Story
+Item id: 1282 Name: Fantasia
+Item id: 899 Name: Singin' in the Rain
+Item id: 919 Name: The Wizard of Oz
+Item id: 2078 Name: The Jungle Book
+Item id: 1073 Name: Willy Wonka & the Chocolate Factory
+Item id: 553 Name: Tombstone
+Item id: 457 Name: The Fugitive
+Item id: 260 Name: Star Wars: Episode IV – A New Hope
+Item id: 1084 Name: Bonnie and Clyde
+Item id: 190 Name: Safe
+Item id: 1025 Name: The Sword in the Stone
+Item id: 319 Name: Shallow Grave
+Item id: 1733 Name: Afterglow
+Item id: 509 Name: The Piano
+Item id: 800 Name: Lone Star
+Item id: 2076 Name: Blue Velvet
+Item id: 2692 Name: Run Lola Run
+Item id: 1967 Name: Labyrinth
+Item id: 1079 Name: A Fish Called Wanda
+Item id: 2973 Name: Crimes and Misdemeanors
+Item id: 2583 Name: Cookie's Fortune
+Item id: 2843 Name: Black Cat, White Cat
+Item id: 2921 Name: High Plains Drifter
+Item id: 1283 Name: High Noon
+Item id: 368 Name: Maverick
+Item id: 538 Name: Six Degrees of Separation
+Item id: 759 Name: Maya Lin: A Strong Clear Vision
+Item id: 599 Name: The Wild Bunch
+Item id: 162 Name: Crumb
+Item id: 1304 Name: Butch Cassidy and the Sundance Kid
+Item id: 2351 Name: Nights of Cabiria
+Item id: 417 Name: Barcelona
+Item id: 902 Name: Breakfast at Tiffany's
+Item id: 171 Name: Jeffrey
+
+Users favorites attributes on the kG
+Academy Award for Best Director
+National Film Registry
+Academy Award for Best Picture
+Academy Award for Best Film Editing
+Academy Award for Best Writing, Original Screenplay
+
+Recommendations
+Item id: 1089 Name: Reservoir Dogs
+Item id: 1210 Name: Star Wars: Episode VI – Return of the Jedi
+Item id: 858 Name: The Godfather
+Item id: 356 Name: Forrest Gump
+Item id: 2987 Name: Who Framed Roger Rabbit
+
+Paths for the Recommended Item: 1089
+"Together"; "Ghost World"; "Divided We Fall" nodes: "drama" destination: "Reservoir Dogs"
+Paths for the Recommended Item: 1210
+"Men in Black"; "Hook"; "Star Wars: Episode V – The Empire Strikes Back" nodes: "George Lucas" destination: "Star Wars: Episode VI – Return of the Jedi"
+Paths for the Recommended Item: 858
+"The Man Who Wasn't There"; "To Die For"; "Buffalo '66" nodes: "crime film" destination: "The Godfather"
+Paths for the Recommended Item: 356
+"Bridget Jones's Diary"; "Together"; "The Closet" nodes: "comedy film" destination: "Forrest Gump"
+Paths for the Recommended Item: 2987
+"Love in the Afternoon"; "Character"; "The NeverEnding Story III" nodes: "film based on literature" destination: "Who Framed Roger Rabbit"
+
+User: 5
+Items interacted by the user
+Item id: 300 Name: Quiz Show
+Item id: 247 Name: Heavenly Creatures
+Item id: 474 Name: In the Line of Fire
+Item id: 475 Name: In the Name of the Father
+Item id: 266 Name: Legends of the Fall
+Item id: 290 Name: Once Were Warriors
+Item id: 596 Name: Pinocchio
+Item id: 36 Name: Dead Man Walking
+Item id: 253 Name: Interview with the Vampire
+Item id: 410 Name: Addams Family Values
+Item id: 608 Name: Fargo
+Item id: 589 Name: Terminator 2: Judgment Day
+Item id: 531 Name: The Secret Garden
+Item id: 594 Name: Snow White and the Seven Dwarfs
+Item id: 21 Name: Get Shorty
+Item id: 357 Name: Four Weddings and a Funeral
+Item id: 58 Name: Il Postino: The Postman
+Item id: 261 Name: Little Women
+Item id: 515 Name: The Remains of the Day
+Item id: 265 Name: Like Water for Chocolate
+Item id: 367 Name: The Mask
+Item id: 597 Name: Pretty Woman
+Item id: 1 Name: Toy Story
+Item id: 527 Name: Schindler's List
+Item id: 364 Name: The Lion King
+Item id: 50 Name: The Usual Suspects
+Item id: 34 Name: Babe
+Item id: 318 Name: The Shawshank Redemption
+Item id: 110 Name: Braveheart
+Item id: 595 Name: Beauty and the Beast
+Item id: 349 Name: Clear and Present Danger
+Item id: 316 Name: Stargate
+Item id: 457 Name: The Fugitive
+Item id: 588 Name: Aladdin
+Item id: 380 Name: True Lies
+Item id: 150 Name: Apollo 13
+Item id: 296 Name: Pulp Fiction
+Item id: 590 Name: Dances with Wolves
+Item id: 592 Name: Batman
+
+Users favorites attributes on the kG
+Academy Award for Best Original Score
+Academy Award for Best Picture
+Academy Award for Best Film Editing
+Academy Award for Best Sound Mixing
+Academy Award for Best Director
+
+Recommendations
+Item id: 356 Name: Forrest Gump
+Item id: 377 Name: Speed
+Item id: 454 Name: The Firm
+Item id: 480 Name: Jurassic Park
+Item id: 292 Name: Outbreak
+
+Paths for the Recommended Item: 356
+"Interview with the Vampire"; "Pinocchio"; "Little Women" nodes: "Academy Award for Best Original Score" destination: "Forrest Gump"
+Paths for the Recommended Item: 377
+"Legends of the Fall"; "Terminator 2: Judgment Day"; "Schindler's List" nodes: "Academy Award for Best Sound Mixing" destination: "Speed"
+Paths for the Recommended Item: 454
+"Interview with the Vampire"; "Pinocchio"; "Little Women" nodes: "Academy Award for Best Original Score" destination: "The Firm"
+Paths for the Recommended Item: 480
+"In the Line of Fire"; "Terminator 2: Judgment Day"; "Fargo" nodes: "thriller film" destination: "Jurassic Park"
+Paths for the Recommended Item: 292
+"In the Line of Fire"; "Terminator 2: Judgment Day"; "Fargo" nodes: "thriller film" destination: "Outbreak"
+
+User: 6
+Items interacted by the user
+Item id: 1061 Name: Sleepers
+Item id: 979 Name: Nothing Personal
+Item id: 991 Name: Michael Collins
+Item id: 1006 Name: The Chamber
+Item id: 1049 Name: The Ghost and the Darkness
+Item id: 1064 Name: Aladdin and the King of Thieves
+Item id: 981 Name: Dangerous Ground
+Item id: 795 Name: Somebody to Love
+Item id: 1004 Name: The Glimmer Man
+Item id: 986 Name: Fly Away Home
+Item id: 1042 Name: That Thing You Do!
+Item id: 775 Name: Spirits of the Dead
+Item id: 888 Name: The Land Before Time III: The Time of the Great Giving
+Item id: 867 Name: Carpool
+Item id: 999 Name: 2 Days in the Valley
+Item id: 359 Name: I Like It Like That
+Item id: 697 Name: Feeling Minnesota
+Item id: 848 Name: The Spitfire Grill
+Item id: 881 Name: First Kid
+Item id: 210 Name: Wild Bill
+Item id: 201 Name: Three Wishes
+Item id: 113 Name: Before and After
+Item id: 251 Name: The Hunted
+Item id: 891 Name: Halloween: The Curse of Michael Myers
+Item id: 189 Name: Reckless
+Item id: 837 Name: Matilda
+Item id: 710 Name: Celtic Pride
+Item id: 336 Name: The Walking Dead
+Item id: 830 Name: The First Wives Club
+Item id: 801 Name: Harriet the Spy
+Item id: 835 Name: Foxfire
+Item id: 536 Name: A Simple Twist of Fate
+Item id: 212 Name: Bushwhacked
+Item id: 880 Name: The Island of Dr. Moreau
+Item id: 662 Name: Fear
+Item id: 700 Name: Angus
+Item id: 86 Name: White Squall
+Item id: 219 Name: The Cure
+Item id: 839 Name: The Crow: City of Angels
+Item id: 310 Name: Rent-a-Kid
+Item id: 209 Name: White Man's Burden
+Item id: 694 Name: The Substitute
+Item id: 719 Name: Multiplicity
+Item id: 852 Name: Tin Cup
+Item id: 88 Name: Black Sheep
+Item id: 842 Name: Bordello of Blood
+Item id: 799 Name: The Frighteners
+Item id: 254 Name: Jefferson in Paris
+Item id: 765 Name: Jack
+Item id: 472 Name: I'll Do Anything
+Item id: 43 Name: Restoration
+Item id: 146 Name: The Amazing Panda Adventure
+Item id: 13 Name: Balto
+Item id: 250 Name: Heavyweights
+Item id: 240 Name: Hideaway
+Item id: 1073 Name: Willy Wonka & the Chocolate Factory
+Item id: 291 Name: Poison Ivy II: Lily
+Item id: 704 Name: The Quest
+Item id: 304 Name: Roommates
+Item id: 313 Name: The Swan Princess
+Item id: 458 Name: Geronimo: An American Legend
+Item id: 510 Name: Poetic Justice
+Item id: 838 Name: Emma
+Item id: 818 Name: A Very Brady Sequel
+Item id: 469 Name: La casa de los espíritus
+Item id: 205 Name: Unstrung Heroes
+Item id: 61 Name: Eye for an Eye
+Item id: 1084 Name: Bonnie and Clyde
+Item id: 302 Name: La Reine Margot
+Item id: 279 Name: My Family
+Item id: 102 Name: Mr. Wrong
+Item id: 354 Name: Cobb
+Item id: 54 Name: The Big Green
+Item id: 27 Name: Now and Then
+Item id: 217 Name: The Babysitter
+Item id: 352 Name: Crooklyn
+Item id: 179 Name: Mad Love
+Item id: 26 Name: Othello
+Item id: 640 Name: Diabolique
+Item id: 569 Name: Little Big League
+Item id: 667 Name: Bloodsport II: The Next Kumite
+Item id: 126 Name: The NeverEnding Story III
+Item id: 609 Name: Homeward Bound II: Lost in San Francisco
+Item id: 76 Name: Screamers
+Item id: 505 Name: North
+Item id: 347 Name: Bitter Moon
+Item id: 628 Name: Primal Fear
+Item id: 460 Name: Getting Even with Dad
+Item id: 8 Name: Tom and Huck
+Item id: 631 Name: All Dogs Go to Heaven 2
+Item id: 358 Name: Higher Learning
+Item id: 340 Name: The War
+Item id: 709 Name: Oliver & Company
+Item id: 271 Name: Losing Isaiah
+Item id: 343 Name: The Baby-Sitters Club
+Item id: 270 Name: Love Affair
+Item id: 258 Name: A Kid in King Arthur's Court
+Item id: 647 Name: Courage Under Fire
+Item id: 274 Name: Man of the House
+Item id: 66 Name: Lawnmower Man 2: Beyond Cyberspace
+Item id: 312 Name: Stuart Saves His Family
+Item id: 100 Name: City Hall
+Item id: 445 Name: Fatal Instinct
+Item id: 89 Name: Nick of Time
+Item id: 360 Name: I Love Trouble
+Item id: 330 Name: Tales from the Hood
+Item id: 575 Name: The Little Rascals
+Item id: 65 Name: Bio-Dome
+Item id: 747 Name: The Stupids
+Item id: 332 Name: Village of the Damned
+Item id: 637 Name: Sgt. Bilko
+Item id: 606 Name: Candyman: Farewell to the Flesh
+Item id: 450 Name: With Honors
+Item id: 140 Name: Up Close & Personal
+Item id: 762 Name: Striptease
+Item id: 159 Name: Clockers
+Item id: 180 Name: Mallrats
+Item id: 378 Name: Speechless
+Item id: 239 Name: A Goofy Movie
+Item id: 41 Name: Richard III
+Item id: 366 Name: Wes Craven's New Nightmare
+Item id: 416 Name: Bad Girls
+Item id: 191 Name: The Scarlet Letter
+Item id: 548 Name: Terminal Velocity
+Item id: 516 Name: Renaissance Man
+Item id: 79 Name: The Juror
+Item id: 314 Name: The Secret of Roan Inish
+Item id: 405 Name: Highlander III: The Sorcerer
+Item id: 802 Name: Phenomenon
+Item id: 783 Name: The Hunchback of Notre Dame
+Item id: 93 Name: Vampire in Brooklyn
+Item id: 490 Name: Malice
+Item id: 537 Name: Sirens
+Item id: 262 Name: A Little Princess
+Item id: 46 Name: How to Make an American Quilt
+Item id: 426 Name: Body Snatchers
+Item id: 542 Name: Son in Law
+Item id: 412 Name: The Age of Innocence
+Item id: 15 Name: Cutthroat Island
+Item id: 437 Name: Cops & Robbersons
+Item id: 489 Name: Made in America
+Item id: 174 Name: Jury Duty
+Item id: 524 Name: Rudy
+Item id: 195 Name: Something to Talk About
+Item id: 351 Name: Corrina, Corrina
+Item id: 289 Name: Only You
+Item id: 502 Name: The Next Karate Kid
+Item id: 415 Name: Another Stakeout
+Item id: 382 Name: Wolf
+Item id: 24 Name: Powder
+Item id: 708 Name: The Truth About Cats & Dogs
+Item id: 361 Name: It Could Happen to You
+Item id: 267 Name: Major Payne
+Item id: 4 Name: Waiting to Exhale
+Item id: 546 Name: Super Mario Bros.
+Item id: 104 Name: Happy Gilmore
+Item id: 383 Name: Wyatt Earp
+Item id: 281 Name: Nobody's Fool
+Item id: 374 Name: Richie Rich
+Item id: 3 Name: Grumpier Old Men
+Item id: 531 Name: The Secret Garden
+Item id: 170 Name: Hackers
+Item id: 248 Name: Houseguest
+Item id: 419 Name: The Beverly Hillbillies
+Item id: 234 Name: Exit to Eden
+Item id: 257 Name: Just Cause
+Item id: 494 Name: Executive Decision
+Item id: 477 Name: What's Love Got to Do with It
+Item id: 491 Name: The Man Without a Face
+Item id: 371 Name: The Paper
+Item id: 596 Name: Pinocchio
+Item id: 543 Name: So I Married an Axe Murderer
+Item id: 475 Name: In the Name of the Father
+Item id: 540 Name: Sliver
+Item id: 216 Name: Billy Madison
+Item id: 303 Name: The Quick and the Dead
+Item id: 616 Name: The Aristocats
+Item id: 327 Name: Tank Girl
+Item id: 207 Name: A Walk in the Clouds
+Item id: 362 Name: Rudyard Kipling's The Jungle Book
+Item id: 112 Name: Rumble in the Bronx
+Item id: 218 Name: Boys on the Side
+Item id: 381 Name: When a Man Loves a Woman
+Item id: 145 Name: Bad Boys
+Item id: 230 Name: Dolores Claiborne
+Item id: 5 Name: Father of the Bride Part II
+Item id: 181 Name: Mighty Morphin Power Rangers: The Movie
+Item id: 45 Name: To Die For
+Item id: 468 Name: The Englishman Who Went Up a Hill But Came Down a Mountain
+Item id: 552 Name: The Three Musketeers
+Item id: 273 Name: Frankenstein
+Item id: 237 Name: Forget Paris
+Item id: 22 Name: Copycat
+Item id: 277 Name: Miracle on 34th Street
+Item id: 520 Name: Robin Hood: Men in Tights
+Item id: 608 Name: Fargo
+Item id: 466 Name: Hot Shots! Part Deux
+Item id: 16 Name: Casino
+Item id: 31 Name: Dangerous Minds
+Item id: 594 Name: Snow White and the Seven Dwarfs
+Item id: 355 Name: The Flintstones
+Item id: 497 Name: Much Ado About Nothing
+Item id: 515 Name: The Remains of the Day
+Item id: 485 Name: Last Action Hero
+Item id: 370 Name: Naked Gun 33⅓: The Final Insult
+Item id: 224 Name: Don Juan DeMarco
+Item id: 105 Name: The Bridges of Madison County
+Item id: 333 Name: Tommy Boy
+Item id: 368 Name: Maverick
+Item id: 353 Name: The Crow
+Item id: 256 Name: Junior
+Item id: 168 Name: First Knight
+Item id: 25 Name: Leaving Las Vegas
+Item id: 62 Name: Mr. Holland's Opus
+Item id: 293 Name: Léon: The Professional
+Item id: 158 Name: Casper
+Item id: 736 Name: Twister
+Item id: 186 Name: Nine Months
+Item id: 204 Name: Under Siege 2: Dark Territory
+Item id: 252 Name: I.Q.
+Item id: 508 Name: Philadelphia
+Item id: 151 Name: Rob Roy
+Item id: 196 Name: Species
+Item id: 141 Name: The Birdcage
+Item id: 337 Name: What's Eating Gilbert Grape
+Item id: 17 Name: Sense and Sensibility
+Item id: 553 Name: Tombstone
+Item id: 236 Name: French Kiss
+Item id: 95 Name: Broken Arrow
+Item id: 2 Name: Jumanji
+Item id: 474 Name: In the Line of Fire
+Item id: 282 Name: Nell
+Item id: 315 Name: The Specialist
+Item id: 435 Name: Coneheads
+Item id: 432 Name: City Slickers II: The Legend of Curly's Gold
+Item id: 11 Name: The American President
+Item id: 266 Name: Legends of the Fall
+Item id: 357 Name: Four Weddings and a Funeral
+Item id: 440 Name: Dave
+Item id: 160 Name: Congo
+Item id: 317 Name: The Santa Clause
+Item id: 32 Name: 12 Monkeys
+Item id: 539 Name: Sleepless in Seattle
+Item id: 527 Name: Schindler's List
+Item id: 21 Name: Get Shorty
+Item id: 19 Name: Ace Ventura: When Nature Calls
+Item id: 225 Name: Disclosure
+Item id: 50 Name: The Usual Suspects
+Item id: 410 Name: Addams Family Values
+Item id: 500 Name: Mrs. Doubtfire
+Item id: 589 Name: Terminator 2: Judgment Day
+Item id: 367 Name: The Mask
+Item id: 377 Name: Speed
+Item id: 47 Name: Seven
+Item id: 364 Name: The Lion King
+Item id: 110 Name: Braveheart
+Item id: 288 Name: Natural Born Killers
+Item id: 185 Name: The Net
+Item id: 253 Name: Interview with the Vampire
+Item id: 454 Name: The Firm
+Item id: 10 Name: GoldenEye
+Item id: 208 Name: Waterworld
+Item id: 339 Name: While You Were Sleeping
+Item id: 161 Name: Crimson Tide
+Item id: 318 Name: The Shawshank Redemption
+Item id: 480 Name: Jurassic Park
+Item id: 329 Name: Star Trek Generations
+Item id: 356 Name: Forrest Gump
+Item id: 595 Name: Beauty and the Beast
+Item id: 593 Name: The Silence of the Lambs
+Item id: 231 Name: Dumb and Dumber
+Item id: 316 Name: Stargate
+Item id: 457 Name: The Fugitive
+Item id: 344 Name: Ace Ventura: Pet Detective
+Item id: 165 Name: Die Hard with a Vengeance
+Item id: 153 Name: Batman Forever
+Item id: 588 Name: Aladdin
+Item id: 349 Name: Clear and Present Danger
+Item id: 380 Name: True Lies
+Item id: 150 Name: Apollo 13
+Item id: 296 Name: Pulp Fiction
+Item id: 590 Name: Dances with Wolves
+
+Users favorites attributes on the kG
+drama
+film based on a novel
+comedy film
+action film
+San Francisco
+
+Recommendations
+Item id: 592 Name: Batman
+Item id: 350 Name: The Client
+Item id: 434 Name: Cliffhanger
+Item id: 292 Name: Outbreak
+Item id: 597 Name: Pretty Woman
+
+Paths for the Recommended Item: 592
+"The Ghost and the Darkness"; "Dangerous Ground"; "The Glimmer Man" nodes: "action film" destination: "Batman"
+Paths for the Recommended Item: 350
+"Sleepers"; "Michael Collins"; "Nothing Personal" nodes: "drama" destination: "The Client"
+Paths for the Recommended Item: 434
+"The Chamber"; "The Glimmer Man"; "The Island of Dr. Moreau" nodes: "thriller film" destination: "Cliffhanger"
+Paths for the Recommended Item: 292
+"The Chamber"; "The Glimmer Man"; "The Island of Dr. Moreau" nodes: "thriller film" destination: "Outbreak"
+Paths for the Recommended Item: 597
+"Dangerous Ground"; "Tin Cup"; "Jack" nodes: "San Francisco" destination: "Pretty Woman"
+
+User: 7
+Items interacted by the user
+Item id: 49286 Name: The Holiday
+Item id: 49278 Name: Déjà Vu
+Item id: 48997 Name: Perfume: The Story of a Murderer
+Item id: 7155 Name: Calendar Girls
+Item id: 49824 Name: Dreamgirls
+Item id: 49272 Name: Casino Royale
+Item id: 37741 Name: Capote
+Item id: 48783 Name: Flags of Our Fathers
+Item id: 4844 Name: Bandits
+Item id: 8783 Name: The Village
+Item id: 3994 Name: Unbreakable
+Item id: 45730 Name: Lady in the Water
+Item id: 45668 Name: The Lake House
+Item id: 46530 Name: Superman Returns
+Item id: 6534 Name: Hulk
+Item id: 45499 Name: X-Men: The Last Stand
+Item id: 45517 Name: Cars
+Item id: 38388 Name: Goal!
+Item id: 42002 Name: The Producers
+Item id: 32587 Name: Sin City
+Item id: 33836 Name: Bewitched
+Item id: 32031 Name: Robots
+Item id: 8908 Name: Ladder 49
+Item id: 34319 Name: The Island
+Item id: 33493 Name: Star Wars: Episode III – Revenge of the Sith
+Item id: 34048 Name: War of the Worlds
+Item id: 33794 Name: Batman Begins
+Item id: 32296 Name: Miss Congeniality 2: Armed and Fabulous
+Item id: 31878 Name: Kung Fu Hustle
+Item id: 8870 Name: The Forgotten
+Item id: 32029 Name: Hostage
+Item id: 33162 Name: Kingdom of Heaven
+Item id: 2671 Name: Notting Hill
+Item id: 30812 Name: The Aviator
+Item id: 8972 Name: National Treasure
+Item id: 4246 Name: Bridget Jones's Diary
+Item id: 8949 Name: Sideways
+Item id: 8958 Name: Ray
+Item id: 8808 Name: The Princess Diaries 2: Royal Engagement
+Item id: 4700 Name: The Princess Diaries
+Item id: 8373 Name: The Stepford Wives
+Item id: 8665 Name: The Bourne Supremacy
+Item id: 7445 Name: Man on Fire
+Item id: 1617 Name: L.A. Confidential
+Item id: 4310 Name: Pearl Harbor
+Item id: 30816 Name: The Phantom of the Opera
+Item id: 8666 Name: Catwoman
+Item id: 5618 Name: Spirited Away
+Item id: 2019 Name: Seven Samurai
+Item id: 8865 Name: Sky Captain and the World of Tomorrow
+Item id: 8207 Name: The Day of the Jackal
+Item id: 2717 Name: Ghostbusters II
+Item id: 2701 Name: Wild Wild West
+Item id: 2688 Name: The General's Daughter
+Item id: 3354 Name: Mission to Mars
+Item id: 4018 Name: What Women Want
+Item id: 4370 Name: A.I. Artificial Intelligence
+Item id: 5218 Name: Ice Age
+Item id: 5991 Name: Chicago
+Item id: 6934 Name: The Matrix Revolutions
+Item id: 595 Name: Beauty and the Beast
+Item id: 924 Name: 2001: A Space Odyssey
+Item id: 1183 Name: The English Patient
+Item id: 1240 Name: The Terminator
+Item id: 2324 Name: Life is Beautiful
+Item id: 2628 Name: Star Wars: Episode I – The Phantom Menace
+Item id: 3408 Name: Erin Brockovich
+Item id: 2858 Name: American Beauty
+Item id: 3623 Name: Mission: Impossible 2
+Item id: 8528 Name: DodgeBall: A True Underdog Story
+Item id: 750 Name: Dr. Strangelove
+Item id: 8360 Name: Shrek 2
+Item id: 4896 Name: Harry Potter and the Philosopher's Stone
+Item id: 5464 Name: Road to Perdition
+Item id: 4995 Name: A Beautiful Mind
+Item id: 5349 Name: Spider-Man
+Item id: 8798 Name: Collateral
+Item id: 5989 Name: Catch Me If You Can
+Item id: 3916 Name: Remember the Titans
+Item id: 8368 Name: Harry Potter and the Prisoner of Azkaban
+Item id: 4993 Name: The Lord of the Rings: The Fellowship of the Ring
+Item id: 6539 Name: Pirates of the Caribbean: The Curse of the Black Pearl
+Item id: 7143 Name: The Last Samurai
+Item id: 3578 Name: Gladiator
+Item id: 4886 Name: Monsters, Inc.
+Item id: 7153 Name: The Lord of the Rings: The Return of the King
+Item id: 8636 Name: Spider-Man 2
+Item id: 8984 Name: Ocean's Twelve
+Item id: 8965 Name: The Polar Express
+Item id: 8970 Name: Finding Neverland
+Item id: 8961 Name: The Incredibles
+Item id: 1196 Name: Star Wars: Episode V – The Empire Strikes Back
+Item id: 50 Name: The Usual Suspects
+Item id: 165 Name: Die Hard with a Vengeance
+Item id: 648 Name: Mission: Impossible
+Item id: 588 Name: Aladdin
+Item id: 1210 Name: Star Wars: Episode VI – Return of the Jedi
+Item id: 780 Name: Independence Day
+Item id: 589 Name: Terminator 2: Judgment Day
+Item id: 380 Name: True Lies
+Item id: 260 Name: Star Wars: Episode IV – A New Hope
+Item id: 150 Name: Apollo 13

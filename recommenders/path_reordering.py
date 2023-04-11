@@ -101,7 +101,8 @@ class PathReordering(LODPersonalizedReordering):
 
         reorder.to_csv(self.output_path, mode='w', header=False, index=False)
 
-    def reorder_with_path(self, fold: str, h_min: int, h_max: int, max_users: int, expl_alg: str, reordered: int):
+    def reorder_with_path(self, fold: str, h_min: int, h_max: int, max_users: int, expl_alg: str, reordered: int,
+                          n_explain: int):
         """
         Function that reorders the recommendations made by a recommendation algorithm based on an adapted TF-IDF to
         the LOD and generate the explanation paths. There are two approaches: the max that always return the best path
@@ -134,7 +135,7 @@ class PathReordering(LODPersonalizedReordering):
         output_title_l = output_file_name.split("/")
         output_title = '/'.join(output_title_l[:-1])
         output_title = output_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + \
-                       output_title_l[-1]
+                       "n_explain=" + str(n_explain) + "_" + output_title_l[-1]
         f = open(output_title, mode="w", encoding='utf-8')
         f.write(output_title + "\n")
 
@@ -222,7 +223,7 @@ class PathReordering(LODPersonalizedReordering):
 
                 print("\nReordered Recommendations")
                 f.write("\nReordered Recommendations\n")
-                item_rank = list(reordered_items['item_id'])
+                item_rank = list(reordered_items['item_id'])[:n_explain]
                 for i in item_rank:
                     movie_name = self.prop_set.loc[i].iloc[0, 0]
                     print("Item id: " + str(i) + " Name: " + movie_name)
@@ -230,7 +231,7 @@ class PathReordering(LODPersonalizedReordering):
 
             else:
                 item_rank = self.output_rec_set
-                item_rank = list(item_rank.loc[u][:10]["item_id"])
+                item_rank = list(item_rank.loc[u][:n_explain]["item_id"])
 
                 print("\nRecommendations")
                 f.write("\nRecommendations\n")
@@ -382,7 +383,7 @@ class PathReordering(LODPersonalizedReordering):
 
             # get items names from ids do generate explanations
             for k in path_set.keys():
-                s_items = self.train_set.loc[user].sort_values(by='timestamp', kind="quicksort", ascending=False)
+                s_items = self.train_set.loc[user].sort_values(by=self.train_set.columns[-1], kind="quicksort", ascending=False)
                 s_items = s_items[s_items[self.train_set.columns[0]].isin(list(path_set[k]))]
                 item_names = []
                 for h in s_items[s_items.columns[0]].to_list():
@@ -612,7 +613,7 @@ class PathReordering(LODPersonalizedReordering):
             user_df = self.train_set.loc[user]
             user_item = user_df[
                 user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(max_props)].index.unique()))]
-            hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+            hist_ids = list(user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
             hist_lists.append(hist_ids)
             hist_names = hist_props.loc[hist_ids]['title'].unique()
             rec_name = self.prop_set.loc[r]['title'].unique()[0]
@@ -727,7 +728,7 @@ class PathReordering(LODPersonalizedReordering):
             user_df = self.train_set.loc[user]
             user_item = user_df[
                 user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(max_props)].index.unique()))]
-            hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+            hist_ids = list(user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
             hist_lists.append(hist_ids)
             hist_names = hist_props.loc[hist_ids]['title'].unique()
             rec_name = self.prop_set.loc[r]['title'].unique()[0]
@@ -904,12 +905,12 @@ class PathReordering(LODPersonalizedReordering):
                 user_df = self.train_set.loc[user]
                 user_item = user_df[
                     user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'] == max_prop[0]].index.unique()))]
-                hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+                hist_ids = list(user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
                 sub_p = [prop_rank_l[0]]
                 while len(hist_ids) == 0:
                     user_item = user_df[
                             user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(sub_p)].index.unique()))]
-                    hist_ids = list(user_item.sort_values(by="timestamp", ascending=False)[:3][user_item.columns[0]])
+                    hist_ids = list(user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
                     new_sub_p = []
                     for p in sub_p:
                         try:
