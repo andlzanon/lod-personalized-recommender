@@ -522,9 +522,5 @@ if args.mode == "explanation" and args.dataset == "ml":
     run_explanations_experiments_ml(folds_path_ml, args.begin, args.end, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
                         args.max, args.max_users, args.expl_alg, args.reordered_recs, args.n_explain)
 
-if args.mode == "explanation" and args.dataset == "lastfm":
-    run_explanations_experiments_lastfm(folds_path_lastfm, args.begin, args.end, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
-                        args.max, args.max_users, args.expl_alg, args.reordered_recs, args.n_explain)
-
 if args.mode == "validate_expl" and args.dataset == "ml":
     statistical_relevance_explanations(args.baseline, args.dataset, args.reordered_recs)

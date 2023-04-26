@@ -464,8 +464,9 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
     :param reordered: 1 if the recommendations were reordred by proposed reordering system 0 if not
     :return: excel file with wilcoxon and ttest statistical relevance tests for all metrics
     """
-    basline_results = []
-    proposed_results = []
+    explod_results = []
+    explodv2_results = []
+    pem_results = []
 
     path = "./datasets/"
     if dataset == "ml":
@@ -476,42 +477,51 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
 
     for i in range(0, 10):
         path = path_base + str(i) + "/results/explanations/" + "reordered_recs=" + str(reordered)
-        path_baseline = path + "_expl_alg=explod_" + str(rec_alg) + \
-                        "_lodreorder_path[policy=last_items=01_reorder=10_hybrid].csv"
+        path_explod = path + "_expl_alg=explod_" + str(rec_alg) + ".csv"
+        path_explod_v2 = path + "_expl_alg=explod_v2_" + str(rec_alg) + ".csv"
+        path_pem = path + "_expl_alg=pem_" + str(rec_alg) + ".csv"
 
-        path_proposed = path + "_expl_alg=diverse_" + str(rec_alg) + \
-                        "_lodreorder_path[policy=last_items=01_reorder=10_hybrid].csv"
+        explod_results.append(explanation_file_to_df(path_explod, "explod").set_index("metric"))
+        explodv2_results.append(explanation_file_to_df(path_explod_v2, "pem").set_index("metric"))
+        pem_results.append(explanation_file_to_df(path_pem, "explod_v2").set_index("metric"))
 
-        basline_results.append(explanation_file_to_df(path_baseline, "explod").set_index("metric"))
-        proposed_results.append(explanation_file_to_df(path_proposed, "diverse").set_index("metric"))
-        path = path_base
-
-    metrics = list(basline_results[0].index.unique())
-    results_df = pd.DataFrame(columns=["METRIC", "PROPOSED_NAME",
-                                       "PROPOSED_MEAN", "BASELINE_NAME",
-                                       "BASELINE_MEAN", "WILCOXON", "TTEST"])
+    metrics = list(explod_results[0].index.unique())
+    results_df = pd.DataFrame(columns=["METRIC",
+                                       "VERSION1", "VERSION1_MEAN",
+                                       "VERSION2", "VERSION2_MEAN",
+                                       "VERSION3", "VERSION3_MEAN",
+                                       "WILCOXON12", "WILCOXON13", "WILCOXON23"])
     for m in metrics:
-        m_baseline = []
-        m_proposed = []
+        m_explod = []
+        m_explodv2 = []
+        m_pem = []
         for i in range(0, 10):
-            m_baseline.append(float(basline_results[i].loc[m].value))
-            m_proposed.append(float(proposed_results[i].loc[m].value))
+            m_explod.append(float(explod_results[i].loc[m].value))
+            m_explodv2.append(float(explodv2_results[i].loc[m].value))
+            m_pem.append(float(pem_results[i].loc[m].value))
 
-        baseline_mean = np.array(m_baseline).mean()
-        print(m + " baseline results: ", m_baseline)
-        proposed_mean = np.array(m_proposed).mean()
-        print(m + " proposed results: ", m_proposed)
+        explod_mean = np.array(m_explod).mean()
+        print(m + " baseline results: ", m_explod)
 
-        wt, wp = wilcoxon(m_baseline, m_proposed)
-        print("p-value with wilcoxon: " + str(wp))
-        tt, tp = ttest_rel(m_baseline, m_proposed)
-        print("p-value with t-test: " + str(tp))
+        explodv2_mean = np.array(m_explodv2).mean()
+        print(m + " proposed results: ", m_explodv2)
 
-        results_df = results_df.append({"METRIC": m, "PROPOSED_NAME": "diverse",
-                                        "PROPOSED_MEAN": proposed_mean,
-                                        "BASELINE_NAME": "explod",
-                                        "BASELINE_MEAN": baseline_mean,
-                                        "WILCOXON": wp, "TTEST": tp}, ignore_index=True)
+        pem_mean = np.array(m_pem).mean()
+        print(m + " proposed results: ", m_pem)
+
+        wt_12, wp_12 = wilcoxon(m_explod, m_explodv2)
+        wt_13, wp_13 = wilcoxon(m_explod, m_pem)
+        wt_23, wp_23 = wilcoxon(m_explodv2, m_pem)
+
+        results_df = results_df.append({"METRIC": m,
+                                        "VERSION1": "explod",
+                                        "VERSION1_MEAN": explod_mean,
+                                        "VERSION2": "explod_v2",
+                                        "VERSION2_MEAN": explodv2_mean,
+                                        "VERSION3": "pem",
+                                        "VERSION3_MEAN": pem_mean,
+                                        "WILCOXON12": wp_12, "WILCOXON13": wp_13, "WILCOXON23": wp_23
+                                        }, ignore_index=True)
 
     p = path_base[:-6] + "explanation_results_reordered=" + str(reordered) + ".xlsx"
     try:
