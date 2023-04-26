@@ -204,7 +204,7 @@ def file_to_df(file_path: str, algorithm: str):
 
 
 def evaluate_explanations(file_name: str, m_items: list, m_props: list, total_items: dict, total_props: dict,
-                          train_set: pd.DataFrame, prop_set: pd.DataFrame):
+                          train_set: pd.DataFrame, prop_set: pd.DataFrame, all_lir: list, all_sep: list, all_etd: list):
     """
     Diversity of explanation metrics. We will use 10 metrics: mean and std item and prop user diversity
     total item and prop aggregate diversity and entropy and gini
@@ -215,6 +215,9 @@ def evaluate_explanations(file_name: str, m_items: list, m_props: list, total_it
     :param total_props: dict of prop, quantity of times used in explanations
     :param train_set: pandas dataframe of the train set
     :param prop_set: pandas dataframe of the properties extracted from the KG
+    :param all_etd: list of all users etd metric
+    :param all_sep: list of all users sep metric
+    :param all_lir: list of all users lir metric
     :return: file saved with metrics
     """
     t_items = len(train_set[train_set.columns[0]].unique())
@@ -234,6 +237,12 @@ def evaluate_explanations(file_name: str, m_items: list, m_props: list, total_it
     pentropy = "Props entropy: " + str(entropy(props_probs))
     igini = "Items Gini index: " + str(gini(np.array(item_probs, dtype=np.float64)))
     pgini = "Props Gini index: " + str(gini(np.array(props_probs, dtype=np.float64)))
+    mean_lir = "LIR metric: " + str(np.array(all_lir).mean())
+    mean_etd = "ETD metric: " + str(np.array(all_etd).mean())
+    mean_sep = "SEP metric: " + str(np.array(all_sep).mean())
+    std_lir = "std LIR metric: " + str(np.array(all_lir).std())
+    std_etd = "std ETD metric: " + str(np.array(all_etd).std())
+    std_sep = "std SEP metric: " + str(np.array(all_sep).std())
 
     f = open(file_name, mode="w", encoding='utf-8')
     f.write(file_name + "\n")
@@ -247,6 +256,12 @@ def evaluate_explanations(file_name: str, m_items: list, m_props: list, total_it
     f.write(pentropy + "\n")
     f.write(igini + "\n")
     f.write(pgini + "\n")
+    f.write(mean_lir + "\n")
+    f.write(mean_etd + "\n")
+    f.write(mean_sep + "\n")
+    f.write(std_lir + "\n")
+    f.write(std_etd + "\n")
+    f.write(std_sep + "\n")
     f.close()
 
     print("\n" + file_name)
@@ -260,6 +275,12 @@ def evaluate_explanations(file_name: str, m_items: list, m_props: list, total_it
     print(pentropy)
     print(igini)
     print(pgini)
+    print(mean_lir)
+    print(mean_etd)
+    print(mean_sep)
+    print(std_lir)
+    print(std_etd)
+    print(std_sep)
 
 
 def lir_metric(beta: float, user: int, items: list, train_set: pd.DataFrame):
@@ -267,7 +288,7 @@ def lir_metric(beta: float, user: int, items: list, train_set: pd.DataFrame):
     Linking Interaction Recency (LIR): metric proposed in https://dl.acm.org/doi/abs/10.1145/3477495.3532041
     :param beta: parameter for the exponential decay
     :param user: user id
-    :param items: list of list items used for each recommendation explanation path
+    :param items: list  of listof items used for each recommendation explanation path
     :param train_set: training set of user item interactions
     :return: the LIR metric for the user, the lir for every recommendation is the mean of the lir of every recommendation
         and the lir for every recommendation is the mean of the lir for every item in the explanation path
@@ -280,7 +301,7 @@ def lir_metric(beta: float, user: int, items: list, train_set: pd.DataFrame):
     interacted["lir"] = -1
 
     # for every item calculate the exponential decay
-    min = interacted[interacted.columns[last_col]].min()
+    min = interacted[last_col].min()
     last_value = min
     last_lir = min
     for i, row in interacted.iterrows():
@@ -299,7 +320,7 @@ def lir_metric(beta: float, user: int, items: list, train_set: pd.DataFrame):
 
     scaler = MinMaxScaler()
     interacted['normalized'] = scaler.fit_transform(
-        np.asarray(interacted[interacted.columns[-1]]).reshape(-1, 1)).reshape(-1)
+        np.asarray(interacted[interacted.columns[-1]]).astype(np.float64).reshape(-1, 1)).reshape(-1)
 
     # initialize mean variables
     total_sum = 0
@@ -308,22 +329,29 @@ def lir_metric(beta: float, user: int, items: list, train_set: pd.DataFrame):
         items_sum = 0
         items_n = 0
         for item in pro_list:
-            value = int(interacted[interacted[interacted.columns[0]] == item][last_col])
-            items_sum = items_sum + value
-            items_n = items_n + 1
+            try:
+                value = int(interacted[interacted[interacted.columns[1]] == item]['normalized'])
+                items_sum = items_sum + value
+                items_n = items_n + 1
+            except TypeError:
+                pass
 
-        total_sum = total_sum + (items_sum/items_n)
-        total_n = total_n + 1
+        try:
+            total_sum = total_sum + (items_sum/items_n)
+            total_n = total_n + 1
+        except ZeroDivisionError:
+            total_n = total_n + 1
 
     return total_sum/total_n
 
 
-def sep_metric(beta: float, props: list, prop_set: pd.DataFrame):
+def sep_metric(beta: float, props: list, prop_set: pd.DataFrame, memo_sep: dict):
     """
     Shared Entity Popularity (SEP) metric proposed in https://dl.acm.org/doi/abs/10.1145/3477495.3532041
     :param beta: parameter for the exponential decay
     :param props: list of list of properties used for each recommendation explanation path
     :param prop_set: property set extrated from Wikidata
+    :param memo_sep: memoization for sep values across users
     :return: the sep metric for the user, the sep for every recommendation is the mean of the sep of every recommendation
         and the sep for every recommendation is the mean of the sep for every item in the explanation path
     """
@@ -340,47 +368,56 @@ def sep_metric(beta: float, props: list, prop_set: pd.DataFrame):
         # for every property list of each explanation
         for p in expl_props:
             # obtain the most popular link to of the property e.g. link actor from property Brad Pitt
-            sum_df = pd.DataFrame(prop_set[prop_set["obj"] == p].groupby("prop").count())
-            link = sum_df[sum_df[sum_df.columns[0]] == sum_df.max()[0]].index[0]
-            link_df = prop_set[prop_set["prop"] == link]
-            # generate dataset with property as index and count as column
-            count_link = pd.DataFrame(link_df.groupby("obj").count())
-            count_link = count_link.sort_values(by=count_link.columns[0], ascending=True)
-            count_link = pd.DataFrame(count_link[count_link.columns[0]])
-            # initialize sep column with value -1
-            count_link["sep"] = -1
+            links = list(set(prop_set[prop_set["obj"] == p]['prop'].values))
+            l_memo = list(set(memo_sep.keys()).intersection(set(links)))
+            if len(l_memo) > 0:
+                memo_df = memo_sep[l_memo[0]]
+                p_sep_value = memo_df.loc[p][-1]
+            else:
+                link_df = prop_set[prop_set["prop"].isin(links)]
+                # generate dataset with property as index and count as column
+                count_link = pd.DataFrame(link_df.groupby("obj").count())
+                count_link = count_link.sort_values(by=count_link.columns[0], ascending=True)
+                count_link = pd.DataFrame(count_link[count_link.columns[0]])
+                # initialize sep column with value -1
+                count_link["sep"] = -1
 
-            # obtain min value so we do not need to calculate every time
-            # and initialize the last value and last lir as min according to the base case
-            min = count_link[count_link.columns[0]].min()
-            last_value = min
-            last_sep = min
-            for i, row in count_link.iterrows():
-                # if it is min, then lir is the value
-                if row[0] == min:
-                    count_link.at[i, "sep"] = min
-                # else if the count is the same repeat the sep, otherwise, calculate new sep
-                else:
-                    if row[0] == last_value:
-                        count_link.at[i, "sep"] = last_sep
+                # obtain min value so we do not need to calculate every time
+                # and initialize the last value and last sep as min according to the base case
+                min = count_link[count_link.columns[0]].min()
+                last_value = min
+                last_sep = min
+                for i, row in count_link.iterrows():
+                    # if it is min, then lir is the value
+                    if row[0] == min:
+                        count_link.at[i, "sep"] = min
+                    # else if the count is the same repeat the sep, otherwise, calculate new sep
                     else:
-                        sep = (1 - beta) * last_sep + beta * row[0]
-                        count_link.at[i, "sep"] = sep
-                        last_value = row[0]
-                        last_sep = sep
+                        if row[0] == last_value:
+                            count_link.at[i, "sep"] = last_sep
+                        else:
+                            sep = (1 - beta) * last_sep + beta * row[0]
+                            count_link.at[i, "sep"] = sep
+                            last_value = row[0]
+                            last_sep = sep
 
-            # generate normalized sep column
-            count_link['normalized'] = scaler.fit_transform(
-                np.asarray(count_link[count_link.columns[-1]]).reshape(-1, 1)).reshape(-1)
+                # generate normalized sep column
+                count_link['normalized'] = scaler.fit_transform(
+                    np.asarray(count_link[count_link.columns[-1]]).astype(np.float64).reshape(-1, 1)).reshape(-1)
+                p_sep_value = count_link.loc[p][-1]
+                for l in links:
+                    memo_sep[l] = count_link
 
             # obtain sep value for the property and calculate mean
-            p_sep_value = count_link.loc[p][-1]
             items_sum = items_sum + p_sep_value
             items_n = items_n + 1
         
         # calculate total mean
-        total_sum = total_sum + (items_sum / items_n)
-        total_n = total_n + 1
+        try:
+            total_sum = total_sum + (items_sum / items_n)
+            total_n = total_n + 1
+        except ZeroDivisionError:
+            total_n = total_n + 1
 
     return total_sum / total_n
 
@@ -427,8 +464,9 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
     :param reordered: 1 if the recommendations were reordred by proposed reordering system 0 if not
     :return: excel file with wilcoxon and ttest statistical relevance tests for all metrics
     """
-    basline_results = []
-    proposed_results = []
+    explod_results = []
+    explodv2_results = []
+    pem_results = []
 
     path = "./datasets/"
     if dataset == "ml":
@@ -439,42 +477,51 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
 
     for i in range(0, 10):
         path = path_base + str(i) + "/results/explanations/" + "reordered_recs=" + str(reordered)
-        path_baseline = path + "_expl_alg=explod_" + str(rec_alg) + \
-                        "_lodreorder_path[policy=last_items=01_reorder=10_hybrid].csv"
+        path_explod = path + "_expl_alg=explod_" + str(rec_alg) + ".csv"
+        path_explod_v2 = path + "_expl_alg=explod_v2_" + str(rec_alg) + ".csv"
+        path_pem = path + "_expl_alg=pem_" + str(rec_alg) + ".csv"
 
-        path_proposed = path + "_expl_alg=diverse_" + str(rec_alg) + \
-                        "_lodreorder_path[policy=last_items=01_reorder=10_hybrid].csv"
+        explod_results.append(explanation_file_to_df(path_explod, "explod").set_index("metric"))
+        explodv2_results.append(explanation_file_to_df(path_explod_v2, "pem").set_index("metric"))
+        pem_results.append(explanation_file_to_df(path_pem, "explod_v2").set_index("metric"))
 
-        basline_results.append(explanation_file_to_df(path_baseline, "explod").set_index("metric"))
-        proposed_results.append(explanation_file_to_df(path_proposed, "diverse").set_index("metric"))
-        path = path_base
-
-    metrics = list(basline_results[0].index.unique())
-    results_df = pd.DataFrame(columns=["METRIC", "PROPOSED_NAME",
-                                       "PROPOSED_MEAN", "BASELINE_NAME",
-                                       "BASELINE_MEAN", "WILCOXON", "TTEST"])
+    metrics = list(explod_results[0].index.unique())
+    results_df = pd.DataFrame(columns=["METRIC",
+                                       "VERSION1", "VERSION1_MEAN",
+                                       "VERSION2", "VERSION2_MEAN",
+                                       "VERSION3", "VERSION3_MEAN",
+                                       "WILCOXON12", "WILCOXON13", "WILCOXON23"])
     for m in metrics:
-        m_baseline = []
-        m_proposed = []
+        m_explod = []
+        m_explodv2 = []
+        m_pem = []
         for i in range(0, 10):
-            m_baseline.append(float(basline_results[i].loc[m].value))
-            m_proposed.append(float(proposed_results[i].loc[m].value))
+            m_explod.append(float(explod_results[i].loc[m].value))
+            m_explodv2.append(float(explodv2_results[i].loc[m].value))
+            m_pem.append(float(pem_results[i].loc[m].value))
 
-        baseline_mean = np.array(m_baseline).mean()
-        print(m + " baseline results: ", m_baseline)
-        proposed_mean = np.array(m_proposed).mean()
-        print(m + " proposed results: ", m_proposed)
+        explod_mean = np.array(m_explod).mean()
+        print(m + " baseline results: ", m_explod)
 
-        wt, wp = wilcoxon(m_baseline, m_proposed)
-        print("p-value with wilcoxon: " + str(wp))
-        tt, tp = ttest_rel(m_baseline, m_proposed)
-        print("p-value with t-test: " + str(tp))
+        explodv2_mean = np.array(m_explodv2).mean()
+        print(m + " proposed results: ", m_explodv2)
 
-        results_df = results_df.append({"METRIC": m, "PROPOSED_NAME": "diverse",
-                                        "PROPOSED_MEAN": proposed_mean,
-                                        "BASELINE_NAME": "explod",
-                                        "BASELINE_MEAN": baseline_mean,
-                                        "WILCOXON": wp, "TTEST": tp}, ignore_index=True)
+        pem_mean = np.array(m_pem).mean()
+        print(m + " proposed results: ", m_pem)
+
+        wt_12, wp_12 = wilcoxon(m_explod, m_explodv2)
+        wt_13, wp_13 = wilcoxon(m_explod, m_pem)
+        wt_23, wp_23 = wilcoxon(m_explodv2, m_pem)
+
+        results_df = results_df.append({"METRIC": m,
+                                        "VERSION1": "explod",
+                                        "VERSION1_MEAN": explod_mean,
+                                        "VERSION2": "explod_v2",
+                                        "VERSION2_MEAN": explodv2_mean,
+                                        "VERSION3": "pem",
+                                        "VERSION3_MEAN": pem_mean,
+                                        "WILCOXON12": wp_12, "WILCOXON13": wp_13, "WILCOXON23": wp_23
+                                        }, ignore_index=True)
 
     p = path_base[:-6] + "explanation_results_reordered=" + str(reordered) + ".xlsx"
     try:

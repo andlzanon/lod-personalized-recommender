@@ -215,7 +215,7 @@ def run_experiments_lastfm(fold: str, start_fold: int, end_fold: int, baselines:
 
 
 def run_explanations_experiments_ml(fold: str, start_fold: int, end_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
-                        h_max=0, max_users=1, expl_alg='diverse', reorder=1):
+                        h_max=0, max_users=1, expl_alg='diverse', reorder=1, n_explain=5):
     """
     Run explanation experiments for the movie-lens 100k dataset for the quantity of folds passed by in the parameter n_folds.
     E.g. if 9 then will run for all folds if 6 it will run from fold 0 to 5, etc.
@@ -224,6 +224,7 @@ def run_explanations_experiments_ml(fold: str, start_fold: int, end_fold: int, r
     :param end_fold: fold to end evaluation
     :param reorders: list to reorder recommender algorithms that had run already
     :param n_reorder: quantity of items to reorder
+    :param n_explain: quantity of items to explain
     :param p_items: percentage of items from historic to build semantic profile
     :param policy: policy to choose items
     :param: h_min: minimum number of users' historic items to generate the recommendations and explanations to, if a
@@ -297,11 +298,11 @@ def run_explanations_experiments_ml(fold: str, start_fold: int, end_fold: int, r
                                         cols_used=['user_id', 'movie_id', 'interaction', 'timestamp'],
                                         prop_cols=['movieId', 'title', 'prop', 'obj'], n_reorder=n_reorder,
                                         p_items=p_items, policy=policy, hybrid=True)
-            path_reord.reorder_with_path(fold + str(f), h_min, h_max, max_users, expl_alg, reorder)
+            path_reord.reorder_with_path(fold + str(f), h_min, h_max, max_users, expl_alg, reorder, n_explain)
 
 
 def run_explanations_experiments_lastfm(fold: str, start_fold: int, end_fold: int, reorders=None, n_reorder=10, p_items=0.1, policy='last', h_min=0,
-                        h_max=0, max_users=1, expl_alg='diverse', reorder=1):
+                        h_max=0, max_users=1, expl_alg='diverse', reorder=1, n_explain=5):
     """
     Run explanation experiments for the lastfm dataset for the quantity of folds passed by in the parameter n_folds.
     E.g. if 10 then will run for all folds if 6 it will run from fold 0 to 5, etc
@@ -382,7 +383,7 @@ def run_explanations_experiments_lastfm(fold: str, start_fold: int, end_fold: in
                                         cols_used=['user_id', 'artist_id', 'interaction'],
                                         prop_cols=['id', 'artist', 'prop', 'obj'], n_reorder=n_reorder, p_items=p_items,
                                         policy=policy, hybrid=True)
-            path_reord.reorder_with_path(fold + str(f), h_min, h_max, max_users, expl_alg, reorder)
+            path_reord.reorder_with_path(fold + str(f), h_min, h_max, max_users, expl_alg, reorder, n_explain)
 
 
 parser = argparse.ArgumentParser()
@@ -462,7 +463,7 @@ parser.add_argument("--save",
                     default=0,
                     help="Boolean argument to save or not result in file. Only works on the 'validation' mode.")
 
-# reorder commdands
+# reorder and explainability commands
 
 parser.add_argument("--min",
                     type=int,
@@ -488,9 +489,13 @@ parser.add_argument("--reordered_recs",
 parser.add_argument("--expl_alg",
                     type=str,
                     default="diverse",
-                    help="Algorithm to explain recommendations. Either max, diverse or explod. Works only on "
+                    help="Algorithm to explain recommendations. Either max, diverse, explod or pem. Works only on "
                          "'explanation' mode.")
 
+parser.add_argument("--n_explain",
+                    type=int,
+                    default=5,
+                    help="Quantity of items to explain. Works only on 'explanation mode'")
 # parse arguments
 args = parser.parse_args()
 
@@ -515,11 +520,7 @@ if args.mode == "validate" and args.dataset == "lastfm":
 
 if args.mode == "explanation" and args.dataset == "ml":
     run_explanations_experiments_ml(folds_path_ml, args.begin, args.end, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
-                        args.max, args.max_users, args.expl_alg, args.reordered_recs)
-
-if args.mode == "explanation" and args.dataset == "lastfm":
-    run_explanations_experiments_lastfm(folds_path_lastfm, args.begin, args.end, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
-                        args.max, args.max_users, args.expl_alg, args.reordered_recs)
+                        args.max, args.max_users, args.expl_alg, args.reordered_recs, args.n_explain)
 
 if args.mode == "validate_expl" and args.dataset == "ml":
     statistical_relevance_explanations(args.baseline, args.dataset, args.reordered_recs)

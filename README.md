@@ -123,6 +123,8 @@ explanation experiments and 'validate_expl' to run statistical accuracy tests;
 
 * `expl_alg`: Algorithm to explain recommendations. Either max, diverse or explod. Works only on 'explanation' mode.
 
+* `n_explain`: Number of recommendations to explain. Min 1, max: 10. Works only on 'explanation' mode.
+
 Therefore there are three main commands: the 'run' that is responsable of running an experiment, the 'validate' to run a statistical relevance test comparison of a baseline with a proposed metric and 
 the 'explanation' mode that generates to a fold recommendations just like the run, but it prints on the console the items names, the semantic profile and the explanation paths.  
 
@@ -140,17 +142,13 @@ To run a statistical relevance test use the following command in which the bprmf
 
     python main.py --mode=validate --dataset=lastfm --sufix=path[policy=last_items=01_reorder=10_hybrid] --baseline=bprmf --method="both" --save=1 --metrics="MAP AGG_DIV NDCG GINI ENTROPY COVERAGE"
 
-To run an explanation experiments for the movielens dataset for the diverse explanations algorithm run the following command. To compare results with the ExpLOD algorithm change the parameter to explod on expl_alg parameter. Change the reordered_recs parameter to explain the reordered recommendations or the baseline algorithm:
+To run an explanation experiments for the movielens dataset for the explod_v2 explanations algorithm run the following command. To compare results with the ExpLOD algorithm change the parameter to explod on expl_alg parameter or pem to the PEM algorithm. To run with the reordered explanation of the KBS paper change the reordered_recs param to 1:
     
-    python main.py --mode=explanation --dataset=ml --begin=0 --end=9 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=diverse --reordered_recs=0
+    python main.py --mode=explanation --dataset=ml --begin=0 --end=9 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=explod_v2 --reordered_recs=0 --n_explain=5
 
-To run an explanation experiments for the lastfm dataset for the diverse explanations algorithm run the following command. To compare results with the ExpLOD algorithm change the parameter to explod on expl_alg parameter. Change the reordered_recs parameter to explain the reordered recommendations or the baseline algorithm:
-    
-    python main.py --mode=explanation --dataset=lastfm --begin=0 --end=9 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=diverse --reordered_recs=0
+To run an explanation samples for the pem explanations algorithm on the movielens dataset for the PageRank algorithm for a maximum of 2 users that have at least 0 interactions and a max of 20 interactions. To compare results with the ExpLOD algorithm change the parameter to explod on expl_alg parameter. Change the reordered_recs parameter to explain the reordered recommendations or the baseline algorithm:
 
-To run an explanation samples for the diverse explanations algorithm on the movielens dataset for the PageRank algorithm for a maximum of 2 users that have at least 0 interactions and a max of 20 interactions. To compare results with the ExpLOD algorithm change the parameter to explod on expl_alg parameter. Change the reordered_recs parameter to explain the reordered recommendations or the baseline algorithm:
-
-    python main.py --mode=explanation --dataset=ml --begin=0 --end=1 --reord="PageRank" --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=20 --max_users=2 --expl_alg=diverse --reordered_recs=0
+    python main.py --mode=explanation --dataset=ml --begin=0 --end=1 --reord="PageRank" --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=20 --max_users=2 --expl_alg=pem --reordered_recs=0
     
 To evaluate the explanations diversity offline for the PageRank algorithm and movielens dataset use the command:
     

@@ -1,0 +1,17 @@
+./datasets/ml-latest-small/folds/6/results/explanations/reordered_recs=0_expl_alg=pem_bprmf.csv
+Mean user item aggregate diversity: 8.262295081967213
+Std user item aggregate diversity: 2.8307540520311134
+Mean user property aggregate diversity: 4.762295081967213
+Std user property aggregate diversity: 0.5129995156825853
+Total items aggregate diversity: 1454
+Total property aggregate diversity: 1038
+Items entropy: 6.529310199395029
+Props entropy: 6.094582453486451
+Items Gini index: 0.9357741081977109
+Props Gini index: 0.9935224776250482
+LIR metric: 0.03240437158469945
+ETD metric: 0.9524590163934427
+SEP metric: 0.14534971647193795
+std LIR metric: 0.07565772592887626
+std ETD metric: 0.10259990313651705
+std SEP metric: 0.12396955256867107
