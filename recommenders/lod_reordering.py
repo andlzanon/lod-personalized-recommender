@@ -121,3 +121,52 @@ class LODPersonalizedReordering(object):
         fav_prop = interacted_props['score'].to_dict()
 
         return fav_prop
+
+    def user_semantic_profile_link(self, historic: list) -> dict:
+        """
+        Generate the user semantic profile, where all the values of properties (e.g.: George Lucas, action films, etc)
+        are ordered by a score that is calculated as:
+            score = (npi/i) * log(N/dft)
+        where npi are the number of edges to a value, i the number of interacted items,
+        N the total number of items and dft the number of items with the value
+        :param historic: list of the items interacted by a user
+        :return: dictionary with properties' values as keys and scores as values
+        """
+
+        # create npi, i and n columns
+        interacted_props = self.prop_set.loc[self.prop_set.index.isin(historic)].copy()
+        interacted_props['npi'] = interacted_props.groupby(self.prop_set.columns[-1])[self.prop_set.columns[-1]].transform('count')
+        interacted_props['i'] = len(historic)
+        interacted_props['n'] = len(self.prop_set.index.unique())
+
+        # get items per property on full dbpedia/wikidata by dropping the duplicates with same item id and prop value
+        # therefore, a value that repeats in the same item is ignored
+        items_per_obj = self.prop_set.reset_index().drop_duplicates(subset=[self.prop_set.columns[0], self.prop_set.columns[-1]]).set_index(
+            self.prop_set.columns[-1])
+        df_dict = items_per_obj.index.value_counts().to_dict()
+
+        # generate the dft column based on items per property and score column base on all new created columns
+        interacted_props['dft'] = interacted_props.apply(lambda x: df_dict[x[self.prop_set.columns[-1]]], axis=1)
+
+        interacted_props['score'] = (interacted_props['npi'] / interacted_props['i']) * (
+            np.log(interacted_props['n'] / interacted_props['dft']))
+
+        items_per_obj_l = self.prop_set.reset_index().drop_duplicates(
+            subset=[self.prop_set.columns[0], self.prop_set.columns[-2]]).set_index(
+            self.prop_set.columns[-2])
+        df_dict_l = items_per_obj_l.index.value_counts().to_dict()
+
+        interacted_props['npi_l'] = interacted_props.groupby(self.prop_set.columns[-2])[
+            self.prop_set.columns[-2]].transform('count')
+        interacted_props['dft_l'] = interacted_props.apply(lambda x: df_dict_l[x[self.prop_set.columns[-2]]], axis=1)
+        interacted_props['score_l'] = (interacted_props['npi_l'] / interacted_props['i']) * (
+            np.log(interacted_props['n'] / interacted_props['dft_l']))
+
+        interacted_props['score_f'] = interacted_props['score'] + interacted_props['score_l']
+
+        # generate the dict
+        interacted_props.reset_index(inplace=True)
+        interacted_props = interacted_props.set_index(self.prop_set.columns[-1])
+        fav_prop = interacted_props['score'].to_dict()
+
+        return fav_prop

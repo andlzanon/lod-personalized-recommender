@@ -134,7 +134,7 @@ class PathReordering(LODPersonalizedReordering):
 
         output_title_l = output_file_name.split("/")
         output_title = '/'.join(output_title_l[:-1])
-        output_title = output_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + \
+        output_title = output_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_l_" + \
                        "n_explain=" + str(n_explain) + "_" + output_title_l[-1]
         f = open(output_title, mode="w", encoding='utf-8')
         f.write(output_title + "\n")
@@ -182,7 +182,7 @@ class PathReordering(LODPersonalizedReordering):
             items_recommended = list(self.output_rec_set.loc[u][self.output_cols[1]])[:self.n_reorder]
 
             # get semantic profile and extract the best paths from the suggested item to the recommended
-            user_semantic_profile = self.user_semantic_profile(items_historic)
+            user_semantic_profile = self.user_semantic_profile_link(items_historic)
 
             print("\nUsers favorites attributes on the kG")
             f.write("\nUsers favorites attributes on the kG\n")
