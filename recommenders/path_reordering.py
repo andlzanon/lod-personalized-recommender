@@ -278,7 +278,7 @@ class PathReordering(LODPersonalizedReordering):
         :param semantic_profile: semantic profile of the user
         :return: data frame with historic item, the recommended and path
         """
-        sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path'])
+        sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path', 'path_s'])
         historic_codes = ['I' + str(i) for i in historic]
         recommeded_codes = ['I' + str(i) for i in recommeded]
         historic_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
@@ -290,13 +290,14 @@ class PathReordering(LODPersonalizedReordering):
                 rm_name = 'I' + str(rm)
                 try:
                     paths = nx.all_shortest_paths(subgraph, source=hm_node, target=rm_name)
-                    paths = [list(map(semantic_profile.get, p[1::2])) for p in paths]
+                    paths_s = [p for p in paths]
+                    paths = [list(map(semantic_profile.get, p[1::2])) for p in paths_s]
                     values = [sum(values) / len(values) for values in paths if len(values) > 0 or values is None]
                     sem_path_dist = sem_path_dist.append(
-                        {'historic': hm, 'recommended': rm, 'path': paths[np.argmax(values)]},
+                        {'historic': hm, 'recommended': rm, 'path': paths[np.argmax(values)], 'path_s': paths_s[np.argmax(values)]},
                         ignore_index=True)
                 except (nx.exception.NetworkXNoPath, ValueError):
-                    sem_path_dist = sem_path_dist.append({'historic': hm, 'recommended': rm, 'path': []},
+                    sem_path_dist = sem_path_dist.append({'historic': hm, 'recommended': rm, 'path': [], 'path_s': []},
                                                          ignore_index=True)
                 # print("Historic: " + str(hm) + " Recommended: " + str(rm))
 
