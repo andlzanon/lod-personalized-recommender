@@ -523,4 +523,4 @@ if args.mode == "explanation" and args.dataset == "ml":
                         args.max, args.max_users, args.expl_alg, args.reordered_recs, args.n_explain)
 
 if args.mode == "validate_expl" and args.dataset == "ml":
-    statistical_relevance_explanations(args.baseline, args.dataset, args.reordered_recs)
+    statistical_relevance_explanations(args.baseline, args.dataset, args.reordered_recs, args.n_explain)
