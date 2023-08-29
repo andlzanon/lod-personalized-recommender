@@ -125,7 +125,7 @@ class PathReordering(LODPersonalizedReordering):
         results_title_l = results_file_name.split("/")
         results_title = '/'.join(results_title_l[:-1])
         results_title = results_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + \
-                        results_title_l[-1]
+                        "n_explain=" + str(n_explain) + "_" + results_title_l[-1]
 
         if reordered:
             output_file_name = fold + "/outputs/explanations/" + self.output_path.split("/")[-1]
@@ -255,7 +255,8 @@ class PathReordering(LODPersonalizedReordering):
                 items, props, (ulir, usep, uetd) = self.__pem_ranked_paths(item_rank, items_historic, u, f, memo_sep)
 
             elif expl_alg == 'explod_v2':
-                items, props, (ulir, usep, uetd) = self.__explod_ranked_paths_v2(item_rank, items_historic, u, f, memo_sep)
+                items, props, (ulir, usep, uetd) = self.__explod_ranked_paths_v2(item_rank, items_historic, u, f,
+                                                                                 memo_sep)
             f.write("\n")
 
             total_items = dict(Counter(total_items) + Counter(items))
@@ -383,7 +384,8 @@ class PathReordering(LODPersonalizedReordering):
 
             # get items names from ids do generate explanations
             for k in path_set.keys():
-                s_items = self.train_set.loc[user].sort_values(by=self.train_set.columns[-1], kind="quicksort", ascending=False)
+                s_items = self.train_set.loc[user].sort_values(by=self.train_set.columns[-1], kind="quicksort",
+                                                               ascending=False)
                 s_items = s_items[s_items[self.train_set.columns[0]].isin(list(path_set[k]))]
                 item_names = []
                 for h in s_items[s_items.columns[0]].to_list():
@@ -642,7 +644,8 @@ class PathReordering(LODPersonalizedReordering):
 
         return hist_items, nodes, (lir, sep, etd)
 
-    def __explod_ranked_paths_v2(self, ranked_items: list, items_historic: list, user: int, file: _io.TextIOWrapper, memo_sep: dict):
+    def __explod_ranked_paths_v2(self, ranked_items: list, items_historic: list, user: int, file: _io.TextIOWrapper,
+                                 memo_sep: dict):
         """
         Build explanation to recommendations based on the ExpLOD, method, explained in https://dl.acm.org/doi/abs/10.1145/2959100.2959173
         :param ranked_items: list of the recommended items
@@ -756,7 +759,8 @@ class PathReordering(LODPersonalizedReordering):
         etd = eval.etd_metric(list(nodes.keys()), len(ranked_items), len(self.prop_set['obj'].unique()))
         return hist_items, nodes, (lir, sep, etd)
 
-    def __pem_ranked_paths(self, ranked_items: list, items_historic: list, user: int, file: _io.TextIOWrapper, memo_sep: dict):
+    def __pem_ranked_paths(self, ranked_items: list, items_historic: list, user: int, file: _io.TextIOWrapper,
+                           memo_sep: dict):
         # count historic movies properties considering two levels of hierarchy above
         hierarchy_df = pd.read_csv("./generated_files/wikidata/props_hierarchy_wikidata_movielens_small.csv")
         hist_props = self.prop_set.loc[items_historic]
@@ -812,7 +816,8 @@ class PathReordering(LODPersonalizedReordering):
             valid_props = set(all_user_props).intersection(set(self.prop_set['obj'].to_list()))
 
             # count number of items described by each of valid props
-            count_rec_df = rec_props[[rec_props.columns[0], rec_props.columns[-1]]].drop_duplicates().groupby('obj').count()
+            count_rec_df = rec_props[[rec_props.columns[0], rec_props.columns[-1]]].drop_duplicates().groupby(
+                'obj').count()
             count_rec_df.columns = ['count']
             count_rec_hierarchy_l1 = count_rec_df.merge(rec_hierarchy_props_l1, on='obj', how='right')
             count_rec_hierarchy_l2 = count_rec_hierarchy_l1.merge(rec_hierarchy_props_l2, left_on='super_obj',
@@ -868,7 +873,7 @@ class PathReordering(LODPersonalizedReordering):
                     non_redundant.append(obj)
 
             # score properties
-            props_catalog = self.prop_set[[self.prop_set.columns[0], self.prop_set.columns[-1]]].drop_duplicates()\
+            props_catalog = self.prop_set[[self.prop_set.columns[0], self.prop_set.columns[-1]]].drop_duplicates() \
                 .groupby("obj").count()
             props_catalog = pd.DataFrame(props_catalog[props_catalog.columns[0]])
             props_catalog.columns = ['count']
@@ -905,12 +910,15 @@ class PathReordering(LODPersonalizedReordering):
                 user_df = self.train_set.loc[user]
                 user_item = user_df[
                     user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'] == max_prop[0]].index.unique()))]
-                hist_ids = list(user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
+                hist_ids = list(
+                    user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
                 sub_p = [prop_rank_l[0]]
                 while len(hist_ids) == 0:
                     user_item = user_df[
-                            user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(sub_p)].index.unique()))]
-                    hist_ids = list(user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
+                        user_df[user_df.columns[0]].isin(
+                            list(hist_props[hist_props['obj'].isin(sub_p)].index.unique()))]
+                    hist_ids = list(
+                        user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
                     new_sub_p = []
                     for p in sub_p:
                         try:
@@ -923,7 +931,8 @@ class PathReordering(LODPersonalizedReordering):
                 hist_names = hist_props.loc[hist_ids]['title'].unique()
             else:
                 max_prop = []
-                hist_ids = self.train_set.loc[user].sort_values(by=self.train_set.columns[-1], ascending=False)[:3][self.train_set.columns[0]]
+                hist_ids = self.train_set.loc[user].sort_values(by=self.train_set.columns[-1], ascending=False)[:3][
+                    self.train_set.columns[0]]
                 hist_names = hist_props.loc[hist_ids]['title'].unique()
                 hist_lists.append(hist_ids)
 
