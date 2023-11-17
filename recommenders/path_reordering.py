@@ -5,6 +5,9 @@ import pandas as pd
 import networkx as nx
 from collections import Counter
 
+from gensim.models.keyedvectors import load_word2vec_format, KeyedVectors
+from node2vec import Node2Vec
+
 from recommenders.lod_reordering import LODPersonalizedReordering
 import evaluation_utils as eval
 
@@ -256,6 +259,11 @@ class PathReordering(LODPersonalizedReordering):
 
             elif expl_alg == 'explod_v2':
                 items, props, (ulir, usep, uetd) = self.__explod_ranked_paths_v2(item_rank, items_historic, u, f, memo_sep)
+
+            elif expl_alg == "embed":
+                self.embeedings(item_rank, items_historic, u, f, memo_sep, save=False)
+                break
+
             f.write("\n")
 
             total_items = dict(Counter(total_items) + Counter(items))
@@ -954,6 +962,55 @@ class PathReordering(LODPersonalizedReordering):
         etd = eval.etd_metric(list(nodes.keys()), len(ranked_items), len(self.prop_set['obj'].unique()))
 
         return hist_items, nodes, (lir, sep, etd)
+
+    def embeedings(self, recommeded: list, historic: list, user: int, file: _io.TextIOWrapper, memo_sep: dict,
+                   pool=False, save=False):
+
+        user_code = "U" + str(user)
+        # obtain user embeeding
+        if save:
+            node2vec = Node2Vec(self.graph, dimensions=64, walk_length=30, num_walks=100, workers=1)
+            model = node2vec.fit(window=10, min_count=1, batch_words=4)
+            model.save("model")
+            print("--- Model Saved ---")
+        else:
+            model = KeyedVectors.load('model')
+
+        sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path_s', 'path_v'])
+        historic_codes = ['I' + str(i) for i in historic]
+        recommeded_codes = ['I' + str(i) for i in recommeded]
+        historic_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
+
+        subgraph = self.graph.subgraph(historic_codes + recommeded_codes + historic_props)
+
+        # obtain paths from historic item to recommended
+        for hm in historic:
+            hm_node = 'I' + str(hm)
+            for rm in recommeded:
+                rm_name = 'I' + str(rm)
+                try:
+                    paths = nx.all_shortest_paths(subgraph, source=hm_node, target=rm_name)
+                    paths_s = [p for p in paths]
+                    all_path_v = []
+                    for p in paths_s:
+                        path_v = []
+                        for prop in p:
+                            path_v.append(model.wv.similarity(user_code, prop))
+                        all_path_v.append(path_v)
+
+                    sem_path_dist = sem_path_dist.append(
+                        {'historic': hm, 'recommended': rm, 'path_s': paths_s, 'path_v': all_path_v},
+                        ignore_index=True)
+                    # obtain sum of similarity from  uer embeeding with properties of the path
+                except (nx.exception.NetworkXNoPath, ValueError):
+                    sem_path_dist = sem_path_dist.append({'historic': hm, 'recommended': rm, 'path_s': [], 'path_v': []},
+                                                         ignore_index=True)
+
+            # choose path with highest mean similarity of sem_path_dist
+            print("TODO")
+            # PROBLEM: diversification of properties. try some used properties, but then it will be
+
+        return model
 
     def __add_dict(self, d: dict, key) -> dict:
         """
