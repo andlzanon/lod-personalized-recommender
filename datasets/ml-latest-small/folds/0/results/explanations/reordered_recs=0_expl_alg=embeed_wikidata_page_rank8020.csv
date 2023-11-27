@@ -1,0 +1,17 @@
+./datasets/ml-latest-small/folds/0/results/explanations/reordered_recs=0_expl_alg=embeed_wikidata_page_rank8020.csv
+Mean user item aggregate diversity: 0.0
+Std user item aggregate diversity: 0.0
+Mean user property aggregate diversity: 0.0
+Std user property aggregate diversity: 0.0
+Total items aggregate diversity: 0
+Total property aggregate diversity: 0
+Items entropy: nan
+Props entropy: nan
+Items Gini index: 3.3086750797929556e-17
+Props Gini index: -4.598679059756193e-17
+LIR metric: -1.0
+ETD metric: -1.0
+SEP metric: -1.0
+std LIR metric: 0.0
+std ETD metric: 0.0
+std SEP metric: 0.0

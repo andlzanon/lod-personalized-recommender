@@ -1,0 +1,72 @@
+./datasets/ml-latest-small/folds/0/outputs/explanations/reordered_recs=0_expl_alg=embeed_n_explain=5_wikidata_page_rank8020.csv
+
+User: 37
+Items interacted by the user
+Item id: 1061 Name: Sleepers
+Item id: 661 Name: James and the Giant Peach
+Item id: 1073 Name: Willy Wonka & the Chocolate Factory
+Item id: 671 Name: Mystery Science Theater 3000: The Movie
+Item id: 292 Name: Outbreak
+Item id: 318 Name: The Shawshank Redemption
+Item id: 329 Name: Star Trek Generations
+Item id: 231 Name: Dumb and Dumber
+Item id: 349 Name: Clear and Present Danger
+Item id: 457 Name: The Fugitive
+Item id: 593 Name: The Silence of the Lambs
+Item id: 153 Name: Batman Forever
+Item id: 165 Name: Die Hard with a Vengeance
+Item id: 344 Name: Ace Ventura: Pet Detective
+Item id: 590 Name: Dances with Wolves
+Item id: 380 Name: True Lies
+Item id: 592 Name: Batman
+
+Users favorites attributes on the kG
+James Cameron
+Academy Award for Best Sound Mixing
+Batman
+Tim Burton
+Jim Carrey
+
+Recommendations
+Item id: 356 Name: Forrest Gump
+Item id: 296 Name: Pulp Fiction
+Item id: 150 Name: Apollo 13
+Item id: 110 Name: Braveheart
+Item id: 480 Name: Jurassic Park
+
+
+User: 53
+Items interacted by the user
+Item id: 381 Name: When a Man Loves a Woman
+Item id: 1049 Name: The Ghost and the Darkness
+Item id: 249 Name: Immortal Beloved
+Item id: 481 Name: Kalifornia
+Item id: 916 Name: Roman Holiday
+Item id: 1100 Name: Days of Thunder
+Item id: 1125 Name: The Return of the Pink Panther
+Item id: 1256 Name: Duck Soup
+Item id: 4019 Name: Finding Forrester
+Item id: 922 Name: Sunset Boulevard
+Item id: 203 Name: To Wong Foo, Thanks for Everything! Julie Newmar
+Item id: 880 Name: The Island of Dr. Moreau
+Item id: 1982 Name: Halloween
+Item id: 2686 Name: The Red Violin
+Item id: 413 Name: Airheads
+Item id: 748 Name: The Arrival
+Item id: 2616 Name: Dick Tracy
+Item id: 1441 Name: Benny & Joon
+
+Users favorites attributes on the kG
+John Carpenter
+Al Franken
+Bernard Rose
+Warren Beatty
+François Girard
+
+Recommendations
+Item id: 356 Name: Forrest Gump
+Item id: 296 Name: Pulp Fiction
+Item id: 318 Name: The Shawshank Redemption
+Item id: 593 Name: The Silence of the Lambs
+Item id: 527 Name: Schindler's List
+

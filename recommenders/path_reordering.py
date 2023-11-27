@@ -966,6 +966,7 @@ class PathReordering(LODPersonalizedReordering):
     def embeedings(self, recommeded: list, historic: list, user: int, file: _io.TextIOWrapper, memo_sep: dict,
                    pool=False, save=False):
 
+        hist_props = self.prop_set.loc[historic]
         user_code = "U" + str(user)
         # obtain user embeeding
         if save:
@@ -976,7 +977,7 @@ class PathReordering(LODPersonalizedReordering):
         else:
             model = KeyedVectors.load('model')
 
-        sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path_s', 'path_v'])
+        sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path_s', 'path_v', 'values'])
         historic_codes = ['I' + str(i) for i in historic]
         recommeded_codes = ['I' + str(i) for i in recommeded]
         historic_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
@@ -998,19 +999,58 @@ class PathReordering(LODPersonalizedReordering):
                             path_v.append(model.wv.similarity(user_code, prop))
                         all_path_v.append(path_v)
 
+                    values = [sum(values) / len(values) for values in all_path_v if len(values) > 0 or values is None]
                     sem_path_dist = sem_path_dist.append(
-                        {'historic': hm, 'recommended': rm, 'path_s': paths_s, 'path_v': all_path_v},
+                        {'historic': hm, 'recommended': rm, 'path_s': paths_s, 'path_v': all_path_v, 'values': values},
                         ignore_index=True)
                     # obtain sum of similarity from  uer embeeding with properties of the path
                 except (nx.exception.NetworkXNoPath, ValueError):
                     sem_path_dist = sem_path_dist.append({'historic': hm, 'recommended': rm, 'path_s': [], 'path_v': []},
                                                          ignore_index=True)
 
-            # choose path with highest mean similarity of sem_path_dist
-            print("TODO")
-            # PROBLEM: diversification of properties. try some used properties, but then it will be
+        # choose path with highest mean similarity of sem_path_dist
+        sem_path_dist_m = sem_path_dist.pivot(index='historic', columns='recommended', values='values')
+        sem_path_dist_m = sem_path_dist_m.applymap(max)
+        max_paths = sem_path_dist_m.max().to_frame().T
 
-        return model
+        hist_items = {}
+        nodes = {}
+        hist_lists = []
+        prop_lists = []
+        for rec in recommeded:
+            max_value = max_paths[rec][0]
+            origin = sem_path_dist_m[sem_path_dist_m[rec] == max_value].index[0]
+            row = sem_path_dist[(sem_path_dist['historic'] == origin) & (sem_path_dist['recommended'] == rec)]
+            path_index = list(row["values"])[0].index(max_value)
+            path = list(row["path_s"])[0][path_index]
+
+            # TODO: paths with lenght higher than 3
+            print("\nPaths for the Recommended Item: " + str(rec))
+            file.write("\nPaths for the Recommended Item: " + str(rec) + "\n")
+            origin = ""
+            hist_names = hist_props.loc[int(path[0][1:])]['title'].unique()
+            hist_lists.append(int(path[0][1:]))
+            for i in hist_names:
+                origin = origin + "\"" + i + "\"; "
+                hist_items = self.__add_dict(hist_items, i)
+            origin = origin[:-2]
+
+            prop_lists.append([path[1]])
+            path_sentence = " nodes: "
+            n = path[1]
+            path_sentence = path_sentence + "\"" + n + "\" "
+            nodes = self.__add_dict(nodes, n)
+
+            rec_name = self.prop_set.loc[rec]['title'].unique()[0]
+            destination = "destination: \"" + rec_name + "\""
+            print(origin + path_sentence + destination)
+            file.write(origin + path_sentence + destination)
+
+        lir = eval.lir_metric(0.3, user, hist_lists, self.train_set)
+        sep = eval.sep_metric(0.3, prop_lists, self.prop_set, memo_sep)
+        etd = eval.etd_metric(list(nodes.keys()), len(recommeded), len(self.prop_set['obj'].unique()))
+
+        return hist_items, nodes, (lir, sep, etd)
 
     def __add_dict(self, d: dict, key) -> dict:
         """

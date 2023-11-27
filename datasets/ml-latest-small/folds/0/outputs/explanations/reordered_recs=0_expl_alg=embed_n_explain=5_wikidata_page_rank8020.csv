@@ -1,0 +1,46 @@
+./datasets/ml-latest-small/folds/0/outputs/explanations/reordered_recs=0_expl_alg=embed_n_explain=5_wikidata_page_rank8020.csv
+
+User: 37
+Items interacted by the user
+Item id: 1061 Name: Sleepers
+Item id: 661 Name: James and the Giant Peach
+Item id: 1073 Name: Willy Wonka & the Chocolate Factory
+Item id: 671 Name: Mystery Science Theater 3000: The Movie
+Item id: 292 Name: Outbreak
+Item id: 318 Name: The Shawshank Redemption
+Item id: 329 Name: Star Trek Generations
+Item id: 231 Name: Dumb and Dumber
+Item id: 349 Name: Clear and Present Danger
+Item id: 457 Name: The Fugitive
+Item id: 593 Name: The Silence of the Lambs
+Item id: 153 Name: Batman Forever
+Item id: 165 Name: Die Hard with a Vengeance
+Item id: 344 Name: Ace Ventura: Pet Detective
+Item id: 590 Name: Dances with Wolves
+Item id: 380 Name: True Lies
+Item id: 592 Name: Batman
+
+Users favorites attributes on the kG
+James Cameron
+Academy Award for Best Sound Mixing
+Batman
+Tim Burton
+Jim Carrey
+
+Recommendations
+Item id: 356 Name: Forrest Gump
+Item id: 296 Name: Pulp Fiction
+Item id: 150 Name: Apollo 13
+Item id: 110 Name: Braveheart
+Item id: 480 Name: Jurassic Park
+
+Paths for the Recommended Item: 356
+"The Fugitive" nodes: "Academy Award for Best Sound Editing" destination: "Forrest Gump"
+Paths for the Recommended Item: 296
+"True Lies" nodes: "MTV Movie Award for Best Dance Sequence" destination: "Pulp Fiction"
+Paths for the Recommended Item: 150
+"True Lies" nodes: "Japan Academy Prize for Outstanding Foreign Language Film" destination: "Apollo 13"
+Paths for the Recommended Item: 110
+"The Fugitive" nodes: "Academy Award for Best Sound Editing" destination: "Braveheart"
+Paths for the Recommended Item: 480
+"The Fugitive" nodes: "Academy Award for Best Sound Editing" destination: "Jurassic Park"
