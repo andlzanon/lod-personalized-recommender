@@ -119,6 +119,10 @@ class PathReordering(LODPersonalizedReordering):
         :return: file with recommendations for every user reordered
         """
 
+        semantic_pro = True
+        if expl_alg in ["embed", "explod_v2", "pem"]:
+            semantic_pro = False
+
         # create result and output file names
         if reordered:
             results_file_name = fold + "/results/explanations/" + self.output_path.split("/")[-1]
@@ -165,6 +169,10 @@ class PathReordering(LODPersonalizedReordering):
                 if n_users == max_users:
                     break
                 n_users = n_users + 1
+            elif h_min == -1 and h_max == -1 and max_users > 0:
+                if n_users == max_users:
+                    break
+                n_users = n_users + 1
 
             try:
                 items_historic = items_historic[self.cols_used[1]].to_list()
@@ -201,11 +209,12 @@ class PathReordering(LODPersonalizedReordering):
 
             items_historic_cutout = self.__items_by_policy(items_historic)
             # new items interacted based on policy and percentage
-            sem_dist = self.__semantic_path_distance(items_historic_cutout, items_recommended, user_semantic_profile)
+            if semantic_pro:
+                sem_dist = self.__semantic_path_distance(items_historic_cutout, items_recommended, user_semantic_profile)
+                # create column with the sum of paths
+                sem_dist['score'] = pd.DataFrame(sem_dist['path'].to_list()).mean(1)
 
-            # create column with the sum of paths
-            sem_dist['score'] = pd.DataFrame(sem_dist['path'].to_list()).mean(1)
-            if reordered:
+            if reordered and semantic_pro:
                 # pivot to create a matrix with interacted items by recommended
                 # and reorder the recommended items by the sum of the columns
                 sem_dist_matrix = sem_dist.pivot(index='historic', columns='recommended', values='score')
@@ -243,8 +252,10 @@ class PathReordering(LODPersonalizedReordering):
                     print("Item id: " + str(i) + " Name: " + movie_name)
                     f.write("Item id: " + str(i) + " Name: " + movie_name + "\n")
 
-            sem_dist = sem_dist.set_index('recommended')
-            sem_dist = sem_dist.fillna(0)
+            if semantic_pro:
+                sem_dist = sem_dist.set_index('recommended')
+                sem_dist = sem_dist.fillna(0)
+
             items, props = [], []
             if expl_alg == 'diverse':
                 items, props, (ulir, usep, uetd) = self.__diverse_ranked_paths(item_rank, sem_dist,
@@ -261,8 +272,7 @@ class PathReordering(LODPersonalizedReordering):
                 items, props, (ulir, usep, uetd) = self.__explod_ranked_paths_v2(item_rank, items_historic, u, f, memo_sep)
 
             elif expl_alg == "embed":
-                self.embeedings(item_rank, items_historic, u, f, memo_sep, save=False)
-                break
+                items, props, (ulir, usep, uetd) = self.__embeedings(item_rank, items_historic, u, f, memo_sep, save=False)
 
             f.write("\n")
 
@@ -963,11 +973,11 @@ class PathReordering(LODPersonalizedReordering):
 
         return hist_items, nodes, (lir, sep, etd)
 
-    def embeedings(self, recommeded: list, historic: list, user: int, file: _io.TextIOWrapper, memo_sep: dict,
-                   pool=False, save=False):
-
+    def __embeedings(self, recommeded: list, historic: list, user: int, file: _io.TextIOWrapper, memo_sep: dict,
+                     save=False):
         hist_props = self.prop_set.loc[historic]
         user_code = "U" + str(user)
+        # TODO: user as pooling of items
         # obtain user embeeding
         if save:
             node2vec = Node2Vec(self.graph, dimensions=64, walk_length=30, num_walks=100, workers=1)
@@ -991,7 +1001,7 @@ class PathReordering(LODPersonalizedReordering):
                 rm_name = 'I' + str(rm)
                 try:
                     paths = nx.all_shortest_paths(subgraph, source=hm_node, target=rm_name)
-                    paths_s = [p for p in paths]
+                    paths_s = [p for p in paths if len(p) <= 5]
                     all_path_v = []
                     for p in paths_s:
                         path_v = []
@@ -1000,17 +1010,18 @@ class PathReordering(LODPersonalizedReordering):
                         all_path_v.append(path_v)
 
                     values = [sum(values) / len(values) for values in all_path_v if len(values) > 0 or values is None]
+                    if len(values) == 0:
+                        values = [0]
                     sem_path_dist = sem_path_dist.append(
                         {'historic': hm, 'recommended': rm, 'path_s': paths_s, 'path_v': all_path_v, 'values': values},
                         ignore_index=True)
                     # obtain sum of similarity from  uer embeeding with properties of the path
                 except (nx.exception.NetworkXNoPath, ValueError):
-                    sem_path_dist = sem_path_dist.append({'historic': hm, 'recommended': rm, 'path_s': [], 'path_v': []},
-                                                         ignore_index=True)
+                    pass
 
         # choose path with highest mean similarity of sem_path_dist
         sem_path_dist_m = sem_path_dist.pivot(index='historic', columns='recommended', values='values')
-        sem_path_dist_m = sem_path_dist_m.applymap(max)
+        sem_path_dist_m = sem_path_dist_m.dropna().applymap(max)
         max_paths = sem_path_dist_m.max().to_frame().T
 
         hist_items = {}
@@ -1018,31 +1029,40 @@ class PathReordering(LODPersonalizedReordering):
         hist_lists = []
         prop_lists = []
         for rec in recommeded:
-            max_value = max_paths[rec][0]
-            origin = sem_path_dist_m[sem_path_dist_m[rec] == max_value].index[0]
-            row = sem_path_dist[(sem_path_dist['historic'] == origin) & (sem_path_dist['recommended'] == rec)]
-            path_index = list(row["values"])[0].index(max_value)
-            path = list(row["path_s"])[0][path_index]
-
-            # TODO: paths with lenght higher than 3
             print("\nPaths for the Recommended Item: " + str(rec))
             file.write("\nPaths for the Recommended Item: " + str(rec) + "\n")
-            origin = ""
-            hist_names = hist_props.loc[int(path[0][1:])]['title'].unique()
-            hist_lists.append(int(path[0][1:]))
-            for i in hist_names:
-                origin = origin + "\"" + i + "\"; "
-                hist_items = self.__add_dict(hist_items, i)
-            origin = origin[:-2]
+            try:
+                max_value = max_paths[rec][0]
+                origin = sem_path_dist_m[sem_path_dist_m[rec] == max_value].index[0]
+                row = sem_path_dist[(sem_path_dist['historic'] == origin) & (sem_path_dist['recommended'] == rec)]
+                path_index = list(row["values"])[0].index(max_value)
+                path = list(row["path_s"])[0][path_index]
 
-            prop_lists.append([path[1]])
-            path_sentence = " nodes: "
-            n = path[1]
-            path_sentence = path_sentence + "\"" + n + "\" "
-            nodes = self.__add_dict(nodes, n)
+                origin = ""
+                hist_names = hist_props.loc[hist_props.index.isin([int(x[1:]) for x in path[:-1][0::2]])]['title'].unique()
+                hist_lists.append([int(x[1:]) for x in path[:-1][0::2]])
+                for i in hist_names:
+                    origin = origin + "\"" + i + "\"; "
+                    hist_items = self.__add_dict(hist_items, i)
+                origin = origin[:-2]
 
-            rec_name = self.prop_set.loc[rec]['title'].unique()[0]
-            destination = "destination: \"" + rec_name + "\""
+                path_props = [x for x in path[:-1][1::2]]
+                prop_lists.append(nodes)
+                path_sentence = " nodes: "
+                for n in path_props:
+                    path_sentence = path_sentence + "\"" + n + "\" "
+                    nodes = self.__add_dict(nodes, n)
+
+                rec_name = self.prop_set.loc[rec]['title'].unique()[0]
+                destination = "destination: \"" + rec_name + "\""
+            except KeyError:
+                origin = ""
+                path_sentence = ""
+                rec_name = self.prop_set.loc[rec]['title'].unique()[0]
+                destination = "destination: \"" + rec_name + "\""
+                hist_lists.append([])
+                prop_lists.append([])
+
             print(origin + path_sentence + destination)
             file.write(origin + path_sentence + destination)
 

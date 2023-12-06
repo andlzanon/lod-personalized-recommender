@@ -1,0 +1,136 @@
+./datasets/ml-latest-small/folds/0/outputs/explanations/reordered_recs=0_expl_alg=embed_n_explain=5_ncf.csv
+
+User: 478
+Items interacted by the user
+Item id: 1073 Name: Willy Wonka & the Chocolate Factory
+Item id: 33669 Name: The Sisterhood of the Traveling Pants
+Item id: 33164 Name: House of Wax
+Item id: 33679 Name: Mr. & Mrs. Smith
+Item id: 33493 Name: Star Wars: Episode III – Revenge of the Sith
+Item id: 33794 Name: Batman Begins
+Item id: 337 Name: What's Eating Gilbert Grape
+Item id: 104 Name: Happy Gilmore
+Item id: 1917 Name: Armageddon
+Item id: 1225 Name: Amadeus
+Item id: 2987 Name: Who Framed Roger Rabbit
+Item id: 594 Name: Snow White and the Seven Dwarfs
+Item id: 368 Name: Maverick
+Item id: 266 Name: Legends of the Fall
+Item id: 786 Name: Eraser
+Item id: 1584 Name: Contact
+Item id: 350 Name: The Client
+
+Users favorites attributes on the kG
+Alan Silvestri
+Steven Ford
+Academy Award for Best Sound Mixing
+Academy Award for Best Cinematography
+Michael Bay
+
+Recommendations
+Item id: 1485 Name: Liar Liar
+Item id: 34048 Name: War of the Worlds
+Item id: 45517 Name: Cars
+Item id: 8970 Name: Finding Neverland
+Item id: 1241 Name: Braindead
+
+Paths for the Recommended Item: 1485
+"Legends of the Fall" nodes: "United States of America" destination: "Liar Liar"
+Paths for the Recommended Item: 34048
+"Legends of the Fall" nodes: "Academy Award for Best Sound Mixing" destination: "War of the Worlds"
+Paths for the Recommended Item: 45517
+"Legends of the Fall" nodes: "United States of America" destination: "Cars"
+Paths for the Recommended Item: 8970
+"Snow White and the Seven Dwarfs" nodes: "fantasy film" destination: "Finding Neverland"
+Paths for the Recommended Item: 1241
+destination: "Braindead"
+
+User: 478
+Items interacted by the user
+Item id: 1073 Name: Willy Wonka & the Chocolate Factory
+Item id: 33669 Name: The Sisterhood of the Traveling Pants
+Item id: 33164 Name: House of Wax
+Item id: 33679 Name: Mr. & Mrs. Smith
+Item id: 33493 Name: Star Wars: Episode III – Revenge of the Sith
+Item id: 33794 Name: Batman Begins
+Item id: 337 Name: What's Eating Gilbert Grape
+Item id: 104 Name: Happy Gilmore
+Item id: 1917 Name: Armageddon
+Item id: 1225 Name: Amadeus
+Item id: 2987 Name: Who Framed Roger Rabbit
+Item id: 594 Name: Snow White and the Seven Dwarfs
+Item id: 368 Name: Maverick
+Item id: 266 Name: Legends of the Fall
+Item id: 786 Name: Eraser
+Item id: 1584 Name: Contact
+Item id: 350 Name: The Client
+
+Users favorites attributes on the kG
+Alan Silvestri
+Steven Ford
+Academy Award for Best Sound Mixing
+Academy Award for Best Cinematography
+Michael Bay
+
+Recommendations
+Item id: 1485 Name: Liar Liar
+Item id: 34048 Name: War of the Worlds
+Item id: 45517 Name: Cars
+Item id: 8970 Name: Finding Neverland
+Item id: 1241 Name: Braindead
+
+Paths for the Recommended Item: 1485
+"Legends of the Fall" nodes: "United States of America" destination: "Liar Liar"
+Paths for the Recommended Item: 34048
+"Legends of the Fall" nodes: "Academy Award for Best Sound Mixing" destination: "War of the Worlds"
+Paths for the Recommended Item: 45517
+"Legends of the Fall" nodes: "United States of America" destination: "Cars"
+Paths for the Recommended Item: 8970
+"Snow White and the Seven Dwarfs" nodes: "fantasy film" destination: "Finding Neverland"
+Paths for the Recommended Item: 1241
+destination: "Braindead"
+
+User: 478
+Items interacted by the user
+Item id: 1073 Name: Willy Wonka & the Chocolate Factory
+Item id: 33669 Name: The Sisterhood of the Traveling Pants
+Item id: 33164 Name: House of Wax
+Item id: 33679 Name: Mr. & Mrs. Smith
+Item id: 33493 Name: Star Wars: Episode III – Revenge of the Sith
+Item id: 33794 Name: Batman Begins
+Item id: 337 Name: What's Eating Gilbert Grape
+Item id: 104 Name: Happy Gilmore
+Item id: 1917 Name: Armageddon
+Item id: 1225 Name: Amadeus
+Item id: 2987 Name: Who Framed Roger Rabbit
+Item id: 594 Name: Snow White and the Seven Dwarfs
+Item id: 368 Name: Maverick
+Item id: 266 Name: Legends of the Fall
+Item id: 786 Name: Eraser
+Item id: 1584 Name: Contact
+Item id: 350 Name: The Client
+
+Users favorites attributes on the kG
+Alan Silvestri
+Steven Ford
+Academy Award for Best Sound Mixing
+Academy Award for Best Cinematography
+Michael Bay
+
+Recommendations
+Item id: 1485 Name: Liar Liar
+Item id: 34048 Name: War of the Worlds
+Item id: 45517 Name: Cars
+Item id: 8970 Name: Finding Neverland
+Item id: 1241 Name: Braindead
+
+Paths for the Recommended Item: 1485
+"Legends of the Fall" nodes: "United States of America" destination: "Liar Liar"
+Paths for the Recommended Item: 34048
+"Legends of the Fall" nodes: "Academy Award for Best Sound Mixing" destination: "War of the Worlds"
+Paths for the Recommended Item: 45517
+"Legends of the Fall" nodes: "United States of America" destination: "Cars"
+Paths for the Recommended Item: 8970
+"Snow White and the Seven Dwarfs" nodes: "fantasy film" destination: "Finding Neverland"
+Paths for the Recommended Item: 1241
+destination: "Braindead"

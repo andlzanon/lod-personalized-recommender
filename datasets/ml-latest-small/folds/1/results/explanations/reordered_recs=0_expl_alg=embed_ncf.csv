@@ -1,0 +1,17 @@
+./datasets/ml-latest-small/folds/1/results/explanations/reordered_recs=0_expl_alg=embed_ncf.csv
+Mean user item aggregate diversity: nan
+Std user item aggregate diversity: nan
+Mean user property aggregate diversity: nan
+Std user property aggregate diversity: nan
+Total items aggregate diversity: 0
+Total property aggregate diversity: 0
+Items entropy: nan
+Props entropy: nan
+Items Gini index: 3.294990234260923e-17
+Props Gini index: -4.598679059756193e-17
+LIR metric: nan
+ETD metric: nan
+SEP metric: nan
+std LIR metric: nan
+std ETD metric: nan
+std SEP metric: nan
