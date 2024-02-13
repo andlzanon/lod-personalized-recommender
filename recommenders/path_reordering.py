@@ -127,6 +127,10 @@ class PathReordering(LODPersonalizedReordering):
         if expl_alg in ["rotate", "word2vec", "explod_v2", "pem"]:
             semantic_pro = False
 
+        dataset = "ml"
+        if self.prop_path.split("/")[3] == "last-fm":
+            dataset = "last-fm"
+
         # create result and output file names
         if reordered:
             results_file_name = fold + "/results/explanations/" + self.output_path.split("/")[-1]
@@ -270,11 +274,12 @@ class PathReordering(LODPersonalizedReordering):
                                                                               user_semantic_profile, u, f, memo_sep)
 
             elif expl_alg == 'pem':
-                items, props, (ulir, usep, uetd) = self.__pem_ranked_paths(item_rank, items_historic, u, f, memo_sep)
+                items, props, (ulir, usep, uetd) = self.__pem_ranked_paths(item_rank, items_historic, u, dataset,
+                                                                           f, memo_sep)
 
             elif expl_alg == 'explod_v2':
-                items, props, (ulir, usep, uetd) = self.__explod_ranked_paths_v2(item_rank, items_historic, u, f,
-                                                                                 memo_sep)
+                items, props, (ulir, usep, uetd) = self.__explod_ranked_paths_v2(item_rank, items_historic, u, dataset,
+                                                                                 f, memo_sep)
 
             elif expl_alg == "word2vec":
                 items, props, (ulir, usep, uetd) = self.__word2vec_embeedings(item_rank, items_historic, u, f, memo_sep)
@@ -644,8 +649,8 @@ class PathReordering(LODPersonalizedReordering):
                 user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(max_props)].index.unique()))]
             hist_ids = list(user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
             hist_lists.append(hist_ids)
-            hist_names = hist_props.loc[hist_ids]['title'].unique()
-            rec_name = self.prop_set.loc[r]['title'].unique()[0]
+            hist_names = hist_props.loc[hist_ids][self.prop_cols[1]].unique()
+            rec_name = self.prop_set.loc[r][self.prop_cols[1]].unique()[0]
 
             print("\nPaths for the Recommended Item: " + str(r))
             file.write("\nPaths for the Recommended Item: " + str(r) + "\n")
@@ -671,13 +676,14 @@ class PathReordering(LODPersonalizedReordering):
 
         return hist_items, nodes, (lir, sep, etd)
 
-    def __explod_ranked_paths_v2(self, ranked_items: list, items_historic: list, user: int, file: _io.TextIOWrapper,
-                                 memo_sep: dict):
+    def __explod_ranked_paths_v2(self, ranked_items: list, items_historic: list, user: int, dataset: str,
+                                 file: _io.TextIOWrapper, memo_sep: dict):
         """
         Build explanation to recommendations based on the ExpLOD, method, explained in https://dl.acm.org/doi/abs/10.1145/2959100.2959173
         :param ranked_items: list of the recommended items
         :param items_historic: list of historic items
         :param user: user id of user to show explanations to
+        :param dataset: string that represent the dataset. It is either 'ml' or 'last-fm'
         :param file: file to write explanations
         :return: historic items and properties used in explanations
         """
@@ -713,7 +719,11 @@ class PathReordering(LODPersonalizedReordering):
 
         interacted_props = interacted_props[['obj', 'score', 'dft']].drop_duplicates()
 
-        hierarchy_df = pd.read_csv("./generated_files/wikidata/props_hierarchy_wikidata_movielens_small.csv")
+        if dataset == "ml":
+            hierarchy_df = pd.read_csv("./generated_files/wikidata/props_hierarchy_wikidata_movielens_small.csv")
+        elif dataset == "last-fm":
+            hierarchy_df = pd.read_csv("./generated_files/wikidata/last-fm/props_hierarchy_wikidata_lastfm_small.csv")
+
         historic_hierarchy_props_l1 = hierarchy_df[hierarchy_df['obj'].isin(union)]
         historic_hierarchy_props_l1 = historic_hierarchy_props_l1.merge(interacted_props[['obj', 'score', 'dft']],
                                                                         on='obj', how='left').drop_duplicates()
@@ -760,8 +770,8 @@ class PathReordering(LODPersonalizedReordering):
                 user_df[user_df.columns[0]].isin(list(hist_props[hist_props['obj'].isin(max_props)].index.unique()))]
             hist_ids = list(user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
             hist_lists.append(hist_ids)
-            hist_names = hist_props.loc[hist_ids]['title'].unique()
-            rec_name = self.prop_set.loc[r]['title'].unique()[0]
+            hist_names = hist_props.loc[hist_ids][self.prop_cols[1]].unique()
+            rec_name = self.prop_set.loc[r][self.prop_cols[1]].unique()[0]
 
             print("\nPaths for the Recommended Item: " + str(r))
             file.write("\nPaths for the Recommended Item: " + str(r) + "\n")
@@ -786,10 +796,15 @@ class PathReordering(LODPersonalizedReordering):
         etd = eval.etd_metric(list(nodes.keys()), len(ranked_items), len(self.prop_set['obj'].unique()))
         return hist_items, nodes, (lir, sep, etd)
 
-    def __pem_ranked_paths(self, ranked_items: list, items_historic: list, user: int, file: _io.TextIOWrapper,
-                           memo_sep: dict):
+    def __pem_ranked_paths(self, ranked_items: list, items_historic: list, user: int, dataset: str,
+                           file: _io.TextIOWrapper, memo_sep: dict):
+
         # count historic movies properties considering two levels of hierarchy above
-        hierarchy_df = pd.read_csv("./generated_files/wikidata/props_hierarchy_wikidata_movielens_small.csv")
+        if dataset == "ml":
+            hierarchy_df = pd.read_csv("./generated_files/wikidata/props_hierarchy_wikidata_movielens_small.csv")
+        elif dataset == "last-fm":
+            hierarchy_df = pd.read_csv("./generated_files/wikidata/last-fm/props_hierarchy_wikidata_lastfm_small.csv")
+
         hist_props = self.prop_set.loc[items_historic]
         hist_props_l = hist_props['obj'].unique().tolist()
 
@@ -955,15 +970,15 @@ class PathReordering(LODPersonalizedReordering):
                     sub_p = new_sub_p
 
                 hist_lists.append(hist_ids)
-                hist_names = hist_props.loc[hist_ids]['title'].unique()
+                hist_names = hist_props.loc[hist_ids][self.prop_cols[1]].unique()
             else:
                 max_prop = []
                 hist_ids = self.train_set.loc[user].sort_values(by=self.train_set.columns[-1], ascending=False)[:3][
                     self.train_set.columns[0]]
-                hist_names = hist_props.loc[hist_ids]['title'].unique()
+                hist_names = hist_props.loc[hist_ids][self.prop_cols[1]].unique()
                 hist_lists.append(hist_ids)
 
-            rec_name = self.prop_set.loc[r]['title'].unique()[0]
+            rec_name = self.prop_set.loc[r][self.prop_cols[1]].unique()[0]
             # building explanation
             print("\nPaths for the Recommended Item: " + str(r))
             file.write("\nPaths for the Recommended Item: " + str(r) + "\n")
@@ -1064,7 +1079,7 @@ class PathReordering(LODPersonalizedReordering):
 
                 origin = ""
                 hist_names = hist_props.loc[hist_props.index.isin([int(x[1:]) for x in path[:-1][0::2]])][
-                    'title'].unique()
+                    self.prop_cols[1]].unique()
                 hist_lists.append([int(x[1:]) for x in path[:-1][0::2]])
                 for i in hist_names:
                     origin = origin + "\"" + i + "\"; "
@@ -1078,12 +1093,12 @@ class PathReordering(LODPersonalizedReordering):
                     path_sentence = path_sentence + "\"" + n + "\" "
                     nodes = self.__add_dict(nodes, n)
 
-                rec_name = self.prop_set.loc[rec]['title'].unique()[0]
+                rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
                 destination = "destination: \"" + rec_name + "\""
             except KeyError:
                 origin = ""
                 path_sentence = ""
-                rec_name = self.prop_set.loc[rec]['title'].unique()[0]
+                rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
                 destination = "destination: \"" + rec_name + "\""
                 hist_lists.append([])
                 prop_lists.append([])
@@ -1229,7 +1244,7 @@ class PathReordering(LODPersonalizedReordering):
 
                 origin = ""
                 hist_names = hist_props.loc[hist_props.index.isin([int(x[1:]) for x in path[:-1][0::2]])][
-                    'title'].unique()
+                    self.prop_cols[1]].unique()
                 hist_lists.append([int(x[1:]) for x in path[:-1][0::2]])
                 for i in hist_names:
                     origin = origin + "\"" + i + "\"; "
@@ -1243,12 +1258,12 @@ class PathReordering(LODPersonalizedReordering):
                     path_sentence = path_sentence + "\"" + n + "\" "
                     nodes = self.__add_dict(nodes, n)
 
-                rec_name = self.prop_set.loc[rec]['title'].unique()[0]
+                rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
                 destination = "destination: \"" + rec_name + "\""
             except KeyError:
                 origin = ""
                 path_sentence = ""
-                rec_name = self.prop_set.loc[rec]['title'].unique()[0]
+                rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
                 destination = "destination: \"" + rec_name + "\""
                 hist_lists.append([])
                 prop_lists.append([])
