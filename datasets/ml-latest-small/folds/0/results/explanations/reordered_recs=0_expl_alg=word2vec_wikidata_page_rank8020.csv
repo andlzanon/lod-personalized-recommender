@@ -1,0 +1,17 @@
+./datasets/ml-latest-small/folds/0/results/explanations/reordered_recs=0_expl_alg=word2vec_wikidata_page_rank8020.csv
+Mean user item aggregate diversity: 3.565436241610738
+Std user item aggregate diversity: 1.3637492650833603
+Mean user property aggregate diversity: 4.332214765100671
+Std user property aggregate diversity: 1.3450265562796253
+Total items aggregate diversity: 879
+Total property aggregate diversity: 613
+Items entropy: 6.200485065034056
+Props entropy: 4.98298418119888
+Items Gini index: 0.9553951738431996
+Props Gini index: 0.997531173300212
+LIR metric: 0.015100671140939598
+ETD metric: 0.8664429530201342
+SEP metric: 0.2500878771805388
+std LIR metric: 0.08031078433240758
+std ETD metric: 0.26900531125592503
+std SEP metric: 0.17572669737214036

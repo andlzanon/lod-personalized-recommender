@@ -1,6 +1,6 @@
 from preprocessing import movielens_small_utils as ml_small
 from preprocessing import lastfm_utils as fm
-from evaluation_utils import statistical_relevance, statistical_relevance_explanations
+from evaluation_utils import statistical_relevance, statistical_relevance_explanations, maut
 from caserec.recommenders.item_recommendation.most_popular import MostPopular
 from caserec.recommenders.item_recommendation.userknn import UserKNN
 from caserec.recommenders.item_recommendation.bprmf import BprMF
@@ -415,7 +415,7 @@ parser.add_argument("--alg",
                     type=str,
                     default="None",
                     help="Algoritms to run separated by space. E.g.: MostPop BPRMF UserKNN PageRank NCF EASE."
-                         "Only works on the 'run' mode")
+                         "Only works on the 'run' and 'maut' mode")
 parser.add_argument("--reord",
                     type=str,
                     default="None",
@@ -496,6 +496,28 @@ parser.add_argument("--n_explain",
                     type=int,
                     default=5,
                     help="Quantity of items to explain. Works only on 'explanation mode'")
+
+# mault commands
+parser.add_argument("--fold",
+                    type=int,
+                    default=0,
+                    help="Number of the fold to check mault. Works only on 'maut_expl mode'")
+
+parser.add_argument("--expl_algs",
+                    type=str,
+                    default="explod explod_v2 pem word2vec rotate",
+                    help="Algoritms to compare. Works only on 'maut_expl mode'")
+
+parser.add_argument("--expl_metrics",
+                    type=str,
+                    default="",
+                    help="Metrics to use as features on MAUT. Usage eg.: \"SEP ETD LIR\" Works only on 'maut_expl mode'")
+
+parser.add_argument("--weights",
+                    type=str,
+                    default="",
+                    help="Weights to use e.g.: \"0.3 0.3 0.3\". Works only on 'maut_expl mode'")
+
 # parse arguments
 args = parser.parse_args()
 
@@ -524,3 +546,6 @@ if args.mode == "explanation" and args.dataset == "ml":
 
 if args.mode == "validate_expl" and args.dataset == "ml":
     statistical_relevance_explanations(args.baseline, args.dataset, args.reordered_recs)
+
+if args.mode == "maut":
+    maut(args.dataset, args.fold, args.expl_algs, args.alg, args.expl_metrics, args.weights)

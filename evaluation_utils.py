@@ -138,12 +138,12 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
             print("---" + key + "---")
 
             base_list = base_results[key]
-            base_mean = sum(base_list)/len(base_list)
+            base_mean = sum(base_list) / len(base_list)
             print("Results of the baseline algorithm: " + str(base_list) +
                   " mean: " + str(base_mean) + " -> " + baseline)
 
             prop_list = prop_results[key]
-            prop_mean = sum(prop_list)/len(prop_list)
+            prop_mean = sum(prop_list) / len(prop_list)
             print("Results of the proposed algorithm: " + str(prop_list) +
                   " mean: " + str(prop_mean) + " -> " + proposed)
 
@@ -162,9 +162,9 @@ def statistical_relevance(proposed: str, baseline: str, dataset: str, metrics: l
                 print("p-value with t-test: " + str(tp))
 
             results = results.append({'METRIC': key,
-                            'PROPOSED NAME': proposed, 'PROPOSED MEAN': prop_mean,
-                            'BASELINE NAME': base_mean, 'BASELINE MEAN': baseline,
-                            'WILCOXON': wp, 'TTEST': tp}, ignore_index=True)
+                                      'PROPOSED NAME': proposed, 'PROPOSED MEAN': prop_mean,
+                                      'BASELINE NAME': base_mean, 'BASELINE MEAN': baseline,
+                                      'WILCOXON': wp, 'TTEST': tp}, ignore_index=True)
 
     if save:
         p = dataset[:-6] + "results_" + proposed + ".xlsx"
@@ -337,12 +337,12 @@ def lir_metric(beta: float, user: int, items: list, train_set: pd.DataFrame):
                 pass
 
         try:
-            total_sum = total_sum + (items_sum/items_n)
+            total_sum = total_sum + (items_sum / items_n)
             total_n = total_n + 1
         except ZeroDivisionError:
             total_n = total_n + 1
 
-    return total_sum/total_n
+    return total_sum / total_n
 
 
 def sep_metric(beta: float, props: list, prop_set: pd.DataFrame, memo_sep: dict):
@@ -411,7 +411,7 @@ def sep_metric(beta: float, props: list, prop_set: pd.DataFrame, memo_sep: dict)
             # obtain sep value for the property and calculate mean
             items_sum = items_sum + p_sep_value
             items_n = items_n + 1
-        
+
         # calculate total mean
         try:
             total_sum = total_sum + (items_sum / items_n)
@@ -430,7 +430,7 @@ def etd_metric(explanation_types: list, k: int, total_types: int):
     :param total_types: total number of explanation types in the dataset
     :return: the division between the explanation types in the explanations and the minimum between the k and total_types
     """
-    return len(set(explanation_types))/(min(k, total_types))
+    return len(set(explanation_types)) / (min(k, total_types))
 
 
 def explanation_file_to_df(file_path: str, algorithm: str):
@@ -537,4 +537,65 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
     print("--- FILE SAVE AT " + p + "---")
 
 
+def maut(dataset: str, folder: int, expl_algs: str, rec_alg: str, metrics: str, weights: str):
 
+    metrics_dict = {
+        "SEP": "SEP metric",
+        "ETD": "ETD metric",
+        "LIR": "LIR metric",
+        "TID": "Total items aggregate diversity",
+        "TPD": "Total property aggregate diversity",
+        "MID": "Mean user item aggregate diversity",
+        "MPD": "Mean user property aggregate diversity",
+        "IEnt": "Items entropy",
+        "PEnt": "Props entropy",
+        "IGini": "Items Gini index",
+        "PGini": "Props Gini index"
+    }
+    expl_algs_l = expl_algs.split(" ")
+
+    metrics_l = metrics.split(" ")
+    if len(metrics_l) == 1:
+        metrics_l = list(metrics_dict.keys())
+
+    weights_l = weights.split(" ")
+    if len(weights_l) == 1:
+        weights_l = [1/len(metrics_l) for _ in metrics_l]
+
+    weights_dict = {}
+    for i in range(0, len(metrics_l)):
+        metric = metrics_l[i]
+        weight = weights_l[i]
+        weights_dict[metrics_dict[metric]] = weight
+
+    path = "./datasets/"
+    if dataset == "ml":
+        path = path + "ml-latest-small"
+    else:
+        path = path + "hetrec2011-lastfm-2k"
+    path_base = path + "/folds/"
+    path = path_base + str(folder) + "/results/explanations/" + "reordered_recs=0"
+    df_metrics = []
+    for i in range(0, len(expl_algs_l)):
+        alg = expl_algs_l[i]
+        alg_path = path + "_expl_alg=" + alg + "_" + str(rec_alg) + ".csv"
+        df_metrics.append(explanation_file_to_df(alg_path, alg))
+
+    scaler = MinMaxScaler()
+    utility_matrix = pd.concat(df_metrics).pivot(index='alg', columns='metric', values='value').astype(np.float64)
+
+    if "IGini" in metrics_l:
+        utility_matrix[metrics_dict['IGini']] = 1 - utility_matrix[metrics_dict['IGini']]
+    if "PGini" in metrics_l:
+        utility_matrix[metrics_dict['PGini']] = 1 - utility_matrix[metrics_dict['PGini']]
+
+    used_metrics = [metrics_dict[m] for m in metrics_l]
+    utility_matrix = utility_matrix[used_metrics]
+    uf_utility_matrix = pd.DataFrame(scaler.fit_transform(utility_matrix), columns=utility_matrix.columns).set_index(utility_matrix.index)
+
+    for m in weights_dict.keys():
+        uf_utility_matrix[m] = uf_utility_matrix[m] * weights_dict[m]
+
+    rank = uf_utility_matrix.sum(axis=1).sort_values(ascending=False)
+    for ind in rank.index:
+        print(str(ind) + ": " + str(rank[ind]))
