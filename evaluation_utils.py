@@ -538,7 +538,6 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
 
 
 def maut(dataset: str, folder: int, expl_algs: str, rec_alg: str, metrics: str, weights: str):
-
     metrics_dict = {
         "SEP": "SEP metric",
         "ETD": "ETD metric",
@@ -560,7 +559,7 @@ def maut(dataset: str, folder: int, expl_algs: str, rec_alg: str, metrics: str, 
 
     weights_l = weights.split(" ")
     if len(weights_l) == 1:
-        weights_l = [1/len(metrics_l) for _ in metrics_l]
+        weights_l = [1 / len(metrics_l) for _ in metrics_l]
 
     weights_dict = {}
     for i in range(0, len(metrics_l)):
@@ -591,10 +590,11 @@ def maut(dataset: str, folder: int, expl_algs: str, rec_alg: str, metrics: str, 
 
     used_metrics = [metrics_dict[m] for m in metrics_l]
     utility_matrix = utility_matrix[used_metrics]
-    uf_utility_matrix = pd.DataFrame(scaler.fit_transform(utility_matrix), columns=utility_matrix.columns).set_index(utility_matrix.index)
+    uf_utility_matrix = pd.DataFrame(scaler.fit_transform(utility_matrix), columns=utility_matrix.columns).set_index(
+        utility_matrix.index)
 
     for m in weights_dict.keys():
-        uf_utility_matrix[m] = uf_utility_matrix[m] * weights_dict[m]
+        uf_utility_matrix[m] = uf_utility_matrix[m] * float(weights_dict[m])
 
     rank = uf_utility_matrix.sum(axis=1).sort_values(ascending=False)
     for ind in rank.index:
