@@ -495,7 +495,7 @@ parser.add_argument("--expl_alg",
 parser.add_argument("--n_explain",
                     type=int,
                     default=5,
-                    help="Quantity of items to explain. Works only on 'explanation mode'")
+                    help="Quantity of items to explain. Works only on 'explanation and maut mode'")
 
 # mault commands
 parser.add_argument("--fold",
@@ -544,8 +544,12 @@ if args.mode == "explanation" and args.dataset == "ml":
     run_explanations_experiments_ml(folds_path_ml, args.begin, args.end, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
                         args.max, args.max_users, args.expl_alg, args.reordered_recs, args.n_explain)
 
+if args.mode == "explanation" and args.dataset == "lastfm":
+    run_explanations_experiments_lastfm(folds_path_lastfm, args.begin, args.end, args.reord.split(), args.nreorder, args.pitems, args.policy, args.min,
+                        args.max, args.max_users, args.expl_alg, args.reordered_recs, args.n_explain)
+
 if args.mode == "validate_expl" and args.dataset == "ml":
-    statistical_relevance_explanations(args.baseline, args.dataset, args.reordered_recs)
+    statistical_relevance_explanations(args.baseline, args.dataset, args.reordered_recs, args.n_explain)
 
 if args.mode == "maut":
-    maut(args.dataset, args.fold, args.expl_algs, args.alg, args.expl_metrics, args.weights)
+    maut(args.dataset, args.fold, args.expl_algs, args.alg, args.expl_metrics, args.weights, args.n_explain)

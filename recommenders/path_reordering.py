@@ -5,6 +5,7 @@ from collections import Counter
 import networkx as nx
 import numpy as np
 import pandas as pd
+from pandas.core.indexing import IndexingError
 from pykeen.pipeline import pipeline
 from pykeen.triples import TriplesFactory
 from gensim.models.keyedvectors import KeyedVectors
@@ -139,8 +140,12 @@ class PathReordering(LODPersonalizedReordering):
 
         results_title_l = results_file_name.split("/")
         results_title = '/'.join(results_title_l[:-1])
-        results_title = results_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + \
-                        "n_explain=" + str(n_explain) + "_" + results_title_l[-1]
+        if n_explain != 5:
+            results_title = results_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + \
+                            "n_explain=" + str(n_explain) + "_" + results_title_l[-1]
+        else:
+            results_title = results_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" \
+                            + results_title_l[-1]
 
         if reordered:
             output_file_name = fold + "/outputs/explanations/" + self.output_path.split("/")[-1]
@@ -256,7 +261,10 @@ class PathReordering(LODPersonalizedReordering):
                 print("\nRecommendations")
                 f.write("\nRecommendations\n")
                 for i in item_rank:
-                    movie_name = self.prop_set.loc[i].iloc[0, 0]
+                    try:
+                        movie_name = self.prop_set.loc[i].iloc[0, 0]
+                    except IndexingError:
+                        movie_name = self.prop_set.loc[i].iloc[0]
                     print("Item id: " + str(i) + " Name: " + movie_name)
                     f.write("Item id: " + str(i) + " Name: " + movie_name + "\n")
 
@@ -650,7 +658,10 @@ class PathReordering(LODPersonalizedReordering):
             hist_ids = list(user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
             hist_lists.append(hist_ids)
             hist_names = hist_props.loc[hist_ids][self.prop_cols[1]].unique()
-            rec_name = self.prop_set.loc[r][self.prop_cols[1]].unique()[0]
+            try:
+                rec_name = self.prop_set.loc[r][self.prop_cols[1]].unique()[0]
+            except AttributeError:
+                rec_name = self.prop_set.loc[r][self.prop_cols[1]]
 
             print("\nPaths for the Recommended Item: " + str(r))
             file.write("\nPaths for the Recommended Item: " + str(r) + "\n")
@@ -771,7 +782,10 @@ class PathReordering(LODPersonalizedReordering):
             hist_ids = list(user_item.sort_values(by=user_item.columns[-1], ascending=False)[:3][user_item.columns[0]])
             hist_lists.append(hist_ids)
             hist_names = hist_props.loc[hist_ids][self.prop_cols[1]].unique()
-            rec_name = self.prop_set.loc[r][self.prop_cols[1]].unique()[0]
+            try:
+                rec_name = self.prop_set.loc[r][self.prop_cols[1]].unique()[0]
+            except AttributeError:
+                rec_name = self.prop_set.loc[r][self.prop_cols[1]]
 
             print("\nPaths for the Recommended Item: " + str(r))
             file.write("\nPaths for the Recommended Item: " + str(r) + "\n")
@@ -798,7 +812,6 @@ class PathReordering(LODPersonalizedReordering):
 
     def __pem_ranked_paths(self, ranked_items: list, items_historic: list, user: int, dataset: str,
                            file: _io.TextIOWrapper, memo_sep: dict):
-
         # count historic movies properties considering two levels of hierarchy above
         if dataset == "ml":
             hierarchy_df = pd.read_csv("./generated_files/wikidata/props_hierarchy_wikidata_movielens_small.csv")
@@ -835,8 +848,11 @@ class PathReordering(LODPersonalizedReordering):
         for r in ranked_items:
             # count recommended item properties considering two levels of hierarchy above
             rec_props = self.prop_set.loc[r]
-            rec_props_l = list(rec_props['obj'].unique())
-
+            try:
+                rec_props_l = list(rec_props['obj'].unique())
+            except AttributeError:
+                rec_props_l = [rec_props['obj']]
+                rec_props = pd.DataFrame(rec_props).T
             rec_hierarchy_props_l1 = hierarchy_df[hierarchy_df['obj'].isin(rec_props_l)]
             rec_hierarchy_props_l1 = rec_hierarchy_props_l1[
                 rec_hierarchy_props_l1.obj != rec_hierarchy_props_l1.super_obj]
@@ -978,7 +994,10 @@ class PathReordering(LODPersonalizedReordering):
                 hist_names = hist_props.loc[hist_ids][self.prop_cols[1]].unique()
                 hist_lists.append(hist_ids)
 
-            rec_name = self.prop_set.loc[r][self.prop_cols[1]].unique()[0]
+            try:
+                rec_name = self.prop_set.loc[r][self.prop_cols[1]].unique()[0]
+            except AttributeError:
+                rec_name = self.prop_set.loc[r][self.prop_cols[1]]
             # building explanation
             print("\nPaths for the Recommended Item: " + str(r))
             file.write("\nPaths for the Recommended Item: " + str(r) + "\n")
@@ -1133,7 +1152,7 @@ class PathReordering(LODPersonalizedReordering):
                 training_loop='sLCWA',
                 loss='NSSALoss',
                 optimizer='Adam',
-                model_kwargs=dict(embedding_dim=300),
+                model_kwargs=dict(embedding_dim=150),
                 optimizer_kwargs=dict(lr=1e-3),
                 training_kwargs=dict(num_epochs=50, batch_size=256),
                 use_testing_data=False,
@@ -1257,13 +1276,18 @@ class PathReordering(LODPersonalizedReordering):
                 for n in path_props:
                     path_sentence = path_sentence + "\"" + n + "\" "
                     nodes = self.__add_dict(nodes, n)
-
-                rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
+                try:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
+                except AttributeError:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]]
                 destination = "destination: \"" + rec_name + "\""
             except KeyError:
                 origin = ""
                 path_sentence = ""
-                rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
+                try:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
+                except AttributeError:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]]
                 destination = "destination: \"" + rec_name + "\""
                 hist_lists.append([])
                 prop_lists.append([])

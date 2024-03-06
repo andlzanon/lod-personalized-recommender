@@ -294,6 +294,9 @@ def lir_metric(beta: float, user: int, items: list, train_set: pd.DataFrame):
         and the lir for every recommendation is the mean of the lir for every item in the explanation path
     """
     # get user data
+    if train_set.columns[0] == "artist_id":
+        train_set = pd.read_csv("./datasets/hetrec2011-lastfm-2k/user_taggedartists-timestamps.dat", sep="\t")
+        train_set = train_set[["userID", "artistID", "timestamp"]].set_index("userID")
     interacted = train_set.loc[user]
     interacted = interacted.reset_index()
     last_col = interacted.columns[-1]
@@ -456,12 +459,13 @@ def explanation_file_to_df(file_path: str, algorithm: str):
     return df
 
 
-def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: int):
+def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: int, n_explain: int):
     """
     Compute statistical relevance test for explanations evaluation
     :param rec_alg: recommendation algorithm used
     :param dataset: dataset (ml or last-fm)
     :param reordered: 1 if the recommendations were reordred by proposed reordering system 0 if not
+    :param n_explain: number of explanations explained in the file to check for statistical significance
     :return: excel file with wilcoxon and ttest statistical relevance tests for all metrics
     """
     explod_results = []
@@ -477,9 +481,14 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
 
     for i in range(0, 10):
         path = path_base + str(i) + "/results/explanations/" + "reordered_recs=" + str(reordered)
-        path_explod = path + "_expl_alg=explod_" + str(rec_alg) + ".csv"
-        path_explod_v2 = path + "_expl_alg=explod_v2_" + str(rec_alg) + ".csv"
-        path_pem = path + "_expl_alg=pem_" + str(rec_alg) + ".csv"
+
+        n_explain_s = "_"
+        if n_explain != 5:
+            n_explain_s = n_explain_s + "n_explain=" + str(n_explain) + "_"
+
+        path_explod = path + "_expl_alg=explod" + n_explain_s + str(rec_alg) + ".csv"
+        path_explod_v2 = path + "_expl_alg=explod_v2" + n_explain_s + str(rec_alg) + ".csv"
+        path_pem = path + "_expl_alg=pem" + n_explain_s + str(rec_alg) + ".csv"
 
         explod_results.append(explanation_file_to_df(path_explod, "explod").set_index("metric"))
         explodv2_results.append(explanation_file_to_df(path_explod_v2, "pem").set_index("metric"))
@@ -509,9 +518,14 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
         pem_mean = np.array(m_pem).mean()
         print(m + " proposed results: ", m_pem)
 
-        wt_12, wp_12 = wilcoxon(m_explod, m_explodv2)
-        wt_13, wp_13 = wilcoxon(m_explod, m_pem)
-        wt_23, wp_23 = wilcoxon(m_explodv2, m_pem)
+        try:
+            wt_12, wp_12 = wilcoxon(m_explod, m_explodv2)
+            wt_13, wp_13 = wilcoxon(m_explod, m_pem)
+            wt_23, wp_23 = wilcoxon(m_explodv2, m_pem)
+        except ValueError:
+            wt_12, wp_12 = 0, 0
+            wt_13, wp_13 = 0, 0
+            wt_23, wp_23 = 0, 0
 
         results_df = results_df.append({"METRIC": m,
                                         "VERSION1": "explod",
@@ -523,7 +537,11 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
                                         "WILCOXON12": wp_12, "WILCOXON13": wp_13, "WILCOXON23": wp_23
                                         }, ignore_index=True)
 
-    p = path_base[:-6] + "explanation_results_reordered=" + str(reordered) + ".xlsx"
+    p = path_base[:-6] + "explanation_results_reordered=" + str(reordered) + "_"
+    if n_explain != 5:
+        p = p + "n_explain=" + str(n_explain)
+    p = p + ".xlsx"
+
     try:
         book = load_workbook(p)
         writer = pd.ExcelWriter(p, mode='r+')
@@ -537,7 +555,7 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
     print("--- FILE SAVE AT " + p + "---")
 
 
-def maut(dataset: str, folder: int, expl_algs: str, rec_alg: str, metrics: str, weights: str):
+def maut(dataset: str, folder: int, expl_algs: str, rec_alg: str, metrics: str, weights: str, n_explain: int):
     metrics_dict = {
         "SEP": "SEP metric",
         "ETD": "ETD metric",
@@ -574,10 +592,15 @@ def maut(dataset: str, folder: int, expl_algs: str, rec_alg: str, metrics: str, 
         path = path + "hetrec2011-lastfm-2k"
     path_base = path + "/folds/"
     path = path_base + str(folder) + "/results/explanations/" + "reordered_recs=0"
+    if n_explain != 5:
+        path_n_expain = "n_explain=" + str(n_explain)
     df_metrics = []
     for i in range(0, len(expl_algs_l)):
         alg = expl_algs_l[i]
-        alg_path = path + "_expl_alg=" + alg + "_" + str(rec_alg) + ".csv"
+        if n_explain != 5:
+            alg_path = path + "_expl_alg=" + alg + "_" + path_n_expain + "_" + str(rec_alg) + ".csv"
+        else:
+            alg_path = path + "_expl_alg=" + alg + "_" + str(rec_alg) + ".csv"
         df_metrics.append(explanation_file_to_df(alg_path, alg))
 
     scaler = MinMaxScaler()
