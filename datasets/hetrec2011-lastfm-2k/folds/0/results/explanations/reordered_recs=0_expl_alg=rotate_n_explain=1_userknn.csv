@@ -1,0 +1,17 @@
+./datasets/hetrec2011-lastfm-2k/folds/0/results/explanations/reordered_recs=0_expl_alg=rotate_n_explain=1_userknn.csv
+Mean user item aggregate diversity: 1.5248
+Std user item aggregate diversity: 0.5025783123056545
+Mean user property aggregate diversity: 1.5248
+Std user property aggregate diversity: 0.5025783123056545
+Total items aggregate diversity: 1182
+Total property aggregate diversity: 177
+Items entropy: 6.462188915050296
+Props entropy: 3.400288387293477
+Items Gini index: 0.9459814146001495
+Props Gini index: 0.9985031859246967
+LIR metric: 0.009066666666666667
+ETD metric: 1.5248
+SEP metric: 0.6687969442487097
+std LIR metric: 0.09336913599019513
+std ETD metric: 0.5025783123056545
+std SEP metric: 0.3005911304177495
