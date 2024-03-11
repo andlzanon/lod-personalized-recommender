@@ -612,6 +612,17 @@ def maut(dataset: str, folder: int, expl_algs: str, rec_alg: str, metrics: str, 
         utility_matrix[metrics_dict['PGini']] = 1 - utility_matrix[metrics_dict['PGini']]
 
     used_metrics = [metrics_dict[m] for m in metrics_l]
+
+    utility_matrix_print = utility_matrix[used_metrics + ["std " + x for x in used_metrics]].copy()
+    for m in used_metrics:
+        truncated_values = utility_matrix_print[m].map(lambda x: "{:.4f}".format(x))
+        std_values = utility_matrix_print['std ' + m].map(lambda x: "{:.2f}".format(x))
+        utility_matrix_print[m] = truncated_values + "#" + std_values
+
+    utility_matrix_print = utility_matrix_print[used_metrics]
+    print(utility_matrix_print.T)
+    print()
+
     utility_matrix = utility_matrix[used_metrics]
     uf_utility_matrix = pd.DataFrame(scaler.fit_transform(utility_matrix), columns=utility_matrix.columns).set_index(
         utility_matrix.index)
