@@ -5,6 +5,7 @@ import re
 from SPARQLWrapper import SPARQLWrapper, JSON
 
 wikidata_hierarchy_props_ml_small = "../generated_files/wikidata/props_hierarchy_wikidata_movielens_small.csv"
+wikidata_hierarchy_props_lastfm_small = "../generated_files/wikidata/last-fm/props_hierarchy_wikidata_lastfm_small.csv"
 
 
 def get_movie_hierarchy_data_from_wikidata(slice_prop_list: list):
@@ -59,7 +60,7 @@ def results_movies_to_dict(props_movie: dict):
         hyper_label = line["hyperClassLabel"]["value"]
 
         dict_props1 = {"obj": item_label,
-                      "super_obj": super_label}
+                       "super_obj": super_label}
         dict_props2 = {"obj": super_label,
                        "super_obj": hyper_label}
 
@@ -99,9 +100,10 @@ def extract_wikidata_prop_hierarchy(prop_set):
     print("End obtaining movie data")
 
     # save output
-    all_movie_props.to_csv(wikidata_hierarchy_props_ml_small, mode='w', header=True, index=False)
+    all_movie_props.to_csv(wikidata_hierarchy_props_lastfm_small, mode='w', header=True, index=False)
     print('Output file generated')
 
 
-prop_set = pd.read_csv("../generated_files/wikidata/props_wikidata_movielens_small.csv")
+# prop_set = pd.read_csv("../generated_files/wikidata/props_wikidata_movielens_small.csv")
+prop_set = pd.read_csv("../generated_files/wikidata/last-fm/props_artists_id.csv")
 extract_wikidata_prop_hierarchy(prop_set)
