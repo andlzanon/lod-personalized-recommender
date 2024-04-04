@@ -1152,7 +1152,7 @@ class PathReordering(LODPersonalizedReordering):
                 training_loop='sLCWA',
                 loss='NSSALoss',
                 optimizer='Adam',
-                model_kwargs=dict(embedding_dim=150),
+                model_kwargs=dict(embedding_dim=200),
                 optimizer_kwargs=dict(lr=1e-3),
                 training_kwargs=dict(num_epochs=50, batch_size=256),
                 use_testing_data=False,
