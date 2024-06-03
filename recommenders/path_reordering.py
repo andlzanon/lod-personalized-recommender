@@ -125,7 +125,7 @@ class PathReordering(LODPersonalizedReordering):
         """
 
         semantic_pro = True
-        if expl_alg in ["rotate", "word2vec", "explod_v2", "pem"]:
+        if expl_alg in ["rotate", "word2vec", "explod_v2", "pem"] or expl_alg.startswith("webmedia"):
             semantic_pro = False
 
         dataset = "ml"
@@ -156,6 +156,12 @@ class PathReordering(LODPersonalizedReordering):
         output_title = '/'.join(output_title_l[:-1])
         output_title = output_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + \
                        "n_explain=" + str(n_explain) + "_" + output_title_l[-1]
+
+        if expl_alg.startswith("webmedia"):
+            output_title = output_title.replace("/explanations/", "/explanations/webmedia/")
+            results_title = results_title.replace("expl_alg=", "expl_alg=webmedia_")
+            results_title = results_title.replace("/explanations/", "/explanations/webmedia/")
+
         f = open(output_title, mode="w", encoding='utf-8')
         f.write(output_title + "\n")
         print(output_title)
@@ -294,6 +300,10 @@ class PathReordering(LODPersonalizedReordering):
 
             elif expl_alg == "rotate":
                 items, props, (ulir, usep, uetd) = self.__rotate_embedding(item_rank, items_historic, u, f, memo_sep)
+
+            elif expl_alg.startswith("webmedia"):
+                model_name = expl_alg.split("_")[-1]
+                items, props, (ulir, usep, uetd) = self.__webmedia_embedding(model_name, item_rank, items_historic, u, f, memo_sep)
 
             f.write("\n")
 
@@ -1199,6 +1209,153 @@ class PathReordering(LODPersonalizedReordering):
                         if len(p) > 5:
                             continue
                         path_embed = pd.Series(np.zeros(shape=(300,)))
+                        uflag = False
+                        count = 0
+                        buff = [None, None]
+                        for prop in p:
+                            try:
+                                title = titles[int(prop[1:])]
+                                path_embed = path_embed + entity_embeds.loc[title]
+                                buff[0] = title
+                            except (ValueError, KeyError):
+                                path_embed = path_embed + entity_embeds.loc[prop]
+                                buff[1] = prop
+                            count = count + 1
+
+                            if count == 2:
+                                count = 1
+                                try:
+                                    edge = relations[(buff[0], buff[1])]
+                                except KeyError:
+                                    try:
+                                        edge = self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]]["prop"].unique()[0]
+                                    except AttributeError:
+                                        edge = str(self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]][
+                                            "prop"])
+                                    except IndexError:
+                                        uflag = True
+                                        break
+
+                                path_embed = path_embed + relation_embeds.loc[edge]
+
+                        # calculate similarity and check if is it higher
+                        score = cosine_similarity([user_embed.to_numpy()], [path_embed.to_numpy()])[0][0]
+                        if score > max and not uflag:
+                            max = score
+                            max_path = p
+
+                    sem_path_dist = sem_path_dist.append(
+                        {'historic': hm, 'recommended': rm, 'path_s': max_path, 'path_v': max}, ignore_index=True)
+
+                except (nx.exception.NetworkXNoPath, ValueError):
+                    sem_path_dist = sem_path_dist.append(
+                        {'historic': hm, 'recommended': rm, 'path_s': [], 'path_v': -1},
+                        ignore_index=True)
+
+        # choose path with highest mean similarity of sem_path_dist
+        sem_path_dist_m = sem_path_dist.pivot(index='historic', columns='recommended', values='path_v')
+        max_paths = sem_path_dist_m.max().to_frame().T
+
+        hist_items = {}
+        nodes = {}
+        hist_lists = []
+        prop_lists = []
+        for rec in recommeded:
+            print("\nPaths for the Recommended Item: " + str(rec))
+            file.write("\nPaths for the Recommended Item: " + str(rec) + "\n")
+            try:
+                max_value = max_paths[rec][0]
+                if max_value == -1:
+                    raise KeyError
+                origin = sem_path_dist_m[sem_path_dist_m[rec] == max_value].index[0]
+                row = sem_path_dist[(sem_path_dist['historic'] == origin) & (sem_path_dist['recommended'] == rec)]
+                path = list(row["path_s"])[0]
+
+                origin = ""
+                hist_names = hist_props.loc[hist_props.index.isin([int(x[1:]) for x in path[:-1][0::2]])][
+                    self.prop_cols[1]].unique()
+                hist_lists.append([int(x[1:]) for x in path[:-1][0::2]])
+                for i in hist_names:
+                    origin = origin + "\"" + i + "\"; "
+                    hist_items = self.__add_dict(hist_items, i)
+                origin = origin[:-2]
+
+                path_props = [x for x in path[:-1][1::2]]
+                prop_lists.append(nodes)
+                path_sentence = " nodes: "
+                for n in path_props:
+                    path_sentence = path_sentence + "\"" + n + "\" "
+                    nodes = self.__add_dict(nodes, n)
+                try:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
+                except AttributeError:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]]
+                destination = "destination: \"" + rec_name + "\""
+            except KeyError:
+                origin = ""
+                path_sentence = ""
+                try:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
+                except AttributeError:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]]
+                destination = "destination: \"" + rec_name + "\""
+                hist_lists.append([])
+                prop_lists.append([])
+
+            print(origin + path_sentence + destination)
+            file.write(origin + path_sentence + destination)
+
+        lir = eval.lir_metric(0.3, user, hist_lists, self.train_set)
+        sep = eval.sep_metric(0.3, prop_lists, self.prop_set, memo_sep)
+        etd = eval.etd_metric(list(nodes.keys()), len(recommeded), len(self.prop_set['obj'].unique()))
+        return hist_items, nodes, (lir, sep, etd)
+
+    def __webmedia_embedding(self, model_name: str, recommeded: list, historic: list, user: int, file: _io.TextIOWrapper, memo_sep: dict):
+        hist_props = self.prop_set.loc[historic]
+        model_path = self.train_file.split("/")
+        model_path = '/'.join(model_path[:-3])
+        model_path = model_path + "/models/" + model_name + "_webmedia_model"
+        triples = self.prop_set.to_numpy()
+        tf = TriplesFactory.from_labeled_triples(triples)
+
+        model = torch.load(model_path + "/trained_model.pkl")
+        entity_embeds = pd.DataFrame(model.entity_representations[0](indices=None).detach().numpy()).rename(
+            tf.entity_id_to_label)
+        relation_embeds = pd.DataFrame(model.relation_representations[0](indices=None).detach().numpy()).rename(
+            tf.relation_id_to_label)
+
+        # create user embeding as pooling of entity
+        user_embed = pd.Series(np.zeros(shape=(model.entity_representations[0].embedding_dim,)))
+        for i in historic:
+            try:
+                title = self.prop_set.loc[i][self.prop_set.columns[0]].unique()[0]
+            except AttributeError:
+                title = str(self.prop_set.loc[i][self.prop_set.columns[0]])
+
+            item_embed = entity_embeds.loc[title]
+            user_embed = user_embed + item_embed
+
+        sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path_s', 'path_v'])
+        historic_codes = ['I' + str(i) for i in historic]
+        recommeded_codes = ['I' + str(i) for i in recommeded]
+        historic_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
+
+        subgraph = self.graph.subgraph(historic_codes + recommeded_codes + historic_props)
+        titles = self.prop_set[self.prop_cols[1]].to_dict()
+        relations = self.prop_set.set_index([self.prop_cols[1], self.prop_cols[-1]]).to_dict()['prop']
+        # obtain paths from historic item to recommended
+        for hm in historic:
+            hm_node = 'I' + str(hm)
+            for rm in recommeded:
+                rm_name = 'I' + str(rm)
+                try:
+                    paths = nx.all_shortest_paths(subgraph, source=hm_node, target=rm_name)
+                    max = -1
+                    max_path = []
+                    for p in paths:
+                        if len(p) > 5:
+                            continue
+                        path_embed = pd.Series(np.zeros(shape=(model.entity_representations[0].embedding_dim,)))
                         uflag = False
                         count = 0
                         buff = [None, None]

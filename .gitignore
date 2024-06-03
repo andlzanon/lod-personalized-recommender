@@ -1,2 +1,6 @@
 __pycache__/
 /notebooks/
+datasets/hetrec2011-lastfm-2k/models/complex_webmedia_model
+datasets/hetrec2011-lastfm-2k/models/quate_webmedia_model
+datasets/hetrec2011-lastfm-2k/models/rotate_webmedia_model
+datasets/hetrec2011-lastfm-2k/models/transe_webmedia_model
