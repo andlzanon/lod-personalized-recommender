@@ -11,7 +11,7 @@ The first paper is you can find the link to our paper on ScienceDirect [here](ht
 
 The second paper proposes a approach to explaining recommendation based on graph embeddings, that are trained on the Wikidata Linked Open Data. A cosine similarity is between a user embedding and a path embedding. The user embedding is the sum pooling of the user's interacted items embeddings and the path's embedding are the sum pooling of item and edges that connect an interacted item with a recommended. The path with most similarity to the user is chosen to be displayed. 
 
->Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "Model-Agnostic Knowledge Graph Embedding Explanations for Recommender Systems". The 2nd World Conference on eXplainable Artificial Intelligence (2023)" 
+>Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "Model-Agnostic Knowledge Graph Embedding Explanations for Recommender Systems". The 2nd World Conference on eXplainable Artificial Intelligence (2023)
 
 
 ## Citation 
@@ -155,7 +155,7 @@ To run the Lastfm experiments use the following command line:
 
     python main.py --mode=run --dataset=lastfm --begin=0 --end=9 --alg="MostPop BPRMF UserKNN PageRank NCF EASE" --reord="MostPop BPRMF UserKNN PageRank NCF EASE" --nreorder=10 --pitems=0.1 --policy=last
 
-To run a statistical relevance test for ranking metrics use the following command in which the bprmf baseline is compared to the proposed reordering with policy of last items, percentage of historic items to build user profile of 0.1 and reordering of the top 10 of the baseline:
+To run a statistical relevance test for ranking metrics, considering all the folds, use the following command in which the bprmf baseline is compared to the proposed reordering with policy of last items, percentage of historic items to build user profile of 0.1 and reordering of the top 10 of the baseline:
 
     python main.py --mode=validate --dataset=lastfm --sufix=path[policy=last_items=01_reorder=10_hybrid] --baseline=bprmf --method="both" --save=1 --metrics="MAP AGG_DIV NDCG GINI ENTROPY COVERAGE"
 
@@ -167,7 +167,7 @@ To run an explanation samples for the pem explanations algorithm on the movielen
 
     python main.py --mode=explanation --dataset=ml --begin=0 --end=1 --reord="PageRank" --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=20 --max_users=2 --expl_alg=pem --reordered_recs=0
     
-To run a statistical relevance test for explanation metrics for the PageRank algorithm and movielens dataset use the command:
+To run a statistical relevance test, considering all the ten folds, for explanation metrics for the PageRank algorithm and movielens dataset, for the PEM, ExpLOD v2 and ExpLOD algorithms use the command:
     
     python main.py --mode=validate_expl --baseline=wikidata_page_rank8020 --dataset=ml --reordered_recs=0
     

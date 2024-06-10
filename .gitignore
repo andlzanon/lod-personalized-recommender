@@ -4,3 +4,8 @@ datasets/hetrec2011-lastfm-2k/models/complex_webmedia_model
 datasets/hetrec2011-lastfm-2k/models/quate_webmedia_model
 datasets/hetrec2011-lastfm-2k/models/rotate_webmedia_model
 datasets/hetrec2011-lastfm-2k/models/transe_webmedia_model
+
+datasets/ml-latest-small/models/complex_webmedia_model
+datasets/ml-latest-small/models/quate_webmedia_model
+datasets/ml-latest-small/models/rotate_webmedia_model
+datasets/ml-latest-small/models/transe_webmedia_model

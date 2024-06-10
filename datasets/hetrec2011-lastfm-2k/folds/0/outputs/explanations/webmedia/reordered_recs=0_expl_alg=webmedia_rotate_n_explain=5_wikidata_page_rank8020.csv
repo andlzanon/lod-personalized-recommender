@@ -1,0 +1,3269 @@
+./datasets/hetrec2011-lastfm-2k/folds/0/outputs/explanations/webmedia/reordered_recs=0_expl_alg=webmedia_rotate_n_explain=5_wikidata_page_rank8020.csv
+
+User: 2
+Items interacted by the user
+Item id: 51 Name: Duran Duran
+Item id: 88 Name: Gorillaz
+Item id: 79 Name: Fiction Factory
+Item id: 80 Name: Groove Armada
+Item id: 81 Name: Portishead
+Item id: 82 Name: Marc Almond
+Item id: 83 Name: Cock Robin
+Item id: 84 Name: Cut Copy
+Item id: 85 Name: Spandau Ballet
+Item id: 86 Name: Katie Melua
+Item id: 87 Name: Deacon Blue
+Item id: 89 Name: Lady Gaga
+Item id: 52 Name: Morcheeba
+Item id: 90 Name: Kosheen
+Item id: 91 Name: Nik Kershaw
+Item id: 92 Name: Vitamin Z
+Item id: 94 Name: Ministry of Sound
+Item id: 95 Name: Simply Red
+Item id: 96 Name: Fleetwood Mac
+Item id: 97 Name: Duffy
+Item id: 98 Name: Japan
+Item id: 99 Name: INXS
+Item id: 78 Name: The Adventures
+Item id: 77 Name: George Michael
+Item id: 76 Name: Electronic
+Item id: 75 Name: Camouflage
+Item id: 53 Name: Air
+Item id: 54 Name: Hooverphonic
+Item id: 55 Name: Kylie Minogue
+Item id: 56 Name: Daft Punk
+Item id: 57 Name: Thievery Corporation
+Item id: 58 Name: Goldfrapp
+Item id: 60 Name: Matt Bianco
+Item id: 61 Name: Talk Talk
+Item id: 62 Name: Prefab Sprout
+Item id: 63 Name: Enigma
+Item id: 65 Name: Coldplay
+Item id: 66 Name: Faithless
+Item id: 67 Name: Madonna
+Item id: 68 Name: Icehouse
+Item id: 69 Name: Sade
+Item id: 70 Name: Moby
+Item id: 71 Name: Dido
+Item id: 72 Name: Depeche Mode
+Item id: 74 Name: Basia
+Item id: 100 Name: ABC
+
+Users favorites attributes on the kG
+United Kingdom
+new wave
+pop music
+synth-pop
+London
+
+Recommendations
+Item id: 227 Name: The Beatles
+Item id: 289 Name: Britney Spears
+Item id: 154 Name: Radiohead
+Item id: 288 Name: Rihanna
+Item id: 190 Name: Muse
+
+Paths for the Recommended Item: 227
+"Nik Kershaw" nodes: "United Kingdom" destination: "The Beatles"
+Paths for the Recommended Item: 289
+"Cock Robin" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 154
+"Lady Gaga"; "Madonna" nodes: "David Bowie" "United Kingdom" destination: "Radiohead"
+Paths for the Recommended Item: 288
+"Nik Kershaw"; "Talk Talk" nodes: "United Kingdom" "English" destination: "Rihanna"
+Paths for the Recommended Item: 190
+"Cock Robin"; "Lady Gaga" nodes: "United States of America" "Queen" destination: "Muse"
+
+User: 5
+Items interacted by the user
+Item id: 53 Name: Air
+Item id: 154 Name: Radiohead
+Item id: 218 Name: Man Man
+Item id: 219 Name: M. Ward
+Item id: 220 Name: Red Hot Chili Peppers
+Item id: 221 Name: Travis
+Item id: 222 Name: Modest Mouse
+Item id: 223 Name: Band of Horses
+Item id: 226 Name: Queens of the Stone Age
+Item id: 227 Name: The Beatles
+Item id: 228 Name: Kings of Leon
+Item id: 229 Name: The Killers
+Item id: 230 Name: Green Day
+Item id: 231 Name: Devendra Banhart
+Item id: 233 Name: list of Nine Inch Nails band members
+Item id: 234 Name: Nirvana
+Item id: 235 Name: Eels
+Item id: 236 Name: Clap Your Hands Say Yeah
+Item id: 237 Name: Thom Yorke
+Item id: 215 Name: Jeff Buckley
+Item id: 214 Name: DeVotchKa
+Item id: 212 Name: Bob Dylan
+Item id: 200 Name: Gogol Bordello
+Item id: 173 Name: Placebo
+Item id: 182 Name: Keane
+Item id: 190 Name: Muse
+Item id: 195 Name: Bright Eyes
+Item id: 196 Name: Beirut
+Item id: 197 Name: Tom Waits
+Item id: 199 Name: Arcade Fire
+Item id: 202 Name: Cake
+Item id: 211 Name: The Decemberists
+Item id: 204 Name: Damien Rice
+Item id: 205 Name: Andrew Bird
+Item id: 206 Name: Beck
+Item id: 207 Name: Arctic Monkeys
+Item id: 208 Name: Babyshambles
+Item id: 209 Name: My Chemical Romance
+Item id: 210 Name: Bloc Party
+Item id: 238 Name: Massive Attack
+
+Users favorites attributes on the kG
+alternative rock
+Shortlist Music Prize
+folk rock
+indie rock
+Grammy Award for Best Rock Performance by a Duo or Group with Vocal
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 65 Name: Coldplay
+Item id: 289 Name: Britney Spears
+Item id: 67 Name: Madonna
+Item id: 533 Name: Oasis
+
+Paths for the Recommended Item: 89
+"Eels"; "Keane" nodes: "1995-01-01T00:00:00Z" "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 65
+"Man Man"; "Andrew Bird" nodes: "United States of America" "1996-01-01T00:00:00Z" destination: "Coldplay"
+Paths for the Recommended Item: 289
+"Eels" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 67
+"Eels" nodes: "United States of America" destination: "Madonna"
+Paths for the Recommended Item: 533
+"Tom Waits"; "Cake" nodes: "United States of America" "1991-01-01T00:00:00Z" destination: "Oasis"
+
+User: 6
+Items interacted by the user
+Item id: 77 Name: George Michael
+Item id: 241 Name: Toni Braxton
+Item id: 266 Name: Erykah Badu
+Item id: 267 Name: Nas
+Item id: 268 Name: Richard Marx
+Item id: 269 Name: Dru Hill
+Item id: 271 Name: Mos Def
+Item id: 272 Name: Faith Evans
+Item id: 275 Name: Angie Stone
+Item id: 276 Name: Gang Starr
+Item id: 277 Name: Papa Wemba
+Item id: 278 Name: Tupac Shakur
+Item id: 280 Name: Sam the Kid
+Item id: 281 Name: Dealema
+Item id: 282 Name: Boss AC
+Item id: 283 Name: Ana Carolina
+Item id: 284 Name: Dilated Peoples
+Item id: 285 Name: Janet Jackson
+Item id: 286 Name: Peter Tosh
+Item id: 265 Name: Céline Dion
+Item id: 264 Name: Sara Tavares
+Item id: 263 Name: Jill Scott
+Item id: 252 Name: Tamia
+Item id: 242 Name: Elo da Corrente
+Item id: 243 Name: Teta Lando
+Item id: 245 Name: Bob Marley and the Wailers
+Item id: 247 Name: Maxwell
+Item id: 248 Name: Pharoahe Monch
+Item id: 249 Name: Common
+Item id: 250 Name: Bob Marley
+Item id: 253 Name: Bryan Adams
+Item id: 262 Name: Mary J. Blige
+Item id: 254 Name: Lokua Kanza
+Item id: 256 Name: Kid Abelha
+Item id: 257 Name: Mariah Carey
+Item id: 258 Name: Tina Turner
+Item id: 259 Name: 9th Wonder
+Item id: 260 Name: Floetry
+Item id: 261 Name: Marisa Monte
+Item id: 287 Name: Monica
+
+Users favorites attributes on the kG
+actor
+soul music
+record producer
+composer
+recording artist
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 289 Name: Britney Spears
+Item id: 295 Name: Beyoncé
+Item id: 67 Name: Madonna
+Item id: 288 Name: Rihanna
+
+Paths for the Recommended Item: 89
+"Monica" nodes: "pop music" destination: "Lady Gaga"
+Paths for the Recommended Item: 289
+"Mariah Carey" nodes: "Grammy Award for Best New Artist" destination: "Britney Spears"
+Paths for the Recommended Item: 295
+"Erykah Badu"; "Boss AC" nodes: "1994-01-01T00:00:00Z" "singer-songwriter" destination: "Beyoncé"
+Paths for the Recommended Item: 67
+"Angie Stone" nodes: "1979-01-01T00:00:00Z" destination: "Madonna"
+Paths for the Recommended Item: 288
+"Monica" nodes: "pop music" destination: "Rihanna"
+
+User: 7
+Items interacted by the user
+Item id: 55 Name: Kylie Minogue
+Item id: 322 Name: Ashanti
+Item id: 310 Name: Nelly Furtado
+Item id: 312 Name: Cassie Ventura
+Item id: 313 Name: Allison Iraheta
+Item id: 314 Name: Ciara
+Item id: 316 Name: Alanis Morissette
+Item id: 317 Name: Keri Hilson
+Item id: 318 Name: Hilary Duff
+Item id: 320 Name: Fergie
+Item id: 321 Name: Jonas Brothers
+Item id: 323 Name: The Saturdays
+Item id: 89 Name: Lady Gaga
+Item id: 324 Name: Cobra Starship
+Item id: 325 Name: Ashley Tisdale
+Item id: 326 Name: JoJo
+Item id: 327 Name: Chris Brown
+Item id: 328 Name: David Guetta
+Item id: 329 Name: Justin Timberlake
+Item id: 330 Name: T.I.
+Item id: 331 Name: Kanye West
+Item id: 332 Name: Kelly Rowland
+Item id: 309 Name: Danity Kane
+Item id: 308 Name: Kat DeLuna
+Item id: 307 Name: Kate Voegele
+Item id: 306 Name: Black Eyed Peas
+Item id: 257 Name: Mariah Carey
+Item id: 288 Name: Rihanna
+Item id: 289 Name: Britney Spears
+Item id: 290 Name: Jordin Sparks
+Item id: 291 Name: Kelly Clarkson
+Item id: 292 Name: Christina Aguilera
+Item id: 293 Name: Ashlee Simpson
+Item id: 294 Name: Leona Lewis
+Item id: 295 Name: Beyoncé
+Item id: 296 Name: Sugababes
+Item id: 297 Name: David Cook
+Item id: 298 Name: Lily Allen
+Item id: 299 Name: Jennifer Lopez
+Item id: 300 Name: Katy Perry
+Item id: 301 Name: Alicia Keys
+Item id: 302 Name: Pink
+Item id: 303 Name: Panic! At The Disco
+Item id: 304 Name: David Archuleta
+Item id: 305 Name: Katharine McPhee
+Item id: 333 Name: Avril Lavigne
+
+Users favorites attributes on the kG
+film actor
+actor
+English
+pop music
+female
+
+Recommendations
+Item id: 67 Name: Madonna
+Item id: 466 Name: Kesha
+Item id: 701 Name: Shakira
+Item id: 461 Name: Miley Cyrus
+Item id: 349 Name: The Pussycat Dolls
+
+Paths for the Recommended Item: 67
+"Lady Gaga" nodes: "David Bowie" destination: "Madonna"
+Paths for the Recommended Item: 466
+"Danity Kane" nodes: "United States of America" destination: "Kesha"
+Paths for the Recommended Item: 701
+"Lady Gaga" nodes: "pop music" destination: "Shakira"
+Paths for the Recommended Item: 461
+"Britney Spears" nodes: "Madonna" destination: "Miley Cyrus"
+Paths for the Recommended Item: 349
+"Britney Spears"; "Leona Lewis" nodes: "Whitney Houston" "United States of America" destination: "The Pussycat Dolls"
+
+User: 8
+Items interacted by the user
+Item id: 71 Name: Dido
+Item id: 341 Name: Barbara Schöneberger
+Item id: 343 Name: Annett Louisan
+Item id: 344 Name: Taylor Swift
+Item id: 345 Name: Nadja Benaissa
+Item id: 346 Name: Lena
+Item id: 347 Name: Cassandra Steen
+Item id: 348 Name: Wir sind Helden
+Item id: 349 Name: The Pussycat Dolls
+Item id: 353 Name: Milow
+Item id: 354 Name: Sarah Connor
+Item id: 355 Name: Jason Mraz
+Item id: 356 Name: Brad Paisley
+Item id: 357 Name: Silbermond
+Item id: 358 Name: Diyana
+Item id: 359 Name: Maria Mena
+Item id: 360 Name: Shania Twain
+Item id: 364 Name: Sugarland
+Item id: 365 Name: Christina Stürmer
+Item id: 342 Name: Colbie Caillat
+Item id: 338 Name: Queensberry
+Item id: 89 Name: Lady Gaga
+Item id: 337 Name: Sasha
+Item id: 97 Name: Duffy
+Item id: 251 Name: Whitney Houston
+Item id: 257 Name: Mariah Carey
+Item id: 265 Name: Céline Dion
+Item id: 288 Name: Rihanna
+Item id: 289 Name: Britney Spears
+Item id: 291 Name: Kelly Clarkson
+Item id: 295 Name: Beyoncé
+Item id: 296 Name: Sugababes
+Item id: 298 Name: Lily Allen
+Item id: 300 Name: Katy Perry
+Item id: 302 Name: Pink
+Item id: 311 Name: Natasha Bedingfield
+Item id: 323 Name: The Saturdays
+Item id: 334 Name: No Angels
+Item id: 335 Name: Sandy Vee
+Item id: 336 Name: Vanessa Petruo
+Item id: 366 Name: Jack Johnson
+
+Users favorites attributes on the kG
+pop music
+female
+English
+American Music Award for Favorite Pop/Rock Female Artist
+MTV Video Music Award for Best Female Video
+
+Recommendations
+Item id: 292 Name: Christina Aguilera
+Item id: 67 Name: Madonna
+Item id: 333 Name: Avril Lavigne
+Item id: 701 Name: Shakira
+Item id: 466 Name: Kesha
+
+Paths for the Recommended Item: 292
+"Britney Spears" nodes: "Whitney Houston" destination: "Christina Aguilera"
+Paths for the Recommended Item: 67
+"Lady Gaga" nodes: "David Bowie" destination: "Madonna"
+Paths for the Recommended Item: 333
+"Mariah Carey" nodes: "Grammy Award for Best New Artist" destination: "Avril Lavigne"
+Paths for the Recommended Item: 701
+"Sugarland"; "Pink" nodes: "United States of America" "contralto" destination: "Shakira"
+Paths for the Recommended Item: 466
+"Colbie Caillat" nodes: "Los Angeles" destination: "Kesha"
+
+User: 9
+Items interacted by the user
+Item id: 8 Name: Dir En Grey
+Item id: 390 Name: Gackt
+Item id: 412 Name: Blink-182
+Item id: 410 Name: G-Dragon
+Item id: 409 Name: G-Dragon
+Item id: 408 Name: Crossfade
+Item id: 407 Name: Akira Yamaoka
+Item id: 406 Name: Hyde
+Item id: 405 Name: The Rasmus
+Item id: 403 Name: The All-American Rejects
+Item id: 401 Name: Rentrer en Soi
+Item id: 396 Name: L'Arc-en-Ciel
+Item id: 395 Name: NEWS
+Item id: 393 Name: Super Junior
+Item id: 391 Name: Sinamore
+Item id: 389 Name: Enya
+Item id: 367 Name: Big Bang
+Item id: 387 Name: TRAX
+Item id: 386 Name: Cascada
+Item id: 384 Name: Fairuz
+Item id: 383 Name: Bad Religion
+Item id: 382 Name: Buck-Tick
+Item id: 381 Name: CNBLUE
+Item id: 380 Name: Blackmore's Night
+Item id: 378 Name: Evanescence
+Item id: 376 Name: UVERworld
+Item id: 373 Name: Jay Park
+Item id: 371 Name: Skillet
+Item id: 370 Name: Katatonia
+Item id: 369 Name: 2PM
+Item id: 415 Name: Laith Al-Deen
+
+Users favorites attributes on the kG
+South Korea
+Japan
+Seoul
+K-pop
+JYP Entertainment
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 289 Name: Britney Spears
+Item id: 300 Name: Katy Perry
+Item id: 9178 Name: Super Junior-M
+Item id: 288 Name: Rihanna
+
+Paths for the Recommended Item: 89
+"Skillet" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 289
+"Skillet" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 300
+"Skillet" nodes: "United States of America" destination: "Katy Perry"
+Paths for the Recommended Item: 9178
+"G-Dragon" nodes: "South Korea" destination: "Super Junior-M"
+Paths for the Recommended Item: 288
+"Skillet" nodes: "United States of America" "2005-01-01T00:00:00Z" destination: "Rihanna"
+
+User: 10
+Items interacted by the user
+Item id: 154 Name: Radiohead
+Item id: 442 Name: The Tallest Man on Earth
+Item id: 432 Name: Klaxons
+Item id: 434 Name: Spoon
+Item id: 435 Name: Black Lips
+Item id: 436 Name: The Smashing Pumpkins
+Item id: 437 Name: She Moves
+Item id: 439 Name: Los Hermanos
+Item id: 440 Name: Animal Collective
+Item id: 441 Name: Joy Division
+Item id: 443 Name: The Rakes
+Item id: 429 Name: The Smiths
+Item id: 444 Name: Múm
+Item id: 445 Name: Bon Iver
+Item id: 446 Name: Ra Ra Riot
+Item id: 447 Name: Manolito
+Item id: 448 Name: Art Brut
+Item id: 449 Name: Poney Express
+Item id: 451 Name: Local Natives
+Item id: 453 Name: Silverchair
+Item id: 430 Name: Kate Nash
+Item id: 428 Name: The Libertines
+Item id: 159 Name: The Cure
+Item id: 229 Name: The Killers
+Item id: 196 Name: Beirut
+Item id: 199 Name: Arcade Fire
+Item id: 200 Name: Gogol Bordello
+Item id: 208 Name: Babyshambles
+Item id: 217 Name: Death Cab for Cutie
+Item id: 219 Name: M. Ward
+Item id: 225 Name: Interpol
+Item id: 228 Name: Kings of Leon
+Item id: 416 Name: The National
+Item id: 426 Name: Rilo Kiley
+Item id: 417 Name: Cordel do Fogo Encantado
+Item id: 418 Name: Sigur Rós
+Item id: 419 Name: Tokyo Police Club
+Item id: 420 Name: The Kills
+Item id: 421 Name: Móveis Coloniais de Acaju
+Item id: 423 Name: Bat for Lashes
+Item id: 424 Name: The Strokes
+Item id: 425 Name: Yeah Yeah Yeahs
+Item id: 454 Name: Jónsi
+
+Users favorites attributes on the kG
+Shortlist Music Prize
+indie rock
+1999-01-01T00:00:00Z
+1997-01-01T00:00:00Z
+alternative rock
+
+Recommendations
+Item id: 227 Name: The Beatles
+Item id: 190 Name: Muse
+Item id: 89 Name: Lady Gaga
+Item id: 207 Name: Arctic Monkeys
+Item id: 65 Name: Coldplay
+
+Paths for the Recommended Item: 227
+"The Kills"; "Yeah Yeah Yeahs" nodes: "2000-01-01T00:00:00Z" "United Kingdom" destination: "The Beatles"
+Paths for the Recommended Item: 190
+"The Kills" nodes: "United Kingdom" destination: "Muse"
+Paths for the Recommended Item: 89
+"Black Lips" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 207
+"The Kills" nodes: "United Kingdom" destination: "Arctic Monkeys"
+Paths for the Recommended Item: 65
+"The Kills" nodes: "United Kingdom" destination: "Coldplay"
+
+User: 11
+Items interacted by the user
+Item id: 89 Name: Lady Gaga
+Item id: 471 Name: Metro Station
+Item id: 463 Name: Savage Garden
+Item id: 464 Name: 3OH!3
+Item id: 465 Name: Jessica Simpson
+Item id: 466 Name: Kesha
+Item id: 467 Name: Darren Hayes
+Item id: 468 Name: Usher
+Item id: 469 Name: Nick Carter
+Item id: 470 Name: Never Shout Never
+Item id: 472 Name: 3 Doors Down
+Item id: 461 Name: Miley Cyrus
+Item id: 473 Name: Dream Street
+Item id: 474 Name: Craig David
+Item id: 475 Name: Eminem
+Item id: 476 Name: M. Pokora
+Item id: 477 Name: Daniel Merriweather
+Item id: 479 Name: Westlife
+Item id: 481 Name: Simple Plan
+Item id: 482 Name: Jeremih
+Item id: 462 Name: Labelle
+Item id: 460 Name: Noize MC
+Item id: 157 Name: Mick Jackson
+Item id: 306 Name: Black Eyed Peas
+Item id: 230 Name: Green Day
+Item id: 234 Name: Nirvana
+Item id: 292 Name: Christina Aguilera
+Item id: 294 Name: Leona Lewis
+Item id: 295 Name: Beyoncé
+Item id: 300 Name: Katy Perry
+Item id: 301 Name: Alicia Keys
+Item id: 304 Name: David Archuleta
+Item id: 325 Name: Ashley Tisdale
+Item id: 459 Name: NSYNC
+Item id: 327 Name: Chris Brown
+Item id: 329 Name: Justin Timberlake
+Item id: 344 Name: Taylor Swift
+Item id: 349 Name: The Pussycat Dolls
+Item id: 455 Name: Backstreet Boys
+Item id: 456 Name: Jesse McCartney
+Item id: 457 Name: Aaron Carter
+Item id: 458 Name: Justin Bieber
+Item id: 484 Name: Ne-Yo
+
+Users favorites attributes on the kG
+pop music
+English
+contemporary R&B
+MTV Video Music Award for Best Art Direction
+actor
+
+Recommendations
+Item id: 289 Name: Britney Spears
+Item id: 288 Name: Rihanna
+Item id: 333 Name: Avril Lavigne
+Item id: 67 Name: Madonna
+Item id: 701 Name: Shakira
+
+Paths for the Recommended Item: 289
+"Ne-Yo" nodes: "Michael Jackson" destination: "Britney Spears"
+Paths for the Recommended Item: 288
+"NSYNC"; "Justin Bieber" nodes: "Justin Timberlake" "English" destination: "Rihanna"
+Paths for the Recommended Item: 333
+"NSYNC"; "Justin Bieber" nodes: "Justin Timberlake" "Canada" destination: "Avril Lavigne"
+Paths for the Recommended Item: 67
+"Lady Gaga" nodes: "David Bowie" destination: "Madonna"
+Paths for the Recommended Item: 701
+"Never Shout Never"; "Alicia Keys" nodes: "United States of America" "female" destination: "Shakira"
+
+User: 12
+Items interacted by the user
+Item id: 72 Name: Depeche Mode
+Item id: 510 Name: P.O.D.
+Item id: 501 Name: Angels of Light
+Item id: 502 Name: LaFee
+Item id: 503 Name: In Flames
+Item id: 504 Name: HIM
+Item id: 505 Name: Digital Summer
+Item id: 506 Name: Anathema
+Item id: 507 Name: Saosin
+Item id: 509 Name: Pitchshifter
+Item id: 512 Name: Deftones
+Item id: 189 Name: Poets of the Fall
+Item id: 514 Name: Ill Niño
+Item id: 515 Name: Clan of Xymox
+Item id: 516 Name: Celldweller
+Item id: 517 Name: Korn
+Item id: 518 Name: Within Temptation
+Item id: 519 Name: Static-X
+Item id: 520 Name: Fluke
+Item id: 521 Name: Happysad
+Item id: 500 Name: Bullet For My Valentine
+Item id: 498 Name: Paramore
+Item id: 497 Name: Papa Roach
+Item id: 496 Name: Cold
+Item id: 288 Name: Rihanna
+Item id: 300 Name: Katy Perry
+Item id: 333 Name: Avril Lavigne
+Item id: 344 Name: Taylor Swift
+Item id: 377 Name: Linkin Park
+Item id: 378 Name: Evanescence
+Item id: 407 Name: Akira Yamaoka
+Item id: 466 Name: Kesha
+Item id: 486 Name: Thirty Seconds to Mars
+Item id: 487 Name: The Birthday Massacre
+Item id: 488 Name: Three Days Grace
+Item id: 489 Name: Limp Bizkit
+Item id: 490 Name: Seether
+Item id: 491 Name: Fort Minor
+Item id: 492 Name: Funeral for a Friend
+Item id: 493 Name: Lostprophets
+Item id: 495 Name: This Beautiful Republic
+Item id: 522 Name: Lacrimosa
+
+Users favorites attributes on the kG
+alternative metal
+alternative rock
+Grammy Award for Best New Artist
+electronic rock
+nu metal
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 289 Name: Britney Spears
+Item id: 190 Name: Muse
+Item id: 295 Name: Beyoncé
+Item id: 67 Name: Madonna
+
+Paths for the Recommended Item: 89
+"Fort Minor" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 289
+"Fort Minor" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 190
+"Static-X"; "Kesha" nodes: "United States of America" "1994-01-01T00:00:00Z" destination: "Muse"
+Paths for the Recommended Item: 295
+"Fort Minor" nodes: "United States of America" destination: "Beyoncé"
+Paths for the Recommended Item: 67
+"Papa Roach" nodes: "United States of America" destination: "Madonna"
+
+User: 13
+Items interacted by the user
+Item id: 55 Name: Kylie Minogue
+Item id: 537 Name: The Used
+Item id: 528 Name: Pixie Lott
+Item id: 529 Name: Paul van Dyk
+Item id: 530 Name: Alphabeat
+Item id: 531 Name: Taio Cruz
+Item id: 532 Name: Little Boots
+Item id: 534 Name: No Doubt
+Item id: 535 Name: Sophie Ellis-Bextor
+Item id: 536 Name: Good Charlotte
+Item id: 538 Name: Maroon 5
+Item id: 526 Name: La Roux
+Item id: 539 Name: Gossip
+Item id: 540 Name: Fall Out Boy
+Item id: 541 Name: Space Cowboy
+Item id: 542 Name: Pitty
+Item id: 543 Name: Nicole Scherzinger
+Item id: 545 Name: Flo Rida
+Item id: 546 Name: The Ting Tings
+Item id: 547 Name: Kid Cudi
+Item id: 527 Name: Lil Wayne
+Item id: 525 Name: Gwen Stefani
+Item id: 67 Name: Madonna
+Item id: 318 Name: Hilary Duff
+Item id: 89 Name: Lady Gaga
+Item id: 173 Name: Placebo
+Item id: 228 Name: Kings of Leon
+Item id: 292 Name: Christina Aguilera
+Item id: 298 Name: Lily Allen
+Item id: 300 Name: Katy Perry
+Item id: 310 Name: Nelly Furtado
+Item id: 316 Name: Alanis Morissette
+Item id: 325 Name: Ashley Tisdale
+Item id: 524 Name: Jeffree Star
+Item id: 328 Name: David Guetta
+Item id: 333 Name: Avril Lavigne
+Item id: 344 Name: Taylor Swift
+Item id: 349 Name: The Pussycat Dolls
+Item id: 378 Name: Evanescence
+Item id: 461 Name: Miley Cyrus
+Item id: 466 Name: Kesha
+Item id: 498 Name: Paramore
+Item id: 548 Name: Ellie Goulding
+
+Users favorites attributes on the kG
+English
+Grammy Award for Best New Artist
+pop rock
+dance-pop
+electropop
+
+Recommendations
+Item id: 289 Name: Britney Spears
+Item id: 288 Name: Rihanna
+Item id: 295 Name: Beyoncé
+Item id: 701 Name: Shakira
+Item id: 302 Name: Pink
+
+Paths for the Recommended Item: 289
+"Lady Gaga" nodes: "Madonna" destination: "Britney Spears"
+Paths for the Recommended Item: 288
+"Maroon 5"; "Kesha" nodes: "United States of America" "2005-01-01T00:00:00Z" destination: "Rihanna"
+Paths for the Recommended Item: 295
+"The Pussycat Dolls" nodes: "United States of America" destination: "Beyoncé"
+Paths for the Recommended Item: 701
+"The Used"; "Kesha" nodes: "United States of America" "female" destination: "Shakira"
+Paths for the Recommended Item: 302
+"The Pussycat Dolls" nodes: "United States of America" destination: "Pink"
+
+User: 14
+Items interacted by the user
+Item id: 549 Name: The Sonics
+Item id: 587 Name: Sister Rosetta Tharpe
+Item id: 577 Name: Ruth Brown
+Item id: 578 Name: James Brown
+Item id: 580 Name: Muddy Waters
+Item id: 581 Name: Elmore James
+Item id: 583 Name: John Lee Hooker
+Item id: 584 Name: The Isley Brothers
+Item id: 585 Name: Chuck Berry
+Item id: 588 Name: Big Joe Turner
+Item id: 575 Name: Aretha Franklin
+Item id: 589 Name: Andre Williams
+Item id: 590 Name: Louis Prima
+Item id: 591 Name: Charles Aznavour
+Item id: 592 Name: Ennio Morricone
+Item id: 593 Name: Renato Carosone
+Item id: 594 Name: The Pretty Things
+Item id: 597 Name: The Easybeats
+Item id: 576 Name: Marvin Gaye
+Item id: 574 Name: Big Mama Thornton
+Item id: 550 Name: The Fleshtones
+Item id: 563 Name: Small Faces
+Item id: 552 Name: The Barracudas
+Item id: 554 Name: The Kinks
+Item id: 555 Name: The Swingin' Neckbreakers
+Item id: 556 Name: The Strollers
+Item id: 557 Name: The Fuzztones
+Item id: 561 Name: The Untamed Youth
+Item id: 562 Name: The Who
+Item id: 564 Name: Mahalia Jackson
+Item id: 573 Name: The Detroit Cobras
+Item id: 565 Name: Howlin' Wolf
+Item id: 566 Name: Jackie Wilson
+Item id: 567 Name: Sam Cooke
+Item id: 569 Name: Otis Redding
+Item id: 570 Name: Little Richard
+Item id: 571 Name: LaVern Baker
+Item id: 572 Name: Ray Charles
+Item id: 598 Name: The Gruesomes
+
+Users favorites attributes on the kG
+Grammy Lifetime Achievement Award
+blues
+rhythm and blues
+star on Hollywood Walk of Fame
+English
+
+Recommendations
+Item id: 227 Name: The Beatles
+Item id: 89 Name: Lady Gaga
+Item id: 289 Name: Britney Spears
+Item id: 295 Name: Beyoncé
+Item id: 67 Name: Madonna
+
+Paths for the Recommended Item: 227
+"Sister Rosetta Tharpe"; "LaVern Baker" nodes: "Chicago" "Little Richard" destination: "The Beatles"
+Paths for the Recommended Item: 89
+"The Who" nodes: "Ludwig van Beethoven" "pop music" destination: "Lady Gaga"
+Paths for the Recommended Item: 289
+"The Isley Brothers" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 295
+"The Isley Brothers" nodes: "United States of America" destination: "Beyoncé"
+Paths for the Recommended Item: 67
+"The Isley Brothers" nodes: "United States of America" destination: "Madonna"
+
+User: 15
+Items interacted by the user
+Item id: 69 Name: Sade
+Item id: 611 Name: The Sea and Cake
+Item id: 613 Name: John Coltrane
+Item id: 614 Name: Pearl Jam
+Item id: 615 Name: Elliott Smith
+Item id: 616 Name: Squarepusher
+Item id: 617 Name: The Roots
+Item id: 618 Name: Belle and Sebastian
+Item id: 619 Name: A Tribe Called Quest
+Item id: 620 Name: Pulp
+Item id: 621 Name: The Album Leaf
+Item id: 622 Name: Sufjan Stevens
+Item id: 623 Name: Clogs
+Item id: 624 Name: Great Lake Swimmers
+Item id: 625 Name: Thelonious Monk
+Item id: 626 Name: A. A. Bondy
+Item id: 627 Name: Saint Etienne
+Item id: 629 Name: of Montreal
+Item id: 630 Name: Neil Young
+Item id: 631 Name: Einstürzende Neubauten
+Item id: 632 Name: Explosions in the Sky
+Item id: 612 Name: Talking Heads
+Item id: 610 Name: Miles Davis
+Item id: 154 Name: Radiohead
+Item id: 609 Name: Nick Drake
+Item id: 159 Name: The Cure
+Item id: 203 Name: Blur
+Item id: 205 Name: Andrew Bird
+Item id: 212 Name: Bob Dylan
+Item id: 215 Name: Jeff Buckley
+Item id: 218 Name: Man Man
+Item id: 222 Name: Modest Mouse
+Item id: 227 Name: The Beatles
+Item id: 233 Name: list of Nine Inch Nails band members
+Item id: 266 Name: Erykah Badu
+Item id: 511 Name: U2
+Item id: 599 Name: David Bowie
+Item id: 601 Name: Prince
+Item id: 602 Name: Iron & Wine
+Item id: 603 Name: Aphex Twin
+Item id: 604 Name: Kings of Convenience
+Item id: 605 Name: Beastie Boys
+Item id: 607 Name: Jethro Tull
+Item id: 608 Name: Tortoise
+Item id: 633 Name: Ornette Coleman
+
+Users favorites attributes on the kG
+Rock and Roll Hall of Fame
+English
+Grammy Lifetime Achievement Award
+1990-01-01T00:00:00Z
+guitarist
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 190 Name: Muse
+Item id: 65 Name: Coldplay
+Item id: 67 Name: Madonna
+Item id: 289 Name: Britney Spears
+
+Paths for the Recommended Item: 89
+"The Roots" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 190
+"David Bowie" nodes: "United Kingdom" destination: "Muse"
+Paths for the Recommended Item: 65
+"David Bowie" nodes: "United Kingdom" destination: "Coldplay"
+Paths for the Recommended Item: 67
+"Sade" nodes: "United Kingdom" destination: "Madonna"
+Paths for the Recommended Item: 289
+"The Roots" nodes: "United States of America" destination: "Britney Spears"
+
+User: 16
+Items interacted by the user
+Item id: 89 Name: Lady Gaga
+Item id: 161 Name: Enrique Iglesias
+Item id: 673 Name: Christos Dantis
+Item id: 672 Name: Denise Rosenthal
+Item id: 671 Name: Alkistis Protopsalti
+Item id: 670 Name: Safura Alizadeh
+Item id: 669 Name: Eric Saade
+Item id: 668 Name: Mando
+Item id: 667 Name: Evridiki
+Item id: 664 Name: Karolina
+Item id: 663 Name: Sakis Rouvas
+Item id: 662 Name: Tamta
+Item id: 661 Name: Stromae
+Item id: 660 Name: Dima Bilan
+Item id: 657 Name: Paolo Meneguzzi
+Item id: 650 Name: Giorgos Papadopoulos
+Item id: 649 Name: D'Nash
+Item id: 648 Name: Antonis Remos
+Item id: 647 Name: Eleftheria Eleftheriou
+Item id: 646 Name: RBD
+Item id: 644 Name: Inna
+Item id: 643 Name: Nikolas Metaxas
+Item id: 642 Name: Banghra
+Item id: 639 Name: Milan Stanković
+Item id: 638 Name: Kalomira
+Item id: 637 Name: Helena Paparizou
+Item id: 636 Name: Ivi Adamou
+Item id: 635 Name: Casi angeles team
+Item id: 532 Name: Little Boots
+Item id: 386 Name: Cascada
+Item id: 346 Name: Lena
+Item id: 677 Name: Kostas Martakis
+
+Users favorites attributes on the kG
+Modern Greek
+Greece
+pop music
+voice
+singer
+
+Recommendations
+Item id: 289 Name: Britney Spears
+Item id: 288 Name: Rihanna
+Item id: 300 Name: Katy Perry
+Item id: 701 Name: Shakira
+Item id: 292 Name: Christina Aguilera
+
+Paths for the Recommended Item: 289
+"Lady Gaga" nodes: "Madonna" destination: "Britney Spears"
+Paths for the Recommended Item: 288
+"Ivi Adamou"; "Kostas Martakis" nodes: "Athens" "female" destination: "Rihanna"
+Paths for the Recommended Item: 300
+"Kalomira" nodes: "United States of America" destination: "Katy Perry"
+Paths for the Recommended Item: 701
+"Sakis Rouvas" nodes: "rock music" destination: "Shakira"
+Paths for the Recommended Item: 292
+"Lady Gaga" nodes: "pop music" destination: "Christina Aguilera"
+
+User: 17
+Items interacted by the user
+Item id: 56 Name: Daft Punk
+Item id: 694 Name: Darren Criss
+Item id: 682 Name: Lights
+Item id: 683 Name: John Mayer
+Item id: 686 Name: Selena Gomez & the Scene
+Item id: 687 Name: All Time Low
+Item id: 688 Name: Honor Society
+Item id: 689 Name: Florence + the Machine
+Item id: 693 Name: Hey Monday
+Item id: 695 Name: Push Play
+Item id: 680 Name: The Veronicas
+Item id: 696 Name: The Pierces
+Item id: 697 Name: Sia
+Item id: 698 Name: Duncan Sheik
+Item id: 699 Name: Esmée Denters
+Item id: 700 Name: Boyce Avenue
+Item id: 702 Name: Ester Dean
+Item id: 703 Name: The xx
+Item id: 681 Name: Demi Lovato
+Item id: 548 Name: Ellie Goulding
+Item id: 67 Name: Madonna
+Item id: 325 Name: Ashley Tisdale
+Item id: 89 Name: Lady Gaga
+Item id: 229 Name: The Killers
+Item id: 230 Name: Green Day
+Item id: 292 Name: Christina Aguilera
+Item id: 298 Name: Lily Allen
+Item id: 306 Name: Black Eyed Peas
+Item id: 324 Name: Cobra Starship
+Item id: 344 Name: Taylor Swift
+Item id: 544 Name: Adam Lambert
+Item id: 403 Name: The All-American Rejects
+Item id: 461 Name: Miley Cyrus
+Item id: 466 Name: Kesha
+Item id: 498 Name: Paramore
+Item id: 526 Name: La Roux
+Item id: 528 Name: Pixie Lott
+Item id: 538 Name: Maroon 5
+Item id: 704 Name: The Pretty Reckless
+
+Users favorites attributes on the kG
+pop rock
+Grammy Award for Best Pop Vocal Album
+synth-pop
+English
+dance-pop
+
+Recommendations
+Item id: 289 Name: Britney Spears
+Item id: 300 Name: Katy Perry
+Item id: 288 Name: Rihanna
+Item id: 333 Name: Avril Lavigne
+Item id: 295 Name: Beyoncé
+
+Paths for the Recommended Item: 289
+"Lady Gaga" nodes: "Madonna" destination: "Britney Spears"
+Paths for the Recommended Item: 300
+"Cobra Starship" nodes: "United States of America" destination: "Katy Perry"
+Paths for the Recommended Item: 288
+"Kesha"; "Maroon 5" nodes: "United States of America" "2005-01-01T00:00:00Z" destination: "Rihanna"
+Paths for the Recommended Item: 333
+"Daft Punk" nodes: "France" destination: "Avril Lavigne"
+Paths for the Recommended Item: 295
+"Cobra Starship" nodes: "United States of America" destination: "Beyoncé"
+
+User: 18
+Items interacted by the user
+Item id: 56 Name: Daft Punk
+Item id: 727 Name: Era
+Item id: 719 Name: Orishas
+Item id: 720 Name: Social Distortion
+Item id: 721 Name: Wim Mertens
+Item id: 722 Name: ATB
+Item id: 723 Name: Buena Vista Social Club
+Item id: 724 Name: Ozzy Osbourne
+Item id: 725 Name: Titãs
+Item id: 726 Name: Apocalyptica
+Item id: 729 Name: Sacred Spirit
+Item id: 65 Name: Coldplay
+Item id: 730 Name: Eagles
+Item id: 731 Name: 1200 Micrograms
+Item id: 732 Name: Alice Cooper
+Item id: 733 Name: John Lennon
+Item id: 734 Name: Bruce Springsteen
+Item id: 735 Name: The Rolling Stones
+Item id: 736 Name: Eliades Ochoa
+Item id: 737 Name: Trans-Siberian Orchestra
+Item id: 717 Name: Electric Light Orchestra
+Item id: 716 Name: Kaiser Chiefs
+Item id: 715 Name: R.E.M.
+Item id: 714 Name: Legião Urbana
+Item id: 71 Name: Dido
+Item id: 88 Name: Gorillaz
+Item id: 163 Name: Pink Floyd
+Item id: 174 Name: Infected Mushroom
+Item id: 190 Name: Muse
+Item id: 227 Name: The Beatles
+Item id: 230 Name: Green Day
+Item id: 378 Name: Evanescence
+Item id: 389 Name: Enya
+Item id: 511 Name: U2
+Item id: 533 Name: Oasis
+Item id: 707 Name: Metallica
+Item id: 708 Name: Capital Inicial
+Item id: 709 Name: The White Stripes
+Item id: 711 Name: Mark Knopfler
+Item id: 712 Name: Dire Straits
+Item id: 713 Name: Gotthard
+Item id: 739 Name: Lulu Santos
+
+Users favorites attributes on the kG
+Rock and Roll Hall of Fame
+rock music
+blues rock
+Warner Bros. Records
+Grammy Award for Best New Artist
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 289 Name: Britney Spears
+Item id: 154 Name: Radiohead
+Item id: 67 Name: Madonna
+Item id: 300 Name: Katy Perry
+
+Paths for the Recommended Item: 89
+"John Lennon"; "Electric Light Orchestra" nodes: "The Beatles" "New York City" destination: "Lady Gaga"
+Paths for the Recommended Item: 289
+"John Lennon"; "Electric Light Orchestra" nodes: "The Beatles" "English" destination: "Britney Spears"
+Paths for the Recommended Item: 154
+"Ozzy Osbourne"; "Metallica" nodes: "Black Sabbath" "United Kingdom" destination: "Radiohead"
+Paths for the Recommended Item: 67
+"Electric Light Orchestra" nodes: "United Kingdom" destination: "Madonna"
+Paths for the Recommended Item: 300
+"John Lennon"; "Electric Light Orchestra" nodes: "The Beatles" "guitar" destination: "Katy Perry"
+
+User: 20
+Items interacted by the user
+Item id: 56 Name: Daft Punk
+Item id: 761 Name: Asian Dub Foundation
+Item id: 784 Name: Jackson and his Computer Band
+Item id: 783 Name: Digitonal
+Item id: 782 Name: Solar Fields
+Item id: 779 Name: Bring Me the Horizon
+Item id: 778 Name: Ochre
+Item id: 777 Name: The Crystal Method
+Item id: 774 Name: Mooncake
+Item id: 772 Name: Proem
+Item id: 770 Name: Horse the Band
+Item id: 769 Name: Isis
+Item id: 768 Name: Enter Shikari
+Item id: 767 Name: Gridlock
+Item id: 766 Name: Ben Frost
+Item id: 763 Name: Mono
+Item id: 756 Name: Arovane
+Item id: 88 Name: Gorillaz
+Item id: 755 Name: 65daysofstatic
+Item id: 752 Name: Boris
+Item id: 750 Name: Bill Withers
+Item id: 749 Name: Casino Versus Japan
+Item id: 748 Name: Boards of Canada
+Item id: 747 Name: Carbon Based Lifeforms
+Item id: 746 Name: Salem
+Item id: 745 Name: Aidan Baker
+Item id: 744 Name: Autechre
+Item id: 743 Name: Nadja
+Item id: 512 Name: Deftones
+Item id: 504 Name: HIM
+Item id: 163 Name: Pink Floyd
+Item id: 141 Name: Aidan Baker
+Item id: 785 Name: Fear Factory
+
+Users favorites attributes on the kG
+intelligent dance music
+electronica
+electronic music
+1993-01-01T00:00:00Z
+United Kingdom
+
+Recommendations
+Item id: 154 Name: Radiohead
+Item id: 227 Name: The Beatles
+Item id: 89 Name: Lady Gaga
+Item id: 190 Name: Muse
+Item id: 289 Name: Britney Spears
+
+Paths for the Recommended Item: 154
+"Ochre" nodes: "United Kingdom" destination: "Radiohead"
+Paths for the Recommended Item: 227
+"Asian Dub Foundation"; "The Crystal Method" nodes: "1993-01-01T00:00:00Z" "United Kingdom" destination: "The Beatles"
+Paths for the Recommended Item: 89
+"The Crystal Method" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 190
+"Ochre" nodes: "United Kingdom" destination: "Muse"
+Paths for the Recommended Item: 289
+"The Crystal Method" nodes: "United States of America" destination: "Britney Spears"
+
+User: 21
+Items interacted by the user
+Item id: 55 Name: Kylie Minogue
+Item id: 67 Name: Madonna
+Item id: 535 Name: Sophie Ellis-Bextor
+Item id: 543 Name: Nicole Scherzinger
+Item id: 660 Name: Dima Bilan
+Item id: 681 Name: Demi Lovato
+Item id: 686 Name: Selena Gomez & the Scene
+Item id: 701 Name: Shakira
+Item id: 786 Name: Mandy Moore
+Item id: 788 Name: Fey
+Item id: 789 Name: Dannii Minogue
+Item id: 791 Name: Marie Serneholt
+Item id: 793 Name: Miley Cyrus
+Item id: 794 Name: A-Teens
+Item id: 795 Name: Gloria Trevi
+Item id: 796 Name: Anna Carina
+Item id: 797 Name: Emily Osment
+Item id: 798 Name: Geri Halliwell
+Item id: 800 Name: Atomic Kitten
+Item id: 531 Name: Taio Cruz
+Item id: 523 Name: Lindsay Lohan
+Item id: 476 Name: M. Pokora
+Item id: 298 Name: Lily Allen
+Item id: 71 Name: Dido
+Item id: 89 Name: Lady Gaga
+Item id: 288 Name: Rihanna
+Item id: 289 Name: Britney Spears
+Item id: 292 Name: Christina Aguilera
+Item id: 293 Name: Ashlee Simpson
+Item id: 295 Name: Beyoncé
+Item id: 300 Name: Katy Perry
+Item id: 466 Name: Kesha
+Item id: 302 Name: Pink
+Item id: 306 Name: Black Eyed Peas
+Item id: 310 Name: Nelly Furtado
+Item id: 318 Name: Hilary Duff
+Item id: 325 Name: Ashley Tisdale
+Item id: 461 Name: Miley Cyrus
+Item id: 465 Name: Jessica Simpson
+Item id: 803 Name: Five
+
+Users favorites attributes on the kG
+pop music
+English
+model
+dance-pop
+film actor
+
+Recommendations
+Item id: 333 Name: Avril Lavigne
+Item id: 498 Name: Paramore
+Item id: 299 Name: Jennifer Lopez
+Item id: 344 Name: Taylor Swift
+Item id: 349 Name: The Pussycat Dolls
+
+Paths for the Recommended Item: 333
+"Jessica Simpson" nodes: "1999-01-01T00:00:00Z" destination: "Avril Lavigne"
+Paths for the Recommended Item: 498
+"Jessica Simpson" nodes: "United States of America" destination: "Paramore"
+Paths for the Recommended Item: 299
+"Lindsay Lohan" nodes: "New York City" destination: "Jennifer Lopez"
+Paths for the Recommended Item: 344
+"Emily Osment" nodes: "2006-01-01T00:00:00Z" destination: "Taylor Swift"
+Paths for the Recommended Item: 349
+"Jessica Simpson" nodes: "United States of America" destination: "The Pussycat Dolls"
+
+User: 22
+Items interacted by the user
+Item id: 412 Name: Blink-182
+Item id: 837 Name: Eluveitie
+Item id: 828 Name: From a Second Story Window
+Item id: 829 Name: It Prevails
+Item id: 830 Name: Atreyu
+Item id: 831 Name: Emmure
+Item id: 832 Name: I Killed the Prom Queen
+Item id: 833 Name: Suffokate
+Item id: 834 Name: Five Finger Death Punch
+Item id: 835 Name: Scar Symmetry
+Item id: 839 Name: All Shall Perish
+Item id: 826 Name: Divine Heresy
+Item id: 840 Name: Millencolin
+Item id: 841 Name: Slayer
+Item id: 842 Name: Despised Icon
+Item id: 844 Name: Pain Confessor
+Item id: 845 Name: The Dillinger Escape Plan
+Item id: 846 Name: Lamb of God
+Item id: 848 Name: Ego Fall
+Item id: 849 Name: Feed Her to the Sharks
+Item id: 827 Name: Ignite
+Item id: 825 Name: Whitechapel
+Item id: 503 Name: In Flames
+Item id: 813 Name: As I Lay Dying
+Item id: 514 Name: Ill Niño
+Item id: 804 Name: Darkest Hour
+Item id: 805 Name: Parkway Drive
+Item id: 806 Name: Soilwork
+Item id: 807 Name: Crematory
+Item id: 808 Name: Rise Against
+Item id: 810 Name: All That Remains
+Item id: 812 Name: Dark Tranquillity
+Item id: 814 Name: Caliban
+Item id: 824 Name: Ensiferum
+Item id: 815 Name: Killswitch Engage
+Item id: 816 Name: A Day to Remember
+Item id: 817 Name: Corpus Christi
+Item id: 818 Name: 36 Crazyfists
+Item id: 819 Name: Avatar
+Item id: 820 Name: At the Gates
+Item id: 821 Name: Amon Amarth
+Item id: 823 Name: August Burns Red
+Item id: 850 Name: Haste the Day
+
+Users favorites attributes on the kG
+metalcore
+melodic death metal
+Nuclear Blast
+2002-01-01T00:00:00Z
+Victory Records
+
+Recommendations
+Item id: 707 Name: Metallica
+Item id: 498 Name: Paramore
+Item id: 377 Name: Linkin Park
+Item id: 190 Name: Muse
+Item id: 227 Name: The Beatles
+
+Paths for the Recommended Item: 707
+"Slayer"; "Despised Icon" nodes: "Nuclear Blast" "1981-01-01T00:00:00Z" destination: "Metallica"
+Paths for the Recommended Item: 498
+"Scar Symmetry"; "Despised Icon" nodes: "Nuclear Blast" "2004-01-01T00:00:00Z" destination: "Paramore"
+Paths for the Recommended Item: 377
+"Despised Icon"; "Soilwork" nodes: "Nuclear Blast" "1996-01-01T00:00:00Z" destination: "Linkin Park"
+Paths for the Recommended Item: 190
+"All Shall Perish"; "Lamb of God" nodes: "Nuclear Blast" "1994-01-01T00:00:00Z" destination: "Muse"
+Paths for the Recommended Item: 227
+"Lamb of God" nodes: "1994-01-01T00:00:00Z" "rock music" destination: "The Beatles"
+
+User: 23
+Items interacted by the user
+Item id: 7 Name: Marilyn Manson
+Item id: 873 Name: Porno for Pyros
+Item id: 863 Name: The Velvet Underground
+Item id: 864 Name: Ministry
+Item id: 865 Name: Republika
+Item id: 866 Name: Virgin Prunes
+Item id: 867 Name: Nick Cave and the Bad Seeds
+Item id: 868 Name: The Doors
+Item id: 869 Name: The Afghan Whigs
+Item id: 870 Name: Skeletal Family
+Item id: 871 Name: New Model Army
+Item id: 874 Name: Roxy Music
+Item id: 861 Name: Killing Joke
+Item id: 875 Name: Bauhaus
+Item id: 876 Name: Revolting Cocks
+Item id: 877 Name: Alphaville
+Item id: 878 Name: Wolfsheim
+Item id: 879 Name: Can
+Item id: 880 Name: Nitzer Ebb
+Item id: 881 Name: Kyuss
+Item id: 882 Name: The Jesus Lizard
+Item id: 883 Name: Tiamat
+Item id: 862 Name: Primal Scream
+Item id: 860 Name: Stone Temple Pilots
+Item id: 72 Name: Depeche Mode
+Item id: 511 Name: U2
+Item id: 159 Name: The Cure
+Item id: 163 Name: Pink Floyd
+Item id: 181 Name: Paradise Lost
+Item id: 220 Name: Red Hot Chili Peppers
+Item id: 226 Name: Queens of the Stone Age
+Item id: 227 Name: The Beatles
+Item id: 233 Name: list of Nine Inch Nails band members
+Item id: 420 Name: The Kills
+Item id: 436 Name: The Smashing Pumpkins
+Item id: 599 Name: David Bowie
+Item id: 859 Name: Pixies
+Item id: 707 Name: Metallica
+Item id: 851 Name: Manic Street Preachers
+Item id: 852 Name: The Stranglers
+Item id: 853 Name: Therapy?
+Item id: 854 Name: Alice in Chains
+Item id: 855 Name: Jane's Addiction
+Item id: 856 Name: Soundgarden
+Item id: 857 Name: The Clash
+Item id: 858 Name: PJ Harvey
+Item id: 884 Name: Brygada Kryzys
+
+Users favorites attributes on the kG
+alternative rock
+United Kingdom
+Rock and Roll Hall of Fame
+1987-01-01T00:00:00Z
+new wave
+
+Recommendations
+Item id: 154 Name: Radiohead
+Item id: 190 Name: Muse
+Item id: 89 Name: Lady Gaga
+Item id: 234 Name: Nirvana
+Item id: 65 Name: Coldplay
+
+Paths for the Recommended Item: 154
+"list of Nine Inch Nails band members"; "The Smashing Pumpkins" nodes: "1988-01-01T00:00:00Z" "Pink Floyd" destination: "Radiohead"
+Paths for the Recommended Item: 190
+"David Bowie" nodes: "United Kingdom" destination: "Muse"
+Paths for the Recommended Item: 89
+"Alice in Chains" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 234
+"Republika"; "Metallica" nodes: "1981-01-01T00:00:00Z" "Black Sabbath" destination: "Nirvana"
+Paths for the Recommended Item: 65
+"Revolting Cocks"; "Queens of the Stone Age" nodes: "United States of America" "1996-01-01T00:00:00Z" destination: "Coldplay"
+
+User: 24
+Items interacted by the user
+Item id: 55 Name: Kylie Minogue
+Item id: 437 Name: She Moves
+Item id: 689 Name: Florence + the Machine
+Item id: 709 Name: The White Stripes
+Item id: 786 Name: Mandy Moore
+Item id: 789 Name: Dannii Minogue
+Item id: 885 Name: Tracy Chapman
+Item id: 886 Name: Dragonette
+Item id: 889 Name: Cyndi Lauper
+Item id: 890 Name: Kelly Osbourne
+Item id: 891 Name: Jewel
+Item id: 893 Name: Kate Miller-Heidke
+Item id: 894 Name: Sneaky Sound System
+Item id: 896 Name: Noisettes
+Item id: 898 Name: Tegan and Sara
+Item id: 899 Name: Missy Higgins
+Item id: 900 Name: Annie Lennox
+Item id: 901 Name: V V Brown
+Item id: 904 Name: Rogue Traders
+Item id: 526 Name: La Roux
+Item id: 425 Name: Yeah Yeah Yeahs
+Item id: 89 Name: Lady Gaga
+Item id: 340 Name: Cher
+Item id: 157 Name: Mick Jackson
+Item id: 167 Name: Scissor Sisters
+Item id: 229 Name: The Killers
+Item id: 257 Name: Mariah Carey
+Item id: 258 Name: Tina Turner
+Item id: 285 Name: Janet Jackson
+Item id: 288 Name: Rihanna
+Item id: 289 Name: Britney Spears
+Item id: 291 Name: Kelly Clarkson
+Item id: 295 Name: Beyoncé
+Item id: 298 Name: Lily Allen
+Item id: 300 Name: Katy Perry
+Item id: 301 Name: Alicia Keys
+Item id: 302 Name: Pink
+Item id: 310 Name: Nelly Furtado
+Item id: 316 Name: Alanis Morissette
+Item id: 333 Name: Avril Lavigne
+Item id: 905 Name: Crowded House
+
+Users favorites attributes on the kG
+English
+Grammy Award for Best New Artist
+female
+film actor
+MTV Video Music Award for Best Female Video
+
+Recommendations
+Item id: 67 Name: Madonna
+Item id: 292 Name: Christina Aguilera
+Item id: 701 Name: Shakira
+Item id: 466 Name: Kesha
+Item id: 306 Name: Black Eyed Peas
+
+Paths for the Recommended Item: 67
+"Lady Gaga" nodes: "David Bowie" destination: "Madonna"
+Paths for the Recommended Item: 292
+"Britney Spears" nodes: "Whitney Houston" destination: "Christina Aguilera"
+Paths for the Recommended Item: 701
+"Tegan and Sara"; "Avril Lavigne" nodes: "Canada" "voice" destination: "Shakira"
+Paths for the Recommended Item: 466
+"Scissor Sisters" nodes: "United States of America" destination: "Kesha"
+Paths for the Recommended Item: 306
+"Alicia Keys" nodes: "United States of America" destination: "Black Eyed Peas"
+
+User: 25
+Items interacted by the user
+Item id: 55 Name: Kylie Minogue
+Item id: 786 Name: Mandy Moore
+Item id: 459 Name: NSYNC
+Item id: 462 Name: Labelle
+Item id: 469 Name: Nick Carter
+Item id: 476 Name: M. Pokora
+Item id: 484 Name: Ne-Yo
+Item id: 531 Name: Taio Cruz
+Item id: 543 Name: Nicole Scherzinger
+Item id: 701 Name: Shakira
+Item id: 800 Name: Atomic Kitten
+Item id: 354 Name: Sarah Connor
+Item id: 907 Name: Timbaland
+Item id: 908 Name: Vanessa Hudgens
+Item id: 909 Name: Delta Goodrem
+Item id: 910 Name: John Williams
+Item id: 911 Name: Rachel Stevens
+Item id: 913 Name: Destiny's Child
+Item id: 914 Name: Medina
+Item id: 915 Name: Alexandra Burke
+Item id: 455 Name: Backstreet Boys
+Item id: 350 Name: Monrose
+Item id: 67 Name: Madonna
+Item id: 295 Name: Beyoncé
+Item id: 155 Name: Robbie Williams
+Item id: 157 Name: Mick Jackson
+Item id: 288 Name: Rihanna
+Item id: 289 Name: Britney Spears
+Item id: 290 Name: Jordin Sparks
+Item id: 292 Name: Christina Aguilera
+Item id: 293 Name: Ashlee Simpson
+Item id: 294 Name: Leona Lewis
+Item id: 296 Name: Sugababes
+Item id: 331 Name: Kanye West
+Item id: 302 Name: Pink
+Item id: 309 Name: Danity Kane
+Item id: 310 Name: Nelly Furtado
+Item id: 311 Name: Natasha Bedingfield
+Item id: 314 Name: Ciara
+Item id: 318 Name: Hilary Duff
+Item id: 328 Name: David Guetta
+Item id: 329 Name: Justin Timberlake
+Item id: 916 Name: Vanessa Struhler
+
+Users favorites attributes on the kG
+contemporary R&B
+English
+pop music
+actor
+model
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 300 Name: Katy Perry
+Item id: 333 Name: Avril Lavigne
+Item id: 466 Name: Kesha
+Item id: 306 Name: Black Eyed Peas
+
+Paths for the Recommended Item: 89
+"Britney Spears" nodes: "Madonna" destination: "Lady Gaga"
+Paths for the Recommended Item: 300
+"Danity Kane" nodes: "United States of America" destination: "Katy Perry"
+Paths for the Recommended Item: 333
+"Rachel Stevens"; "Sugababes" nodes: "United Kingdom" "1999-01-01T00:00:00Z" destination: "Avril Lavigne"
+Paths for the Recommended Item: 466
+"Danity Kane" nodes: "United States of America" destination: "Kesha"
+Paths for the Recommended Item: 306
+"Britney Spears"; "Leona Lewis" nodes: "Whitney Houston" "United States of America" destination: "Black Eyed Peas"
+
+User: 26
+Items interacted by the user
+Item id: 6 Name: Moonspell
+Item id: 25 Name: Cradle of Filth
+Item id: 938 Name: Hibria
+Item id: 939 Name: Mindflow
+Item id: 942 Name: Iced Earth
+Item id: 943 Name: Nevermore
+Item id: 944 Name: Symphony X
+Item id: 945 Name: Journey
+Item id: 946 Name: Avantasia
+Item id: 947 Name: Testament
+Item id: 948 Name: Burning in Hell
+Item id: 949 Name: Death
+Item id: 950 Name: Kiko Loureiro
+Item id: 951 Name: Bon Jovi
+Item id: 952 Name: Skid Row
+Item id: 954 Name: Kreator
+Item id: 955 Name: Epica
+Item id: 956 Name: Yngwie Malmsteen
+Item id: 957 Name: Blind Guardian
+Item id: 958 Name: Kotipelto
+Item id: 959 Name: Queen
+Item id: 937 Name: Stratovarius
+Item id: 936 Name: Kamelot
+Item id: 935 Name: Bittencourt Project
+Item id: 921 Name: Circle II Circle
+Item id: 511 Name: U2
+Item id: 707 Name: Metallica
+Item id: 718 Name: Johnny Cash
+Item id: 841 Name: Slayer
+Item id: 917 Name: list of Iron Maiden band members
+Item id: 918 Name: Megadeth
+Item id: 919 Name: Savatage
+Item id: 920 Name: Dream Theater
+Item id: 922 Name: Bruce Dickinson
+Item id: 934 Name: Angel Dust
+Item id: 923 Name: Children of Bodom
+Item id: 924 Name: Angra
+Item id: 925 Name: Andre Matos
+Item id: 926 Name: Shaman
+Item id: 927 Name: Hangar 18
+Item id: 929 Name: Viper
+Item id: 931 Name: Dr. Sin
+Item id: 932 Name: Matanza
+Item id: 960 Name: Outworld
+
+Users favorites attributes on the kG
+Brazil
+power metal
+heavy metal
+Nuclear Blast
+progressive metal
+
+Recommendations
+Item id: 227 Name: The Beatles
+Item id: 163 Name: Pink Floyd
+Item id: 89 Name: Lady Gaga
+Item id: 190 Name: Muse
+Item id: 1412 Name: Led Zeppelin
+
+Paths for the Recommended Item: 227
+"Slayer"; "Bruce Dickinson" nodes: "Iron Maiden" "United Kingdom" destination: "The Beatles"
+Paths for the Recommended Item: 163
+"Slayer"; "Bruce Dickinson" nodes: "Iron Maiden" "United Kingdom" destination: "Pink Floyd"
+Paths for the Recommended Item: 89
+"Avantasia"; "Death" nodes: "Nuclear Blast" "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 190
+"Slayer"; "Bruce Dickinson" nodes: "Iron Maiden" "United Kingdom" destination: "Muse"
+Paths for the Recommended Item: 1412
+"Slayer"; "Bruce Dickinson" nodes: "Iron Maiden" "United Kingdom" destination: "Led Zeppelin"
+
+User: 27
+Items interacted by the user
+Item id: 51 Name: Duran Duran
+Item id: 967 Name: Sixpence None the Richer
+Item id: 969 Name: Kasabian
+Item id: 970 Name: Infernal
+Item id: 972 Name: t.A.T.u.
+Item id: 973 Name: Hevia
+Item id: 974 Name: Amy Studt
+Item id: 975 Name: Santana
+Item id: 976 Name: Agressiva 69
+Item id: 977 Name: At the Drive-In
+Item id: 978 Name: Disturbed
+Item id: 979 Name: Smash Mouth
+Item id: 980 Name: YELLE
+Item id: 981 Name: Emilíana Torrini
+Item id: 982 Name: Foo Fighters
+Item id: 983 Name: Rodrigo y Gabriela
+Item id: 984 Name: Tilly and the Wall
+Item id: 985 Name: Blondie
+Item id: 986 Name: Frank Sinatra
+Item id: 987 Name: Earth, Wind & Fire
+Item id: 988 Name: Fallulah
+Item id: 989 Name: The Donnas
+Item id: 990 Name: Iron Butterfly
+Item id: 968 Name: Armin van Buuren
+Item id: 966 Name: Nickelback
+Item id: 67 Name: Madonna
+Item id: 965 Name: Bush
+Item id: 152 Name: Porcupine Tree
+Item id: 172 Name: Garbage
+Item id: 183 Name: Jamiroquai
+Item id: 328 Name: David Guetta
+Item id: 348 Name: Wir sind Helden
+Item id: 423 Name: Bat for Lashes
+Item id: 463 Name: Savage Garden
+Item id: 548 Name: Ellie Goulding
+Item id: 614 Name: Pearl Jam
+Item id: 641 Name: Laura Pausini
+Item id: 644 Name: Inna
+Item id: 689 Name: Florence + the Machine
+Item id: 701 Name: Shakira
+Item id: 703 Name: The xx
+Item id: 726 Name: Apocalyptica
+Item id: 861 Name: Killing Joke
+Item id: 917 Name: list of Iron Maiden band members
+Item id: 961 Name: Tori Amos
+Item id: 962 Name: The Cardigans
+Item id: 963 Name: Yanni
+Item id: 964 Name: The Mars Volta
+Item id: 991 Name: Jem
+
+Users favorites attributes on the kG
+English
+1993-01-01T00:00:00Z
+1992-01-01T00:00:00Z
+alternative rock
+United Kingdom
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 289 Name: Britney Spears
+Item id: 227 Name: The Beatles
+Item id: 300 Name: Katy Perry
+Item id: 288 Name: Rihanna
+
+Paths for the Recommended Item: 89
+"Madonna"; "Bush" nodes: "United Kingdom" "David Bowie" destination: "Lady Gaga"
+Paths for the Recommended Item: 289
+"Smash Mouth" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 227
+"Shakira" nodes: "John Lennon" destination: "The Beatles"
+Paths for the Recommended Item: 300
+"Smash Mouth" nodes: "United States of America" destination: "Katy Perry"
+Paths for the Recommended Item: 288
+"Earth, Wind & Fire" nodes: "United States of America" "2005-01-01T00:00:00Z" destination: "Rihanna"
+
+User: 28
+Items interacted by the user
+Item id: 51 Name: Duran Duran
+Item id: 61 Name: Talk Talk
+Item id: 1009 Name: Tiësto
+Item id: 1010 Name: Dewa 19
+Item id: 1013 Name: Ultravox
+Item id: 1014 Name: Erasure
+Item id: 1016 Name: Novaspace
+Item id: 1017 Name: The Psychedelic Furs
+Item id: 1018 Name: Midge Ure
+Item id: 1019 Name: Yazoo
+Item id: 1020 Name: OceanLab
+Item id: 1021 Name: Groove Coverage
+Item id: 1022 Name: Dance Nation
+Item id: 1023 Name: Fragma
+Item id: 1024 Name: AnnaGrace
+Item id: 1025 Name: DJ Sammy
+Item id: 1026 Name: Sylver
+Item id: 1027 Name: Heaven 17
+Item id: 1028 Name: Anything Box
+Item id: 1008 Name: Level 42
+Item id: 1006 Name: The Fixx
+Item id: 1005 Name: Robert Palmer
+Item id: 993 Name: Simple Minds
+Item id: 72 Name: Depeche Mode
+Item id: 85 Name: Spandau Ballet
+Item id: 91 Name: Nik Kershaw
+Item id: 100 Name: ABC
+Item id: 193 Name: Tears for Fears
+Item id: 905 Name: Crowded House
+Item id: 992 Name: Chris Rea
+Item id: 994 Name: Howard Jones
+Item id: 1004 Name: Kim Wilde
+Item id: 995 Name: China Crisis
+Item id: 997 Name: The Human League
+Item id: 998 Name: Orchestral Manoeuvres in the Dark
+Item id: 1000 Name: Information Society
+Item id: 1001 Name: Pet Shop Boys
+Item id: 1002 Name: Rick Astley
+Item id: 1003 Name: Johnny Hates Jazz
+Item id: 1029 Name: Markus Schulz
+
+Users favorites attributes on the kG
+new wave
+United Kingdom
+synth-pop
+1980-01-01T00:00:00Z
+trance
+
+Recommendations
+Item id: 67 Name: Madonna
+Item id: 227 Name: The Beatles
+Item id: 89 Name: Lady Gaga
+Item id: 159 Name: The Cure
+Item id: 599 Name: David Bowie
+
+Paths for the Recommended Item: 67
+"The Fixx" nodes: "United Kingdom" destination: "Madonna"
+Paths for the Recommended Item: 227
+"Nik Kershaw" nodes: "United Kingdom" destination: "The Beatles"
+Paths for the Recommended Item: 89
+"Anything Box" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 159
+"Nik Kershaw" nodes: "United Kingdom" destination: "The Cure"
+Paths for the Recommended Item: 599
+"The Fixx" nodes: "United Kingdom" destination: "David Bowie"
+
+User: 29
+Items interacted by the user
+Item id: 55 Name: Kylie Minogue
+Item id: 1034 Name: Kerli
+Item id: 537 Name: The Used
+Item id: 686 Name: Selena Gomez & the Scene
+Item id: 687 Name: All Time Low
+Item id: 908 Name: Vanessa Hudgens
+Item id: 951 Name: Bon Jovi
+Item id: 966 Name: Nickelback
+Item id: 1032 Name: Jessie J
+Item id: 1035 Name: Breathe Carolina
+Item id: 528 Name: Pixie Lott
+Item id: 1036 Name: Anarbor
+Item id: 1037 Name: Nicki Minaj
+Item id: 1038 Name: The Maine
+Item id: 1040 Name: Forever the Sickest Kids
+Item id: 1042 Name: Bruno Mars
+Item id: 1044 Name: Slipknot
+Item id: 1045 Name: Fresno
+Item id: 531 Name: Taio Cruz
+Item id: 500 Name: Bullet For My Valentine
+Item id: 89 Name: Lady Gaga
+Item id: 318 Name: Hilary Duff
+Item id: 161 Name: Enrique Iglesias
+Item id: 209 Name: My Chemical Romance
+Item id: 288 Name: Rihanna
+Item id: 289 Name: Britney Spears
+Item id: 292 Name: Christina Aguilera
+Item id: 300 Name: Katy Perry
+Item id: 302 Name: Pink
+Item id: 328 Name: David Guetta
+Item id: 498 Name: Paramore
+Item id: 333 Name: Avril Lavigne
+Item id: 378 Name: Evanescence
+Item id: 455 Name: Backstreet Boys
+Item id: 461 Name: Miley Cyrus
+Item id: 464 Name: 3OH!3
+Item id: 466 Name: Kesha
+Item id: 472 Name: 3 Doors Down
+Item id: 1046 Name: New Found Glory
+
+Users favorites attributes on the kG
+English
+pop rock
+dance-pop
+pop music
+MTV Video Music Award for Best Female Video
+
+Recommendations
+Item id: 295 Name: Beyoncé
+Item id: 67 Name: Madonna
+Item id: 701 Name: Shakira
+Item id: 306 Name: Black Eyed Peas
+Item id: 344 Name: Taylor Swift
+
+Paths for the Recommended Item: 295
+"The Maine" nodes: "United States of America" destination: "Beyoncé"
+Paths for the Recommended Item: 67
+"Lady Gaga" nodes: "David Bowie" destination: "Madonna"
+Paths for the Recommended Item: 701
+"The Maine"; "Kesha" nodes: "United States of America" "female" destination: "Shakira"
+Paths for the Recommended Item: 306
+"Bruno Mars" nodes: "United States of America" destination: "Black Eyed Peas"
+Paths for the Recommended Item: 344
+"The Maine" nodes: "United States of America" destination: "Taylor Swift"
+
+User: 30
+Items interacted by the user
+Item id: 89 Name: Lady Gaga
+Item id: 1043 Name: Boys Like Girls
+Item id: 538 Name: Maroon 5
+Item id: 646 Name: RBD
+Item id: 680 Name: The Veronicas
+Item id: 687 Name: All Time Low
+Item id: 793 Name: Miley Cyrus
+Item id: 908 Name: Vanessa Hudgens
+Item id: 951 Name: Bon Jovi
+Item id: 966 Name: Nickelback
+Item id: 1047 Name: McFly
+Item id: 498 Name: Paramore
+Item id: 1048 Name: The Kooks
+Item id: 1049 Name: Panik
+Item id: 1051 Name: Alesha Dixon
+Item id: 1052 Name: Pink
+Item id: 1053 Name: Edyta Bartosiewicz
+Item id: 1055 Name: Myslovitz
+Item id: 1057 Name: Ewa Farna
+Item id: 1058 Name: Łzy
+Item id: 521 Name: Happysad
+Item id: 481 Name: Simple Plan
+Item id: 190 Name: Muse
+Item id: 300 Name: Katy Perry
+Item id: 228 Name: Kings of Leon
+Item id: 229 Name: The Killers
+Item id: 230 Name: Green Day
+Item id: 234 Name: Nirvana
+Item id: 288 Name: Rihanna
+Item id: 289 Name: Britney Spears
+Item id: 291 Name: Kelly Clarkson
+Item id: 295 Name: Beyoncé
+Item id: 304 Name: David Archuleta
+Item id: 471 Name: Metro Station
+Item id: 315 Name: M. Pokora
+Item id: 318 Name: Hilary Duff
+Item id: 325 Name: Ashley Tisdale
+Item id: 344 Name: Taylor Swift
+Item id: 455 Name: Backstreet Boys
+Item id: 456 Name: Jesse McCartney
+Item id: 461 Name: Miley Cyrus
+Item id: 465 Name: Jessica Simpson
+Item id: 1059 Name: Alexz Johnson
+
+Users favorites attributes on the kG
+pop rock
+pop music
+English
+electropop
+film actor
+
+Recommendations
+Item id: 333 Name: Avril Lavigne
+Item id: 292 Name: Christina Aguilera
+Item id: 466 Name: Kesha
+Item id: 67 Name: Madonna
+Item id: 701 Name: Shakira
+
+Paths for the Recommended Item: 333
+"Nickelback" nodes: "Canada" destination: "Avril Lavigne"
+Paths for the Recommended Item: 292
+"Britney Spears" nodes: "Whitney Houston" destination: "Christina Aguilera"
+Paths for the Recommended Item: 466
+"Lady Gaga"; "Muse" nodes: "Queen" "2005-01-01T00:00:00Z" destination: "Kesha"
+Paths for the Recommended Item: 67
+"Lady Gaga" nodes: "David Bowie" destination: "Madonna"
+Paths for the Recommended Item: 701
+"Nickelback" nodes: "Canada" "female" destination: "Shakira"
+
+User: 31
+Items interacted by the user
+Item id: 30 Name: And One
+Item id: 1061 Name: Recoil
+Item id: 1064 Name: Hubert Kah
+Item id: 1065 Name: Sally Shapiro
+Item id: 1066 Name: Ayria
+Item id: 1067 Name: Red Flag
+Item id: 1069 Name: The Frozen Autumn
+Item id: 1071 Name: Alan Silvestri
+Item id: 1072 Name: Martin Gore
+Item id: 1073 Name: Kraftwerk
+Item id: 1074 Name: Cause and Effect
+Item id: 1075 Name: IAMX
+Item id: 1077 Name: K
+Item id: 1078 Name: Alan Wilder
+Item id: 1079 Name: Billy Idol
+Item id: 1081 Name: Ace of Base
+Item id: 1085 Name: Curve
+Item id: 1063 Name: Fake
+Item id: 1060 Name: Bonanza Banzai
+Item id: 55 Name: Kylie Minogue
+Item id: 1028 Name: Anything Box
+Item id: 56 Name: Daft Punk
+Item id: 72 Name: Depeche Mode
+Item id: 77 Name: George Michael
+Item id: 159 Name: The Cure
+Item id: 227 Name: The Beatles
+Item id: 238 Name: Massive Attack
+Item id: 289 Name: Britney Spears
+Item id: 534 Name: No Doubt
+Item id: 603 Name: Aphex Twin
+Item id: 757 Name: Crystal Castles
+Item id: 875 Name: Bauhaus
+Item id: 880 Name: Nitzer Ebb
+Item id: 959 Name: Queen
+Item id: 972 Name: t.A.T.u.
+Item id: 1001 Name: Pet Shop Boys
+Item id: 1087 Name: Alisha
+
+Users favorites attributes on the kG
+synth-pop
+United Kingdom
+new wave
+Mute Records
+1986-01-01T00:00:00Z
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 67 Name: Madonna
+Item id: 154 Name: Radiohead
+Item id: 190 Name: Muse
+Item id: 300 Name: Katy Perry
+
+Paths for the Recommended Item: 89
+"Red Flag" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 67
+"Depeche Mode" nodes: "United Kingdom" destination: "Madonna"
+Paths for the Recommended Item: 154
+"Alan Wilder" nodes: "United Kingdom" destination: "Radiohead"
+Paths for the Recommended Item: 190
+"Alan Wilder" nodes: "United Kingdom" destination: "Muse"
+Paths for the Recommended Item: 300
+"Recoil"; "Depeche Mode" nodes: "Alan Wilder" "Columbia Records" destination: "Katy Perry"
+
+User: 32
+Items interacted by the user
+Item id: 72 Name: Depeche Mode
+Item id: 88 Name: Gorillaz
+Item id: 808 Name: Rise Against
+Item id: 851 Name: Manic Street Preachers
+Item id: 857 Name: The Clash
+Item id: 875 Name: Bauhaus
+Item id: 1089 Name: Suede
+Item id: 1091 Name: AFI
+Item id: 1092 Name: Joaquín Sabina
+Item id: 1093 Name: Kaizers Orchestra
+Item id: 1094 Name: Kent
+Item id: 1095 Name: Damon Albarn
+Item id: 1096 Name: Bayside
+Item id: 1097 Name: Patrick Wolf
+Item id: 1098 Name: Björk
+Item id: 1100 Name: Chiodos
+Item id: 1101 Name: These New Puritans
+Item id: 1102 Name: William Control
+Item id: 1103 Name: Iggy Pop
+Item id: 1104 Name: Rammstein
+Item id: 1105 Name: Jack's Mannequin
+Item id: 1106 Name: Transsylvania Phoenix
+Item id: 1107 Name: The Good The Bad
+Item id: 620 Name: Pulp
+Item id: 599 Name: David Bowie
+Item id: 533 Name: Oasis
+Item id: 217 Name: Death Cab for Cutie
+Item id: 154 Name: Radiohead
+Item id: 155 Name: Robbie Williams
+Item id: 159 Name: The Cure
+Item id: 170 Name: Mew
+Item id: 173 Name: Placebo
+Item id: 190 Name: Muse
+Item id: 196 Name: Beirut
+Item id: 200 Name: Gogol Bordello
+Item id: 203 Name: Blur
+Item id: 220 Name: Red Hot Chili Peppers
+Item id: 493 Name: Lostprophets
+Item id: 227 Name: The Beatles
+Item id: 230 Name: Green Day
+Item id: 234 Name: Nirvana
+Item id: 377 Name: Linkin Park
+Item id: 418 Name: Sigur Rós
+Item id: 428 Name: The Libertines
+Item id: 429 Name: The Smiths
+Item id: 441 Name: Joy Division
+Item id: 447 Name: Manolito
+Item id: 1108 Name: Nicky Wire
+
+Users favorites attributes on the kG
+alternative rock
+MTV Europe Music Award for Best Rock
+United Kingdom
+Britpop
+MTV Video Music Award – Viewer's Choice
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 65 Name: Coldplay
+Item id: 229 Name: The Killers
+Item id: 289 Name: Britney Spears
+Item id: 207 Name: Arctic Monkeys
+
+Paths for the Recommended Item: 89
+"Red Hot Chili Peppers" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 65
+"Robbie Williams" nodes: "United Kingdom" destination: "Coldplay"
+Paths for the Recommended Item: 229
+"Iggy Pop" nodes: "United States of America" destination: "The Killers"
+Paths for the Recommended Item: 289
+"Red Hot Chili Peppers" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 207
+"Robbie Williams" nodes: "United Kingdom" destination: "Arctic Monkeys"
+
+User: 33
+Items interacted by the user
+Item id: 56 Name: Daft Punk
+Item id: 1130 Name: Ludwig van Beethoven
+Item id: 1121 Name: Wolfgang Amadeus Mozart
+Item id: 1122 Name: The Police
+Item id: 1124 Name: Carl Orff
+Item id: 1125 Name: Los Jaivas
+Item id: 1126 Name: Noir Désir
+Item id: 1127 Name: The Asteroids Galaxy Tour
+Item id: 1128 Name: John Petrucci
+Item id: 1129 Name: Villa Cariño
+Item id: 1131 Name: Tool
+Item id: 152 Name: Porcupine Tree
+Item id: 1132 Name: Joe Satriani
+Item id: 1134 Name: Agalloch
+Item id: 1135 Name: Camille
+Item id: 1136 Name: Amadou & Mariam
+Item id: 1137 Name: Kuervos del Sur
+Item id: 1138 Name: Igor Stravinsky
+Item id: 1140 Name: Neal Morse
+Item id: 1142 Name: Die Antwoord
+Item id: 1120 Name: György Ligeti
+Item id: 1118 Name: A Perfect Circle
+Item id: 1117 Name: Claude Debussy
+Item id: 1116 Name: Incubus
+Item id: 183 Name: Jamiroquai
+Item id: 188 Name: l
+Item id: 233 Name: list of Nine Inch Nails band members
+Item id: 418 Name: Sigur Rós
+Item id: 607 Name: Jethro Tull
+Item id: 614 Name: Pearl Jam
+Item id: 632 Name: Explosions in the Sky
+Item id: 964 Name: The Mars Volta
+Item id: 968 Name: Armin van Buuren
+Item id: 977 Name: At the Drive-In
+Item id: 1098 Name: Björk
+Item id: 1109 Name: Yann Tiersen
+Item id: 1110 Name: Rush
+Item id: 1111 Name: Tenhi
+Item id: 1112 Name: Frédéric Chopin
+Item id: 1113 Name: Ayreon
+Item id: 1114 Name: Tarja Turunen
+Item id: 1143 Name: Empyrium
+
+Users favorites attributes on the kG
+progressive metal
+opera
+France
+composer
+Paris
+
+Recommendations
+Item id: 227 Name: The Beatles
+Item id: 154 Name: Radiohead
+Item id: 89 Name: Lady Gaga
+Item id: 190 Name: Muse
+Item id: 163 Name: Pink Floyd
+
+Paths for the Recommended Item: 227
+"Jamiroquai" nodes: "United Kingdom" destination: "The Beatles"
+Paths for the Recommended Item: 154
+"Jamiroquai" nodes: "United Kingdom" destination: "Radiohead"
+Paths for the Recommended Item: 89
+"Pearl Jam" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 190
+"Jamiroquai" nodes: "United Kingdom" destination: "Muse"
+Paths for the Recommended Item: 163
+"Jamiroquai" nodes: "United Kingdom" destination: "Pink Floyd"
+
+User: 34
+Items interacted by the user
+Item id: 1 Name: Malice Mizer
+Item id: 53 Name: Air
+Item id: 851 Name: Manic Street Preachers
+Item id: 1109 Name: Yann Tiersen
+Item id: 1147 Name: Murray Gold
+Item id: 1149 Name: Pete and the Pirates
+Item id: 1150 Name: Leonard Cohen
+Item id: 1151 Name: Editors
+Item id: 1152 Name: Fire Bomber
+Item id: 1153 Name: Đorđe Balašević
+Item id: 1154 Name: The Pillows
+Item id: 1155 Name: Hot Chip
+Item id: 1156 Name: Orbital
+Item id: 1160 Name: Roy Orbison
+Item id: 1161 Name: Pizzicato Five
+Item id: 1162 Name: Flight of the Conchords
+Item id: 1163 Name: Los Campesinos!
+Item id: 717 Name: Electric Light Orchestra
+Item id: 622 Name: Sufjan Stevens
+Item id: 599 Name: David Bowie
+Item id: 220 Name: Red Hot Chili Peppers
+Item id: 70 Name: Moby
+Item id: 72 Name: Depeche Mode
+Item id: 163 Name: Pink Floyd
+Item id: 173 Name: Placebo
+Item id: 196 Name: Beirut
+Item id: 199 Name: Arcade Fire
+Item id: 225 Name: Interpol
+Item id: 511 Name: U2
+Item id: 226 Name: Queens of the Stone Age
+Item id: 227 Name: The Beatles
+Item id: 390 Name: Gackt
+Item id: 416 Name: The National
+Item id: 418 Name: Sigur Rós
+Item id: 441 Name: Joy Division
+Item id: 1164 Name: The Magnetic Fields
+
+Users favorites attributes on the kG
+Shortlist Music Prize
+Rock and Roll Hall of Fame
+alternative rock
+rock music
+United Kingdom
+
+Recommendations
+Item id: 154 Name: Radiohead
+Item id: 190 Name: Muse
+Item id: 89 Name: Lady Gaga
+Item id: 65 Name: Coldplay
+Item id: 67 Name: Madonna
+
+Paths for the Recommended Item: 154
+"U2" nodes: "Pink Floyd" destination: "Radiohead"
+Paths for the Recommended Item: 190
+"David Bowie" nodes: "United Kingdom" destination: "Muse"
+Paths for the Recommended Item: 89
+"Red Hot Chili Peppers" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 65
+"David Bowie" nodes: "United Kingdom" destination: "Coldplay"
+Paths for the Recommended Item: 67
+"Placebo" nodes: "United Kingdom" destination: "Madonna"
+
+User: 35
+Items interacted by the user
+Item id: 186 Name: Blackfield
+Item id: 212 Name: Bob Dylan
+Item id: 444 Name: Múm
+Item id: 920 Name: Dream Theater
+Item id: 964 Name: The Mars Volta
+Item id: 1169 Name: Kayo Dot
+Item id: 1170 Name: Rishloo
+Item id: 1172 Name: Jordan Rudess
+Item id: 1173 Name: Quidam
+Item id: 1174 Name: Juniper
+Item id: 1176 Name: The Sound of Animals Fighting
+Item id: 1177 Name: Diablo Swing Orchestra
+Item id: 1178 Name: Mariusz Duda
+
+Users favorites attributes on the kG
+Duluth
+progressive metal
+progressive rock
+2001-01-01T00:00:00Z
+2003-01-01T00:00:00Z
+
+Recommendations
+Item id: 227 Name: The Beatles
+Item id: 154 Name: Radiohead
+Item id: 190 Name: Muse
+Item id: 163 Name: Pink Floyd
+Item id: 89 Name: Lady Gaga
+
+Paths for the Recommended Item: 227
+"Bob Dylan"; "Rishloo" nodes: "United States of America" "rock music" destination: "The Beatles"
+Paths for the Recommended Item: 154
+"Bob Dylan"; "Dream Theater" nodes: "United States of America" "1985-01-01T00:00:00Z" destination: "Radiohead"
+Paths for the Recommended Item: 190
+"Kayo Dot"; "The Sound of Animals Fighting" nodes: "United States of America" "alternative rock" destination: "Muse"
+Paths for the Recommended Item: 163
+"Bob Dylan"; "Kayo Dot" nodes: "United States of America" "Columbia Records" destination: "Pink Floyd"
+Paths for the Recommended Item: 89
+"Rishloo" nodes: "United States of America" destination: "Lady Gaga"
+
+User: 36
+Items interacted by the user
+Item id: 45 Name: Mindless Self Indulgence
+Item id: 198 Name: System of a Down
+Item id: 1179 Name: Billy Talent
+Item id: 1180 Name: Escape the Fate
+Item id: 1181 Name: Silverstein
+Item id: 1182 Name: The Red Jumpsuit Apparatus
+Item id: 1183 Name: You Me at Six
+Item id: 1185 Name: Alesana
+Item id: 1186 Name: Sum 41
+Item id: 1187 Name: Dance Gavin Dance
+Item id: 1188 Name: Asking Alexandria
+Item id: 1189 Name: Secondhand Serenade
+Item id: 1191 Name: Hadouken!
+Item id: 1192 Name: Four Year Strong
+Item id: 1193 Name: Mayday Parade
+Item id: 1194 Name: Hawthorne Heights
+Item id: 1195 Name: Alexisonfire
+Item id: 1196 Name: Suicide Silence
+Item id: 1197 Name: Senses Fail
+Item id: 1199 Name: Destine
+Item id: 1200 Name: Story of the Year
+Item id: 1091 Name: AFI
+Item id: 1046 Name: New Found Glory
+Item id: 1043 Name: Boys Like Girls
+Item id: 497 Name: Papa Roach
+Item id: 230 Name: Green Day
+Item id: 333 Name: Avril Lavigne
+Item id: 430 Name: Kate Nash
+Item id: 464 Name: 3OH!3
+Item id: 470 Name: Never Shout Never
+Item id: 481 Name: Simple Plan
+Item id: 488 Name: Three Days Grace
+Item id: 493 Name: Lostprophets
+Item id: 537 Name: The Used
+Item id: 1035 Name: Breathe Carolina
+Item id: 540 Name: Fall Out Boy
+Item id: 687 Name: All Time Low
+Item id: 768 Name: Enter Shikari
+Item id: 779 Name: Bring Me the Horizon
+Item id: 805 Name: Parkway Drive
+Item id: 808 Name: Rise Against
+Item id: 816 Name: A Day to Remember
+Item id: 966 Name: Nickelback
+Item id: 1201 Name: Cute Is What We Aim For
+
+Users favorites attributes on the kG
+pop punk
+alternative rock
+post-hardcore
+Epitaph Records
+2001-01-01T00:00:00Z
+
+Recommendations
+Item id: 498 Name: Paramore
+Item id: 89 Name: Lady Gaga
+Item id: 289 Name: Britney Spears
+Item id: 377 Name: Linkin Park
+Item id: 300 Name: Katy Perry
+
+Paths for the Recommended Item: 498
+"The Red Jumpsuit Apparatus" nodes: "2003-01-01T00:00:00Z" destination: "Paramore"
+Paths for the Recommended Item: 89
+"Dance Gavin Dance" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 289
+"Dance Gavin Dance" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 377
+"Sum 41" nodes: "1996-01-01T00:00:00Z" destination: "Linkin Park"
+Paths for the Recommended Item: 300
+"Dance Gavin Dance" nodes: "United States of America" destination: "Katy Perry"
+
+User: 37
+Items interacted by the user
+Item id: 157 Name: Mick Jackson
+Item id: 1227 Name: Dick Dale
+Item id: 1217 Name: Shadow Project
+Item id: 1219 Name: Ravi Shankar
+Item id: 1220 Name: Patsy Cline
+Item id: 1221 Name: Naked City
+Item id: 1222 Name: Venetian Snares
+Item id: 1223 Name: Eyehategod
+Item id: 1224 Name: Bob Wills
+Item id: 1226 Name: Shpongle
+Item id: 1228 Name: La Quiete
+Item id: 1213 Name: Lush
+Item id: 1229 Name: Sunn O)))
+Item id: 1231 Name: The Dresden Dolls
+Item id: 1232 Name: Jelly Roll Morton
+Item id: 1233 Name: The Tear Garden
+Item id: 1234 Name: Sutcliffe Jügend
+Item id: 1235 Name: Birth Control
+Item id: 1236 Name: Zomby
+Item id: 1237 Name: CunninLynguists
+Item id: 1214 Name: Nile
+Item id: 1211 Name: Lärm
+Item id: 227 Name: The Beatles
+Item id: 1112 Name: Frédéric Chopin
+Item id: 233 Name: list of Nine Inch Nails band members
+Item id: 565 Name: Howlin' Wolf
+Item id: 578 Name: James Brown
+Item id: 599 Name: David Bowie
+Item id: 631 Name: Einstürzende Neubauten
+Item id: 845 Name: The Dillinger Escape Plan
+Item id: 875 Name: Bauhaus
+Item id: 1098 Name: Björk
+Item id: 1150 Name: Leonard Cohen
+Item id: 1210 Name: Saul Williams
+Item id: 1202 Name: Melvins
+Item id: 1203 Name: Skinny Puppy
+Item id: 1204 Name: Agoraphobic Nosebleed
+Item id: 1205 Name: Death in June
+Item id: 1206 Name: list of Misfits band members
+Item id: 1207 Name: The Skatalites
+Item id: 1208 Name: The Reverend Horton Heat
+Item id: 1209 Name: T
+Item id: 1238 Name: Tinariwen
+
+Users favorites attributes on the kG
+Grammy Lifetime Achievement Award
+English
+United Kingdom
+Grammy Award for Album of the Year
+1982-01-01T00:00:00Z
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 154 Name: Radiohead
+Item id: 289 Name: Britney Spears
+Item id: 67 Name: Madonna
+Item id: 190 Name: Muse
+
+Paths for the Recommended Item: 89
+"Melvins" nodes: "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 154
+"David Bowie" nodes: "United Kingdom" destination: "Radiohead"
+Paths for the Recommended Item: 289
+"Melvins" nodes: "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 67
+"Melvins" nodes: "United States of America" destination: "Madonna"
+Paths for the Recommended Item: 190
+"David Bowie" nodes: "United Kingdom" destination: "Muse"
+
+User: 38
+Items interacted by the user
+Item id: 56 Name: Daft Punk
+Item id: 65 Name: Coldplay
+Item id: 498 Name: Paramore
+Item id: 511 Name: U2
+Item id: 533 Name: Oasis
+Item id: 614 Name: Pearl Jam
+Item id: 689 Name: Florence + the Machine
+Item id: 691 Name: Owl City
+Item id: 951 Name: Bon Jovi
+Item id: 982 Name: Foo Fighters
+Item id: 1090 Name: Franz Ferdinand
+Item id: 1151 Name: Editors
+Item id: 1239 Name: Weezer
+Item id: 1240 Name: Them Crooked Vultures
+Item id: 1241 Name: Skank
+Item id: 1243 Name: Mika
+Item id: 1244 Name: Elvis Presley
+Item id: 1245 Name: Hayley Williams
+Item id: 1246 Name: Panic! At The Disco
+Item id: 1247 Name: The Calling
+Item id: 1248 Name: The Darkness
+Item id: 489 Name: Limp Bizkit
+Item id: 486 Name: Thirty Seconds to Mars
+Item id: 466 Name: Kesha
+Item id: 228 Name: Kings of Leon
+Item id: 88 Name: Gorillaz
+Item id: 89 Name: Lady Gaga
+Item id: 176 Name: Scorpions
+Item id: 182 Name: Keane
+Item id: 187 Name: A-ha
+Item id: 190 Name: Muse
+Item id: 203 Name: Blur
+Item id: 227 Name: The Beatles
+Item id: 229 Name: The Killers
+Item id: 421 Name: Móveis Coloniais de Acaju
+Item id: 288 Name: Rihanna
+Item id: 298 Name: Lily Allen
+Item id: 300 Name: Katy Perry
+Item id: 306 Name: Black Eyed Peas
+Item id: 333 Name: Avril Lavigne
+Item id: 342 Name: Colbie Caillat
+Item id: 344 Name: Taylor Swift
+Item id: 366 Name: Jack Johnson
+Item id: 1249 Name: Guns N’ Roses
+
+Users favorites attributes on the kG
+alternative rock
+pop rock
+Grammy Award for Best Music Video
+English
+Los Angeles
+
+Recommendations
+Item id: 289 Name: Britney Spears
+Item id: 67 Name: Madonna
+Item id: 295 Name: Beyoncé
+Item id: 292 Name: Christina Aguilera
+Item id: 154 Name: Radiohead
+
+Paths for the Recommended Item: 289
+"Weezer"; "Muse" nodes: "Nirvana" "United States of America" destination: "Britney Spears"
+Paths for the Recommended Item: 67
+"Pearl Jam" nodes: "United States of America" destination: "Madonna"
+Paths for the Recommended Item: 295
+"Pearl Jam" nodes: "United States of America" destination: "Beyoncé"
+Paths for the Recommended Item: 292
+"Weezer"; "Muse" nodes: "Nirvana" "United States of America" destination: "Christina Aguilera"
+Paths for the Recommended Item: 154
+"Lady Gaga" nodes: "David Bowie" "United Kingdom" destination: "Radiohead"
+
+User: 39
+Items interacted by the user
+Item id: 13 Name: Hocico
+Item id: 19 Name: :wumpscut:
+Item id: 1268 Name: Love Like Blood
+Item id: 1269 Name: Freq Nasty
+Item id: 1271 Name: Novembers Doom
+Item id: 1272 Name: E
+Item id: 1273 Name: Vinterland
+Item id: 1274 Name: Sepultura
+Item id: 1275 Name: Samael
+Item id: 1276 Name: Immortal
+Item id: 1277 Name: Velvet Acid Christ
+Item id: 1278 Name: yelworC
+Item id: 1279 Name: X Marks the Pedwalk
+Item id: 1280 Name: Orange Sector
+Item id: 1281 Name: Cannibal Corpse
+Item id: 1282 Name: Forma Tadre
+Item id: 1283 Name: Blue Planet Corporation
+Item id: 1284 Name: Necrophobic
+Item id: 1285 Name: Talamasca
+Item id: 1287 Name: Unlord
+Item id: 1289 Name: Helrunar
+Item id: 1267 Name: Nocte Obducta
+Item id: 1266 Name: Unanimated
+Item id: 1265 Name: Headscan
+Item id: 1253 Name: Front Line Assembly
+Item id: 47 Name: Emperor
+Item id: 81 Name: Portishead
+Item id: 181 Name: Paradise Lost
+Item id: 841 Name: Slayer
+Item id: 843 Name: Pantera
+Item id: 954 Name: Kreator
+Item id: 1251 Name: Dark Fortress
+Item id: 1252 Name: Cryo
+Item id: 1254 Name: Mayhem
+Item id: 1264 Name: Carcass
+Item id: 1256 Name: Haujobb
+Item id: 1257 Name: Overkill
+Item id: 1258 Name: Bolt Thrower
+Item id: 1259 Name: Satyricon
+Item id: 1260 Name: Marduk
+Item id: 1261 Name: Sodom
+Item id: 1262 Name: Secrets of the Moon
+Item id: 1263 Name: Tristania
+Item id: 1290 Name: Messiah
+
+Users favorites attributes on the kG
+black metal
+thrash metal
+Nuclear Blast
+Germany
+death metal
+
+Recommendations
+Item id: 707 Name: Metallica
+Item id: 227 Name: The Beatles
+Item id: 917 Name: list of Iron Maiden band members
+Item id: 89 Name: Lady Gaga
+Item id: 163 Name: Pink Floyd
+
+Paths for the Recommended Item: 707
+"Immortal"; "Satyricon" nodes: "Nuclear Blast" "thrash metal" destination: "Metallica"
+Paths for the Recommended Item: 227
+"Paradise Lost"; "Satyricon" nodes: "Century Media Records" "United Kingdom" destination: "The Beatles"
+Paths for the Recommended Item: 917
+"Paradise Lost"; "Satyricon" nodes: "Century Media Records" "heavy metal" destination: "list of Iron Maiden band members"
+Paths for the Recommended Item: 89
+"Slayer"; "Satyricon" nodes: "Nuclear Blast" "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 163
+"Paradise Lost"; "Satyricon" nodes: "Century Media Records" "United Kingdom" destination: "Pink Floyd"
+
+User: 40
+Items interacted by the user
+Item id: 32 Name: Covenant
+Item id: 1322 Name: E
+Item id: 1312 Name: Pride and Fall
+Item id: 1314 Name: Solitary Experiments
+Item id: 1315 Name: Wynardtage
+Item id: 1318 Name: Sander van Doorn
+Item id: 1319 Name: Brooklyn Bounce
+Item id: 1320 Name: Code 64
+Item id: 1321 Name: Lights of Euphoria
+Item id: 1326 Name: Negative Format
+Item id: 1308 Name: Ronski Speed
+Item id: 1328 Name: Angels of Light
+Item id: 1330 Name: Carlo Resoort
+Item id: 1331 Name: Accessory
+Item id: 1332 Name: XP8
+Item id: 1333 Name: Les Anges de la Nuit
+Item id: 1334 Name: Glis
+Item id: 1335 Name: Bruderschaft
+Item id: 1311 Name: Donkey Rollers
+Item id: 1307 Name: Cesium_137
+Item id: 34 Name: Icon of Coil
+Item id: 1297 Name: Colony 5
+Item id: 1020 Name: OceanLab
+Item id: 1066 Name: Ayria
+Item id: 1292 Name: mind.in.a.box
+Item id: 1293 Name: Absurd Minds
+Item id: 1294 Name: Rotersand
+Item id: 1295 Name: VNV Nation
+Item id: 1296 Name: Seabound
+Item id: 1298 Name: Apoptygma Berzerk
+Item id: 1306 Name: Above & Beyond
+Item id: 1299 Name: Suicide Commando
+Item id: 1300 Name: Blutengel
+Item id: 1301 Name: Neuroticfish
+Item id: 1302 Name: Culture Kultür
+Item id: 1303 Name: Assemblage 23
+Item id: 1304 Name: Edge of Dawn
+Item id: 1305 Name: Cosmic Gate
+Item id: 1336 Name: Syrian
+
+Users favorites attributes on the kG
+futurepop
+synth-pop
+Dependent Records
+Germany
+trance
+
+Recommendations
+Item id: 72 Name: Depeche Mode
+Item id: 89 Name: Lady Gaga
+Item id: 227 Name: The Beatles
+Item id: 968 Name: Armin van Buuren
+Item id: 190 Name: Muse
+
+Paths for the Recommended Item: 72
+"Rotersand"; "VNV Nation" nodes: "Dependent Records" "United Kingdom" destination: "Depeche Mode"
+Paths for the Recommended Item: 89
+"Cesium_137"; "Rotersand" nodes: "Metropolis Records" "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 227
+"VNV Nation"; "Edge of Dawn" nodes: "Dependent Records" "United Kingdom" destination: "The Beatles"
+Paths for the Recommended Item: 968
+"Seabound"; "Edge of Dawn" nodes: "Dependent Records" "1995-01-01T00:00:00Z" destination: "Armin van Buuren"
+Paths for the Recommended Item: 190
+"VNV Nation"; "Edge of Dawn" nodes: "Dependent Records" "United Kingdom" destination: "Muse"
+
+User: 41
+Items interacted by the user
+Item id: 843 Name: Pantera
+Item id: 1363 Name: Power Quest
+Item id: 1354 Name: Mantic Ritual
+Item id: 1355 Name: Jag Panzer
+Item id: 1356 Name: Heathen
+Item id: 1357 Name: Sacred Reich
+Item id: 1358 Name: Judas Priest
+Item id: 1359 Name: Tarot
+Item id: 1360 Name: Motörhead
+Item id: 1361 Name: Bloodbound
+Item id: 1362 Name: Mekong Delta
+Item id: 1364 Name: Exodus
+Item id: 917 Name: list of Iron Maiden band members
+Item id: 1365 Name: Vicious Rumors
+Item id: 1366 Name: W.A.S.P.
+Item id: 1367 Name: Steel Attack
+Item id: 1368 Name: Primal Fear
+Item id: 1369 Name: Black Sabbath
+Item id: 1370 Name: Early Man
+Item id: 1371 Name: Wolf
+Item id: 1372 Name: Deep Purple
+Item id: 1373 Name: Agent Steel
+Item id: 1353 Name: Running Wild
+Item id: 1352 Name: Death Angel
+Item id: 1351 Name: Tenacious D
+Item id: 1350 Name: Edguy
+Item id: 918 Name: Megadeth
+Item id: 922 Name: Bruce Dickinson
+Item id: 928 Name: Helloween
+Item id: 942 Name: Iced Earth
+Item id: 947 Name: Testament
+Item id: 957 Name: Blind Guardian
+Item id: 1257 Name: Overkill
+Item id: 1261 Name: Sodom
+Item id: 1337 Name: Nuclear Assault
+Item id: 1338 Name: HammerFall
+Item id: 1339 Name: Sonata Arctica
+Item id: 1340 Name: Iron Fire
+Item id: 1341 Name: Flotsam and Jetsam
+Item id: 1342 Name: Gamma Ray
+Item id: 1343 Name: Queensrÿche
+Item id: 1344 Name: Annihilator
+Item id: 1347 Name: Sabaton
+Item id: 1348 Name: Alestorm
+Item id: 1349 Name: Rhapsody of Fire
+Item id: 1374 Name: Demons & Wizards
+
+Users favorites attributes on the kG
+thrash metal
+speed metal
+power metal
+Nuclear Blast
+1984-01-01T00:00:00Z
+
+Recommendations
+Item id: 707 Name: Metallica
+Item id: 227 Name: The Beatles
+Item id: 841 Name: Slayer
+Item id: 163 Name: Pink Floyd
+Item id: 1412 Name: Led Zeppelin
+
+Paths for the Recommended Item: 707
+"Exodus"; "Edguy" nodes: "Nuclear Blast" "Kirk Hammett" destination: "Metallica"
+Paths for the Recommended Item: 227
+"W.A.S.P."; "Flotsam and Jetsam" nodes: "1982-01-01T00:00:00Z" "Capitol Records" destination: "The Beatles"
+Paths for the Recommended Item: 841
+"Heathen" nodes: "Nuclear Blast" destination: "Slayer"
+Paths for the Recommended Item: 163
+"W.A.S.P."; "Flotsam and Jetsam" nodes: "1982-01-01T00:00:00Z" "Capitol Records" destination: "Pink Floyd"
+Paths for the Recommended Item: 1412
+"Testament"; "Flotsam and Jetsam" nodes: "1982-01-01T00:00:00Z" "Atlantic Records" destination: "Led Zeppelin"
+
+User: 42
+Items interacted by the user
+Item id: 65 Name: Coldplay
+Item id: 89 Name: Lady Gaga
+Item id: 966 Name: Nickelback
+Item id: 1048 Name: The Kooks
+Item id: 1052 Name: Pink
+Item id: 1090 Name: Franz Ferdinand
+Item id: 1375 Name: Snow Patrol
+Item id: 1376 Name: White Lies
+Item id: 1377 Name: The Fray
+Item id: 1378 Name: Jimmy Eat World
+Item id: 1379 Name: Hurts
+Item id: 1381 Name: Starsailor
+Item id: 1382 Name: David Gray
+Item id: 1383 Name: Imogen Heap
+Item id: 1384 Name: The Verve
+Item id: 1385 Name: Thirteen Senses
+Item id: 1386 Name: Matthew Ryan
+Item id: 1389 Name: Eisley
+Item id: 1390 Name: Vampire Weekend
+Item id: 1391 Name: Negativ
+Item id: 1392 Name: Lady Sovereign
+Item id: 962 Name: The Cardigans
+Item id: 689 Name: Florence + the Machine
+Item id: 538 Name: Maroon 5
+Item id: 229 Name: The Killers
+Item id: 154 Name: Radiohead
+Item id: 173 Name: Placebo
+Item id: 182 Name: Keane
+Item id: 190 Name: Muse
+Item id: 191 Name: OneRepublic
+Item id: 204 Name: Damien Rice
+Item id: 221 Name: Travis
+Item id: 228 Name: Kings of Leon
+Item id: 288 Name: Rihanna
+Item id: 534 Name: No Doubt
+Item id: 289 Name: Britney Spears
+Item id: 291 Name: Kelly Clarkson
+Item id: 302 Name: Pink
+Item id: 377 Name: Linkin Park
+Item id: 378 Name: Evanescence
+Item id: 425 Name: Yeah Yeah Yeahs
+Item id: 472 Name: 3 Doors Down
+Item id: 511 Name: U2
+Item id: 1393 Name: Alenka Gotar
+
+Users favorites attributes on the kG
+alternative rock
+Grammy Award for Best New Artist
+MTV Video Music Award for Best Pop Video
+United Kingdom
+MTV Video Music Award for Video of the Year
+
+Recommendations
+Item id: 300 Name: Katy Perry
+Item id: 227 Name: The Beatles
+Item id: 67 Name: Madonna
+Item id: 295 Name: Beyoncé
+Item id: 333 Name: Avril Lavigne
+
+Paths for the Recommended Item: 300
+"Linkin Park" nodes: "United States of America" destination: "Katy Perry"
+Paths for the Recommended Item: 227
+"David Gray" nodes: "Bob Dylan" destination: "The Beatles"
+Paths for the Recommended Item: 67
+"Keane" nodes: "United Kingdom" destination: "Madonna"
+Paths for the Recommended Item: 295
+"Linkin Park" nodes: "United States of America" destination: "Beyoncé"
+Paths for the Recommended Item: 333
+"Nickelback" nodes: "Canada" destination: "Avril Lavigne"
+
+User: 43
+Items interacted by the user
+Item id: 53 Name: Air
+Item id: 1397 Name: Fatboy Slim
+Item id: 603 Name: Aphex Twin
+Item id: 748 Name: Boards of Canada
+Item id: 907 Name: Timbaland
+Item id: 1009 Name: Tiësto
+Item id: 1098 Name: Björk
+Item id: 1099 Name: The Prodigy
+Item id: 1394 Name: The Chemical Brothers
+Item id: 1396 Name: Digitalism
+Item id: 1398 Name: Justice
+Item id: 475 Name: Eminem
+Item id: 1401 Name: deadmau5
+Item id: 1402 Name: Ludacris
+Item id: 1403 Name: Martin Solveig
+Item id: 1405 Name: Simian Mobile Disco
+Item id: 1406 Name: The Offspring
+Item id: 1407 Name: Michael Gray
+Item id: 1408 Name: MSTRKRFT
+Item id: 1409 Name: Calvin Harris
+Item id: 486 Name: Thirty Seconds to Mars
+Item id: 377 Name: Linkin Park
+Item id: 56 Name: Daft Punk
+Item id: 154 Name: Radiohead
+Item id: 58 Name: Goldfrapp
+Item id: 65 Name: Coldplay
+Item id: 70 Name: Moby
+Item id: 80 Name: Groove Armada
+Item id: 81 Name: Portishead
+Item id: 84 Name: Cut Copy
+Item id: 88 Name: Gorillaz
+Item id: 89 Name: Lady Gaga
+Item id: 190 Name: Muse
+Item id: 331 Name: Kanye West
+Item id: 207 Name: Arctic Monkeys
+Item id: 227 Name: The Beatles
+Item id: 229 Name: The Killers
+Item id: 230 Name: Green Day
+Item id: 238 Name: Massive Attack
+Item id: 278 Name: Tupac Shakur
+Item id: 328 Name: David Guetta
+Item id: 329 Name: Justin Timberlake
+Item id: 1410 Name: Pendulum
+
+Users favorites attributes on the kG
+electronica
+English
+disc jockey
+Grammy Award for Best Rap/Sung Performance
+United Kingdom
+
+Recommendations
+Item id: 289 Name: Britney Spears
+Item id: 67 Name: Madonna
+Item id: 300 Name: Katy Perry
+Item id: 288 Name: Rihanna
+Item id: 295 Name: Beyoncé
+
+Paths for the Recommended Item: 289
+"Simian Mobile Disco"; "Lady Gaga" nodes: "2005-01-01T00:00:00Z" "Madonna" destination: "Britney Spears"
+Paths for the Recommended Item: 67
+"Lady Gaga" nodes: "David Bowie" destination: "Madonna"
+Paths for the Recommended Item: 300
+"Linkin Park" nodes: "United States of America" destination: "Katy Perry"
+Paths for the Recommended Item: 288
+"Lady Gaga"; "Muse" nodes: "Queen" "2005-01-01T00:00:00Z" destination: "Rihanna"
+Paths for the Recommended Item: 295
+"Linkin Park" nodes: "United States of America" destination: "Beyoncé"
+
+User: 44
+Items interacted by the user
+Item id: 15 Name: Dimmu Borgir
+Item id: 1416 Name: George Harrison
+Item id: 1119 Name: list of Faith No More band members
+Item id: 1131 Name: Tool
+Item id: 1216 Name: Mastodon
+Item id: 1411 Name: King Crimson
+Item id: 1412 Name: Led Zeppelin
+Item id: 1413 Name: Genesis
+Item id: 1414 Name: Paul McCartney
+Item id: 1415 Name: Creedence Clearwater Revival
+Item id: 1417 Name: Týr
+Item id: 964 Name: The Mars Volta
+Item id: 1418 Name: Mogwai
+Item id: 1419 Name: Spirit
+Item id: 1420 Name: Terry Reid
+Item id: 1421 Name: Roberto Carlos
+Item id: 1422 Name: Grateful Dead
+Item id: 1424 Name: Cat Power
+Item id: 1425 Name: David Gilmour
+Item id: 1426 Name: The Jimi Hendrix Experience
+Item id: 982 Name: Foo Fighters
+Item id: 957 Name: Blind Guardian
+Item id: 25 Name: Cradle of Filth
+Item id: 436 Name: The Smashing Pumpkins
+Item id: 67 Name: Madonna
+Item id: 152 Name: Porcupine Tree
+Item id: 163 Name: Pink Floyd
+Item id: 190 Name: Muse
+Item id: 215 Name: Jeff Buckley
+Item id: 226 Name: Queens of the Stone Age
+Item id: 234 Name: Nirvana
+Item id: 418 Name: Sigur Rós
+Item id: 562 Name: The Who
+Item id: 917 Name: list of Iron Maiden band members
+Item id: 609 Name: Nick Drake
+Item id: 615 Name: Elliott Smith
+Item id: 630 Name: Neil Young
+Item id: 707 Name: Metallica
+Item id: 717 Name: Electric Light Orchestra
+Item id: 718 Name: Johnny Cash
+Item id: 854 Name: Alice in Chains
+Item id: 868 Name: The Doors
+Item id: 1427 Name: Stevie Wonder
+
+Users favorites attributes on the kG
+Rock and Roll Hall of Fame
+psychedelic rock
+hard rock
+United Kingdom
+art rock
+
+Recommendations
+Item id: 227 Name: The Beatles
+Item id: 154 Name: Radiohead
+Item id: 89 Name: Lady Gaga
+Item id: 65 Name: Coldplay
+Item id: 959 Name: Queen
+
+Paths for the Recommended Item: 227
+"George Harrison"; "Elliott Smith" nodes: "The Beatles" "United Kingdom" destination: "The Beatles"
+Paths for the Recommended Item: 154
+"George Harrison"; "Elliott Smith" nodes: "The Beatles" "United Kingdom" destination: "Radiohead"
+Paths for the Recommended Item: 89
+"The Jimi Hendrix Experience"; "The Who" nodes: "Jimi Hendrix" "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 65
+"George Harrison"; "Elliott Smith" nodes: "The Beatles" "United Kingdom" destination: "Coldplay"
+Paths for the Recommended Item: 959
+"The Jimi Hendrix Experience"; "Jeff Buckley" nodes: "United States of America" "Jimi Hendrix" destination: "Queen"
+
+User: 45
+Items interacted by the user
+Item id: 89 Name: Lady Gaga
+Item id: 701 Name: Shakira
+Item id: 792 Name: Thalía
+Item id: 795 Name: Gloria Trevi
+Item id: 1428 Name: Dulce María
+Item id: 1429 Name: Christian Chávez
+Item id: 1431 Name: Paty Cantú
+Item id: 1432 Name: Tiziano Ferro
+Item id: 1433 Name: Daddy Yankee
+Item id: 1434 Name: Kazaky
+Item id: 1435 Name: Timbiriche
+Item id: 1436 Name: Luis Fonsi
+Item id: 1437 Name: Chino & Nacho
+Item id: 1438 Name: Camila
+Item id: 1439 Name: Alexis & Fido
+Item id: 1441 Name: Eva Simons
+Item id: 1443 Name: Wisin & Yandel
+Item id: 1444 Name: Akon
+Item id: 1448 Name: Ivy Queen
+Item id: 787 Name: Paulina Rubio
+Item id: 646 Name: RBD
+Item id: 161 Name: Enrique Iglesias
+Item id: 641 Name: Laura Pausini
+Item id: 288 Name: Rihanna
+Item id: 289 Name: Britney Spears
+Item id: 291 Name: Kelly Clarkson
+Item id: 292 Name: Christina Aguilera
+Item id: 293 Name: Ashlee Simpson
+Item id: 295 Name: Beyoncé
+Item id: 300 Name: Katy Perry
+Item id: 302 Name: Pink
+Item id: 306 Name: Black Eyed Peas
+Item id: 310 Name: Nelly Furtado
+Item id: 320 Name: Fergie
+Item id: 325 Name: Ashley Tisdale
+Item id: 332 Name: Kelly Rowland
+Item id: 349 Name: The Pussycat Dolls
+Item id: 461 Name: Miley Cyrus
+Item id: 466 Name: Kesha
+Item id: 543 Name: Nicole Scherzinger
+Item id: 1449 Name: Pitbull
+
+Users favorites attributes on the kG
+English
+pop music
+Spanish
+television actor
+film actor
+
+Recommendations
+Item id: 67 Name: Madonna
+Item id: 333 Name: Avril Lavigne
+Item id: 55 Name: Kylie Minogue
+Item id: 299 Name: Jennifer Lopez
+Item id: 498 Name: Paramore
+
+Paths for the Recommended Item: 67
+"Lady Gaga" nodes: "David Bowie" destination: "Madonna"
+Paths for the Recommended Item: 333
+"Chino & Nacho"; "Kesha" nodes: "2005-01-01T00:00:00Z" "Los Angeles" destination: "Avril Lavigne"
+Paths for the Recommended Item: 55
+"Lady Gaga" nodes: "pop music" destination: "Kylie Minogue"
+Paths for the Recommended Item: 299
+"Wisin & Yandel" nodes: "Puerto Rico" destination: "Jennifer Lopez"
+Paths for the Recommended Item: 498
+"Dulce María"; "Christian Chávez" nodes: "RBD" "United States of America" destination: "Paramore"
+
+User: 46
+Items interacted by the user
+Item id: 89 Name: Lady Gaga
+Item id: 1037 Name: Nicki Minaj
+Item id: 498 Name: Paramore
+Item id: 542 Name: Pitty
+Item id: 646 Name: RBD
+Item id: 681 Name: Demi Lovato
+Item id: 686 Name: Selena Gomez & the Scene
+Item id: 701 Name: Shakira
+Item id: 802 Name: Anahí
+Item id: 908 Name: Vanessa Hudgens
+Item id: 1032 Name: Jessie J
+Item id: 1042 Name: Bruno Mars
+Item id: 475 Name: Eminem
+Item id: 1051 Name: Alesha Dixon
+Item id: 1428 Name: Dulce María
+Item id: 1450 Name: Kristinia DeBarge
+Item id: 1451 Name: Girlicious
+Item id: 1452 Name: Willow Smith
+Item id: 1453 Name: Selena Gomez
+Item id: 1454 Name: Jullie
+Item id: 1455 Name: B.o.B
+Item id: 1456 Name: Far East Movement
+Item id: 484 Name: Ne-Yo
+Item id: 466 Name: Kesha
+Item id: 288 Name: Rihanna
+Item id: 306 Name: Black Eyed Peas
+Item id: 289 Name: Britney Spears
+Item id: 290 Name: Jordin Sparks
+Item id: 291 Name: Kelly Clarkson
+Item id: 292 Name: Christina Aguilera
+Item id: 295 Name: Beyoncé
+Item id: 299 Name: Jennifer Lopez
+Item id: 300 Name: Katy Perry
+Item id: 301 Name: Alicia Keys
+Item id: 302 Name: Pink
+Item id: 314 Name: Ciara
+Item id: 464 Name: 3OH!3
+Item id: 320 Name: Fergie
+Item id: 325 Name: Ashley Tisdale
+Item id: 327 Name: Chris Brown
+Item id: 328 Name: David Guetta
+Item id: 330 Name: T.I.
+Item id: 344 Name: Taylor Swift
+Item id: 349 Name: The Pussycat Dolls
+Item id: 458 Name: Justin Bieber
+Item id: 461 Name: Miley Cyrus
+Item id: 1457 Name: Cherish
+
+Users favorites attributes on the kG
+English
+pop music
+contemporary R&B
+mezzo-soprano
+female
+
+Recommendations
+Item id: 333 Name: Avril Lavigne
+Item id: 67 Name: Madonna
+Item id: 55 Name: Kylie Minogue
+Item id: 257 Name: Mariah Carey
+Item id: 318 Name: Hilary Duff
+
+Paths for the Recommended Item: 333
+"T.I." nodes: "1999-01-01T00:00:00Z" destination: "Avril Lavigne"
+Paths for the Recommended Item: 67
+"Lady Gaga" nodes: "David Bowie" destination: "Madonna"
+Paths for the Recommended Item: 55
+"Lady Gaga" nodes: "pop music" destination: "Kylie Minogue"
+Paths for the Recommended Item: 257
+"The Pussycat Dolls" nodes: "United States of America" destination: "Mariah Carey"
+Paths for the Recommended Item: 318
+"Ciara" nodes: "United States of America" destination: "Hilary Duff"
+
+User: 47
+Items interacted by the user
+Item id: 182 Name: Keane
+Item id: 903 Name: Amy Winehouse
+Item id: 498 Name: Paramore
+Item id: 523 Name: Lindsay Lohan
+Item id: 540 Name: Fall Out Boy
+Item id: 680 Name: The Veronicas
+Item id: 681 Name: Demi Lovato
+Item id: 686 Name: Selena Gomez & the Scene
+Item id: 701 Name: Shakira
+Item id: 794 Name: A-Teens
+Item id: 908 Name: Vanessa Hudgens
+Item id: 469 Name: Nick Carter
+Item id: 972 Name: t.A.T.u.
+Item id: 1037 Name: Nicki Minaj
+Item id: 1244 Name: Elvis Presley
+Item id: 1456 Name: Far East Movement
+Item id: 1458 Name: Miranda Cosgrove
+Item id: 1459 Name: Carrie Underwood
+Item id: 1461 Name: Big Time Rush
+Item id: 1462 Name: Gloriana
+Item id: 475 Name: Eminem
+Item id: 466 Name: Kesha
+Item id: 289 Name: Britney Spears
+Item id: 304 Name: David Archuleta
+Item id: 291 Name: Kelly Clarkson
+Item id: 292 Name: Christina Aguilera
+Item id: 293 Name: Ashlee Simpson
+Item id: 294 Name: Leona Lewis
+Item id: 298 Name: Lily Allen
+Item id: 299 Name: Jennifer Lopez
+Item id: 300 Name: Katy Perry
+Item id: 302 Name: Pink
+Item id: 310 Name: Nelly Furtado
+Item id: 465 Name: Jessica Simpson
+Item id: 317 Name: Keri Hilson
+Item id: 318 Name: Hilary Duff
+Item id: 325 Name: Ashley Tisdale
+Item id: 333 Name: Avril Lavigne
+Item id: 455 Name: Backstreet Boys
+Item id: 456 Name: Jesse McCartney
+Item id: 461 Name: Miley Cyrus
+Item id: 464 Name: 3OH!3
+Item id: 1463 Name: Amy Macdonald
+
+Users favorites attributes on the kG
+English
+Grammy Award for Best New Artist
+pop rock
+pop music
+film actor
+
+Recommendations
+Item id: 89 Name: Lady Gaga
+Item id: 288 Name: Rihanna
+Item id: 295 Name: Beyoncé
+Item id: 67 Name: Madonna
+Item id: 306 Name: Black Eyed Peas
+
+Paths for the Recommended Item: 89
+"Britney Spears" nodes: "Madonna" destination: "Lady Gaga"
+Paths for the Recommended Item: 288
+"Kesha" nodes: "2005-01-01T00:00:00Z" destination: "Rihanna"
+Paths for the Recommended Item: 295
+"Jesse McCartney" nodes: "United States of America" destination: "Beyoncé"
+Paths for the Recommended Item: 67
+"Jesse McCartney" nodes: "United States of America" destination: "Madonna"
+Paths for the Recommended Item: 306
+"Britney Spears"; "Leona Lewis" nodes: "Whitney Houston" "United States of America" destination: "Black Eyed Peas"
+
+User: 48
+Items interacted by the user
+Item id: 55 Name: Kylie Minogue
+Item id: 1421 Name: Roberto Carlos
+Item id: 533 Name: Oasis
+Item id: 575 Name: Aretha Franklin
+Item id: 701 Name: Shakira
+Item id: 889 Name: Cyndi Lauper
+Item id: 951 Name: Bon Jovi
+Item id: 959 Name: Queen
+Item id: 972 Name: t.A.T.u.
+Item id: 1464 Name: ABBA
+Item id: 67 Name: Madonna
+Item id: 1465 Name: Agnetha Fältskog
+Item id: 1468 Name: Kansas
+Item id: 1469 Name: The Mamas & the Papas
+Item id: 1470 Name: Lifehouse
+Item id: 1475 Name: Ricky Martin
+Item id: 1478 Name: B.J. Thomas
+Item id: 1479 Name: Kim Carnes
+Item id: 511 Name: U2
+Item id: 475 Name: Eminem
+Item id: 378 Name: Evanescence
+Item id: 340 Name: Cher
+Item id: 89 Name: Lady Gaga
+Item id: 157 Name: Mick Jackson
+Item id: 176 Name: Scorpions
+Item id: 180 Name: Roxette
+Item id: 220 Name: Red Hot Chili Peppers
+Item id: 227 Name: The Beatles
+Item id: 230 Name: Green Day
+Item id: 246 Name: Adriana Calcanhotto
+Item id: 258 Name: Tina Turner
+Item id: 265 Name: Céline Dion
+Item id: 283 Name: Ana Carolina
+Item id: 288 Name: Rihanna
+Item id: 289 Name: Britney Spears
+Item id: 295 Name: Beyoncé
+Item id: 300 Name: Katy Perry
+Item id: 1480 Name: Anni-Frid Lyngstad
+
+Users favorites attributes on the kG
+pop rock
+English
+Grammy Award for Best Music Video
+dance music
+dance-pop
+
+Recommendations
+Item id: 292 Name: Christina Aguilera
+Item id: 333 Name: Avril Lavigne
+Item id: 466 Name: Kesha
+Item id: 302 Name: Pink
+Item id: 498 Name: Paramore
+
+Paths for the Recommended Item: 292
+"Britney Spears" nodes: "Whitney Houston" destination: "Christina Aguilera"
+Paths for the Recommended Item: 333
+"Red Hot Chili Peppers" nodes: "Los Angeles" destination: "Avril Lavigne"
+Paths for the Recommended Item: 466
+"Shakira"; "The Beatles" nodes: "John Lennon" "female" destination: "Kesha"
+Paths for the Recommended Item: 302
+"Oasis"; "Shakira" nodes: "The Rolling Stones" "English" destination: "Pink"
+Paths for the Recommended Item: 498
+"Katy Perry" nodes: "United States of America" destination: "Paramore"
+
+User: 49
+Items interacted by the user
+Item id: 89 Name: Lady Gaga
+Item id: 1499 Name: Frankie Ruiz
+Item id: 1485 Name: Miike Snow
+Item id: 1486 Name: Santigold
+Item id: 1487 Name: Eileen Rose
+Item id: 1488 Name: Mashina Vremeni
+Item id: 1489 Name: Reba McEntire
+Item id: 1493 Name: Chespirito
+Item id: 1494 Name: Rocío Dúrcal
+Item id: 1500 Name: Tito El Babuino
+Item id: 166 Name: The Cranberries
+Item id: 1501 Name: Caifanes
+Item id: 1502 Name: Rooney
+Item id: 1503 Name: Nadia Oh
+Item id: 1504 Name: Sonic Youth
+Item id: 1505 Name: Natalie Imbruglia
+Item id: 1506 Name: Valeria Lynch
+Item id: 1507 Name: Omarion
+Item id: 1483 Name: Riko
+Item id: 1481 Name: Matt Sorum
+Item id: 1443 Name: Wisin & Yandel
+Item id: 1400 Name: MGMT
+Item id: 223 Name: Band of Horses
+Item id: 288 Name: Rihanna
+Item id: 306 Name: Black Eyed Peas
+Item id: 308 Name: Kat DeLuna
+Item id: 310 Name: Nelly Furtado
+Item id: 312 Name: Cassie Ventura
+Item id: 314 Name: Ciara
+Item id: 324 Name: Cobra Starship
+Item id: 448 Name: Art Brut
+Item id: 461 Name: Miley Cyrus
+Item id: 701 Name: Shakira
+Item id: 907 Name: Timbaland
+Item id: 913 Name: Destiny's Child
+Item id: 1106 Name: Transsylvania Phoenix
+Item id: 1390 Name: Vampire Weekend
+Item id: 1508 Name: Starlight Mints
+
+Users favorites attributes on the kG
+Spanish
+English
+actor
+female
+mezzo-soprano
+
+Recommendations
+Item id: 289 Name: Britney Spears
+Item id: 300 Name: Katy Perry
+Item id: 295 Name: Beyoncé
+Item id: 292 Name: Christina Aguilera
+Item id: 67 Name: Madonna
+
+Paths for the Recommended Item: 289
+"Lady Gaga" nodes: "Madonna" destination: "Britney Spears"
+Paths for the Recommended Item: 300
+"MGMT" nodes: "United States of America" destination: "Katy Perry"
+Paths for the Recommended Item: 295
+"MGMT" nodes: "United States of America" destination: "Beyoncé"
+Paths for the Recommended Item: 292
+"MGMT" nodes: "United States of America" destination: "Christina Aguilera"
+Paths for the Recommended Item: 67
+"Lady Gaga" nodes: "David Bowie" destination: "Madonna"
+
+User: 50
+Items interacted by the user
+Item id: 56 Name: Daft Punk
+Item id: 1510 Name: Black Rebel Motorcycle Club
+Item id: 982 Name: Foo Fighters
+Item id: 1048 Name: The Kooks
+Item id: 1090 Name: Franz Ferdinand
+Item id: 1106 Name: Transsylvania Phoenix
+Item id: 1151 Name: Editors
+Item id: 1376 Name: White Lies
+Item id: 1394 Name: The Chemical Brothers
+Item id: 1509 Name: Noel Gallagher
+Item id: 1511 Name: Paolo Nutini
+Item id: 959 Name: Queen
+Item id: 1512 Name: The Last Shadow Puppets
+Item id: 1513 Name: Ramones
+Item id: 1514 Name: The Courteeners
+Item id: 1515 Name: The Fratellis
+Item id: 1516 Name: The Enemy
+Item id: 1517 Name: The Wombats
+Item id: 1518 Name: Mumford & Sons
+Item id: 1519 Name: Ryan Adams
+Item id: 969 Name: Kasabian
+Item id: 868 Name: The Doors
+Item id: 65 Name: Coldplay
+Item id: 229 Name: The Killers
+Item id: 159 Name: The Cure
+Item id: 163 Name: Pink Floyd
+Item id: 171 Name: Stereophonics
+Item id: 173 Name: Placebo
+Item id: 207 Name: Arctic Monkeys
+Item id: 220 Name: Red Hot Chili Peppers
+Item id: 221 Name: Travis
+Item id: 227 Name: The Beatles
+Item id: 230 Name: Green Day
+Item id: 733 Name: John Lennon
+Item id: 250 Name: Bob Marley
+Item id: 424 Name: The Strokes
+Item id: 428 Name: The Libertines
+Item id: 533 Name: Oasis
+Item id: 604 Name: Kings of Convenience
+Item id: 703 Name: The xx
+Item id: 709 Name: The White Stripes
+Item id: 718 Name: Johnny Cash
+Item id: 1520 Name: The Hives
+
+Users favorites attributes on the kG
+United Kingdom
+Rock and Roll Hall of Fame
+alternative rock
+indie rock
+rock music
+
+Recommendations
+Item id: 154 Name: Radiohead
+Item id: 190 Name: Muse
+Item id: 89 Name: Lady Gaga
+Item id: 228 Name: Kings of Leon
+Item id: 289 Name: Britney Spears
+
+Paths for the Recommended Item: 154
+"Queen" nodes: "Pink Floyd" destination: "Radiohead"
+Paths for the Recommended Item: 190
+"John Lennon" nodes: "United Kingdom" destination: "Muse"
+Paths for the Recommended Item: 89
+"Queen"; "Red Hot Chili Peppers" nodes: "Jimi Hendrix" "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 228
+"John Lennon"; "Oasis" nodes: "The Beatles" "Sony Music" destination: "Kings of Leon"
+Paths for the Recommended Item: 289
+"The Last Shadow Puppets"; "Arctic Monkeys" nodes: "Alex Turner" "English" destination: "Britney Spears"
+
+User: 51
+Items interacted by the user
+Item id: 163 Name: Pink Floyd
+Item id: 1264 Name: Carcass
+Item id: 1337 Name: Nuclear Assault
+Item id: 1344 Name: Annihilator
+Item id: 1356 Name: Heathen
+Item id: 1358 Name: Judas Priest
+Item id: 1360 Name: Motörhead
+Item id: 1364 Name: Exodus
+Item id: 1369 Name: Black Sabbath
+Item id: 1412 Name: Led Zeppelin
+Item id: 1521 Name: Morbid Angel
+Item id: 1522 Name: Destruction
+Item id: 1524 Name: Hirax
+Item id: 1525 Name: Artillery
+Item id: 1526 Name: Toxic Holocaust
+Item id: 1527 Name: Anthrax
+Item id: 1529 Name: Forbidden
+Item id: 1530 Name: Vio-lence
+Item id: 1533 Name: Napalm Death
+Item id: 1534 Name: The Sisters of Mercy
+Item id: 1535 Name: Mercyful Fate
+Item id: 1274 Name: Sepultura
+Item id: 1261 Name: Sodom
+Item id: 173 Name: Placebo
+Item id: 1257 Name: Overkill
+Item id: 188 Name: l
+Item id: 198 Name: System of a Down
+Item id: 225 Name: Interpol
+Item id: 503 Name: In Flames
+Item id: 707 Name: Metallica
+Item id: 726 Name: Apocalyptica
+Item id: 806 Name: Soilwork
+Item id: 841 Name: Slayer
+Item id: 917 Name: list of Iron Maiden band members
+Item id: 918 Name: Megadeth
+Item id: 923 Name: Children of Bodom
+Item id: 928 Name: Helloween
+Item id: 947 Name: Testament
+Item id: 949 Name: Death
+Item id: 954 Name: Kreator
+Item id: 959 Name: Queen
+Item id: 1104 Name: Rammstein
+Item id: 1214 Name: Nile
+Item id: 1249 Name: Guns N’ Roses
+Item id: 1536 Name: Exumer
+
+Users favorites attributes on the kG
+thrash metal
+Nuclear Blast
+1984-01-01T00:00:00Z
+speed metal
+1981-01-01T00:00:00Z
+
+Recommendations
+Item id: 227 Name: The Beatles
+Item id: 234 Name: Nirvana
+Item id: 190 Name: Muse
+Item id: 89 Name: Lady Gaga
+Item id: 154 Name: Radiohead
+
+Paths for the Recommended Item: 227
+"Carcass"; "Heathen" nodes: "Nuclear Blast" "Liverpool" destination: "The Beatles"
+Paths for the Recommended Item: 234
+"Heathen"; "Kreator" nodes: "Nuclear Blast" "United States of America" destination: "Nirvana"
+Paths for the Recommended Item: 190
+"Exodus"; "Metallica" nodes: "Kirk Hammett" "Warner Bros. Records" destination: "Muse"
+Paths for the Recommended Item: 89
+"Heathen"; "Kreator" nodes: "Nuclear Blast" "United States of America" destination: "Lady Gaga"
+Paths for the Recommended Item: 154
+"Forbidden"; "Death" nodes: "Combat Records" "1985-01-01T00:00:00Z" destination: "Radiohead"
+
+User: 52
+Items interacted by the user
+Item id: 329 Name: Justin Timberlake
+Item id: 1545 Name: Raimundos
+Item id: 1547 Name: Hatebreed
+Item id: 1550 Name: Impending Doom
+Item id: 1551 Name: As Blood Runs Black
+Item id: 1553 Name: Céu
+Item id: 1554 Name: ABACABB
+Item id: 1555 Name: Job for a Cowboy
+Item id: 1556 Name: Joss Stone
+Item id: 1557 Name: Carnifex
+Item id: 1558 Name: Provérbio X
+Item id: 1560 Name: Facção Central
+Item id: 1562 Name: Akissforjersey
+Item id: 1563 Name: Annotations of an Autopsy
