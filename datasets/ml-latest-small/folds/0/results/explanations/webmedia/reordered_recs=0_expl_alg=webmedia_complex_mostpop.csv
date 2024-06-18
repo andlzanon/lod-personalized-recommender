@@ -1,0 +1,17 @@
+./datasets/ml-latest-small/folds/0/results/explanations/webmedia/reordered_recs=0_expl_alg=webmedia_complex_mostpop.csv
+Mean user item aggregate diversity: 4.478688524590164
+Std user item aggregate diversity: 1.9511337397001223
+Mean user property aggregate diversity: 4.768852459016394
+Std user property aggregate diversity: 1.570427631393683
+Total items aggregate diversity: 552
+Total property aggregate diversity: 100
+Items entropy: 5.259365270944152
+Props entropy: 2.960489813431364
+Items Gini index: 0.9811904251306335
+Props Gini index: 0.9997765806178708
+LIR metric: 0.02344262295081967
+ETD metric: 0.9537704918032787
+SEP metric: 0.5625606317068009
+std LIR metric: 0.09813649320226478
+std ETD metric: 0.31408552627873654
+std SEP metric: 0.15193625085318285

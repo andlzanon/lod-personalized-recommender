@@ -1,6 +1,8 @@
 import _io
+import os
 import random
 from collections import Counter
+import openai
 
 import networkx as nx
 import numpy as np
@@ -11,6 +13,7 @@ from pykeen.triples import TriplesFactory
 from gensim.models.keyedvectors import KeyedVectors
 from node2vec import Node2Vec
 from sklearn.metrics.pairwise import cosine_similarity
+from dotenv import load_dotenv
 
 import evaluation_utils as eval
 from recommenders.lod_reordering import LODPersonalizedReordering
@@ -161,6 +164,13 @@ class PathReordering(LODPersonalizedReordering):
         if expl_alg.startswith("webmedia"):
             output_title = output_title.replace("/explanations/", "/explanations/webmedia/")
             results_title = results_title.replace("/explanations/", "/explanations/webmedia/")
+            print(output_title)
+            print(results_title)
+
+        if expl_alg.startswith("llm"):
+            load_dotenv()
+            output_title = output_title.replace("/explanations/", "/explanations/llm/")
+            results_title = results_title.replace("/explanations/", "/explanations/llm/")
             print(output_title)
             print(results_title)
 
@@ -1469,6 +1479,9 @@ class PathReordering(LODPersonalizedReordering):
         expl_count = 50
         sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path_s'])
 
+        if model_name.startswith("gpt"):
+            key = os.getenv("OPEN_AI_KEY")
+
         historic_codes = ['I' + str(i) for i in historic]
         recommeded_codes = ['I' + str(i) for i in recommeded]
         historic_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
@@ -1573,7 +1586,10 @@ class PathReordering(LODPersonalizedReordering):
                           "A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life\n" \
                           "War Horse | Band of Brothers -> Steven Spielberg -> War Horse"
 
+        print("LLM " + model_name + " Prompt:")
         print(prompt)
+        file.write("LLM " + model_name + " Prompt:")
+        file.write(prompt)
         print("LLM Response: ")
         response = ""
         for i in range(0, len(recommeded)):

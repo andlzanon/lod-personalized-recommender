@@ -1,0 +1,17 @@
+./datasets/hetrec2011-lastfm-2k/folds/0/results/explanations/webmedia/reordered_recs=0_expl_alg=webmedia_complex_ncf.csv
+Mean user item aggregate diversity: 5.790243902439024
+Std user item aggregate diversity: 1.4130296479692335
+Mean user property aggregate diversity: 6.028726287262873
+Std user property aggregate diversity: 1.4814988211469011
+Total items aggregate diversity: 2726
+Total property aggregate diversity: 527
+Items entropy: 6.6331468400977105
+Props entropy: 4.031459311855017
+Items Gini index: 0.9282002408467362
+Props Gini index: 0.9969189601168278
+LIR metric: 0.013116531165311654
+ETD metric: 1.2057452574525742
+SEP metric: 0.6153913884562324
+std LIR metric: 0.07799166082098061
+std ETD metric: 0.2962997642293802
+std SEP metric: 0.173332651664754
