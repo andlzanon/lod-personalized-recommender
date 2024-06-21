@@ -1,0 +1,17 @@
+./datasets/ml-latest-small/folds/0/results/explanations/webmedia/reordered_recs=0_expl_alg=webmedia_rotate_ease.csv
+Mean user item aggregate diversity: 2.98993288590604
+Std user item aggregate diversity: 1.210925929292933
+Mean user property aggregate diversity: 3.3758389261744965
+Std user property aggregate diversity: 1.1627698362857666
+Total items aggregate diversity: 507
+Total property aggregate diversity: 128
+Items entropy: 4.938091637696845
+Props entropy: 2.470948517864694
+Items Gini index: 0.9832120110836159
+Props Gini index: 0.9997962941348307
+LIR metric: 0.029530201342281882
+ETD metric: 0.6751677852348993
+SEP metric: 0.6583886683558382
+std LIR metric: 0.1194244338341353
+std ETD metric: 0.2325539672571533
+std SEP metric: 0.17438759557877398
