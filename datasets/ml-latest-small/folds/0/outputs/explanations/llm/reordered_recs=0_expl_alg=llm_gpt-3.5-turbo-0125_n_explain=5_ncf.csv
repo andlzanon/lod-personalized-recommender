@@ -1,0 +1,1331 @@
+./datasets/ml-latest-small/folds/0/outputs/explanations/llm/reordered_recs=0_expl_alg=llm_gpt-3.5-turbo-0125_n_explain=5_ncf.csv
+
+User: 37
+Items interacted by the user
+Item id: 1061 Name: Sleepers
+Item id: 661 Name: James and the Giant Peach
+Item id: 1073 Name: Willy Wonka & the Chocolate Factory
+Item id: 671 Name: Mystery Science Theater 3000: The Movie
+Item id: 292 Name: Outbreak
+Item id: 318 Name: The Shawshank Redemption
+Item id: 329 Name: Star Trek Generations
+Item id: 231 Name: Dumb and Dumber
+Item id: 349 Name: Clear and Present Danger
+Item id: 457 Name: The Fugitive
+Item id: 593 Name: The Silence of the Lambs
+Item id: 153 Name: Batman Forever
+Item id: 165 Name: Die Hard with a Vengeance
+Item id: 344 Name: Ace Ventura: Pet Detective
+Item id: 590 Name: Dances with Wolves
+Item id: 380 Name: True Lies
+Item id: 592 Name: Batman
+
+Users favorites attributes on the kG
+James Cameron
+Academy Award for Best Sound Mixing
+Batman
+Tim Burton
+Jim Carrey
+
+Recommendations
+Item id: 356 Name: Forrest Gump
+Item id: 673 Name: Space Jam
+Item id: 1259 Name: Stand by Me
+Item id: 3671 Name: Blazing Saddles
+Item id: 1968 Name: The Breakfast Club
+LLM gpt-3.5-turbo-0125 Prompt:
+In a recommender system, a user has interacted some items, chronologically, in descending order, the last 25 items interacted were:
+'Sleepers'
+'James and the Giant Peach'
+'Willy Wonka & the Chocolate Factory'
+'Mystery Science Theater 3000: The Movie'
+'Outbreak'
+'The Shawshank Redemption'
+'Star Trek Generations'
+'Dumb and Dumber'
+'Clear and Present Danger'
+'The Fugitive'
+'The Silence of the Lambs'
+'Batman Forever'
+'Die Hard with a Vengeance'
+'Ace Ventura: Pet Detective'
+'Dances with Wolves'
+'True Lies'
+'Batman'
+The user has top-5 recommendations, and possible explanations paths. Explanation paths connect an interacted item is connected to a recommended item by attributes. Bellow are the user recommendations with the followed by enumerated explanation paths, the symbol '->' means the connection between an item and an attribute:
+
+For the recommended item 'Forrest Gump':
+1.Willy Wonka & the Chocolate Factory -> National Film Registry -> Forrest Gump 
+2.Sleepers -> coming-of-age story -> Forrest Gump 
+3.Dumb and Dumber -> comedy film -> Forrest Gump 
+4.Clear and Present Danger -> Michael Jace -> Forrest Gump 
+5.Outbreak -> drama -> Forrest Gump 
+6.Clear and Present Danger -> Washington, D.C. -> Forrest Gump 
+7.The Shawshank Redemption -> National Board of Review: Top Ten Films -> Forrest Gump 
+8.The Shawshank Redemption -> Academy Award for Best Sound Mixing -> Forrest Gump 
+9.The Fugitive -> Academy Award for Best Cinematography -> Forrest Gump 
+10.Clear and Present Danger -> United States of America -> Forrest Gump 
+11.Willy Wonka & the Chocolate Factory -> drama -> Forrest Gump 
+12.Clear and Present Danger -> drama -> Forrest Gump 
+13.Clear and Present Danger -> Arizona -> Forrest Gump 
+14.The Shawshank Redemption -> Academy Award for Best Picture -> Forrest Gump 
+15.The Fugitive -> United States of America -> Forrest Gump 
+16.The Shawshank Redemption -> drama -> Forrest Gump 
+17.Sleepers -> United States of America -> Forrest Gump 
+18.Willy Wonka & the Chocolate Factory -> United States of America -> Forrest Gump 
+19.The Shawshank Redemption -> Academy Award for Best Film Editing -> Forrest Gump 
+20.The Shawshank Redemption -> Academy Award for Best Writing, Adapted Screenplay -> Forrest Gump 
+21.The Shawshank Redemption -> Academy Award for Best Actor -> Forrest Gump 
+22.Clear and Present Danger -> California -> Forrest Gump 
+23.The Shawshank Redemption -> National Film Registry -> Forrest Gump 
+24.Star Trek Generations -> Arizona -> Forrest Gump 
+25.The Fugitive -> North Carolina -> Forrest Gump 
+26.The Fugitive -> Academy Award for Best Supporting Actor -> Forrest Gump 
+27.The Shawshank Redemption -> Academy Award for Best Cinematography -> Forrest Gump 
+28.James and the Giant Peach -> film based on a novel -> Forrest Gump 
+29.Clear and Present Danger -> Academy Award for Best Sound Mixing -> Forrest Gump 
+30.Clear and Present Danger -> Academy Award for Best Sound Editing -> Forrest Gump 
+31.Sleepers -> drama -> Forrest Gump 
+32.Outbreak -> United States of America -> Forrest Gump 
+33.Mystery Science Theater 3000: The Movie -> United States of America -> Forrest Gump 
+34.The Shawshank Redemption -> Academy Award for Best Original Score -> Forrest Gump 
+35.Outbreak -> San Francisco -> Forrest Gump 
+36.The Shawshank Redemption -> United States of America -> Forrest Gump 
+37.James and the Giant Peach -> United States of America -> Forrest Gump 
+38.Sleepers -> film based on a novel -> Forrest Gump 
+39.Clear and Present Danger -> film based on a novel -> Forrest Gump 
+40.Star Trek Generations -> United States of America -> Forrest Gump 
+41.Outbreak -> California -> Forrest Gump 
+42.Dumb and Dumber -> United States of America -> Forrest Gump 
+43.Willy Wonka & the Chocolate Factory -> film based on a novel -> Forrest Gump 
+44.Star Trek Generations -> Paramount Pictures -> Forrest Gump 
+45.Willy Wonka & the Chocolate Factory -> Paramount Pictures -> Forrest Gump 
+46.Star Trek Generations -> California -> Forrest Gump 
+47.The Shawshank Redemption -> Maine -> Forrest Gump 
+48.The Fugitive -> Academy Award for Best Picture -> Forrest Gump 
+49.Clear and Present Danger -> Paramount Pictures -> Forrest Gump 
+50.Sleepers -> New York City -> Forrest Gump 
+
+For the recommended item 'Space Jam':
+1.Outbreak -> James Newton Howard -> Space Jam 
+2.Batman Forever -> Long Beach -> Space Jam 
+3.Ace Ventura: Pet Detective -> United States of America -> Space Jam 
+4.Sleepers -> New York City -> Space Jam 
+5.Die Hard with a Vengeance -> United States of America -> Space Jam 
+6.James and the Giant Peach -> children's film -> Space Jam 
+7.Willy Wonka & the Chocolate Factory -> United States of America -> Space Jam 
+8.Dumb and Dumber -> comedy film -> Space Jam 
+9.Dumb and Dumber -> United States of America -> Space Jam 
+10.Star Trek Generations -> fictional crossover -> Space Jam 
+11.Sleepers -> United States of America -> Space Jam 
+12.The Shawshank Redemption -> United States of America -> Space Jam 
+13.Willy Wonka & the Chocolate Factory -> fantasy film -> Space Jam 
+14.Star Trek Generations -> United States of America -> Space Jam 
+15.The Fugitive -> Michael Chapman -> Space Jam 
+16.Dances with Wolves -> United States of America -> Space Jam 
+17.Die Hard with a Vengeance -> New York City -> Space Jam 
+18.Batman -> United States of America -> Space Jam 
+19.Ace Ventura: Pet Detective -> comedy film -> Space Jam 
+20.True Lies -> comedy film -> Space Jam 
+21.James and the Giant Peach -> fantasy film -> Space Jam 
+22.Mystery Science Theater 3000: The Movie -> United States of America -> Space Jam 
+23.Outbreak -> United States of America -> Space Jam 
+24.Clear and Present Danger -> United States of America -> Space Jam 
+25.Batman Forever -> fantasy film -> Space Jam 
+26.The Fugitive -> United States of America -> Space Jam 
+27.The Silence of the Lambs -> United States of America -> Space Jam 
+28.The Fugitive -> James Newton Howard -> Space Jam 
+29.Batman Forever -> United States of America -> Space Jam 
+30.True Lies -> United States of America -> Space Jam 
+31.Batman Forever -> New York City -> Space Jam 
+32.Willy Wonka & the Chocolate Factory -> children's film -> Space Jam 
+33.James and the Giant Peach -> United States of America -> Space Jam 
+
+For the recommended item 'Stand by Me':
+1.Star Trek Generations -> California -> Stand by Me 
+2.The Shawshank Redemption -> male bonding -> Stand by Me 
+3.Ace Ventura: Pet Detective -> comedy film -> Stand by Me 
+4.Sleepers -> coming-of-age story -> Stand by Me 
+5.The Shawshank Redemption -> drama -> Stand by Me 
+6.Outbreak -> drama -> Stand by Me 
+7.Dumb and Dumber -> United States of America -> Stand by Me 
+8.Batman -> United States of America -> Stand by Me 
+9.Mystery Science Theater 3000: The Movie -> adventure film -> Stand by Me 
+10.The Shawshank Redemption -> United States of America -> Stand by Me 
+11.True Lies -> comedy film -> Stand by Me 
+12.James and the Giant Peach -> United States of America -> Stand by Me 
+13.Dumb and Dumber -> comedy film -> Stand by Me 
+14.Outbreak -> California -> Stand by Me 
+15.Ace Ventura: Pet Detective -> United States of America -> Stand by Me 
+16.Star Trek Generations -> United States of America -> Stand by Me 
+17.Dances with Wolves -> National Board of Review: Top Ten Films -> Stand by Me 
+18.The Silence of the Lambs -> National Board of Review: Top Ten Films -> Stand by Me 
+19.Die Hard with a Vengeance -> United States of America -> Stand by Me 
+20.The Shawshank Redemption -> friendship -> Stand by Me 
+21.Clear and Present Danger -> California -> Stand by Me 
+22.The Silence of the Lambs -> United States of America -> Stand by Me 
+23.Clear and Present Danger -> drama -> Stand by Me 
+24.Willy Wonka & the Chocolate Factory -> drama -> Stand by Me 
+25.Dances with Wolves -> Academy Award for Best Writing, Adapted Screenplay -> Stand by Me 
+26.Sleepers -> drama -> Stand by Me 
+27.The Shawshank Redemption -> film based on literature -> Stand by Me 
+28.The Shawshank Redemption -> Stephen King -> Stand by Me 
+29.Clear and Present Danger -> United States of America -> Stand by Me 
+30.Dances with Wolves -> United States of America -> Stand by Me 
+31.The Shawshank Redemption -> National Board of Review: Top Ten Films -> Stand by Me 
+32.Dances with Wolves -> adventure film -> Stand by Me 
+33.The Shawshank Redemption -> Academy Award for Best Writing, Adapted Screenplay -> Stand by Me 
+34.Willy Wonka & the Chocolate Factory -> United States of America -> Stand by Me 
+35.Sleepers -> United States of America -> Stand by Me 
+36.The Silence of the Lambs -> drama -> Stand by Me 
+37.The Shawshank Redemption -> Columbia Pictures -> Stand by Me 
+38.Batman Forever -> United States of America -> Stand by Me 
+39.Mystery Science Theater 3000: The Movie -> United States of America -> Stand by Me 
+40.The Fugitive -> United States of America -> Stand by Me 
+41.Outbreak -> United States of America -> Stand by Me 
+42.The Silence of the Lambs -> Academy Award for Best Writing, Adapted Screenplay -> Stand by Me 
+43.Star Trek Generations -> adventure film -> Stand by Me 
+44.True Lies -> United States of America -> Stand by Me 
+45.Dances with Wolves -> drama -> Stand by Me 
+46.James and the Giant Peach -> Richard Dreyfuss -> Stand by Me 
+
+For the recommended item 'Blazing Saddles':
+1.The Fugitive -> United States of America -> Blazing Saddles 
+2.James and the Giant Peach -> United States of America -> Blazing Saddles 
+3.Die Hard with a Vengeance -> United States of America -> Blazing Saddles 
+4.The Shawshank Redemption -> National Film Registry -> Blazing Saddles 
+5.Star Trek Generations -> California -> Blazing Saddles 
+6.Outbreak -> United States of America -> Blazing Saddles 
+7.Dances with Wolves -> Academy Award for Best Supporting Actress -> Blazing Saddles 
+8.Batman Forever -> Warner Bros. -> Blazing Saddles 
+9.Dances with Wolves -> United States of America -> Blazing Saddles 
+10.Willy Wonka & the Chocolate Factory -> National Film Registry -> Blazing Saddles 
+11.Batman Forever -> United States of America -> Blazing Saddles 
+12.True Lies -> United States of America -> Blazing Saddles 
+13.Ace Ventura: Pet Detective -> Warner Bros. -> Blazing Saddles 
+14.The Shawshank Redemption -> Academy Award for Best Film Editing -> Blazing Saddles 
+15.The Fugitive -> Warner Bros. -> Blazing Saddles 
+16.Dances with Wolves -> National Film Registry -> Blazing Saddles 
+17.The Silence of the Lambs -> Academy Award for Best Film Editing -> Blazing Saddles 
+18.Ace Ventura: Pet Detective -> comedy film -> Blazing Saddles 
+19.The Silence of the Lambs -> United States of America -> Blazing Saddles 
+20.Willy Wonka & the Chocolate Factory -> United States of America -> Blazing Saddles 
+21.True Lies -> comedy film -> Blazing Saddles 
+22.Sleepers -> United States of America -> Blazing Saddles 
+23.Dumb and Dumber -> comedy film -> Blazing Saddles 
+24.Star Trek Generations -> United States of America -> Blazing Saddles 
+25.Batman -> Warner Bros. -> Blazing Saddles 
+26.Dumb and Dumber -> United States of America -> Blazing Saddles 
+27.The Fugitive -> Academy Award for Best Film Editing -> Blazing Saddles 
+28.Mystery Science Theater 3000: The Movie -> United States of America -> Blazing Saddles 
+29.Willy Wonka & the Chocolate Factory -> Gene Wilder -> Blazing Saddles 
+30.Batman -> United States of America -> Blazing Saddles 
+31.Dances with Wolves -> Western film -> Blazing Saddles 
+32.Clear and Present Danger -> California -> Blazing Saddles 
+33.Clear and Present Danger -> United States of America -> Blazing Saddles 
+34.Outbreak -> California -> Blazing Saddles 
+35.Ace Ventura: Pet Detective -> United States of America -> Blazing Saddles 
+36.The Shawshank Redemption -> United States of America -> Blazing Saddles 
+37.Dances with Wolves -> Academy Award for Best Film Editing -> Blazing Saddles 
+38.The Silence of the Lambs -> National Film Registry -> Blazing Saddles 
+39.Willy Wonka & the Chocolate Factory -> Warner Bros. -> Blazing Saddles 
+
+For the recommended item 'The Breakfast Club':
+1.Outbreak -> United States of America -> The Breakfast Club 
+2.Dances with Wolves -> drama -> The Breakfast Club 
+3.True Lies -> United States of America -> The Breakfast Club 
+4.Sleepers -> coming-of-age story -> The Breakfast Club 
+5.Clear and Present Danger -> drama -> The Breakfast Club 
+6.James and the Giant Peach -> United States of America -> The Breakfast Club 
+7.Mystery Science Theater 3000: The Movie -> United States of America -> The Breakfast Club 
+8.Star Trek Generations -> United States of America -> The Breakfast Club 
+9.Dumb and Dumber -> United States of America -> The Breakfast Club 
+10.The Shawshank Redemption -> United States of America -> The Breakfast Club 
+11.Sleepers -> drama -> The Breakfast Club 
+12.The Shawshank Redemption -> National Film Registry -> The Breakfast Club 
+13.Willy Wonka & the Chocolate Factory -> National Film Registry -> The Breakfast Club 
+14.The Fugitive -> Chicago -> The Breakfast Club 
+15.True Lies -> Universal Pictures -> The Breakfast Club 
+16.Ace Ventura: Pet Detective -> United States of America -> The Breakfast Club 
+17.Batman -> United States of America -> The Breakfast Club 
+18.Dances with Wolves -> National Film Registry -> The Breakfast Club 
+19.Dances with Wolves -> United States of America -> The Breakfast Club 
+20.Sleepers -> United States of America -> The Breakfast Club 
+21.Outbreak -> drama -> The Breakfast Club 
+22.The Shawshank Redemption -> drama -> The Breakfast Club 
+23.Clear and Present Danger -> United States of America -> The Breakfast Club 
+24.The Silence of the Lambs -> United States of America -> The Breakfast Club 
+25.The Silence of the Lambs -> drama -> The Breakfast Club 
+26.The Silence of the Lambs -> National Film Registry -> The Breakfast Club 
+27.The Fugitive -> United States of America -> The Breakfast Club 
+28.Batman Forever -> United States of America -> The Breakfast Club 
+29.Batman -> Universal Pictures -> The Breakfast Club 
+30.Die Hard with a Vengeance -> United States of America -> The Breakfast Club 
+31.Willy Wonka & the Chocolate Factory -> United States of America -> The Breakfast Club 
+32.Willy Wonka & the Chocolate Factory -> drama -> The Breakfast Club 
+
+Please choose one explanation path for each recommendation considering the following criteria:
+1. Diversity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Diversify these attributes for the chosen explanation paths set of all recommendations;
+2. Popularity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Use popular attributes for the chosen explanation paths set of all recommendations;
+3. Recency of interacted items: Use explanation paths that connects recently interacted items with the recommended.
+
+Output exactly in the same format as bellow with only the chosen explanation for each recommendation starting with the name and then the explanation, separated with a the symbol '|'.The path's attributes are separated with '->'. An example of the exact format I wantyou to output is:
+Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York
+Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator
+Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan
+A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life
+War Horse | Band of Brothers -> Steven Spielberg -> War Horse
+
+LLM gpt-3.5-turbo-0125 Response: 
+Forrest Gump | Willy Wonka & the Chocolate Factory -> National Film Registry -> Forrest Gump
+Space Jam | Batman Forever -> Long Beach -> Space Jam
+Stand by Me | Star Trek Generations -> California -> Stand by Me
+Blazing Saddles | The Fugitive -> United States of America -> Blazing Saddles
+The Breakfast Club | Outbreak -> United States of America -> The Breakfast Club"Willy Wonka & the Chocolate Factory" nodes: "National Film Registry" destination: "Forrest Gump""Batman Forever" nodes: "Long Beach" destination: "Space Jam""Star Trek Generations" nodes: "California" destination: "Stand by Me""The Fugitive" nodes: "United States of America" destination: "Blazing Saddles""Outbreak" nodes: "United States of America" destination: "The Breakfast Club"
+
+User: 53
+Items interacted by the user
+Item id: 381 Name: When a Man Loves a Woman
+Item id: 1049 Name: The Ghost and the Darkness
+Item id: 249 Name: Immortal Beloved
+Item id: 481 Name: Kalifornia
+Item id: 916 Name: Roman Holiday
+Item id: 1100 Name: Days of Thunder
+Item id: 1125 Name: The Return of the Pink Panther
+Item id: 1256 Name: Duck Soup
+Item id: 4019 Name: Finding Forrester
+Item id: 922 Name: Sunset Boulevard
+Item id: 203 Name: To Wong Foo, Thanks for Everything! Julie Newmar
+Item id: 880 Name: The Island of Dr. Moreau
+Item id: 1982 Name: Halloween
+Item id: 2686 Name: The Red Violin
+Item id: 413 Name: Airheads
+Item id: 748 Name: The Arrival
+Item id: 2616 Name: Dick Tracy
+Item id: 1441 Name: Benny & Joon
+
+Users favorites attributes on the kG
+John Carpenter
+Al Franken
+Bernard Rose
+Warren Beatty
+François Girard
+
+Recommendations
+Item id: 110 Name: Braveheart
+Item id: 1345 Name: Carrie
+Item id: 371 Name: The Paper
+Item id: 2060 Name: BASEketball
+Item id: 3100 Name: A River Runs Through It
+LLM gpt-3.5-turbo-0125 Prompt:
+In a recommender system, a user has interacted some items, chronologically, in descending order, the last 25 items interacted were:
+'When a Man Loves a Woman'
+'The Ghost and the Darkness'
+'Immortal Beloved'
+'Kalifornia'
+'Roman Holiday'
+'Days of Thunder'
+'The Return of the Pink Panther'
+'Duck Soup'
+'Finding Forrester'
+'Sunset Boulevard'
+'To Wong Foo, Thanks for Everything! Julie Newmar'
+'The Island of Dr. Moreau'
+'Halloween'
+'The Red Violin'
+'Airheads'
+'The Arrival'
+'Dick Tracy'
+'Benny & Joon'
+The user has top-5 recommendations, and possible explanations paths. Explanation paths connect an interacted item is connected to a recommended item by attributes. Bellow are the user recommendations with the followed by enumerated explanation paths, the symbol '->' means the connection between an item and an attribute:
+
+For the recommended item 'Braveheart':
+1.Immortal Beloved -> Bruce Davey -> Braveheart 
+2.When a Man Loves a Woman -> United States of America -> Braveheart 
+3.Sunset Boulevard -> Academy Award for Best Picture -> Braveheart 
+4.The Island of Dr. Moreau -> action film -> Braveheart 
+5.Kalifornia -> drama -> Braveheart 
+6.Halloween -> United States of America -> Braveheart 
+7.Roman Holiday -> Academy Award for Best Director -> Braveheart 
+8.Finding Forrester -> United States of America -> Braveheart 
+9.Dick Tracy -> Academy Award for Best Costume Design -> Braveheart 
+10.Halloween -> drama -> Braveheart 
+11.Immortal Beloved -> biographical film -> Braveheart 
+12.Sunset Boulevard -> Academy Award for Best Film Editing -> Braveheart 
+13.The Red Violin -> David Gant -> Braveheart 
+14.Days of Thunder -> action film -> Braveheart 
+15.Dick Tracy -> Academy Award for Best Makeup and Hairstyling -> Braveheart 
+16.Roman Holiday -> United States of America -> Braveheart 
+17.The Ghost and the Darkness -> action film -> Braveheart 
+18.Immortal Beloved -> Icon Productions -> Braveheart 
+19.Duck Soup -> United States of America -> Braveheart 
+20.Days of Thunder -> Academy Award for Best Sound Mixing -> Braveheart 
+21.Days of Thunder -> United States of America -> Braveheart 
+22.The Red Violin -> drama -> Braveheart 
+23.Roman Holiday -> Academy Award for Best Picture -> Braveheart 
+24.Sunset Boulevard -> United States of America -> Braveheart 
+25.Dick Tracy -> United States of America -> Braveheart 
+26.Dick Tracy -> action film -> Braveheart 
+27.The Return of the Pink Panther -> United States of America -> Braveheart 
+28.The Ghost and the Darkness -> United States of America -> Braveheart 
+29.The Arrival -> United States of America -> Braveheart 
+30.Airheads -> United States of America -> Braveheart 
+31.When a Man Loves a Woman -> drama -> Braveheart 
+32.Kalifornia -> United States of America -> Braveheart 
+33.Immortal Beloved -> United States of America -> Braveheart 
+34.Finding Forrester -> drama -> Braveheart 
+35.Roman Holiday -> drama -> Braveheart 
+36.Roman Holiday -> Academy Award for Best Film Editing -> Braveheart 
+37.Immortal Beloved -> drama -> Braveheart 
+38.The Ghost and the Darkness -> drama -> Braveheart 
+39.To Wong Foo, Thanks for Everything! Julie Newmar -> United States of America -> Braveheart 
+40.Sunset Boulevard -> Academy Award for Best Writing, Original Screenplay -> Braveheart 
+41.Roman Holiday -> National Board of Review: Top Ten Films -> Braveheart 
+42.Sunset Boulevard -> Academy Award for Best Director -> Braveheart 
+43.Immortal Beloved -> Donal Gibson -> Braveheart 
+44.Sunset Boulevard -> drama -> Braveheart 
+45.Immortal Beloved -> Stephen McEveety -> Braveheart 
+46.Sunset Boulevard -> National Board of Review: Top Ten Films -> Braveheart 
+47.Days of Thunder -> drama -> Braveheart 
+48.Dick Tracy -> Academy Award for Best Cinematography -> Braveheart 
+49.The Island of Dr. Moreau -> United States of America -> Braveheart 
+50.The Ghost and the Darkness -> Academy Award for Best Sound Editing -> Braveheart 
+
+For the recommended item 'Carrie':
+1.Sunset Boulevard -> Academy Award for Best Actress -> Carrie 
+2.Halloween -> P. J. Soles -> Carrie 
+3.The Arrival -> United States of America -> Carrie 
+4.When a Man Loves a Woman -> United States of America -> Carrie 
+5.The Return of the Pink Panther -> United States of America -> Carrie 
+6.Kalifornia -> United States of America -> Carrie 
+7.Halloween -> United States of America -> Carrie 
+8.Benny & Joon -> United States of America -> Carrie 
+9.Kalifornia -> drama -> Carrie 
+10.Halloween -> horror film -> Carrie 
+11.Airheads -> United States of America -> Carrie 
+12.Finding Forrester -> drama -> Carrie 
+13.Halloween -> Los Angeles -> Carrie 
+14.The Ghost and the Darkness -> horror film -> Carrie 
+15.Roman Holiday -> United States of America -> Carrie 
+16.Sunset Boulevard -> Academy Award for Best Supporting Actress -> Carrie 
+17.Roman Holiday -> drama -> Carrie 
+18.Sunset Boulevard -> Los Angeles -> Carrie 
+19.Sunset Boulevard -> United States of America -> Carrie 
+20.Sunset Boulevard -> drama -> Carrie 
+21.Halloween -> drama -> Carrie 
+22.Duck Soup -> United States of America -> Carrie 
+23.Airheads -> Los Angeles -> Carrie 
+24.Dick Tracy -> Los Angeles -> Carrie 
+25.The Island of Dr. Moreau -> horror film -> Carrie 
+26.Immortal Beloved -> drama -> Carrie 
+27.The Arrival -> thriller film -> Carrie 
+28.When a Man Loves a Woman -> drama -> Carrie 
+29.Days of Thunder -> drama -> Carrie 
+30.Roman Holiday -> Academy Award for Best Actress -> Carrie 
+31.To Wong Foo, Thanks for Everything! Julie Newmar -> United States of America -> Carrie 
+32.Dick Tracy -> United States of America -> Carrie 
+33.Days of Thunder -> United States of America -> Carrie 
+34.Finding Forrester -> coming-of-age story -> Carrie 
+35.Immortal Beloved -> United States of America -> Carrie 
+36.The Ghost and the Darkness -> drama -> Carrie 
+37.The Island of Dr. Moreau -> film based on a novel -> Carrie 
+38.Days of Thunder -> North Carolina -> Carrie 
+39.Halloween -> teen film -> Carrie 
+40.Kalifornia -> horror film -> Carrie 
+41.The Island of Dr. Moreau -> thriller film -> Carrie 
+42.Kalifornia -> Los Angeles -> Carrie 
+43.The Island of Dr. Moreau -> United States of America -> Carrie 
+44.Finding Forrester -> United States of America -> Carrie 
+45.Benny & Joon -> drama -> Carrie 
+46.The Red Violin -> drama -> Carrie 
+47.The Ghost and the Darkness -> United States of America -> Carrie 
+
+For the recommended item 'The Paper':
+1.Airheads -> comedy film -> The Paper 
+2.To Wong Foo, Thanks for Everything! Julie Newmar -> New York City -> The Paper 
+3.Kalifornia -> United States of America -> The Paper 
+4.Duck Soup -> comedy film -> The Paper 
+5.Sunset Boulevard -> United States of America -> The Paper 
+6.Duck Soup -> United States of America -> The Paper 
+7.The Return of the Pink Panther -> comedy film -> The Paper 
+8.Days of Thunder -> Randy Quaid -> The Paper 
+9.When a Man Loves a Woman -> United States of America -> The Paper 
+10.Roman Holiday -> United States of America -> The Paper 
+11.Finding Forrester -> United States of America -> The Paper 
+12.Dick Tracy -> Catherine O'Hara -> The Paper 
+13.Dick Tracy -> Jack Kehoe -> The Paper 
+14.Benny & Joon -> United States of America -> The Paper 
+15.Finding Forrester -> New York City -> The Paper 
+16.The Ghost and the Darkness -> United States of America -> The Paper 
+17.Dick Tracy -> comedy film -> The Paper 
+18.Immortal Beloved -> United States of America -> The Paper 
+19.Days of Thunder -> United States of America -> The Paper 
+20.The Return of the Pink Panther -> United States of America -> The Paper 
+21.To Wong Foo, Thanks for Everything! Julie Newmar -> comedy film -> The Paper 
+22.The Island of Dr. Moreau -> United States of America -> The Paper 
+23.Halloween -> United States of America -> The Paper 
+24.To Wong Foo, Thanks for Everything! Julie Newmar -> United States of America -> The Paper 
+25.Airheads -> United States of America -> The Paper 
+26.Dick Tracy -> United States of America -> The Paper 
+27.The Arrival -> United States of America -> The Paper 
+28.Days of Thunder -> Robert Duvall -> The Paper 
+29.Roman Holiday -> comedy film -> The Paper 
+
+For the recommended item 'BASEketball':
+1.To Wong Foo, Thanks for Everything! Julie Newmar -> United States of America -> BASEketball 
+2.Halloween -> United States of America -> BASEketball 
+3.The Island of Dr. Moreau -> United States of America -> BASEketball 
+4.Sunset Boulevard -> United States of America -> BASEketball 
+5.Airheads -> buddy film -> BASEketball 
+6.Immortal Beloved -> United States of America -> BASEketball 
+7.Finding Forrester -> United States of America -> BASEketball 
+8.The Arrival -> United States of America -> BASEketball 
+9.When a Man Loves a Woman -> United States of America -> BASEketball 
+10.Days of Thunder -> United States of America -> BASEketball 
+11.Kalifornia -> United States of America -> BASEketball 
+12.Benny & Joon -> United States of America -> BASEketball 
+13.The Ghost and the Darkness -> United States of America -> BASEketball 
+14.Airheads -> United States of America -> BASEketball 
+15.Dick Tracy -> United States of America -> BASEketball 
+16.Duck Soup -> United States of America -> BASEketball 
+17.The Return of the Pink Panther -> United States of America -> BASEketball 
+18.Roman Holiday -> United States of America -> BASEketball 
+
+For the recommended item 'A River Runs Through It':
+1.When a Man Loves a Woman -> United States of America -> A River Runs Through It 
+2.Finding Forrester -> coming-of-age story -> A River Runs Through It 
+3.Halloween -> drama -> A River Runs Through It 
+4.Dick Tracy -> Academy Award for Best Cinematography -> A River Runs Through It 
+5.Kalifornia -> drama -> A River Runs Through It 
+6.Benny & Joon -> drama -> A River Runs Through It 
+7.The Red Violin -> Academy Award for Best Original Score -> A River Runs Through It 
+8.The Ghost and the Darkness -> United States of America -> A River Runs Through It 
+9.Halloween -> United States of America -> A River Runs Through It 
+10.Days of Thunder -> drama -> A River Runs Through It 
+11.The Island of Dr. Moreau -> William Hootkins -> A River Runs Through It 
+12.Roman Holiday -> United States of America -> A River Runs Through It 
+13.Finding Forrester -> United States of America -> A River Runs Through It 
+14.Airheads -> United States of America -> A River Runs Through It 
+15.Kalifornia -> United States of America -> A River Runs Through It 
+16.Immortal Beloved -> biographical film -> A River Runs Through It 
+17.The Arrival -> United States of America -> A River Runs Through It 
+18.When a Man Loves a Woman -> drama -> A River Runs Through It 
+19.Days of Thunder -> United States of America -> A River Runs Through It 
+20.Roman Holiday -> Academy Award for Best Writing, Adapted Screenplay -> A River Runs Through It 
+21.The Return of the Pink Panther -> United States of America -> A River Runs Through It 
+22.Sunset Boulevard -> drama -> A River Runs Through It 
+23.Immortal Beloved -> United States of America -> A River Runs Through It 
+24.The Red Violin -> drama -> A River Runs Through It 
+25.Benny & Joon -> United States of America -> A River Runs Through It 
+26.Finding Forrester -> drama -> A River Runs Through It 
+27.Duck Soup -> United States of America -> A River Runs Through It 
+28.The Ghost and the Darkness -> drama -> A River Runs Through It 
+29.Kalifornia -> Brad Pitt -> A River Runs Through It 
+30.To Wong Foo, Thanks for Everything! Julie Newmar -> United States of America -> A River Runs Through It 
+31.Roman Holiday -> drama -> A River Runs Through It 
+32.The Island of Dr. Moreau -> United States of America -> A River Runs Through It 
+33.Dick Tracy -> United States of America -> A River Runs Through It 
+34.Sunset Boulevard -> United States of America -> A River Runs Through It 
+35.Immortal Beloved -> drama -> A River Runs Through It 
+
+Please choose one explanation path for each recommendation considering the following criteria:
+1. Diversity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Diversify these attributes for the chosen explanation paths set of all recommendations;
+2. Popularity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Use popular attributes for the chosen explanation paths set of all recommendations;
+3. Recency of interacted items: Use explanation paths that connects recently interacted items with the recommended.
+
+Output exactly in the same format as bellow with only the chosen explanation for each recommendation starting with the name and then the explanation, separated with a the symbol '|'.The path's attributes are separated with '->'. An example of the exact format I wantyou to output is:
+Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York
+Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator
+Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan
+A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life
+War Horse | Band of Brothers -> Steven Spielberg -> War Horse
+
+LLM gpt-3.5-turbo-0125 Response: 
+Braveheart | Sunset Boulevard -> Academy Award for Best Picture -> Braveheart
+Carrie | Sunset Boulevard -> Academy Award for Best Actress -> Carrie
+The Paper | Airheads -> comedy film -> The Paper
+BASEketball | To Wong Foo, Thanks for Everything! Julie Newmar -> United States of America -> BASEketball
+A River Runs Through It | When a Man Loves a Woman -> United States of America -> A River Runs Through It"Sunset Boulevard" nodes: "Academy Award for Best Picture" destination: "Braveheart""Sunset Boulevard" nodes: "Academy Award for Best Actress" destination: "Carrie""Airheads" nodes: "comedy film" destination: "The Paper""To Wong Foo, Thanks for Everything! Julie Newmar" nodes: "United States of America" destination: "BASEketball""When a Man Loves a Woman" nodes: "United States of America" destination: "A River Runs Through It"
+
+User: 87
+Items interacted by the user
+Item id: 1136 Name: Monty Python and the Holy Grail
+Item id: 4973 Name: Amélie
+Item id: 5618 Name: Spirited Away
+Item id: 7022 Name: Battle Royale
+Item id: 3910 Name: Dancer in the Dark
+Item id: 3593 Name: Battlefield Earth
+Item id: 2009 Name: Soylent Green
+Item id: 262 Name: A Little Princess
+Item id: 2139 Name: The Secret of NIMH
+Item id: 4023 Name: The Family Man
+Item id: 3504 Name: Network
+Item id: 60 Name: The Indian in the Cupboard
+Item id: 2300 Name: The Producers
+Item id: 1077 Name: Sleeper
+Item id: 671 Name: Mystery Science Theater 3000: The Movie
+Item id: 327 Name: Tank Girl
+Item id: 531 Name: The Secret Garden
+Item id: 4571 Name: Bill & Ted's Excellent Adventure
+Item id: 1345 Name: Carrie
+
+Users favorites attributes on the kG
+Woody Allen
+Terry Jones
+dystopian film
+Jim Mallon
+Trace Beaulieu
+
+Recommendations
+Item id: 553 Name: Tombstone
+Item id: 150 Name: Apollo 13
+Item id: 2699 Name: Arachnophobia
+Item id: 5971 Name: My Neighbor Totoro
+Item id: 697 Name: Feeling Minnesota
+LLM gpt-3.5-turbo-0125 Prompt:
+In a recommender system, a user has interacted some items, chronologically, in descending order, the last 25 items interacted were:
+'Monty Python and the Holy Grail'
+'Amélie'
+'Spirited Away'
+'Battle Royale'
+'Dancer in the Dark'
+'Battlefield Earth'
+'Soylent Green'
+'A Little Princess'
+'The Secret of NIMH'
+'The Family Man'
+'Network'
+'The Indian in the Cupboard'
+'The Producers'
+'Sleeper'
+'Mystery Science Theater 3000: The Movie'
+'Tank Girl'
+'The Secret Garden'
+'Bill & Ted's Excellent Adventure'
+'Carrie'
+The user has top-5 recommendations, and possible explanations paths. Explanation paths connect an interacted item is connected to a recommended item by attributes. Bellow are the user recommendations with the followed by enumerated explanation paths, the symbol '->' means the connection between an item and an attribute:
+
+For the recommended item 'Tombstone':
+1.Sleeper -> United States of America -> Tombstone 
+2.Bill & Ted's Excellent Adventure -> Arizona -> Tombstone 
+3.Dancer in the Dark -> drama -> Tombstone 
+4.The Secret of NIMH -> United States of America -> Tombstone 
+5.Network -> drama -> Tombstone 
+6.The Family Man -> drama -> Tombstone 
+7.A Little Princess -> drama -> Tombstone 
+8.Soylent Green -> Charlton Heston -> Tombstone 
+9.Network -> United States of America -> Tombstone 
+10.Battlefield Earth -> United States of America -> Tombstone 
+11.The Family Man -> United States of America -> Tombstone 
+12.Bill & Ted's Excellent Adventure -> United States of America -> Tombstone 
+13.Tank Girl -> Catherine Hardwicke -> Tombstone 
+14.Carrie -> United States of America -> Tombstone 
+15.Spirited Away -> drama -> Tombstone 
+16.Amélie -> drama -> Tombstone 
+17.Battle Royale -> drama -> Tombstone 
+18.Soylent Green -> United States of America -> Tombstone 
+19.A Little Princess -> United States of America -> Tombstone 
+20.The Indian in the Cupboard -> United States of America -> Tombstone 
+21.Mystery Science Theater 3000: The Movie -> United States of America -> Tombstone 
+22.Tank Girl -> United States of America -> Tombstone 
+23.The Producers -> United States of America -> Tombstone 
+24.The Secret Garden -> drama -> Tombstone 
+25.Carrie -> drama -> Tombstone 
+26.The Secret Garden -> United States of America -> Tombstone 
+27.Soylent Green -> drama -> Tombstone 
+28.Dancer in the Dark -> United States of America -> Tombstone 
+
+For the recommended item 'Apollo 13':
+1.Network -> Academy Award for Best Supporting Actor -> Apollo 13 
+2.Amélie -> drama -> Apollo 13 
+3.Soylent Green -> United States of America -> Apollo 13 
+4.Mystery Science Theater 3000: The Movie -> adventure film -> Apollo 13 
+5.The Secret of NIMH -> adventure film -> Apollo 13 
+6.Network -> National Board of Review: Top Ten Films -> Apollo 13 
+7.The Secret Garden -> United States of America -> Apollo 13 
+8.Dancer in the Dark -> Japan Academy Prize for Outstanding Foreign Language Film -> Apollo 13 
+9.Dancer in the Dark -> United States of America -> Apollo 13 
+10.Mystery Science Theater 3000: The Movie -> United States of America -> Apollo 13 
+11.Amélie -> Academy Award for Best Sound Mixing -> Apollo 13 
+12.Network -> Academy Award for Best Supporting Actress -> Apollo 13 
+13.Battlefield Earth -> United States of America -> Apollo 13 
+14.Sleeper -> United States of America -> Apollo 13 
+15.The Indian in the Cupboard -> adventure film -> Apollo 13 
+16.The Family Man -> drama -> Apollo 13 
+17.The Secret of NIMH -> United States of America -> Apollo 13 
+18.Network -> Academy Award for Best Film Editing -> Apollo 13 
+19.Network -> Academy Award for Best Picture -> Apollo 13 
+20.Tank Girl -> United States of America -> Apollo 13 
+21.Network -> United States of America -> Apollo 13 
+22.Battle Royale -> drama -> Apollo 13 
+23.The Secret Garden -> drama -> Apollo 13 
+24.Monty Python and the Holy Grail -> adventure film -> Apollo 13 
+25.A Little Princess -> drama -> Apollo 13 
+26.Soylent Green -> drama -> Apollo 13 
+27.Carrie -> drama -> Apollo 13 
+28.A Little Princess -> United States of America -> Apollo 13 
+29.The Family Man -> United States of America -> Apollo 13 
+30.Dancer in the Dark -> drama -> Apollo 13 
+31.Amélie -> Academy Award for Best Production Design -> Apollo 13 
+32.Carrie -> Academy Award for Best Supporting Actress -> Apollo 13 
+33.The Producers -> United States of America -> Apollo 13 
+34.A Little Princess -> Academy Award for Best Production Design -> Apollo 13 
+35.Dancer in the Dark -> National Board of Review: Top Ten Films -> Apollo 13 
+36.The Indian in the Cupboard -> United States of America -> Apollo 13 
+37.Battlefield Earth -> Jim Meskimen -> Apollo 13 
+38.The Producers -> Academy Award for Best Supporting Actor -> Apollo 13 
+39.Network -> drama -> Apollo 13 
+40.Carrie -> United States of America -> Apollo 13 
+41.Bill & Ted's Excellent Adventure -> United States of America -> Apollo 13 
+42.Spirited Away -> drama -> Apollo 13 
+
+For the recommended item 'Arachnophobia':
+1.Tank Girl -> science fiction film -> Arachnophobia 
+2.Sleeper -> United States of America -> Arachnophobia 
+3.Battlefield Earth -> science fiction film -> Arachnophobia 
+4.Network -> United States of America -> Arachnophobia 
+5.The Producers -> comedy film -> Arachnophobia 
+6.The Indian in the Cupboard -> Kathleen Kennedy -> Arachnophobia 
+7.The Secret of NIMH -> United States of America -> Arachnophobia 
+8.A Little Princess -> comedy film -> Arachnophobia 
+9.Monty Python and the Holy Grail -> comedy film -> Arachnophobia 
+10.Soylent Green -> science fiction film -> Arachnophobia 
+11.The Indian in the Cupboard -> Frank Marshall -> Arachnophobia 
+12.Bill & Ted's Excellent Adventure -> science fiction film -> Arachnophobia 
+13.Bill & Ted's Excellent Adventure -> United States of America -> Arachnophobia 
+14.Carrie -> United States of America -> Arachnophobia 
+15.The Indian in the Cupboard -> United States of America -> Arachnophobia 
+16.Amélie -> comedy film -> Arachnophobia 
+17.Bill & Ted's Excellent Adventure -> comedy film -> Arachnophobia 
+18.Dancer in the Dark -> United States of America -> Arachnophobia 
+19.A Little Princess -> United States of America -> Arachnophobia 
+20.The Family Man -> United States of America -> Arachnophobia 
+21.The Producers -> United States of America -> Arachnophobia 
+22.Mystery Science Theater 3000: The Movie -> science fiction film -> Arachnophobia 
+23.Mystery Science Theater 3000: The Movie -> United States of America -> Arachnophobia 
+24.Sleeper -> science fiction film -> Arachnophobia 
+25.Tank Girl -> United States of America -> Arachnophobia 
+26.Carrie -> horror film -> Arachnophobia 
+27.The Secret Garden -> United States of America -> Arachnophobia 
+28.Soylent Green -> United States of America -> Arachnophobia 
+29.Battlefield Earth -> United States of America -> Arachnophobia 
+
+For the recommended item 'My Neighbor Totoro':
+1.A Little Princess -> fantasy film -> My Neighbor Totoro 
+2.A Little Princess -> children's film -> My Neighbor Totoro 
+3.Spirited Away -> Studio Ghibli -> My Neighbor Totoro 
+4.The Secret of NIMH -> fantasy film -> My Neighbor Totoro 
+5.Spirited Away -> Japan -> My Neighbor Totoro 
+6.Spirited Away -> Joe Hisaishi -> My Neighbor Totoro 
+7.Spirited Away -> Yasuyoshi Tokuma -> My Neighbor Totoro 
+8.Battle Royale -> Japan -> My Neighbor Totoro 
+9.The Family Man -> fantasy film -> My Neighbor Totoro 
+10.Spirited Away -> Takeshi Seyama -> My Neighbor Totoro 
+11.Monty Python and the Holy Grail -> fantasy film -> My Neighbor Totoro 
+12.Spirited Away -> fantasy anime and manga -> My Neighbor Totoro 
+13.Spirited Away -> fantasy film -> My Neighbor Totoro 
+14.The Secret Garden -> fantasy film -> My Neighbor Totoro 
+15.Spirited Away -> Hayao Miyazaki -> My Neighbor Totoro 
+16.The Indian in the Cupboard -> fantasy film -> My Neighbor Totoro 
+17.The Indian in the Cupboard -> children's film -> My Neighbor Totoro 
+18.Spirited Away -> supernatural anime -> My Neighbor Totoro 
+19.Spirited Away -> children's film -> My Neighbor Totoro 
+
+For the recommended item 'Feeling Minnesota':
+1.The Producers -> United States of America -> Feeling Minnesota 
+2.Bill & Ted's Excellent Adventure -> United States of America -> Feeling Minnesota 
+3.Battle Royale -> drama -> Feeling Minnesota 
+4.The Secret of NIMH -> United States of America -> Feeling Minnesota 
+5.The Family Man -> United States of America -> Feeling Minnesota 
+6.The Family Man -> drama -> Feeling Minnesota 
+7.A Little Princess -> drama -> Feeling Minnesota 
+8.Soylent Green -> drama -> Feeling Minnesota 
+9.Network -> drama -> Feeling Minnesota 
+10.Dancer in the Dark -> United States of America -> Feeling Minnesota 
+11.The Family Man -> romantic comedy -> Feeling Minnesota 
+12.Bill & Ted's Excellent Adventure -> Keanu Reeves -> Feeling Minnesota 
+13.Tank Girl -> United States of America -> Feeling Minnesota 
+14.Carrie -> United States of America -> Feeling Minnesota 
+15.Amélie -> romantic comedy -> Feeling Minnesota 
+16.Amélie -> drama -> Feeling Minnesota 
+17.Spirited Away -> drama -> Feeling Minnesota 
+18.Soylent Green -> United States of America -> Feeling Minnesota 
+19.A Little Princess -> United States of America -> Feeling Minnesota 
+20.Network -> United States of America -> Feeling Minnesota 
+21.Sleeper -> United States of America -> Feeling Minnesota 
+22.Mystery Science Theater 3000: The Movie -> United States of America -> Feeling Minnesota 
+23.The Indian in the Cupboard -> United States of America -> Feeling Minnesota 
+24.The Secret Garden -> drama -> Feeling Minnesota 
+25.Carrie -> drama -> Feeling Minnesota 
+26.The Secret Garden -> United States of America -> Feeling Minnesota 
+27.Battlefield Earth -> United States of America -> Feeling Minnesota 
+28.Dancer in the Dark -> drama -> Feeling Minnesota 
+
+Please choose one explanation path for each recommendation considering the following criteria:
+1. Diversity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Diversify these attributes for the chosen explanation paths set of all recommendations;
+2. Popularity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Use popular attributes for the chosen explanation paths set of all recommendations;
+3. Recency of interacted items: Use explanation paths that connects recently interacted items with the recommended.
+
+Output exactly in the same format as bellow with only the chosen explanation for each recommendation starting with the name and then the explanation, separated with a the symbol '|'.The path's attributes are separated with '->'. An example of the exact format I wantyou to output is:
+Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York
+Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator
+Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan
+A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life
+War Horse | Band of Brothers -> Steven Spielberg -> War Horse
+
+LLM gpt-3.5-turbo-0125 Response: 
+Tombstone | Tank Girl -> Catherine Hardwicke -> Tombstone
+Apollo 13 | Network -> Academy Award for Best Supporting Actor -> Apollo 13
+Arachnophobia | Monty Python and the Holy Grail -> comedy film -> Arachnophobia
+My Neighbor Totoro | Spirited Away -> Studio Ghibli -> My Neighbor Totoro
+Feeling Minnesota | Amélie -> romantic comedy -> Feeling Minnesota"Tank Girl" nodes: "Catherine Hardwicke" destination: "Tombstone""Network" nodes: "Academy Award for Best Supporting Actor" destination: "Apollo 13""Monty Python and the Holy Grail" nodes: "comedy film" destination: "Arachnophobia""Spirited Away" nodes: "Studio Ghibli" destination: "My Neighbor Totoro""Amélie" nodes: "romantic comedy" destination: "Feeling Minnesota"
+
+User: 118
+Items interacted by the user
+Item id: 25 Name: Leaving Las Vegas
+Item id: 2329 Name: American History X
+Item id: 2028 Name: Saving Private Ryan
+Item id: 1343 Name: Cape Fear
+Item id: 1104 Name: A Streetcar Named Desire
+Item id: 296 Name: Pulp Fiction
+Item id: 1213 Name: Goodfellas
+Item id: 1196 Name: Star Wars: Episode V – The Empire Strikes Back
+Item id: 608 Name: Fargo
+Item id: 1221 Name: The Godfather Part II
+Item id: 2918 Name: Ferris Bueller's Day Off
+Item id: 1961 Name: Rain Man
+Item id: 590 Name: Dances with Wolves
+Item id: 527 Name: Schindler's List
+Item id: 153 Name: Batman Forever
+Item id: 858 Name: The Godfather
+Item id: 2278 Name: Ronin
+Item id: 1059 Name: Romeo + Juliet
+Item id: 2378 Name: Police Academy
+
+Users favorites attributes on the kG
+Academy Award for Best Director
+Academy Award for Best Actor
+Academy Award for Best Picture
+Academy Award for Best Supporting Actor
+Mike Figgis
+
+Recommendations
+Item id: 1617 Name: L.A. Confidential
+Item id: 1580 Name: Men in Black
+Item id: 1391 Name: Mars Attacks!
+Item id: 849 Name: Escape from L.A.
+Item id: 596 Name: Pinocchio
+LLM gpt-3.5-turbo-0125 Prompt:
+In a recommender system, a user has interacted some items, chronologically, in descending order, the last 25 items interacted were:
+'Leaving Las Vegas'
+'American History X'
+'Saving Private Ryan'
+'Cape Fear'
+'A Streetcar Named Desire'
+'Pulp Fiction'
+'Goodfellas'
+'Star Wars: Episode V – The Empire Strikes Back'
+'Fargo'
+'The Godfather Part II'
+'Ferris Bueller's Day Off'
+'Rain Man'
+'Dances with Wolves'
+'Schindler's List'
+'Batman Forever'
+'The Godfather'
+'Ronin'
+'Romeo + Juliet'
+'Police Academy'
+The user has top-5 recommendations, and possible explanations paths. Explanation paths connect an interacted item is connected to a recommended item by attributes. Bellow are the user recommendations with the followed by enumerated explanation paths, the symbol '->' means the connection between an item and an attribute:
+
+For the recommended item 'L.A. Confidential':
+1.American History X -> crime film -> L.A. Confidential 
+2.Leaving Las Vegas -> film based on a novel -> L.A. Confidential 
+3.A Streetcar Named Desire -> Warner Bros. -> L.A. Confidential 
+4.A Streetcar Named Desire -> Academy Award for Best Writing, Adapted Screenplay -> L.A. Confidential 
+5.Saving Private Ryan -> Academy Award for Best Director -> L.A. Confidential 
+6.Pulp Fiction -> thriller film -> L.A. Confidential 
+7.Saving Private Ryan -> United States of America -> L.A. Confidential 
+8.Cape Fear -> Academy Award for Best Supporting Actress -> L.A. Confidential 
+9.Pulp Fiction -> Academy Award for Best Film Editing -> L.A. Confidential 
+10.Pulp Fiction -> drama -> L.A. Confidential 
+11.Leaving Las Vegas -> Academy Award for Best Writing, Adapted Screenplay -> L.A. Confidential 
+12.A Streetcar Named Desire -> Academy Award for Best Picture -> L.A. Confidential 
+13.Pulp Fiction -> National Board of Review Award for Best Film -> L.A. Confidential 
+14.Saving Private Ryan -> Academy Award for Best Original Dramatic Score -> L.A. Confidential 
+15.Pulp Fiction -> Academy Award for Best Picture -> L.A. Confidential 
+16.Saving Private Ryan -> Academy Award for Best Sound Mixing -> L.A. Confidential 
+17.Leaving Las Vegas -> National Board of Review: Top Ten Films -> L.A. Confidential 
+18.American History X -> Los Angeles -> L.A. Confidential 
+19.Cape Fear -> film based on a novel -> L.A. Confidential 
+20.Cape Fear -> crime film -> L.A. Confidential 
+21.Cape Fear -> drama -> L.A. Confidential 
+22.Pulp Fiction -> National Film Registry -> L.A. Confidential 
+23.Saving Private Ryan -> National Board of Review: Top Ten Films -> L.A. Confidential 
+24.A Streetcar Named Desire -> National Board of Review: Top Ten Films -> L.A. Confidential 
+25.Pulp Fiction -> Academy Award for Best Director -> L.A. Confidential 
+26.Pulp Fiction -> Los Angeles -> L.A. Confidential 
+27.Cape Fear -> thriller film -> L.A. Confidential 
+28.Leaving Las Vegas -> Los Angeles -> L.A. Confidential 
+29.Pulp Fiction -> United States of America -> L.A. Confidential 
+30.Pulp Fiction -> National Board of Review: Top Ten Films -> L.A. Confidential 
+31.Leaving Las Vegas -> drama -> L.A. Confidential 
+32.Saving Private Ryan -> Academy Award for Best Cinematography -> L.A. Confidential 
+33.Saving Private Ryan -> drama -> L.A. Confidential 
+34.Cape Fear -> United States of America -> L.A. Confidential 
+35.Saving Private Ryan -> Academy Award for Best Film Editing -> L.A. Confidential 
+36.Saving Private Ryan -> Academy Award for Best Picture -> L.A. Confidential 
+37.Leaving Las Vegas -> Academy Award for Best Director -> L.A. Confidential 
+38.Leaving Las Vegas -> Graham Beckel -> L.A. Confidential 
+39.A Streetcar Named Desire -> Academy Award for Best Director -> L.A. Confidential 
+40.A Streetcar Named Desire -> Academy Award for Best Supporting Actress -> L.A. Confidential 
+41.Saving Private Ryan -> National Film Registry -> L.A. Confidential 
+42.A Streetcar Named Desire -> United States of America -> L.A. Confidential 
+43.American History X -> drama -> L.A. Confidential 
+44.A Streetcar Named Desire -> drama -> L.A. Confidential 
+45.American History X -> United States of America -> L.A. Confidential 
+46.A Streetcar Named Desire -> National Film Registry -> L.A. Confidential 
+47.Saving Private Ryan -> Academy Award for Best Production Design -> L.A. Confidential 
+48.Pulp Fiction -> Academy Award for Best Supporting Actress -> L.A. Confidential 
+49.A Streetcar Named Desire -> Academy Award for Best Sound Mixing -> L.A. Confidential 
+50.Leaving Las Vegas -> United States of America -> L.A. Confidential 
+
+For the recommended item 'Men in Black':
+1.Cape Fear -> United States of America -> Men in Black 
+2.American History X -> United States of America -> Men in Black 
+3.Schindler's List -> Academy Award for Best Production Design -> Men in Black 
+4.Batman Forever -> action film -> Men in Black 
+5.Goodfellas -> United States of America -> Men in Black 
+6.Batman Forever -> New York City -> Men in Black 
+7.Star Wars: Episode V – The Empire Strikes Back -> United States of America -> Men in Black 
+8.Rain Man -> United States of America -> Men in Black 
+9.Police Academy -> comedy film -> Men in Black 
+10.Batman Forever -> United States of America -> Men in Black 
+11.Saving Private Ryan -> Academy Award for Best Makeup and Hairstyling -> Men in Black 
+12.Schindler's List -> United States of America -> Men in Black 
+13.The Godfather -> New York City -> Men in Black 
+14.The Godfather Part II -> Academy Award for Best Production Design -> Men in Black 
+15.Romeo + Juliet -> action film -> Men in Black 
+16.Star Wars: Episode V – The Empire Strikes Back -> action film -> Men in Black 
+17.Saving Private Ryan -> action film -> Men in Black 
+18.Pulp Fiction -> United States of America -> Men in Black 
+19.Ferris Bueller's Day Off -> United States of America -> Men in Black 
+20.The Godfather Part II -> New York City -> Men in Black 
+21.The Godfather Part II -> United States of America -> Men in Black 
+22.The Godfather -> United States of America -> Men in Black 
+23.Star Wars: Episode V – The Empire Strikes Back -> science fiction film -> Men in Black 
+24.Schindler's List -> Steven Spielberg -> Men in Black 
+25.Romeo + Juliet -> United States of America -> Men in Black 
+26.Ronin -> United States of America -> Men in Black 
+27.Ferris Bueller's Day Off -> comedy film -> Men in Black 
+28.Saving Private Ryan -> United States of America -> Men in Black 
+29.Ronin -> action film -> Men in Black 
+30.The Godfather -> New Jersey -> Men in Black 
+31.Leaving Las Vegas -> United States of America -> Men in Black 
+32.Goodfellas -> New York City -> Men in Black 
+33.Pulp Fiction -> Danny DeVito -> Men in Black 
+34.Rain Man -> buddy film -> Men in Black 
+35.Goodfellas -> New Jersey -> Men in Black 
+36.Star Wars: Episode V – The Empire Strikes Back -> Academy Award for Best Production Design -> Men in Black 
+37.Saving Private Ryan -> Academy Award for Best Production Design -> Men in Black 
+38.Saving Private Ryan -> Steven Spielberg -> Men in Black 
+39.Schindler's List -> Academy Award for Best Makeup and Hairstyling -> Men in Black 
+40.Dances with Wolves -> United States of America -> Men in Black 
+41.Star Wars: Episode V – The Empire Strikes Back -> George Lucas -> Men in Black 
+42.Schindler's List -> Amblin Entertainment -> Men in Black 
+43.Cape Fear -> Amblin Entertainment -> Men in Black 
+44.Rain Man -> Academy Award for Best Production Design -> Men in Black 
+45.A Streetcar Named Desire -> United States of America -> Men in Black 
+46.Dances with Wolves -> Academy Award for Best Production Design -> Men in Black 
+47.Fargo -> United States of America -> Men in Black 
+48.Romeo + Juliet -> Academy Award for Best Production Design -> Men in Black 
+49.Batman Forever -> Tommy Lee Jones -> Men in Black 
+50.Saving Private Ryan -> Amblin Entertainment -> Men in Black 
+
+For the recommended item 'Mars Attacks!':
+1.The Godfather Part II -> New York City -> Mars Attacks! 
+2.Schindler's List -> United States of America -> Mars Attacks! 
+3.Batman Forever -> Warner Bros. -> Mars Attacks! 
+4.American History X -> United States of America -> Mars Attacks! 
+5.A Streetcar Named Desire -> United States of America -> Mars Attacks! 
+6.Cape Fear -> horror film -> Mars Attacks! 
+7.Goodfellas -> United States of America -> Mars Attacks! 
+8.Batman Forever -> New York City -> Mars Attacks! 
+9.Ronin -> United States of America -> Mars Attacks! 
+10.The Godfather -> United States of America -> Mars Attacks! 
+11.Romeo + Juliet -> United States of America -> Mars Attacks! 
+12.Pulp Fiction -> Danny DeVito -> Mars Attacks! 
+13.Cape Fear -> United States of America -> Mars Attacks! 
+14.The Godfather -> New York City -> Mars Attacks! 
+15.Star Wars: Episode V – The Empire Strikes Back -> science fiction film -> Mars Attacks! 
+16.Ferris Bueller's Day Off -> United States of America -> Mars Attacks! 
+17.Leaving Las Vegas -> United States of America -> Mars Attacks! 
+18.Star Wars: Episode V – The Empire Strikes Back -> Peter Suschitzky -> Mars Attacks! 
+19.Goodfellas -> New York City -> Mars Attacks! 
+20.Star Wars: Episode V – The Empire Strikes Back -> United States of America -> Mars Attacks! 
+21.Rain Man -> United States of America -> Mars Attacks! 
+22.A Streetcar Named Desire -> Warner Bros. -> Mars Attacks! 
+23.Batman Forever -> United States of America -> Mars Attacks! 
+24.Police Academy -> United States of America -> Mars Attacks! 
+25.The Godfather Part II -> United States of America -> Mars Attacks! 
+26.Ronin -> Paris -> Mars Attacks! 
+27.Saving Private Ryan -> United States of America -> Mars Attacks! 
+28.Pulp Fiction -> United States of America -> Mars Attacks! 
+29.Dances with Wolves -> Kansas -> Mars Attacks! 
+30.Goodfellas -> Warner Bros. -> Mars Attacks! 
+31.Batman Forever -> Tim Burton -> Mars Attacks! 
+32.Fargo -> United States of America -> Mars Attacks! 
+33.Dances with Wolves -> United States of America -> Mars Attacks! 
+34.Cape Fear -> Joe Don Baker -> Mars Attacks! 
+
+For the recommended item 'Escape from L.A.':
+1.Rain Man -> Valeria Golino -> Escape from L.A. 
+2.Leaving Las Vegas -> United States of America -> Escape from L.A. 
+3.Pulp Fiction -> United States of America -> Escape from L.A. 
+4.Batman Forever -> Los Angeles -> Escape from L.A. 
+5.Star Wars: Episode V – The Empire Strikes Back -> science fiction film -> Escape from L.A. 
+6.The Godfather Part II -> United States of America -> Escape from L.A. 
+7.Romeo + Juliet -> action film -> Escape from L.A. 
+8.Saving Private Ryan -> Leland Orser -> Escape from L.A. 
+9.Saving Private Ryan -> United States of America -> Escape from L.A. 
+10.The Godfather -> Paramount Pictures -> Escape from L.A. 
+11.American History X -> Stacy Keach -> Escape from L.A. 
+12.The Godfather Part II -> Paramount Pictures -> Escape from L.A. 
+13.A Streetcar Named Desire -> United States of America -> Escape from L.A. 
+14.Batman Forever -> United States of America -> Escape from L.A. 
+15.Rain Man -> Los Angeles -> Escape from L.A. 
+16.Fargo -> Steve Buscemi -> Escape from L.A. 
+17.Star Wars: Episode V – The Empire Strikes Back -> United States of America -> Escape from L.A. 
+18.Rain Man -> United States of America -> Escape from L.A. 
+19.Ferris Bueller's Day Off -> Long Beach -> Escape from L.A. 
+20.The Godfather -> United States of America -> Escape from L.A. 
+21.Ferris Bueller's Day Off -> United States of America -> Escape from L.A. 
+22.American History X -> Los Angeles -> Escape from L.A. 
+23.The Godfather -> Los Angeles -> Escape from L.A. 
+24.Leaving Las Vegas -> Valeria Golino -> Escape from L.A. 
+25.Pulp Fiction -> Los Angeles -> Escape from L.A. 
+26.Pulp Fiction -> Steve Buscemi -> Escape from L.A. 
+27.Ronin -> United States of America -> Escape from L.A. 
+28.Goodfellas -> United States of America -> Escape from L.A. 
+29.Fargo -> Bruce Campbell -> Escape from L.A. 
+30.Saving Private Ryan -> action film -> Escape from L.A. 
+31.Leaving Las Vegas -> Los Angeles -> Escape from L.A. 
+32.Police Academy -> United States of America -> Escape from L.A. 
+33.Schindler's List -> United States of America -> Escape from L.A. 
+34.Star Wars: Episode V – The Empire Strikes Back -> action film -> Escape from L.A. 
+35.Batman Forever -> Long Beach -> Escape from L.A. 
+36.Saving Private Ryan -> Paramount Pictures -> Escape from L.A. 
+37.Dances with Wolves -> United States of America -> Escape from L.A. 
+38.Cape Fear -> United States of America -> Escape from L.A. 
+39.Batman Forever -> action film -> Escape from L.A. 
+40.Fargo -> United States of America -> Escape from L.A. 
+41.Romeo + Juliet -> United States of America -> Escape from L.A. 
+42.Ronin -> action film -> Escape from L.A. 
+43.American History X -> United States of America -> Escape from L.A. 
+
+For the recommended item 'Pinocchio':
+1.Ferris Bueller's Day Off -> coming-of-age story -> Pinocchio 
+2.American History X -> United States of America -> Pinocchio 
+3.Dances with Wolves -> National Film Registry -> Pinocchio 
+4.Goodfellas -> National Film Registry -> Pinocchio 
+5.Star Wars: Episode V – The Empire Strikes Back -> United States of America -> Pinocchio 
+6.Pulp Fiction -> National Film Registry -> Pinocchio 
+7.The Godfather -> United States of America -> Pinocchio 
+8.Rain Man -> Academy Award for Best Original Score -> Pinocchio 
+9.The Godfather -> National Film Registry -> Pinocchio 
+10.Saving Private Ryan -> United States of America -> Pinocchio 
+11.Dances with Wolves -> Academy Award for Best Original Score -> Pinocchio 
+12.Ronin -> United States of America -> Pinocchio 
+13.Schindler's List -> Academy Award for Best Original Score -> Pinocchio 
+14.Star Wars: Episode V – The Empire Strikes Back -> fantasy film -> Pinocchio 
+15.The Godfather Part II -> United States of America -> Pinocchio 
+16.Batman Forever -> United States of America -> Pinocchio 
+17.Rain Man -> United States of America -> Pinocchio 
+18.Dances with Wolves -> United States of America -> Pinocchio 
+19.Rain Man -> buddy film -> Pinocchio 
+20.A Streetcar Named Desire -> National Film Registry -> Pinocchio 
+21.The Godfather -> Italy -> Pinocchio 
+22.Leaving Las Vegas -> United States of America -> Pinocchio 
+23.Star Wars: Episode V – The Empire Strikes Back -> Academy Award for Best Original Score -> Pinocchio 
+24.Star Wars: Episode V – The Empire Strikes Back -> National Film Registry -> Pinocchio 
+25.Romeo + Juliet -> United States of America -> Pinocchio 
+26.Fargo -> National Film Registry -> Pinocchio 
+27.Ferris Bueller's Day Off -> National Film Registry -> Pinocchio 
+28.A Streetcar Named Desire -> United States of America -> Pinocchio 
+29.Saving Private Ryan -> National Film Registry -> Pinocchio 
+30.Police Academy -> United States of America -> Pinocchio 
+31.Schindler's List -> United States of America -> Pinocchio 
+32.The Godfather Part II -> National Film Registry -> Pinocchio 
+33.Fargo -> United States of America -> Pinocchio 
+34.Pulp Fiction -> United States of America -> Pinocchio 
+35.Schindler's List -> National Film Registry -> Pinocchio 
+36.Goodfellas -> United States of America -> Pinocchio 
+37.Batman Forever -> fantasy film -> Pinocchio 
+38.Ferris Bueller's Day Off -> United States of America -> Pinocchio 
+39.Cape Fear -> United States of America -> Pinocchio 
+
+Please choose one explanation path for each recommendation considering the following criteria:
+1. Diversity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Diversify these attributes for the chosen explanation paths set of all recommendations;
+2. Popularity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Use popular attributes for the chosen explanation paths set of all recommendations;
+3. Recency of interacted items: Use explanation paths that connects recently interacted items with the recommended.
+
+Output exactly in the same format as bellow with only the chosen explanation for each recommendation starting with the name and then the explanation, separated with a the symbol '|'.The path's attributes are separated with '->'. An example of the exact format I wantyou to output is:
+Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York
+Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator
+Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan
+A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life
+War Horse | Band of Brothers -> Steven Spielberg -> War Horse
+
+LLM gpt-3.5-turbo-0125 Response: 
+L.A. Confidential | Pulp Fiction -> United States of America -> L.A. Confidential
+Men in Black | Cape Fear -> United States of America -> Men in Black
+Mars Attacks! | The Godfather Part II -> New York City -> Mars Attacks!
+Escape from L.A. | Rain Man -> Valeria Golino -> Escape from L.A.
+Pinocchio | Goodfellas -> National Film Registry -> Pinocchio"Pulp Fiction" nodes: "United States of America" destination: "L.A. Confidential""Cape Fear" nodes: "United States of America" destination: "Men in Black""The Godfather Part II" nodes: "New York City" destination: "Mars Attacks!""Rain Man" nodes: "Valeria Golino" destination: "Escape from L.A.""Goodfellas" nodes: "National Film Registry" destination: "Pinocchio"
+
+User: 127
+Items interacted by the user
+Item id: 68954 Name: Up
+Item id: 36517 Name: The Constant Gardener
+Item id: 4226 Name: Memento
+Item id: 2915 Name: Risky Business
+Item id: 2144 Name: Sixteen Candles
+Item id: 1962 Name: Driving Miss Daisy
+Item id: 1947 Name: West Side Story
+Item id: 272 Name: The Madness of King George
+Item id: 3671 Name: Blazing Saddles
+Item id: 2455 Name: The Fly
+Item id: 910 Name: Some Like It Hot
+Item id: 1747 Name: Wag the Dog
+Item id: 1276 Name: Cool Hand Luke
+Item id: 913 Name: The Maltese Falcon
+Item id: 3101 Name: Fatal Attraction
+Item id: 1302 Name: Field of Dreams
+Item id: 2763 Name: The Thomas Crown Affair
+Item id: 5060 Name: MASH
+Item id: 903 Name: Vertigo
+
+Users favorites attributes on the kG
+Academy Award for Best Writing, Adapted Screenplay
+National Film Registry
+Academy Award for Best Supporting Actress
+Academy Award for Best Picture
+Academy Award for Best Film Editing
+
+Recommendations
+Item id: 923 Name: Citizen Kane
+Item id: 2797 Name: Big
+Item id: 4973 Name: Amélie
+Item id: 745 Name: A Close Shave
+Item id: 1513 Name: Romy and Michele's High School Reunion
+LLM gpt-3.5-turbo-0125 Prompt:
+In a recommender system, a user has interacted some items, chronologically, in descending order, the last 25 items interacted were:
+'Up'
+'The Constant Gardener'
+'Memento'
+'Risky Business'
+'Sixteen Candles'
+'Driving Miss Daisy'
+'West Side Story'
+'The Madness of King George'
+'Blazing Saddles'
+'The Fly'
+'Some Like It Hot'
+'Wag the Dog'
+'Cool Hand Luke'
+'The Maltese Falcon'
+'Fatal Attraction'
+'Field of Dreams'
+'The Thomas Crown Affair'
+'MASH'
+'Vertigo'
+The user has top-5 recommendations, and possible explanations paths. Explanation paths connect an interacted item is connected to a recommended item by attributes. Bellow are the user recommendations with the followed by enumerated explanation paths, the symbol '->' means the connection between an item and an attribute:
+
+For the recommended item 'Citizen Kane':
+1.Memento -> National Board of Review: Top Ten Films -> Citizen Kane 
+2.Up -> United States of America -> Citizen Kane 
+3.The Madness of King George -> biographical film -> Citizen Kane 
+4.Blazing Saddles -> United States of America -> Citizen Kane 
+5.Risky Business -> United States of America -> Citizen Kane 
+6.The Fly -> National Board of Review: Top Ten Films -> Citizen Kane 
+7.Driving Miss Daisy -> United States of America -> Citizen Kane 
+8.West Side Story -> Academy Award for Best Sound Mixing -> Citizen Kane 
+9.Some Like It Hot -> Academy Award for Best Art Direction, Black and White -> Citizen Kane 
+10.The Fly -> drama -> Citizen Kane 
+11.Memento -> flashback film -> Citizen Kane 
+12.The Madness of King George -> Academy Award for Best Actor -> Citizen Kane 
+13.Some Like It Hot -> National Film Registry -> Citizen Kane 
+14.West Side Story -> Robert Wise -> Citizen Kane 
+15.Some Like It Hot -> Academy Award for Best Director -> Citizen Kane 
+16.Driving Miss Daisy -> National Board of Review Award for Best Film -> Citizen Kane 
+17.Up -> Academy Award for Best Picture -> Citizen Kane 
+18.Memento -> Academy Award for Best Writing, Original Screenplay -> Citizen Kane 
+19.West Side Story -> Academy Award for Best Film Editing -> Citizen Kane 
+20.West Side Story -> Academy Award for Best Picture -> Citizen Kane 
+21.West Side Story -> drama -> Citizen Kane 
+22.The Fly -> United States of America -> Citizen Kane 
+23.Driving Miss Daisy -> National Board of Review: Top Ten Films -> Citizen Kane 
+24.The Madness of King George -> drama -> Citizen Kane 
+25.Some Like It Hot -> Academy Award for Best Actor -> Citizen Kane 
+26.Some Like It Hot -> San Diego -> Citizen Kane 
+27.West Side Story -> Academy Award for Best Director -> Citizen Kane 
+28.The Constant Gardener -> Academy Award for Best Film Editing -> Citizen Kane 
+29.Some Like It Hot -> United States of America -> Citizen Kane 
+30.Some Like It Hot -> National Board of Review: Top Ten Films -> Citizen Kane 
+31.Up -> National Board of Review: Top Ten Films -> Citizen Kane 
+32.Sixteen Candles -> United States of America -> Citizen Kane 
+33.Memento -> Academy Award for Best Film Editing -> Citizen Kane 
+34.West Side Story -> National Film Registry -> Citizen Kane 
+35.Driving Miss Daisy -> drama -> Citizen Kane 
+36.Driving Miss Daisy -> Academy Award for Best Actor -> Citizen Kane 
+37.Memento -> drama -> Citizen Kane 
+38.Up -> Academy Award for Best Writing, Original Screenplay -> Citizen Kane 
+39.Blazing Saddles -> National Film Registry -> Citizen Kane 
+40.West Side Story -> United States of America -> Citizen Kane 
+41.Driving Miss Daisy -> Academy Award for Best Picture -> Citizen Kane 
+42.The Madness of King George -> National Board of Review: Top Ten Films -> Citizen Kane 
+43.Memento -> National Film Registry -> Citizen Kane 
+44.West Side Story -> National Board of Review: Top Ten Films -> Citizen Kane 
+45.Memento -> United States of America -> Citizen Kane 
+46.West Side Story -> New York City -> Citizen Kane 
+47.Driving Miss Daisy -> Academy Award for Best Film Editing -> Citizen Kane 
+48.Some Like It Hot -> Academy Award for Best Cinematography, Black-and-White -> Citizen Kane 
+49.Blazing Saddles -> Academy Award for Best Film Editing -> Citizen Kane 
+50.The Constant Gardener -> drama -> Citizen Kane 
+
+For the recommended item 'Big':
+1.Risky Business -> romantic comedy -> Big 
+2.Up -> National Board of Review: Top Ten Films -> Big 
+3.Some Like It Hot -> United States of America -> Big 
+4.Cool Hand Luke -> drama -> Big 
+5.Sixteen Candles -> coming-of-age story -> Big 
+6.The Maltese Falcon -> United States of America -> Big 
+7.West Side Story -> drama -> Big 
+8.The Fly -> drama -> Big 
+9.Field of Dreams -> United States of America -> Big 
+10.Cool Hand Luke -> Academy Award for Best Actor -> Big 
+11.Memento -> United States of America -> Big 
+12.Wag the Dog -> United States of America -> Big 
+13.Fatal Attraction -> James Eckhouse -> Big 
+14.West Side Story -> New York City -> Big 
+15.Field of Dreams -> drama -> Big 
+16.Driving Miss Daisy -> United States of America -> Big 
+17.Up -> Academy Award for Best Writing, Original Screenplay -> Big 
+18.Risky Business -> United States of America -> Big 
+19.Blazing Saddles -> United States of America -> Big 
+20.The Madness of King George -> National Board of Review: Top Ten Films -> Big 
+21.The Madness of King George -> drama -> Big 
+22.Fatal Attraction -> drama -> Big 
+23.Driving Miss Daisy -> Academy Award for Best Actor -> Big 
+24.Some Like It Hot -> National Board of Review: Top Ten Films -> Big 
+25.Field of Dreams -> fantasy film -> Big 
+26.Fatal Attraction -> New York City -> Big 
+27.The Madness of King George -> Academy Award for Best Actor -> Big 
+28.Memento -> drama -> Big 
+29.Fatal Attraction -> United States of America -> Big 
+30.Fatal Attraction -> National Board of Review: Top Ten Films -> Big 
+31.Up -> fantasy film -> Big 
+32.Sixteen Candles -> United States of America -> Big 
+33.Sixteen Candles -> romantic comedy -> Big 
+34.The Fly -> Howard Shore -> Big 
+35.Driving Miss Daisy -> drama -> Big 
+36.West Side Story -> National Board of Review: Top Ten Films -> Big 
+37.Memento -> National Board of Review: Top Ten Films -> Big 
+38.Up -> United States of America -> Big 
+39.Wag the Dog -> Academy Award for Best Actor -> Big 
+40.The Fly -> United States of America -> Big 
+41.Driving Miss Daisy -> National Board of Review: Top Ten Films -> Big 
+42.Some Like It Hot -> Academy Award for Best Actor -> Big 
+43.Memento -> Academy Award for Best Writing, Original Screenplay -> Big 
+44.The Fly -> National Board of Review: Top Ten Films -> Big 
+45.Risky Business -> coming-of-age story -> Big 
+46.Some Like It Hot -> romantic comedy -> Big 
+47.West Side Story -> United States of America -> Big 
+48.Field of Dreams -> National Board of Review: Top Ten Films -> Big 
+49.Cool Hand Luke -> United States of America -> Big 
+50.The Constant Gardener -> drama -> Big 
+
+For the recommended item 'Amélie':
+1.The Thomas Crown Affair -> drama -> Amélie 
+2.Cool Hand Luke -> drama -> Amélie 
+3.Driving Miss Daisy -> drama -> Amélie 
+4.The Madness of King George -> comedy film -> Amélie 
+5.West Side Story -> Academy Award for Best Sound Mixing -> Amélie 
+6.The Madness of King George -> Academy Award for Best Production Design -> Amélie 
+7.Driving Miss Daisy -> Academy Award for Best Production Design -> Amélie 
+8.Memento -> drama -> Amélie 
+9.Risky Business -> romantic comedy -> Amélie 
+10.The Madness of King George -> drama -> Amélie 
+11.Vertigo -> drama -> Amélie 
+12.Blazing Saddles -> comedy film -> Amélie 
+13.Vertigo -> Academy Award for Best Sound Mixing -> Amélie 
+14.Up -> Academy Award for Best Writing, Original Screenplay -> Amélie 
+15.Up -> comedy film -> Amélie 
+16.The Constant Gardener -> drama -> Amélie 
+17.Driving Miss Daisy -> comedy film -> Amélie 
+18.West Side Story -> drama -> Amélie 
+19.The Fly -> drama -> Amélie 
+20.Fatal Attraction -> drama -> Amélie 
+21.Field of Dreams -> drama -> Amélie 
+22.Some Like It Hot -> romantic comedy -> Amélie 
+23.The Thomas Crown Affair -> comedy film -> Amélie 
+24.Vertigo -> Academy Award for Best Production Design -> Amélie 
+25.MASH -> drama -> Amélie 
+26.Sixteen Candles -> romantic comedy -> Amélie 
+27.Memento -> Academy Award for Best Writing, Original Screenplay -> Amélie 
+
+For the recommended item 'A Close Shave':
+1.The Constant Gardener -> United Kingdom -> A Close Shave 
+2.Up -> fantasy film -> A Close Shave 
+3.The Madness of King George -> United Kingdom -> A Close Shave 
+4.Driving Miss Daisy -> comedy film -> A Close Shave 
+5.The Thomas Crown Affair -> comedy film -> A Close Shave 
+6.Up -> comedy film -> A Close Shave 
+7.Field of Dreams -> fantasy film -> A Close Shave 
+8.Blazing Saddles -> comedy film -> A Close Shave 
+9.The Madness of King George -> comedy film -> A Close Shave 
+
+For the recommended item 'Romy and Michele's High School Reunion':
+1.The Thomas Crown Affair -> comedy film -> Romy and Michele's High School Reunion 
+2.Fatal Attraction -> United States of America -> Romy and Michele's High School Reunion 
+3.Driving Miss Daisy -> comedy film -> Romy and Michele's High School Reunion 
+4.The Fly -> United States of America -> Romy and Michele's High School Reunion 
+5.Blazing Saddles -> comedy film -> Romy and Michele's High School Reunion 
+6.Some Like It Hot -> United States of America -> Romy and Michele's High School Reunion 
+7.West Side Story -> United States of America -> Romy and Michele's High School Reunion 
+8.Memento -> Los Angeles -> Romy and Michele's High School Reunion 
+9.Risky Business -> United States of America -> Romy and Michele's High School Reunion 
+10.Blazing Saddles -> United States of America -> Romy and Michele's High School Reunion 
+11.The Thomas Crown Affair -> United States of America -> Romy and Michele's High School Reunion 
+12.Wag the Dog -> United States of America -> Romy and Michele's High School Reunion 
+13.Vertigo -> United States of America -> Romy and Michele's High School Reunion 
+14.Up -> United States of America -> Romy and Michele's High School Reunion 
+15.Up -> comedy film -> Romy and Michele's High School Reunion 
+16.Memento -> United States of America -> Romy and Michele's High School Reunion 
+17.Driving Miss Daisy -> United States of America -> Romy and Michele's High School Reunion 
+18.The Madness of King George -> comedy film -> Romy and Michele's High School Reunion 
+19.Cool Hand Luke -> United States of America -> Romy and Michele's High School Reunion 
+20.Field of Dreams -> United States of America -> Romy and Michele's High School Reunion 
+21.The Maltese Falcon -> United States of America -> Romy and Michele's High School Reunion 
+22.MASH -> United States of America -> Romy and Michele's High School Reunion 
+23.Sixteen Candles -> United States of America -> Romy and Michele's High School Reunion 
+24.Risky Business -> Reynaldo Villalobos -> Romy and Michele's High School Reunion 
+
+Please choose one explanation path for each recommendation considering the following criteria:
+1. Diversity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Diversify these attributes for the chosen explanation paths set of all recommendations;
+2. Popularity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Use popular attributes for the chosen explanation paths set of all recommendations;
+3. Recency of interacted items: Use explanation paths that connects recently interacted items with the recommended.
+
+Output exactly in the same format as bellow with only the chosen explanation for each recommendation starting with the name and then the explanation, separated with a the symbol '|'.The path's attributes are separated with '->'. An example of the exact format I wantyou to output is:
+Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York
+Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator
+Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan
+A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life
+War Horse | Band of Brothers -> Steven Spielberg -> War Horse
+
+LLM gpt-3.5-turbo-0125 Response: 
+Citizen Kane | Up -> Academy Award for Best Picture -> Citizen Kane
+Big | Cool Hand Luke -> drama -> Big
+Amélie | Vertigo -> drama -> Amélie
+A Close Shave | Up -> fantasy film -> A Close Shave
+Romy and Michele's High School Reunion | Up -> comedy film -> Romy and Michele's High School Reunion"Up" nodes: "Academy Award for Best Picture" destination: "Citizen Kane""Cool Hand Luke" nodes: "drama" destination: "Big""Vertigo" nodes: "drama" destination: "Amélie""Up" nodes: "fantasy film" destination: "A Close Shave""Up" nodes: "comedy film" destination: "Romy and Michele's High School Reunion"

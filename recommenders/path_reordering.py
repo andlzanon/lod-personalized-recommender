@@ -2,6 +2,7 @@ import _io
 import os
 import random
 from collections import Counter
+import time
 import openai
 
 import networkx as nx
@@ -315,12 +316,13 @@ class PathReordering(LODPersonalizedReordering):
 
             elif expl_alg.startswith("webmedia"):
                 model_name = expl_alg.split("_")[-1]
-                items, props, (ulir, usep, uetd) = self.__webmedia_embedding(model_name, item_rank, items_historic, u, f, memo_sep)
+                items, props, (ulir, usep, uetd) = self.__webmedia_embedding(model_name, item_rank, items_historic, u,
+                                                                             f, memo_sep)
 
             elif expl_alg.startswith("llm"):
                 model_name = expl_alg.split("_")[-1]
                 items, props, (ulir, usep, uetd) = self.__llm_paths(model_name, item_rank, items_historic, u,
-                                                                             f, memo_sep)
+                                                                    f, memo_sep)
             f.write("\n")
 
             total_items = dict(Counter(total_items) + Counter(items))
@@ -1244,10 +1246,11 @@ class PathReordering(LODPersonalizedReordering):
                                     edge = relations[(buff[0], buff[1])]
                                 except KeyError:
                                     try:
-                                        edge = self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]]["prop"].unique()[0]
+                                        edge = self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]][
+                                            "prop"].unique()[0]
                                     except AttributeError:
                                         edge = str(self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]][
-                                            "prop"])
+                                                       "prop"])
                                     except IndexError:
                                         uflag = True
                                         break
@@ -1326,7 +1329,8 @@ class PathReordering(LODPersonalizedReordering):
         etd = eval.etd_metric(list(nodes.keys()), len(recommeded), len(self.prop_set['obj'].unique()))
         return hist_items, nodes, (lir, sep, etd)
 
-    def __webmedia_embedding(self, model_name: str, recommeded: list, historic: list, user: int, file: _io.TextIOWrapper, memo_sep: dict):
+    def __webmedia_embedding(self, model_name: str, recommeded: list, historic: list, user: int,
+                             file: _io.TextIOWrapper, memo_sep: dict):
         hist_props = self.prop_set.loc[historic]
         model_path = self.train_file.split("/")
         model_path = '/'.join(model_path[:-3])
@@ -1391,10 +1395,11 @@ class PathReordering(LODPersonalizedReordering):
                                     edge = relations[(buff[0], buff[1])]
                                 except KeyError:
                                     try:
-                                        edge = self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]]["prop"].unique()[0]
+                                        edge = self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]][
+                                            "prop"].unique()[0]
                                     except AttributeError:
                                         edge = str(self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]][
-                                            "prop"])
+                                                       "prop"])
                                     except IndexError:
                                         uflag = True
                                         break
@@ -1473,19 +1478,18 @@ class PathReordering(LODPersonalizedReordering):
         etd = eval.etd_metric(list(nodes.keys()), len(recommeded), len(self.prop_set['obj'].unique()))
         return hist_items, nodes, (lir, sep, etd)
 
-    def __llm_paths(self, model_name: str, recommeded: list, historic: list, user: int, file: _io.TextIOWrapper, memo_sep: dict):
-        random_seed = 64
-        hist_count = 50
-        expl_count = 50
+    def __llm_paths(self, model_name: str, recommeded: list, historic: list, user: int,
+                    file: _io.TextIOWrapper, memo_sep: dict):
         sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path_s'])
 
+        key = None
         if model_name.startswith("gpt"):
             key = os.getenv("OPEN_AI_KEY")
 
         historic_codes = ['I' + str(i) for i in historic]
-        recommeded_codes = ['I' + str(i) for i in recommeded]
+        recommended_codes = ['I' + str(i) for i in recommeded]
         historic_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
-        subgraph = self.graph.subgraph(historic_codes + recommeded_codes + historic_props)
+        subgraph = self.graph.subgraph(historic_codes + recommended_codes + historic_props)
 
         titles = self.prop_set[self.prop_cols[1]].to_dict()
         relations = self.prop_set.set_index([self.prop_cols[1], self.prop_cols[-1]]).to_dict()['prop']
@@ -1502,7 +1506,7 @@ class PathReordering(LODPersonalizedReordering):
                             continue
                         str_path = []
                         p_items = [x for x in p[:][0::2]]
-                        for i in range(0, len(p)-1):
+                        for i in range(0, len(p) - 1):
                             elem = p[i]
                             if elem in p_items:
                                 item_name = titles[int(elem[1:])]
@@ -1523,79 +1527,19 @@ class PathReordering(LODPersonalizedReordering):
                         ignore_index=True)
 
         sem_path_dist = sem_path_dist.set_index("recommended")
-        prompt = "\nIn a recommender system, a user has interacted some items, chronologically, " \
-                 "in descending order, the last 25 items interacted were:\n"
+        prompt = self.llm_prompt(model_name, historic, recommeded, titles, sem_path_dist)
 
-        last_items = historic[:hist_count]
-        for i in range(0, len(last_items)):
-            prompt = prompt + "'" + titles[historic[i]] + "'\n"
-
-        prompt = prompt + "The user has top-5 recommendations, and possible explanations paths. " \
-                          "Explanation paths connect an interacted item is connected to a recommended item " \
-                          "by attributes. Bellow are the user recommendations with the followed by " \
-                          "enumerated explanation paths, the symbol '->' means the connection between " \
-                          "an item and an attribute:\n"
-
-        for i in range(0, len(recommeded)):
-            rec_item = int(recommeded[i])
-            prompt = prompt + "For the recommended item '" + titles[rec_item] + "':\n"
-            all_expl = sem_path_dist.loc[rec_item]
-            top_expl = all_expl[(all_expl["historic"].isin(last_items))][:expl_count].sample(frac=1, random_state=random_seed)
-            if top_expl.shape[0] == 0 or all_expl.shape[0] < expl_count:
-                top_expl = all_expl.sample(frac=1, random_state=random_seed)[:expl_count]
-            elif top_expl.shape[0] < expl_count:
-                if isinstance(top_expl, pd.Series):
-                    rest = expl_count - 1
-                    temp = all_expl.sample(frac=1, random_state=random_seed)[:rest]
-                    top_expl = temp.append(top_expl, ignore_index=True)
-                else:
-                    lgth = top_expl.shape[0]
-                    rest = expl_count - lgth
-                    top_expl = pd.concat([top_expl, all_expl[(~all_expl["historic"].isin(last_items))][:rest]]).sample(frac=1, random_state=random_seed)
-            
-            c = 1
-            # maybe change to random
-            for _, row in top_expl.iterrows():
-                prompt = prompt + str(c) + "."
-                for elem in row["path_s"]:
-                    prompt = prompt + elem + " -> "
-                prompt = prompt[:-3] + "\n"
-                c = c + 1
-
-        prompt = prompt + "\nPlease choose one explanation path for each recommendation " \
-                          "considering the following criteria:\n"
-
-        prompt = prompt + "1. Diversity of attributes: Each path is composed of attributes that connect" \
-                          "an interacted item node with a recommended. Diversify these attributes for the chosen" \
-                          " explanation paths set of all recommendations;\n"
-
-        prompt = prompt + "2. Popularity of attributes: Each path is composed of attributes that connect" \
-                          "an interacted item node with a recommended. Use popular attributes for the chosen" \
-                          " explanation paths set of all recommendations;\n"
-
-        prompt = prompt + "3. Recency of interacted items: Use explanation paths that connects recently interacted " \
-                          "items with the recommended.\n\n"
-
-        prompt = prompt + "Output exactly in the same format as bellow with only the chosen explanation for each " \
-                          "recommendation starting with the name " \
-                          "and then the explanation, separated with a the symbol '|'." \
-                          "The path's attributes are separated with '->'. An example of the output format I want is:\n" \
-                          "Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York\n" \
-                          "Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator\n" \
-                          "Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan\n" \
-                          "A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life\n" \
-                          "War Horse | Band of Brothers -> Steven Spielberg -> War Horse"
-
-        print("LLM " + model_name + " Prompt:")
+        print("\nLLM " + model_name + " Prompt:")
         print(prompt)
         file.write("LLM " + model_name + " Prompt:")
         file.write(prompt)
-        print("LLM Response: ")
-        response = ""
-        for i in range(0, len(recommeded)):
-            llm_out = input()
-            response = response + llm_out + "\n"
-        response = response[:-1]
+
+        response = self.invoke_model(model_name, prompt, key)
+
+        print("\nLLM " + model_name + " Response: ")
+        file.write("\n\nLLM " + model_name + " Response: ")
+        print(response)
+        file.write("\n" + response)
 
         response_arr = response.split("\n")
         resp_paths_dict = {}
@@ -1611,30 +1555,43 @@ class PathReordering(LODPersonalizedReordering):
         prop_lists = []
         for rec in recommeded:
             print("\nPaths for the Recommended Item: " + str(rec))
-            path = resp_paths_dict[rec]
-            path_split = path.split(" -> ")
-            origin = ""
 
-            hist_names = [str(x).strip() for x in path_split[:-1][0::2]]
-            hist_ids = []
-            for h_name in hist_names:
-                hist_ids.append(list(titles.keys())[list(titles.values()).index(h_name)])
+            try:
+                path = resp_paths_dict[rec]
+                path_split = path.split(" -> ")
+                origin = ""
 
-            hist_lists.append(hist_ids)
-            for i in hist_names:
-                origin = origin + "\"" + i + "\"; "
-                hist_items = self.__add_dict(hist_items, i)
-            origin = origin[:-2]
+                hist_names = [str(x).strip() for x in path_split[:-1][0::2]]
+                hist_ids = []
+                for h_name in hist_names:
+                    hist_ids.append(list(titles.keys())[list(titles.values()).index(h_name)])
 
-            path_props = [str(x).strip() for x in path_split[:-1][1::2]]
-            prop_lists.append(path_props)
-            path_sentence = " nodes: "
-            for n in path_props:
-                path_sentence = path_sentence + "\"" + n + "\" "
-                nodes = self.__add_dict(nodes, n)
+                hist_lists.append(hist_ids)
+                for i in hist_names:
+                    origin = origin + "\"" + i + "\"; "
+                    hist_items = self.__add_dict(hist_items, i)
+                origin = origin[:-2]
 
-            rec_name = str(path_split[-1]).strip()
-            destination = "destination: \"" + rec_name + "\""
+                path_props = [str(x).strip() for x in path_split[:-1][1::2]]
+                prop_lists.append(path_props)
+                path_sentence = " nodes: "
+                for n in path_props:
+                    path_sentence = path_sentence + "\"" + n + "\" "
+                    nodes = self.__add_dict(nodes, n)
+
+                rec_name = str(path_split[-1]).strip()
+                destination = "destination: \"" + rec_name + "\""
+
+            except KeyError:
+                origin = ""
+                path_sentence = ""
+                try:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
+                except AttributeError:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]]
+                destination = "destination: \"" + rec_name + "\""
+                hist_lists.append([])
+                prop_lists.append([])
 
             print(origin + path_sentence + destination)
             file.write(origin + path_sentence + destination)
@@ -1643,6 +1600,117 @@ class PathReordering(LODPersonalizedReordering):
         sep = eval.sep_metric(0.3, prop_lists, self.prop_set, memo_sep)
         etd = eval.etd_metric(list(nodes.keys()), len(recommeded), len(self.prop_set['obj'].unique()))
         return hist_items, nodes, (lir, sep, etd)
+
+    def llm_prompt(self, model: str, historic: list, recommended: list, titles: dict, sem_path_dist: pd.DataFrame,
+                   random_seed=64, hist_count=50, expl_count=50):
+
+        prompt = ""
+        if model.startswith("gpt"):
+            prompt = prompt + "\nIn a recommender system, a user has interacted some items, chronologically, " \
+                              "in descending order, the last items interacted were:\n"
+
+            last_items = historic[:hist_count]
+            for i in range(0, len(last_items)):
+                prompt = prompt + "'" + titles[historic[i]] + "'\n"
+
+            prompt = prompt + "The user has top-5 recommendations, and possible explanations paths. " \
+                              "Explanation paths connect an interacted item is connected to a recommended item " \
+                              "by attributes. Bellow are the user recommendations with the followed by " \
+                              "enumerated explanation paths, the symbol '->' means the connection between " \
+                              "an item and an attribute:\n"
+
+            for i in range(0, len(recommended)):
+                rec_item = int(recommended[i])
+                prompt = prompt + "\nFor the recommended item '" + titles[rec_item] + "':\n"
+                all_expl = sem_path_dist.loc[rec_item]
+                top_expl = all_expl[(all_expl["historic"].isin(last_items))][:expl_count].sample(frac=1,
+                                                                                                 random_state=random_seed)
+                if top_expl.shape[0] == 0 or all_expl.shape[0] < expl_count:
+                    top_expl = all_expl.sample(frac=1, random_state=random_seed)[:expl_count]
+                elif top_expl.shape[0] < expl_count:
+                    if isinstance(top_expl, pd.Series):
+                        rest = expl_count - 1
+                        temp = all_expl.sample(frac=1, random_state=random_seed)[:rest]
+                        top_expl = temp.append(top_expl, ignore_index=True)
+                    else:
+                        lgth = top_expl.shape[0]
+                        rest = expl_count - lgth
+                        top_expl = pd.concat(
+                            [top_expl, all_expl[(~all_expl["historic"].isin(last_items))][:rest]]).sample(
+                            frac=1, random_state=random_seed)
+
+                c = 1
+                for _, row in top_expl.iterrows():
+                    prompt = prompt + str(c) + "."
+                    for elem in row["path_s"]:
+                        prompt = prompt + elem + " -> "
+                    prompt = prompt[:-3] + "\n"
+                    c = c + 1
+
+            prompt = prompt + "\nPlease choose one explanation path for each recommendation " \
+                              "considering the following criteria:\n"
+
+            prompt = prompt + "1. Diversity of attributes: Each path is composed of attributes that connect" \
+                              "an interacted item node with a recommended. Diversify these attributes for the chosen" \
+                              " explanation paths set of all recommendations;\n"
+
+            prompt = prompt + "2. Popularity of attributes: Each path is composed of attributes that connect" \
+                              "an interacted item node with a recommended. Use popular attributes for the chosen" \
+                              " explanation paths set of all recommendations;\n"
+
+            prompt = prompt + "3. Recency of interacted items: Use explanation paths that connects recently interacted " \
+                              "items with the recommended.\n\n"
+
+            prompt = prompt + "Output exactly in the same format as bellow with only the chosen explanation for each " \
+                              "recommendation starting with the name " \
+                              "and then the explanation, separated with a the symbol '|'." \
+                              "The path's attributes are separated with '->'. An example of the exact format I want" \
+                              "you to output is:\n" \
+                              "Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York\n" \
+                              "Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator\n" \
+                              "Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan\n" \
+                              "A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life\n" \
+                              "War Horse | Band of Brothers -> Steven Spielberg -> War Horse"
+
+        return prompt
+
+    def invoke_model(self, model_name: str, prompt: str, key=None):
+        response_text = ""
+        tries = 5
+        if model_name.startswith("gpt"):
+            openai.api_key = key
+            while tries > 0:
+                try:
+                    response = openai.ChatCompletion.create(
+                        model=model_name,
+                        messages=[
+                            {"role": "user", "content": prompt}
+                        ],
+                        temperature=0.2,
+                        seed=42
+                    )
+
+                    # extract the response
+                    response_text = response.choices[0].message["content"]
+                    break
+
+                except (openai.error.InvalidRequestError, openai.error.AuthenticationError,
+                        openai.error.PermissionError, openai.error.Timeout, openai.error.APIConnectionError,
+                        openai.error.APIError) as e:
+                    print(f"Invalid request: {e}")
+                    raise Exception(e)
+                except (openai.error.ServiceUnavailableError,
+                        openai.error.RateLimitError) as e:
+                    print(f"Service unavailable: {e}")
+                    tries = tries - 1
+                    time.sleep(60)  # Wait before retrying
+
+        if tries == 0 and response_text == "":
+            raise Exception("Tries exceeded")
+        if response_text == "":
+            raise Exception("LLM did not respond")
+
+        return response_text
 
     def __add_dict(self, d: dict, key) -> dict:
         """

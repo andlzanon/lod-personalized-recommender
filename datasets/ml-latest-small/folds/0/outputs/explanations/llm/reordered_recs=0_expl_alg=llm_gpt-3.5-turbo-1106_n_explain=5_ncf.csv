@@ -1,0 +1,347 @@
+./datasets/ml-latest-small/folds/0/outputs/explanations/llm/reordered_recs=0_expl_alg=llm_gpt-3.5-turbo-1106_n_explain=5_ncf.csv
+
+User: 15
+Items interacted by the user
+Item id: 63859 Name: Bolt
+Item id: 71264 Name: Cloudy with a Chance of Meatballs
+Item id: 596 Name: Pinocchio
+Item id: 8360 Name: Shrek 2
+Item id: 2085 Name: One Hundred and One Dalmatians
+Item id: 152081 Name: Zootopia
+Item id: 71057 Name: 9
+Item id: 158872 Name: Sausage Party
+Item id: 2081 Name: The Little Mermaid
+Item id: 5618 Name: Spirited Away
+Item id: 5971 Name: My Neighbor Totoro
+Item id: 6377 Name: Finding Nemo
+Item id: 8961 Name: The Incredibles
+Item id: 1 Name: Toy Story
+Item id: 4306 Name: Shrek
+Item id: 50872 Name: Ratatouille
+Item id: 364 Name: The Lion King
+Item id: 4886 Name: Monsters, Inc.
+Item id: 68954 Name: Up
+Item id: 84954 Name: The Adjustment Bureau
+Item id: 122924 Name: X-Men: Apocalypse
+Item id: 4370 Name: A.I. Artificial Intelligence
+Item id: 103249 Name: World War Z
+Item id: 48774 Name: Children of Men
+Item id: 91500 Name: The Hunger Games
+Item id: 120466 Name: Chappie
+Item id: 110102 Name: Captain America: The Winter Soldier
+Item id: 101864 Name: Oblivion
+Item id: 33493 Name: Star Wars: Episode III – Revenge of the Sith
+Item id: 94864 Name: Prometheus
+Item id: 780 Name: Independence Day
+Item id: 2916 Name: Total Recall
+Item id: 89745 Name: The Avengers
+Item id: 84152 Name: Limitless
+Item id: 85414 Name: Source Code
+Item id: 68237 Name: Moon
+Item id: 8644 Name: I, Robot
+Item id: 96610 Name: Looper
+Item id: 56174 Name: I Am Legend
+Item id: 1200 Name: Aliens
+Item id: 1214 Name: Alien
+Item id: 122886 Name: Star Wars Episode VII: The Force Awakens
+Item id: 122922 Name: Doctor Strange
+Item id: 1527 Name: The Fifth Element
+Item id: 70286 Name: District 9
+Item id: 1210 Name: Star Wars: Episode VI – Return of the Jedi
+Item id: 1240 Name: The Terminator
+Item id: 1196 Name: Star Wars: Episode V – The Empire Strikes Back
+Item id: 105504 Name: Captain Phillips
+Item id: 143385 Name: Bridge of Spies
+Item id: 48304 Name: Apocalypto
+Item id: 152077 Name: 10 Cloverfield Lane
+Item id: 3499 Name: Misery
+Item id: 166635 Name: Passengers
+Item id: 160980 Name: Sully
+Item id: 3535 Name: American Psycho
+Item id: 134853 Name: Inside Out
+Item id: 97938 Name: Life of Pi
+Item id: 7438 Name: Kill Bill Volume 2
+Item id: 115149 Name: John Wick
+Item id: 3949 Name: Requiem for a Dream
+Item id: 64614 Name: Gran Torino
+Item id: 122882 Name: Mad Max: Fury Road
+Item id: 2012 Name: Back to the Future Part III
+Item id: 59315 Name: Iron Man
+Item id: 6874 Name: Kill Bill Volume 1
+Item id: 48780 Name: The Prestige
+Item id: 2011 Name: Back to the Future Part II
+Item id: 109374 Name: The Grand Budapest Hotel
+Item id: 72998 Name: Avatar
+Item id: 4022 Name: Cast Away
+Item id: 111759 Name: Edge of Tomorrow
+Item id: 589 Name: Terminator 2: Judgment Day
+Item id: 115713 Name: Ex Machina
+Item id: 2329 Name: American History X
+Item id: 1265 Name: Groundhog Day
+Item id: 1198 Name: Raiders of the Lost Ark
+Item id: 91529 Name: The Dark Knight Rises
+Item id: 2028 Name: Saving Private Ryan
+Item id: 527 Name: Schindler's List
+Item id: 47 Name: Seven
+Item id: 293 Name: Léon: The Professional
+Item id: 99114 Name: Django Unchained
+Item id: 1270 Name: Back to the Future
+Item id: 122904 Name: Deadpool
+Item id: 260 Name: Star Wars: Episode IV – A New Hope
+Item id: 5989 Name: Catch Me If You Can
+Item id: 79132 Name: Inception
+Item id: 58559 Name: The Dark Knight
+Item id: 134130 Name: The Martian
+Item id: 109487 Name: Interstellar
+Item id: 296 Name: Pulp Fiction
+Item id: 356 Name: Forrest Gump
+Item id: 318 Name: The Shawshank Redemption
+Item id: 3147 Name: The Green Mile
+Item id: 5445 Name: Minority Report
+Item id: 4995 Name: A Beautiful Mind
+Item id: 4226 Name: Memento
+Item id: 3578 Name: Gladiator
+Item id: 2762 Name: The Sixth Sense
+Item id: 5952 Name: The Lord of the Rings: The Two Towers
+Item id: 4993 Name: The Lord of the Rings: The Fellowship of the Ring
+Item id: 2858 Name: American Beauty
+Item id: 2571 Name: The Matrix
+Item id: 4720 Name: The Others
+Item id: 6502 Name: 28 Days Later
+Item id: 3753 Name: The Patriot
+Item id: 3994 Name: Unbreakable
+Item id: 69757 Name: (500) Days of Summer
+Item id: 3555 Name: U-571
+Item id: 3617 Name: Road Trip
+Item id: 1347 Name: A Nightmare on Elm Street
+Item id: 4018 Name: What Women Want
+Item id: 3510 Name: Frequency
+Item id: 849 Name: Escape from L.A.
+Item id: 2150 Name: The Gods Must Be Crazy
+Item id: 256 Name: Junior
+Item id: 355 Name: The Flintstones
+Item id: 2278 Name: Ronin
+Item id: 44 Name: Mortal Kombat
+Item id: 1909 Name: The X-Files
+Item id: 158 Name: Casper
+Item id: 2001 Name: Lethal Weapon 2
+Item id: 172 Name: Johnny Mnemonic
+
+Users favorites attributes on the kG
+Academy Award for Best Visual Effects
+Academy Award for Best Sound Editing
+Academy Award for Best Original Score
+Academy Award for Best Sound Mixing
+science fiction film
+
+Recommendations
+Item id: 63082 Name: Slumdog Millionaire
+Item id: 1580 Name: Men in Black
+Item id: 2023 Name: The Godfather Part III
+Item id: 1197 Name: The Princess Bride
+Item id: 166528 Name: Rogue One
+LLM gpt-3.5-turbo-1106 Prompt:
+In a recommender system, a user has interacted some items, chronologically, in descending order, the last 25 items interacted were:
+'Bolt'
+'Cloudy with a Chance of Meatballs'
+'Pinocchio'
+'Shrek 2'
+'One Hundred and One Dalmatians'
+'Zootopia'
+'9'
+'Sausage Party'
+'The Little Mermaid'
+'Spirited Away'
+'My Neighbor Totoro'
+'Finding Nemo'
+'The Incredibles'
+'Toy Story'
+'Shrek'
+'Ratatouille'
+'The Lion King'
+'Monsters, Inc.'
+'Up'
+'The Adjustment Bureau'
+'X-Men: Apocalypse'
+'A.I. Artificial Intelligence'
+'World War Z'
+'Children of Men'
+'The Hunger Games'
+'Chappie'
+'Captain America: The Winter Soldier'
+'Oblivion'
+'Star Wars: Episode III – Revenge of the Sith'
+'Prometheus'
+The user has top-5 recommendations, and possible explanations paths. Explanation paths connect an interacted item is connected to a recommended item by attributes. Bellow are the user recommendations with the followed by enumerated explanation paths, the symbol '->' means the connection between an item and an attribute:
+
+For the recommended item 'Slumdog Millionaire':
+1.A.I. Artificial Intelligence -> National Board of Review: Top Ten Films -> Slumdog Millionaire 
+2.Monsters, Inc. -> Academy Award for Best Original Score -> Slumdog Millionaire 
+3.One Hundred and One Dalmatians -> crime film -> Slumdog Millionaire 
+4.Shrek -> Academy Award for Best Writing, Adapted Screenplay -> Slumdog Millionaire 
+5.Ratatouille -> Academy Award for Best Sound Mixing -> Slumdog Millionaire 
+6.Ratatouille -> coming-of-age story -> Slumdog Millionaire 
+7.The Incredibles -> Academy Award for Best Sound Editing -> Slumdog Millionaire 
+8.Spirited Away -> coming-of-age story -> Slumdog Millionaire 
+9.Pinocchio -> coming-of-age story -> Slumdog Millionaire 
+10.The Little Mermaid -> Academy Award for Best Original Score -> Slumdog Millionaire 
+11.Ratatouille -> Academy Award for Best Sound Editing -> Slumdog Millionaire 
+12.A.I. Artificial Intelligence -> Academy Award for Best Original Score -> Slumdog Millionaire 
+13.A.I. Artificial Intelligence -> drama -> Slumdog Millionaire 
+14.World War Z -> United Kingdom -> Slumdog Millionaire 
+15.Ratatouille -> Academy Award for Best Original Score -> Slumdog Millionaire 
+16.Pinocchio -> Academy Award for Best Original Score -> Slumdog Millionaire 
+17.World War Z -> drama -> Slumdog Millionaire 
+18.One Hundred and One Dalmatians -> drama -> Slumdog Millionaire 
+19.Finding Nemo -> Academy Award for Best Original Score -> Slumdog Millionaire 
+20.The Incredibles -> Academy Award for Best Sound Mixing -> Slumdog Millionaire 
+21.The Lion King -> drama -> Slumdog Millionaire 
+22.Up -> Academy Award for Best Picture -> Slumdog Millionaire 
+23.Up -> Academy Award for Best Original Score -> Slumdog Millionaire 
+24.Up -> National Board of Review: Top Ten Films -> Slumdog Millionaire 
+25.The Lion King -> Academy Award for Best Original Score -> Slumdog Millionaire 
+26.Up -> Academy Award for Best Sound Editing -> Slumdog Millionaire 
+27.World War Z -> film based on a novel -> Slumdog Millionaire 
+28.The Adjustment Bureau -> romance film -> Slumdog Millionaire 
+29.Spirited Away -> drama -> Slumdog Millionaire 
+30.The Little Mermaid -> romance film -> Slumdog Millionaire 
+
+For the recommended item 'Men in Black':
+1.Shrek -> buddy film -> Men in Black 
+2.The Little Mermaid -> United States of America -> Men in Black 
+3.Cloudy with a Chance of Meatballs -> United States of America -> Men in Black 
+4.Zootopia -> United States of America -> Men in Black 
+5.9 -> United States of America -> Men in Black 
+6.9 -> action film -> Men in Black 
+7.One Hundred and One Dalmatians -> comedy film -> Men in Black 
+8.Shrek 2 -> action film -> Men in Black 
+9.Bolt -> comedy film -> Men in Black 
+10.Pinocchio -> buddy film -> Men in Black 
+11.9 -> science fiction film -> Men in Black 
+12.Shrek -> United States of America -> Men in Black 
+13.Toy Story -> Academy Award for Best Original Musical or Comedy Score -> Men in Black 
+14.The Lion King -> United States of America -> Men in Black 
+15.9 -> Danny Elfman -> Men in Black 
+16.Bolt -> United States of America -> Men in Black 
+17.Ratatouille -> buddy film -> Men in Black 
+18.Cloudy with a Chance of Meatballs -> comedy film -> Men in Black 
+19.Shrek 2 -> United States of America -> Men in Black 
+20.One Hundred and One Dalmatians -> United States of America -> Men in Black 
+21.Sausage Party -> comedy film -> Men in Black 
+22.The Incredibles -> United States of America -> Men in Black 
+23.Finding Nemo -> comedy film -> Men in Black 
+24.Finding Nemo -> United States of America -> Men in Black 
+25.Sausage Party -> United States of America -> Men in Black 
+26.Toy Story -> buddy film -> Men in Black 
+27.Ratatouille -> United States of America -> Men in Black 
+28.Toy Story -> United States of America -> Men in Black 
+29.Pinocchio -> United States of America -> Men in Black 
+30.Cloudy with a Chance of Meatballs -> Al Roker -> Men in Black 
+
+For the recommended item 'The Godfather Part III':
+1.X-Men: Apocalypse -> United States of America -> The Godfather Part III 
+2.The Lion King -> drama -> The Godfather Part III 
+3.Pinocchio -> Italy -> The Godfather Part III 
+4.The Little Mermaid -> United States of America -> The Godfather Part III 
+5.Toy Story -> United States of America -> The Godfather Part III 
+6.Spirited Away -> drama -> The Godfather Part III 
+7.9 -> United States of America -> The Godfather Part III 
+8.One Hundred and One Dalmatians -> United States of America -> The Godfather Part III 
+9.Bolt -> United States of America -> The Godfather Part III 
+10.One Hundred and One Dalmatians -> drama -> The Godfather Part III 
+11.Finding Nemo -> United States of America -> The Godfather Part III 
+12.A.I. Artificial Intelligence -> drama -> The Godfather Part III 
+13.The Adjustment Bureau -> New York City -> The Godfather Part III 
+14.A.I. Artificial Intelligence -> New York City -> The Godfather Part III 
+15.The Incredibles -> United States of America -> The Godfather Part III 
+16.Cloudy with a Chance of Meatballs -> United States of America -> The Godfather Part III 
+17.A.I. Artificial Intelligence -> United States of America -> The Godfather Part III 
+18.Pinocchio -> United States of America -> The Godfather Part III 
+19.Zootopia -> United States of America -> The Godfather Part III 
+20.Sausage Party -> United States of America -> The Godfather Part III 
+21.Shrek -> United States of America -> The Godfather Part III 
+22.Up -> United States of America -> The Godfather Part III 
+23.The Lion King -> United States of America -> The Godfather Part III 
+24.Monsters, Inc. -> United States of America -> The Godfather Part III 
+25.Ratatouille -> United States of America -> The Godfather Part III 
+26.Up -> Academy Award for Best Picture -> The Godfather Part III 
+27.A.I. Artificial Intelligence -> New Jersey -> The Godfather Part III 
+28.The Adjustment Bureau -> United States of America -> The Godfather Part III 
+29.One Hundred and One Dalmatians -> crime film -> The Godfather Part III 
+30.Shrek 2 -> United States of America -> The Godfather Part III 
+
+For the recommended item 'The Princess Bride':
+1.Shrek -> fantasy film -> The Princess Bride 
+2.Finding Nemo -> United States of America -> The Princess Bride 
+3.Pinocchio -> fantasy film -> The Princess Bride 
+4.9 -> fantasy film -> The Princess Bride 
+5.The Little Mermaid -> United States of America -> The Princess Bride 
+6.9 -> United States of America -> The Princess Bride 
+7.One Hundred and One Dalmatians -> United States of America -> The Princess Bride 
+8.Shrek 2 -> United States of America -> The Princess Bride 
+9.Bolt -> United States of America -> The Princess Bride 
+10.Pinocchio -> United States of America -> The Princess Bride 
+11.Sausage Party -> United States of America -> The Princess Bride 
+12.Shrek -> United States of America -> The Princess Bride 
+13.Toy Story -> Wallace Shawn -> The Princess Bride 
+14.The Lion King -> United States of America -> The Princess Bride 
+15.The Little Mermaid -> fantasy film -> The Princess Bride 
+16.Cloudy with a Chance of Meatballs -> fantasy film -> The Princess Bride 
+17.Ratatouille -> United States of America -> The Princess Bride 
+18.Cloudy with a Chance of Meatballs -> United States of America -> The Princess Bride 
+19.One Hundred and One Dalmatians -> fantasy film -> The Princess Bride 
+20.Zootopia -> United States of America -> The Princess Bride 
+21.Spirited Away -> fantasy film -> The Princess Bride 
+22.Toy Story -> fantasy film -> The Princess Bride 
+23.The Incredibles -> United States of America -> The Princess Bride 
+24.The Incredibles -> Wallace Shawn -> The Princess Bride 
+25.My Neighbor Totoro -> fantasy film -> The Princess Bride 
+26.Toy Story -> National Film Registry -> The Princess Bride 
+27.The Lion King -> National Film Registry -> The Princess Bride 
+28.Toy Story -> United States of America -> The Princess Bride 
+29.Shrek 2 -> fantasy film -> The Princess Bride 
+30.Pinocchio -> National Film Registry -> The Princess Bride 
+
+For the recommended item 'Rogue One':
+1.The Incredibles -> Michael Giacchino -> Rogue One 
+2.9 -> Fred Tatasciore -> Rogue One 
+3.Pinocchio -> fantasy film -> Rogue One 
+4.Zootopia -> United States of America -> Rogue One 
+5.9 -> action film -> Rogue One 
+6.Zootopia -> Alan Tudyk -> Rogue One 
+7.One Hundred and One Dalmatians -> United States of America -> Rogue One 
+8.Shrek 2 -> United States of America -> Rogue One 
+9.Bolt -> United States of America -> Rogue One 
+10.Shrek 2 -> fantasy film -> Rogue One 
+11.Zootopia -> Terri Douglas -> Rogue One 
+12.The Incredibles -> United States of America -> Rogue One 
+13.Finding Nemo -> United States of America -> Rogue One 
+14.Toy Story -> United States of America -> Rogue One 
+15.9 -> fantasy film -> Rogue One 
+16.Cloudy with a Chance of Meatballs -> fantasy film -> Rogue One 
+17.The Incredibles -> Academy Award for Best Sound Mixing -> Rogue One 
+18.Cloudy with a Chance of Meatballs -> United States of America -> Rogue One 
+19.One Hundred and One Dalmatians -> fantasy film -> Rogue One 
+20.Zootopia -> Michael Giacchino -> Rogue One 
+21.9 -> science fiction film -> Rogue One 
+22.The Little Mermaid -> United States of America -> Rogue One 
+23.Sausage Party -> United States of America -> Rogue One 
+24.The Little Mermaid -> fantasy film -> Rogue One 
+25.9 -> United States of America -> Rogue One 
+26.Spirited Away -> fantasy film -> Rogue One 
+27.Toy Story -> fantasy film -> Rogue One 
+28.My Neighbor Totoro -> fantasy film -> Rogue One 
+29.Shrek 2 -> action film -> Rogue One 
+30.Pinocchio -> United States of America -> Rogue One 
+
+Please choose one explanation path for each recommendation considering the following criteria:
+1. Diversity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Diversify these attributes for the chosen explanation paths set of all recommendations;
+2. Popularity of attributes: Each path is composed of attributes that connectan interacted item node with a recommended. Use popular attributes for the chosen explanation paths set of all recommendations;
+3. Recency of interacted items: Use explanation paths that connects recently interacted items with the recommended.
+
+Output exactly in the same format as bellow with only the chosen explanation for each recommendation starting with the name and then the explanation, separated with a the symbol '|'.The path's attributes are separated with '->'. An example of the exact format I wantyou to output is:
+Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York
+Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator
+Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan
+A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life
+War Horse | Band of Brothers -> Steven Spielberg -> War Horse
