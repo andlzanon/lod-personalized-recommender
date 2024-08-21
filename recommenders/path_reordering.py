@@ -4,6 +4,7 @@ import random
 from collections import Counter
 import time
 import openai
+import re
 
 import networkx as nx
 import numpy as np
@@ -1502,7 +1503,7 @@ class PathReordering(LODPersonalizedReordering):
                 try:
                     paths = list(nx.all_shortest_paths(subgraph, source=hm_node, target=rm_name))
                     for p in paths:
-                        if len(p) > 3:
+                        if len(p) > 3 and not("last-fm" in self.prop_path):
                             continue
                         str_path = []
                         p_items = [x for x in p[:][0::2]]
@@ -1534,19 +1535,48 @@ class PathReordering(LODPersonalizedReordering):
         file.write("LLM " + model_name + " Prompt:")
         file.write(prompt)
 
-        response = self.invoke_model(model_name, prompt, key)
+        if model_name.startswith("gpt"):
+            response = self.invoke_model(model_name, prompt, key)
+        else:
+            lines = []
+            while True:
+                try:
+                    line = input()
+                    if line == "END":
+                        break
+                    lines.append(line)
+                except EOFError:
+                    break
+
+            response = "\n".join(lines)
 
         print("\nLLM " + model_name + " Response: ")
         file.write("\n\nLLM " + model_name + " Response: ")
         print(response)
-        file.write("\n" + response)
+        file.write("\n" + response + "\n")
 
-        response_arr = response.split("\n")
+        if model_name.startswith("gpt"):
+            response_arr = response.split("\n")
+        else:
+            response_arr = re.findall(r'^.*\|.*->.*$', response, re.MULTILINE)
+
         resp_paths_dict = {}
         for i in range(0, len(response_arr)):
             split_reponse = response_arr[i].split("|")
             title = split_reponse[0].strip()
-            title_id = list(titles.keys())[list(titles.values()).index(title)]
+            try:
+                title_id = list(titles.keys())[list(titles.values()).index(title)]
+            except ValueError:
+                try:
+                    title_id = list(titles.keys())[list(map(lambda x: x.lower(), list(titles.values()))).index(title.lower())]
+                except ValueError:
+                    try:
+                        title_id = list(titles.keys())[list(map(lambda x: x.lower(), list(titles.values()))).index(split_reponse[-1].split("->")[-1].strip().lower())]
+                    except ValueError:
+                        for ind, (key, value) in enumerate(titles.items()):
+                            if str(value).lower() == title.lower():
+                                break
+                        title_id = key
             resp_paths_dict[title_id] = split_reponse[1]
 
         hist_items = {}
@@ -1555,6 +1585,7 @@ class PathReordering(LODPersonalizedReordering):
         prop_lists = []
         for rec in recommeded:
             print("\nPaths for the Recommended Item: " + str(rec))
+            file.write("\nPaths for the Recommended Item: " + str(rec) + "\n")
 
             try:
                 path = resp_paths_dict[rec]
@@ -1564,7 +1595,15 @@ class PathReordering(LODPersonalizedReordering):
                 hist_names = [str(x).strip() for x in path_split[:-1][0::2]]
                 hist_ids = []
                 for h_name in hist_names:
-                    hist_ids.append(list(titles.keys())[list(titles.values()).index(h_name)])
+                    try:
+                        hist_ids.append(list(titles.keys())[list(titles.values()).index(h_name)])
+                    except ValueError:
+                        rem_title = ''.join(letter for letter in h_name if letter.isalnum())
+                        for ind, (key, value) in enumerate(titles.items()):
+                            rem_value = ''.join(letter for letter in value if letter.isalnum())
+                            if str(rem_value).lower() == rem_title.lower():
+                                hist_ids.append(key)
+                                break
 
                 hist_lists.append(hist_ids)
                 for i in hist_names:
@@ -1593,8 +1632,8 @@ class PathReordering(LODPersonalizedReordering):
                 hist_lists.append([])
                 prop_lists.append([])
 
+            file.write(origin + path_sentence + destination + "\n")
             print(origin + path_sentence + destination)
-            file.write(origin + path_sentence + destination)
 
         lir = eval.lir_metric(0.3, user, hist_lists, self.train_set)
         sep = eval.sep_metric(0.3, prop_lists, self.prop_set, memo_sep)
@@ -1602,10 +1641,10 @@ class PathReordering(LODPersonalizedReordering):
         return hist_items, nodes, (lir, sep, etd)
 
     def llm_prompt(self, model: str, historic: list, recommended: list, titles: dict, sem_path_dist: pd.DataFrame,
-                   random_seed=64, hist_count=50, expl_count=50):
+                   random_seed=64, hist_count=50, expl_count=40):
 
         prompt = ""
-        if model.startswith("gpt"):
+        if model.startswith("gpt") or model.startswith("llama"):
             prompt = prompt + "\nIn a recommender system, a user has interacted some items, chronologically, " \
                               "in descending order, the last items interacted were:\n"
 
@@ -1623,8 +1662,11 @@ class PathReordering(LODPersonalizedReordering):
                 rec_item = int(recommended[i])
                 prompt = prompt + "\nFor the recommended item '" + titles[rec_item] + "':\n"
                 all_expl = sem_path_dist.loc[rec_item]
-                top_expl = all_expl[(all_expl["historic"].isin(last_items))][:expl_count].sample(frac=1,
-                                                                                                 random_state=random_seed)
+                try:
+                    top_expl = all_expl[(all_expl["historic"].isin(last_items))][:expl_count].sample(frac=1, random_state=random_seed)
+                except AttributeError:
+                    top_expl = pd.DataFrame(all_expl.copy()).T
+
                 if top_expl.shape[0] == 0 or all_expl.shape[0] < expl_count:
                     top_expl = all_expl.sample(frac=1, random_state=random_seed)[:expl_count]
                 elif top_expl.shape[0] < expl_count:
@@ -1638,6 +1680,9 @@ class PathReordering(LODPersonalizedReordering):
                         top_expl = pd.concat(
                             [top_expl, all_expl[(~all_expl["historic"].isin(last_items))][:rest]]).sample(
                             frac=1, random_state=random_seed)
+                
+                if isinstance(top_expl, pd.Series):
+                    top_expl = pd.DataFrame(top_expl.copy()).T
 
                 c = 1
                 for _, row in top_expl.iterrows():
@@ -1665,7 +1710,7 @@ class PathReordering(LODPersonalizedReordering):
                               "recommendation starting with the name " \
                               "and then the explanation, separated with a the symbol '|'." \
                               "The path's attributes are separated with '->'. An example of the exact format I want" \
-                              "you to output is:\n" \
+                              " you to output is:\n" \
                               "Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York\n" \
                               "Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator\n" \
                               "Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan\n" \
@@ -1676,7 +1721,7 @@ class PathReordering(LODPersonalizedReordering):
 
     def invoke_model(self, model_name: str, prompt: str, key=None):
         response_text = ""
-        tries = 5
+        tries = 6
         if model_name.startswith("gpt"):
             openai.api_key = key
             while tries > 0:
@@ -1698,12 +1743,17 @@ class PathReordering(LODPersonalizedReordering):
                         openai.error.PermissionError, openai.error.Timeout, openai.error.APIConnectionError,
                         openai.error.APIError) as e:
                     print(f"Invalid request: {e}")
-                    raise Exception(e)
+                    tries = tries - 1
+                    time.sleep(60 * 10)  # Wait before retrying
                 except (openai.error.ServiceUnavailableError,
                         openai.error.RateLimitError) as e:
                     print(f"Service unavailable: {e}")
                     tries = tries - 1
-                    time.sleep(60)  # Wait before retrying
+                    time.sleep(60 * 10)  # Wait before retrying
+                except Exception as e:
+                    print(f"Error: {e}")
+                    tries = tries - 1
+                    time.sleep(60 * 10)  # Wait before retrying
 
         if tries == 0 and response_text == "":
             raise Exception("Tries exceeded")

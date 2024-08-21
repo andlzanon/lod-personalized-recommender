@@ -405,8 +405,11 @@ def sep_metric(beta: float, props: list, prop_set: pd.DataFrame, memo_sep: dict)
                             last_sep = sep
 
                 # generate normalized sep column
-                count_link['normalized'] = scaler.fit_transform(
-                    np.asarray(count_link[count_link.columns[-1]]).astype(np.float64).reshape(-1, 1)).reshape(-1)
+                try:
+                    count_link['normalized'] = scaler.fit_transform(
+                        np.asarray(count_link[count_link.columns[-1]]).astype(np.float64).reshape(-1, 1)).reshape(-1)
+                except ValueError:
+                    continue
                 p_sep_value = count_link.loc[p][-1]
                 for l in links:
                     memo_sep[l] = count_link
@@ -597,11 +600,19 @@ def maut(dataset: str, folder: int, expl_algs: str, rec_alg: str, metrics: str, 
     df_metrics = []
     for i in range(0, len(expl_algs_l)):
         alg = expl_algs_l[i]
+        if alg.startswith("webmedia"):
+            path = path.replace("/explanations/", "/explanations/webmedia/")
+        elif alg.startswith("llm"):
+            path = path.replace("/explanations/", "/explanations/llm/")
+
         if n_explain != 5:
             alg_path = path + "_expl_alg=" + alg + "_" + path_n_expain + "_" + str(rec_alg) + ".csv"
         else:
             alg_path = path + "_expl_alg=" + alg + "_" + str(rec_alg) + ".csv"
         df_metrics.append(explanation_file_to_df(alg_path, alg))
+
+        if alg.startswith("llm") or alg.startswith("webmedia"):
+            path = path_base + str(folder) + "/results/explanations/" + "reordered_recs=0"
 
     scaler = MinMaxScaler()
     utility_matrix = pd.concat(df_metrics).pivot(index='alg', columns='metric', values='value').astype(np.float64)
