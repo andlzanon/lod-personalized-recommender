@@ -1588,7 +1588,13 @@ class PathReordering(LODPersonalizedReordering):
             file.write("\nPaths for the Recommended Item: " + str(rec) + "\n")
 
             try:
-                path = resp_paths_dict[rec]
+                key1 = rec
+                keys = [k for k, v in titles.items() if v == titles[rec]]
+                keys_p = [key for key in keys if resp_paths_dict.get(key) is not None]
+                if len(keys_p) > 0:
+                    if keys_p[0] != rec:
+                        key1 = keys_p[0]
+                path = resp_paths_dict[key1]
                 path_split = path.split(" -> ")
                 origin = ""
 
