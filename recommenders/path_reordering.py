@@ -16,6 +16,7 @@ from gensim.models.keyedvectors import KeyedVectors
 from node2vec import Node2Vec
 from sklearn.metrics.pairwise import cosine_similarity
 from dotenv import load_dotenv
+from groq import Groq
 
 import evaluation_utils as eval
 from recommenders.lod_reordering import LODPersonalizedReordering
@@ -1535,7 +1536,7 @@ class PathReordering(LODPersonalizedReordering):
         file.write("LLM " + model_name + " Prompt:")
         file.write(prompt)
 
-        if model_name.startswith("gpt"):
+        if model_name.startswith("gpt") or model_name == "llama3-70b-8192":
             response = self.invoke_model(model_name, prompt, key)
         else:
             lines = []
@@ -1558,7 +1559,14 @@ class PathReordering(LODPersonalizedReordering):
         if model_name.startswith("gpt"):
             response_arr = response.split("\n")
         else:
+            tries = 5
             response_arr = re.findall(r'^.*\|.*->.*$', response, re.MULTILINE)
+            while tries > 0 and len(response_arr) == 0:
+                tries = tries - 1
+                response = self.invoke_model(model_name, prompt, key)
+                response_arr = re.findall(r'^.*\|.*->.*$', response, re.MULTILINE)
+            if tries == 0 and len(response_arr) == 0:
+                raise Exception("Could not parse LLLM output")
 
         resp_paths_dict = {}
         for i in range(0, len(response_arr)):
@@ -1712,16 +1720,21 @@ class PathReordering(LODPersonalizedReordering):
             prompt = prompt + "3. Recency of interacted items: Use explanation paths that connects recently interacted " \
                               "items with the recommended.\n\n"
 
-            prompt = prompt + "Output exactly in the same format as bellow with only the chosen explanation for each " \
-                              "recommendation starting with the name " \
-                              "and then the explanation, separated with a the symbol '|'." \
-                              "The path's attributes are separated with '->'. An example of the exact format I want" \
-                              " you to output is:\n" \
-                              "Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York\n" \
-                              "Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator\n" \
-                              "Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan\n" \
-                              "A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life\n" \
-                              "War Horse | Band of Brothers -> Steven Spielberg -> War Horse"
+            if model.startswith("gpt"):
+                prompt = prompt + "Output exactly in the same format as bellow with only the chosen explanation for each " \
+                                  "recommendation starting with the name " \
+                                  "and then the explanation, separated with a the symbol '|'." \
+                                  "The path's attributes are separated with '->'. An example of the exact format I want" \
+                                  " you to output is:\n" \
+                                  "Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York\n" \
+                                  "Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator\n" \
+                                  "Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan\n" \
+                                  "A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life\n" \
+                                  "War Horse | Band of Brothers -> Steven Spielberg -> War Horse"
+            else:
+                prompt = prompt + "The output format for every recommendation is: in one line, start with the name of " \
+                                  "the recommendation, then add the symbol '|'  followed by the explanation path chosen." \
+                                  "Do not create explanation paths, choose from the ones listed."
 
         return prompt
 
@@ -1756,6 +1769,26 @@ class PathReordering(LODPersonalizedReordering):
                     print(f"Service unavailable: {e}")
                     tries = tries - 1
                     time.sleep(60 * 10)  # Wait before retrying
+                except Exception as e:
+                    print(f"Error: {e}")
+                    tries = tries - 1
+                    time.sleep(60 * 10)  # Wait before retrying
+
+        if model_name == "llama3-70b-8192":
+            while tries > 0:
+                try:
+                    response = Groq().chat.completions.create(
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": prompt,
+                            }
+                        ],
+                        temperature=0.6,
+                        model="llama3-70b-8192",
+                    )
+                    response_text = response.choices[0].message.content
+                    break
                 except Exception as e:
                     print(f"Error: {e}")
                     tries = tries - 1

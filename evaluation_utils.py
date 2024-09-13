@@ -474,15 +474,17 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
     explod_results = []
     explodv2_results = []
     pem_results = []
+    final_fold = 10
 
     path = "./datasets/"
     if dataset == "ml":
         path = path + "ml-latest-small"
     else:
         path = path + "hetrec2011-lastfm-2k"
+        final_fold = 1
     path_base = path + "/folds/"
 
-    for i in range(0, 10):
+    for i in range(0, final_fold):
         path = path_base + str(i) + "/results/explanations/" + "reordered_recs=" + str(reordered)
 
         n_explain_s = "_"
@@ -507,7 +509,7 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
         m_explod = []
         m_explodv2 = []
         m_pem = []
-        for i in range(0, 10):
+        for i in range(0, final_fold):
             m_explod.append(float(explod_results[i].loc[m].value))
             m_explodv2.append(float(explodv2_results[i].loc[m].value))
             m_pem.append(float(pem_results[i].loc[m].value))
