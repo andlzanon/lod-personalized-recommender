@@ -5,6 +5,7 @@ from collections import Counter
 import time
 import openai
 import re
+import inspect
 
 import networkx as nx
 import numpy as np
@@ -16,7 +17,7 @@ from gensim.models.keyedvectors import KeyedVectors
 from node2vec import Node2Vec
 from sklearn.metrics.pairwise import cosine_similarity
 from dotenv import load_dotenv
-from groq import Groq
+from groq import Groq, RateLimitError
 
 import evaluation_utils as eval
 from recommenders.lod_reordering import LODPersonalizedReordering
@@ -1530,6 +1531,7 @@ class PathReordering(LODPersonalizedReordering):
 
         sem_path_dist = sem_path_dist.set_index("recommended")
         prompt = self.llm_prompt(model_name, historic, recommeded, titles, sem_path_dist)
+        new_prompt = ""
 
         print("\nLLM " + model_name + " Prompt:")
         print(prompt)
@@ -1537,7 +1539,22 @@ class PathReordering(LODPersonalizedReordering):
         file.write(prompt)
 
         if model_name.startswith("gpt") or model_name == "llama3-70b-8192":
-            response = self.invoke_model(model_name, prompt, key)
+            try:
+                response = self.invoke_model(model_name, prompt, key)
+            except RateLimitError:
+                signature = inspect.signature(self.llm_prompt)
+                new_expl_count = signature.parameters["expl_count"].default
+                new_prompt = self.llm_prompt(model_name,
+                                             historic,
+                                             recommeded,
+                                             titles,
+                                             sem_path_dist,
+                                             expl_count=new_expl_count - 10)
+                print("\nLLM New " + model_name + " Prompt:")
+                file.write("\n\nLLM New " + model_name + " Response: ")
+                print(new_prompt)
+                file.write("\n" + new_prompt + "\n")
+                response = self.invoke_model(model_name, new_prompt, key)
         else:
             lines = []
             while True:
@@ -1563,7 +1580,10 @@ class PathReordering(LODPersonalizedReordering):
             response_arr = re.findall(r'^.*\|.*->.*$', response, re.MULTILINE)
             while tries > 0 and len(response_arr) == 0:
                 tries = tries - 1
-                response = self.invoke_model(model_name, prompt, key)
+                if new_prompt == "":
+                    response = self.invoke_model(model_name, prompt, key)
+                else:
+                    response = self.invoke_model(model_name, new_prompt, key)
                 response_arr = re.findall(r'^.*\|.*->.*$', response, re.MULTILINE)
             if tries == 0 and len(response_arr) == 0:
                 raise Exception("Could not parse LLLM output")
@@ -1676,11 +1696,13 @@ class PathReordering(LODPersonalizedReordering):
                 rec_item = int(recommended[i])
                 prompt = prompt + "\nFor the recommended item '" + titles[rec_item] + "':\n"
                 all_expl = sem_path_dist.loc[rec_item]
+                # extract paths from last items
                 try:
                     top_expl = all_expl[(all_expl["historic"].isin(last_items))][:expl_count].sample(frac=1, random_state=random_seed)
                 except AttributeError:
                     top_expl = pd.DataFrame(all_expl.copy()).T
 
+                # fill with other items until reach the expl_count
                 if top_expl.shape[0] == 0 or all_expl.shape[0] < expl_count:
                     top_expl = all_expl.sample(frac=1, random_state=random_seed)[:expl_count]
                 elif top_expl.shape[0] < expl_count:
@@ -1789,6 +1811,11 @@ class PathReordering(LODPersonalizedReordering):
                     )
                     response_text = response.choices[0].message.content
                     break
+                except RateLimitError as e:
+                    print(f"Error: {e}")
+                    print("Waiting one minute")
+                    time.sleep(60)
+                    raise
                 except Exception as e:
                     print(f"Error: {e}")
                     tries = tries - 1
