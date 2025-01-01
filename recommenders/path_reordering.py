@@ -1,6 +1,11 @@
 import _io
+import os
 import random
 from collections import Counter
+import time
+import openai
+import re
+import inspect
 
 import networkx as nx
 import numpy as np
@@ -11,6 +16,8 @@ from pykeen.triples import TriplesFactory
 from gensim.models.keyedvectors import KeyedVectors
 from node2vec import Node2Vec
 from sklearn.metrics.pairwise import cosine_similarity
+from dotenv import load_dotenv
+from groq import Groq, RateLimitError
 
 import evaluation_utils as eval
 from recommenders.lod_reordering import LODPersonalizedReordering
@@ -125,7 +132,8 @@ class PathReordering(LODPersonalizedReordering):
         """
 
         semantic_pro = True
-        if expl_alg in ["rotate", "word2vec", "explod_v2", "pem"]:
+        if expl_alg in ["rotate", "word2vec", "explod_v2", "pem"] or expl_alg.startswith("webmedia") \
+                or expl_alg.startswith("llm"):
             semantic_pro = False
 
         dataset = "ml"
@@ -156,6 +164,20 @@ class PathReordering(LODPersonalizedReordering):
         output_title = '/'.join(output_title_l[:-1])
         output_title = output_title + "/reordered_recs=" + str(reordered) + "_expl_alg=" + expl_alg + "_" + \
                        "n_explain=" + str(n_explain) + "_" + output_title_l[-1]
+
+        if expl_alg.startswith("webmedia"):
+            output_title = output_title.replace("/explanations/", "/explanations/webmedia/")
+            results_title = results_title.replace("/explanations/", "/explanations/webmedia/")
+            print(output_title)
+            print(results_title)
+
+        if expl_alg.startswith("llm"):
+            load_dotenv()
+            output_title = output_title.replace("/explanations/", "/explanations/llm/")
+            results_title = results_title.replace("/explanations/", "/explanations/llm/")
+            print(output_title)
+            print(results_title)
+
         f = open(output_title, mode="w", encoding='utf-8')
         f.write(output_title + "\n")
         print(output_title)
@@ -295,6 +317,15 @@ class PathReordering(LODPersonalizedReordering):
             elif expl_alg == "rotate":
                 items, props, (ulir, usep, uetd) = self.__rotate_embedding(item_rank, items_historic, u, f, memo_sep)
 
+            elif expl_alg.startswith("webmedia"):
+                model_name = expl_alg.split("_")[-1]
+                items, props, (ulir, usep, uetd) = self.__webmedia_embedding(model_name, item_rank, items_historic, u,
+                                                                             f, memo_sep)
+
+            elif expl_alg.startswith("llm"):
+                model_name = expl_alg.split("_")[-1]
+                items, props, (ulir, usep, uetd) = self.__llm_paths(model_name, item_rank, items_historic, u,
+                                                                    f, memo_sep)
             f.write("\n")
 
             total_items = dict(Counter(total_items) + Counter(items))
@@ -1106,7 +1137,7 @@ class PathReordering(LODPersonalizedReordering):
                 origin = origin[:-2]
 
                 path_props = [x for x in path[:-1][1::2]]
-                prop_lists.append(nodes)
+                prop_lists.append(path_props)
                 path_sentence = " nodes: "
                 for n in path_props:
                     path_sentence = path_sentence + "\"" + n + "\" "
@@ -1218,10 +1249,11 @@ class PathReordering(LODPersonalizedReordering):
                                     edge = relations[(buff[0], buff[1])]
                                 except KeyError:
                                     try:
-                                        edge = self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]]["prop"].unique()[0]
+                                        edge = self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]][
+                                            "prop"].unique()[0]
                                     except AttributeError:
                                         edge = str(self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]][
-                                            "prop"])
+                                                       "prop"])
                                     except IndexError:
                                         uflag = True
                                         break
@@ -1271,7 +1303,7 @@ class PathReordering(LODPersonalizedReordering):
                 origin = origin[:-2]
 
                 path_props = [x for x in path[:-1][1::2]]
-                prop_lists.append(nodes)
+                prop_lists.append(path_props)
                 path_sentence = " nodes: "
                 for n in path_props:
                     path_sentence = path_sentence + "\"" + n + "\" "
@@ -1299,6 +1331,502 @@ class PathReordering(LODPersonalizedReordering):
         sep = eval.sep_metric(0.3, prop_lists, self.prop_set, memo_sep)
         etd = eval.etd_metric(list(nodes.keys()), len(recommeded), len(self.prop_set['obj'].unique()))
         return hist_items, nodes, (lir, sep, etd)
+
+    def __webmedia_embedding(self, model_name: str, recommeded: list, historic: list, user: int,
+                             file: _io.TextIOWrapper, memo_sep: dict):
+        hist_props = self.prop_set.loc[historic]
+        model_path = self.train_file.split("/")
+        model_path = '/'.join(model_path[:-3])
+        model_path = model_path + "/models/" + model_name + "_webmedia_model"
+        triples = self.prop_set.to_numpy()
+        tf = TriplesFactory.from_labeled_triples(triples)
+
+        model = torch.load(model_path + "/trained_model.pkl")
+        entity_embeds = pd.DataFrame(model.entity_representations[0](indices=None).detach().numpy()).rename(
+            tf.entity_id_to_label)
+        relation_embeds = pd.DataFrame(model.relation_representations[0](indices=None).detach().numpy()).rename(
+            tf.relation_id_to_label)
+
+        # create user embeding as pooling of entity
+        user_embed = pd.Series(np.zeros(shape=(model.entity_representations[0].embedding_dim,)))
+        for i in historic:
+            try:
+                title = self.prop_set.loc[i][self.prop_set.columns[0]].unique()[0]
+            except AttributeError:
+                title = str(self.prop_set.loc[i][self.prop_set.columns[0]])
+
+            item_embed = entity_embeds.loc[title]
+            user_embed = user_embed + item_embed
+
+        sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path_s', 'path_v'])
+        historic_codes = ['I' + str(i) for i in historic]
+        recommeded_codes = ['I' + str(i) for i in recommeded]
+        historic_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
+
+        subgraph = self.graph.subgraph(historic_codes + recommeded_codes + historic_props)
+        titles = self.prop_set[self.prop_cols[1]].to_dict()
+        relations = self.prop_set.set_index([self.prop_cols[1], self.prop_cols[-1]]).to_dict()['prop']
+        # obtain paths from historic item to recommended
+        for hm in historic:
+            hm_node = 'I' + str(hm)
+            for rm in recommeded:
+                rm_name = 'I' + str(rm)
+                try:
+                    paths = nx.all_shortest_paths(subgraph, source=hm_node, target=rm_name)
+                    max = -1
+                    max_path = []
+                    for p in paths:
+                        if len(p) > 5:
+                            continue
+                        path_embed = pd.Series(np.zeros(shape=(model.entity_representations[0].embedding_dim,)))
+                        uflag = False
+                        count = 0
+                        buff = [None, None]
+                        for prop in p:
+                            try:
+                                title = titles[int(prop[1:])]
+                                path_embed = path_embed + entity_embeds.loc[title]
+                                buff[0] = title
+                            except (ValueError, KeyError):
+                                path_embed = path_embed + entity_embeds.loc[prop]
+                                buff[1] = prop
+                            count = count + 1
+
+                            if count == 2:
+                                count = 1
+                                try:
+                                    edge = relations[(buff[0], buff[1])]
+                                except KeyError:
+                                    try:
+                                        edge = self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]][
+                                            "prop"].unique()[0]
+                                    except AttributeError:
+                                        edge = str(self.prop_set[self.prop_set[self.prop_set.columns[-1]] == buff[1]][
+                                                       "prop"])
+                                    except IndexError:
+                                        uflag = True
+                                        break
+
+                                path_embed = path_embed + relation_embeds.loc[edge]
+
+                        # calculate similarity and check if is it higher
+                        score = cosine_similarity([user_embed.to_numpy()], [path_embed.to_numpy()])[0][0]
+                        if score > max and not uflag:
+                            max = score
+                            max_path = p
+
+                    sem_path_dist = sem_path_dist.append(
+                        {'historic': hm, 'recommended': rm, 'path_s': max_path, 'path_v': max}, ignore_index=True)
+
+                except (nx.exception.NetworkXNoPath, ValueError):
+                    sem_path_dist = sem_path_dist.append(
+                        {'historic': hm, 'recommended': rm, 'path_s': [], 'path_v': -1},
+                        ignore_index=True)
+
+        # choose path with highest mean similarity of sem_path_dist
+        sem_path_dist_m = sem_path_dist.pivot(index='historic', columns='recommended', values='path_v')
+        max_paths = sem_path_dist_m.max().to_frame().T
+
+        hist_items = {}
+        nodes = {}
+        hist_lists = []
+        prop_lists = []
+        for rec in recommeded:
+            print("\nPaths for the Recommended Item: " + str(rec))
+            file.write("\nPaths for the Recommended Item: " + str(rec) + "\n")
+            try:
+                max_value = max_paths[rec][0]
+                if max_value == -1:
+                    raise KeyError
+                origin = sem_path_dist_m[sem_path_dist_m[rec] == max_value].index[0]
+                row = sem_path_dist[(sem_path_dist['historic'] == origin) & (sem_path_dist['recommended'] == rec)]
+                path = list(row["path_s"])[0]
+
+                origin = ""
+                hist_names = hist_props.loc[hist_props.index.isin([int(x[1:]) for x in path[:-1][0::2]])][
+                    self.prop_cols[1]].unique()
+                hist_lists.append([int(x[1:]) for x in path[:-1][0::2]])
+                for i in hist_names:
+                    origin = origin + "\"" + i + "\"; "
+                    hist_items = self.__add_dict(hist_items, i)
+                origin = origin[:-2]
+
+                path_props = [x for x in path[:-1][1::2]]
+                prop_lists.append(path_props)
+                path_sentence = " nodes: "
+                for n in path_props:
+                    path_sentence = path_sentence + "\"" + n + "\" "
+                    nodes = self.__add_dict(nodes, n)
+                try:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
+                except AttributeError:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]]
+                destination = "destination: \"" + rec_name + "\""
+            except KeyError:
+                origin = ""
+                path_sentence = ""
+                try:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
+                except AttributeError:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]]
+                destination = "destination: \"" + rec_name + "\""
+                hist_lists.append([])
+                prop_lists.append([])
+
+            print(origin + path_sentence + destination)
+            file.write(origin + path_sentence + destination)
+
+        lir = eval.lir_metric(0.3, user, hist_lists, self.train_set)
+        sep = eval.sep_metric(0.3, prop_lists, self.prop_set, memo_sep)
+        etd = eval.etd_metric(list(nodes.keys()), len(recommeded), len(self.prop_set['obj'].unique()))
+        return hist_items, nodes, (lir, sep, etd)
+
+    def __llm_paths(self, model_name: str, recommeded: list, historic: list, user: int,
+                    file: _io.TextIOWrapper, memo_sep: dict):
+        sem_path_dist = pd.DataFrame(columns=['historic', 'recommended', 'path_s'])
+
+        key = None
+        if model_name.startswith("gpt"):
+            key = os.getenv("OPEN_AI_KEY")
+
+        historic_codes = ['I' + str(i) for i in historic]
+        recommended_codes = ['I' + str(i) for i in recommeded]
+        historic_props = list(set(self.prop_set.loc[self.prop_set.index.isin(historic)]['obj']))
+        subgraph = self.graph.subgraph(historic_codes + recommended_codes + historic_props)
+
+        titles = self.prop_set[self.prop_cols[1]].to_dict()
+        relations = self.prop_set.set_index([self.prop_cols[1], self.prop_cols[-1]]).to_dict()['prop']
+
+        # obtain paths from historic item to recommended
+        for hm in historic:
+            hm_node = 'I' + str(hm)
+            for rm in recommeded:
+                rm_name = 'I' + str(rm)
+                try:
+                    paths = list(nx.all_shortest_paths(subgraph, source=hm_node, target=rm_name))
+                    for p in paths:
+                        if len(p) > 3 and not("last-fm" in self.prop_path):
+                            continue
+                        str_path = []
+                        p_items = [x for x in p[:][0::2]]
+                        for i in range(0, len(p) - 1):
+                            elem = p[i]
+                            if elem in p_items:
+                                item_name = titles[int(elem[1:])]
+                                str_path.append(item_name)
+                                # str_path.append(relations[item_name, p[i+1]])
+                            else:
+                                str_path.append(elem)
+                                # str_path.append(relations[titles[int(p[i+1][1:])], elem])
+
+                        rec_title_name = titles[int(p[-1][1:])]
+                        str_path.append(rec_title_name)
+                        sem_path_dist = sem_path_dist.append(
+                            {'historic': hm, 'recommended': rm, 'path_s': str_path}, ignore_index=True)
+
+                except (nx.exception.NetworkXNoPath, ValueError):
+                    sem_path_dist = sem_path_dist.append(
+                        {'historic': hm, 'recommended': rm, 'path_s': []},
+                        ignore_index=True)
+
+        sem_path_dist = sem_path_dist.set_index("recommended")
+        prompt = self.llm_prompt(model_name, historic, recommeded, titles, sem_path_dist)
+        new_prompt = ""
+
+        print("\nLLM " + model_name + " Prompt:")
+        print(prompt)
+        file.write("LLM " + model_name + " Prompt:")
+        file.write(prompt)
+
+        if model_name.startswith("gpt") or model_name == "llama3-70b-8192":
+            try:
+                response = self.invoke_model(model_name, prompt, key)
+            except RateLimitError:
+                signature = inspect.signature(self.llm_prompt)
+                new_expl_count = signature.parameters["expl_count"].default
+                new_prompt = self.llm_prompt(model_name,
+                                             historic,
+                                             recommeded,
+                                             titles,
+                                             sem_path_dist,
+                                             expl_count=new_expl_count - 10)
+                print("\nLLM New " + model_name + " Prompt:")
+                file.write("\n\nLLM New " + model_name + " Response: ")
+                print(new_prompt)
+                file.write("\n" + new_prompt + "\n")
+                response = self.invoke_model(model_name, new_prompt, key)
+        else:
+            lines = []
+            while True:
+                try:
+                    line = input()
+                    if line == "END":
+                        break
+                    lines.append(line)
+                except EOFError:
+                    break
+
+            response = "\n".join(lines)
+
+        print("\nLLM " + model_name + " Response: ")
+        file.write("\n\nLLM " + model_name + " Response: ")
+        print(response)
+        file.write("\n" + response + "\n")
+
+        if model_name.startswith("gpt"):
+            response_arr = response.split("\n")
+        else:
+            tries = 5
+            response_arr = re.findall(r'^.*\|.*->.*$', response, re.MULTILINE)
+            while tries > 0 and len(response_arr) == 0:
+                tries = tries - 1
+                if new_prompt == "":
+                    response = self.invoke_model(model_name, prompt, key)
+                else:
+                    response = self.invoke_model(model_name, new_prompt, key)
+                response_arr = re.findall(r'^.*\|.*->.*$', response, re.MULTILINE)
+            if tries == 0 and len(response_arr) == 0:
+                raise Exception("Could not parse LLLM output")
+
+        resp_paths_dict = {}
+        for i in range(0, len(response_arr)):
+            split_reponse = response_arr[i].split("|")
+            title = split_reponse[0].strip()
+            try:
+                title_id = list(titles.keys())[list(titles.values()).index(title)]
+            except ValueError:
+                try:
+                    title_id = list(titles.keys())[list(map(lambda x: x.lower(), list(titles.values()))).index(title.lower())]
+                except ValueError:
+                    try:
+                        title_id = list(titles.keys())[list(map(lambda x: x.lower(), list(titles.values()))).index(split_reponse[-1].split("->")[-1].strip().lower())]
+                    except ValueError:
+                        for ind, (key, value) in enumerate(titles.items()):
+                            if str(value).lower() == title.lower():
+                                break
+                        title_id = key
+            resp_paths_dict[title_id] = split_reponse[1]
+
+        hist_items = {}
+        nodes = {}
+        hist_lists = []
+        prop_lists = []
+        for rec in recommeded:
+            print("\nPaths for the Recommended Item: " + str(rec))
+            file.write("\nPaths for the Recommended Item: " + str(rec) + "\n")
+
+            try:
+                key1 = rec
+                keys = [k for k, v in titles.items() if v == titles[rec]]
+                keys_p = [key for key in keys if resp_paths_dict.get(key) is not None]
+                if len(keys_p) > 0:
+                    if keys_p[0] != rec:
+                        key1 = keys_p[0]
+                path = resp_paths_dict[key1]
+                path_split = path.split(" -> ")
+                origin = ""
+
+                hist_names = [str(x).strip() for x in path_split[:-1][0::2]]
+                hist_ids = []
+                for h_name in hist_names:
+                    try:
+                        hist_ids.append(list(titles.keys())[list(titles.values()).index(h_name)])
+                    except ValueError:
+                        rem_title = ''.join(letter for letter in h_name if letter.isalnum())
+                        for ind, (key, value) in enumerate(titles.items()):
+                            rem_value = ''.join(letter for letter in value if letter.isalnum())
+                            if str(rem_value).lower() == rem_title.lower():
+                                hist_ids.append(key)
+                                break
+
+                hist_lists.append(hist_ids)
+                for i in hist_names:
+                    origin = origin + "\"" + i + "\"; "
+                    hist_items = self.__add_dict(hist_items, i)
+                origin = origin[:-2]
+
+                path_props = [str(x).strip() for x in path_split[:-1][1::2]]
+                prop_lists.append(path_props)
+                path_sentence = " nodes: "
+                for n in path_props:
+                    path_sentence = path_sentence + "\"" + n + "\" "
+                    nodes = self.__add_dict(nodes, n)
+
+                rec_name = str(path_split[-1]).strip()
+                destination = "destination: \"" + rec_name + "\""
+
+            except KeyError:
+                origin = ""
+                path_sentence = ""
+                try:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]].unique()[0]
+                except AttributeError:
+                    rec_name = self.prop_set.loc[rec][self.prop_cols[1]]
+                destination = "destination: \"" + rec_name + "\""
+                hist_lists.append([])
+                prop_lists.append([])
+
+            file.write(origin + path_sentence + destination + "\n")
+            print(origin + path_sentence + destination)
+
+        lir = eval.lir_metric(0.3, user, hist_lists, self.train_set)
+        sep = eval.sep_metric(0.3, prop_lists, self.prop_set, memo_sep)
+        etd = eval.etd_metric(list(nodes.keys()), len(recommeded), len(self.prop_set['obj'].unique()))
+        return hist_items, nodes, (lir, sep, etd)
+
+    def llm_prompt(self, model: str, historic: list, recommended: list, titles: dict, sem_path_dist: pd.DataFrame,
+                   random_seed=64, hist_count=50, expl_count=40):
+
+        prompt = ""
+        if model.startswith("gpt") or model.startswith("llama"):
+            prompt = prompt + "\nIn a recommender system, a user has interacted some items, chronologically, " \
+                              "in descending order, the last items interacted were:\n"
+
+            last_items = historic[:hist_count]
+            for i in range(0, len(last_items)):
+                prompt = prompt + "'" + titles[historic[i]] + "'\n"
+
+            prompt = prompt + "The user has top-5 recommendations, and possible explanations paths. " \
+                              "Explanation paths connect an interacted item is connected to a recommended item " \
+                              "by attributes. Bellow are the user recommendations with the followed by " \
+                              "enumerated explanation paths, the symbol '->' means the connection between " \
+                              "an item and an attribute:\n"
+
+            for i in range(0, len(recommended)):
+                rec_item = int(recommended[i])
+                prompt = prompt + "\nFor the recommended item '" + titles[rec_item] + "':\n"
+                all_expl = sem_path_dist.loc[rec_item]
+                # extract paths from last items
+                try:
+                    top_expl = all_expl[(all_expl["historic"].isin(last_items))][:expl_count].sample(frac=1, random_state=random_seed)
+                except AttributeError:
+                    top_expl = pd.DataFrame(all_expl.copy()).T
+
+                # fill with other items until reach the expl_count
+                if top_expl.shape[0] == 0 or all_expl.shape[0] < expl_count:
+                    top_expl = all_expl.sample(frac=1, random_state=random_seed)[:expl_count]
+                elif top_expl.shape[0] < expl_count:
+                    if isinstance(top_expl, pd.Series):
+                        rest = expl_count - 1
+                        temp = all_expl.sample(frac=1, random_state=random_seed)[:rest]
+                        top_expl = temp.append(top_expl, ignore_index=True)
+                    else:
+                        lgth = top_expl.shape[0]
+                        rest = expl_count - lgth
+                        top_expl = pd.concat(
+                            [top_expl, all_expl[(~all_expl["historic"].isin(last_items))][:rest]]).sample(
+                            frac=1, random_state=random_seed)
+                
+                if isinstance(top_expl, pd.Series):
+                    top_expl = pd.DataFrame(top_expl.copy()).T
+
+                c = 1
+                for _, row in top_expl.iterrows():
+                    prompt = prompt + str(c) + "."
+                    for elem in row["path_s"]:
+                        prompt = prompt + elem + " -> "
+                    prompt = prompt[:-3] + "\n"
+                    c = c + 1
+
+            prompt = prompt + "\nPlease choose one explanation path for each recommendation " \
+                              "considering the following criteria:\n"
+
+            prompt = prompt + "1. Diversity of attributes: Each path is composed of attributes that connect" \
+                              "an interacted item node with a recommended. Diversify these attributes for the chosen" \
+                              " explanation paths set of all recommendations;\n"
+
+            prompt = prompt + "2. Popularity of attributes: Each path is composed of attributes that connect" \
+                              "an interacted item node with a recommended. Use popular attributes for the chosen" \
+                              " explanation paths set of all recommendations;\n"
+
+            prompt = prompt + "3. Recency of interacted items: Use explanation paths that connects recently interacted " \
+                              "items with the recommended.\n\n"
+
+            if model.startswith("gpt"):
+                prompt = prompt + "Output exactly in the same format as bellow with only the chosen explanation for each " \
+                                  "recommendation starting with the name " \
+                                  "and then the explanation, separated with a the symbol '|'." \
+                                  "The path's attributes are separated with '->'. An example of the exact format I want" \
+                                  " you to output is:\n" \
+                                  "Gangs of New York | Titanic -> Leonardo DiCaprio -> Gangs of New York\n" \
+                                  "Gladiator | Erin Brockovich -> Academy Award for Best Director -> Gladiator\n" \
+                                  "Tarzan | Ratatouille -> Walt Disney Pictures -> Tarzan\n" \
+                                  "A Bug's Life | Ghostbusters -> adventure film -> A Bug's Life\n" \
+                                  "War Horse | Band of Brothers -> Steven Spielberg -> War Horse"
+            else:
+                prompt = prompt + "The output format for every recommendation is: in one line, start with the name of " \
+                                  "the recommendation, then add the symbol '|'  followed by the explanation path chosen." \
+                                  "Do not create explanation paths, choose from the ones listed."
+
+        return prompt
+
+    def invoke_model(self, model_name: str, prompt: str, key=None):
+        response_text = ""
+        tries = 6
+        if model_name.startswith("gpt"):
+            openai.api_key = key
+            while tries > 0:
+                try:
+                    response = openai.ChatCompletion.create(
+                        model=model_name,
+                        messages=[
+                            {"role": "user", "content": prompt}
+                        ],
+                        temperature=0.2,
+                        seed=42
+                    )
+
+                    # extract the response
+                    response_text = response.choices[0].message["content"]
+                    break
+
+                except (openai.error.InvalidRequestError, openai.error.AuthenticationError,
+                        openai.error.PermissionError, openai.error.Timeout, openai.error.APIConnectionError,
+                        openai.error.APIError) as e:
+                    print(f"Invalid request: {e}")
+                    tries = tries - 1
+                    time.sleep(60 * 10)  # Wait before retrying
+                except (openai.error.ServiceUnavailableError,
+                        openai.error.RateLimitError) as e:
+                    print(f"Service unavailable: {e}")
+                    tries = tries - 1
+                    time.sleep(60 * 10)  # Wait before retrying
+                except Exception as e:
+                    print(f"Error: {e}")
+                    tries = tries - 1
+                    time.sleep(60 * 10)  # Wait before retrying
+
+        if model_name == "llama3-70b-8192":
+            while tries > 0:
+                try:
+                    response = Groq().chat.completions.create(
+                        messages=[
+                            {
+                                "role": "user",
+                                "content": prompt,
+                            }
+                        ],
+                        temperature=0.6,
+                        model="llama3-70b-8192",
+                    )
+                    response_text = response.choices[0].message.content
+                    break
+                except RateLimitError as e:
+                    print(f"Error: {e}")
+                    print("Waiting one minute")
+                    time.sleep(60)
+                    raise
+                except Exception as e:
+                    print(f"Error: {e}")
+                    tries = tries - 1
+                    time.sleep(60 * 10)  # Wait before retrying
+
+        if tries == 0 and response_text == "":
+            raise Exception("Tries exceeded")
+        if response_text == "":
+            raise Exception("LLM did not respond")
+
+        return response_text
 
     def __add_dict(self, d: dict, key) -> dict:
         """

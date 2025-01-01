@@ -551,5 +551,8 @@ if args.mode == "explanation" and args.dataset == "lastfm":
 if args.mode == "validate_expl" and args.dataset == "ml":
     statistical_relevance_explanations(args.baseline, args.dataset, args.reordered_recs, args.n_explain)
 
+if args.mode == "validate_expl" and args.dataset == "lastfm":
+    statistical_relevance_explanations(args.baseline, args.dataset, args.reordered_recs, args.n_explain)
+
 if args.mode == "maut":
     maut(args.dataset, args.fold, args.expl_algs, args.alg, args.expl_metrics, args.weights, args.n_explain)

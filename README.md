@@ -11,8 +11,13 @@ The first paper is you can find the link to our paper on ScienceDirect [here](ht
 
 The second paper proposes a approach to explaining recommendation based on graph embeddings, that are trained on the Wikidata Linked Open Data. A cosine similarity is between a user embedding and a path embedding. The user embedding is the sum pooling of the user's interacted items embeddings and the path's embedding are the sum pooling of item and edges that connect an interacted item with a recommended. The path with most similarity to the user is chosen to be displayed. 
 
->Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "Model-Agnostic Knowledge Graph Embedding Explanations for Recommender Systems". The 2nd World Conference on eXplainable Artificial Intelligence (2023)" 
+>Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "Model-Agnostic Knowledge Graph Embedding Explanations for Recommender Systems". The 2nd World Conference on eXplainable Artificial Intelligence (2023)
 
+In the third paper we compared results of different graph embeddings on the paradigm on the previous paper.
+
+> Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "O impacto de estratégias de embeddings de grafos na explicabilidade de sistemas de recomendação." Proceedings of the Brazilian Symposium on Multimedia and the Web (WebMedia). 2024.
+
+In the fourth paper we compared results of all the previous papers and compared to the Large Language Model results. In this method we leveraged paths from the KG and extracted the explanation quality metrics of the path chosen by the LLM.  
 
 ## Citation 
 If this repository could be usefull to you, please cite us:
@@ -30,7 +35,28 @@ If this repository could be usefull to you, please cite us:
         year        = {2022},
         publisher   = {Elsevier}
     }
-
+    
+    @inproceedings{zanon2024model,
+      title         = {Model-agnostic knowledge graph embedding explanations for recommender systems},
+      author        ={Zanon, Andr{\'e} Levi and da Rocha, Leonardo Chaves Dutra and Manzato, Marcelo Garcia},
+      booktitle     ={World Conference on Explainable Artificial Intelligence},
+      pages         ={3--27},
+      year          ={2024},
+      organization  ={Springer}
+    }
+    
+    @inproceedings{webmedia,
+     author     = {André Zanon and Leonardo Rocha and Marcelo Manzato},
+     title      = { O Impacto de Estratégias de Embeddings de Grafos na Explicabilidade de Sistemas de Recomendação},
+     booktitle  = {Proceedings of the 30th Brazilian Symposium on Multimedia and the Web},
+     location   = {Juiz de Fora/MG},
+     year       = {2024},
+     pages      = {231--239},
+     publisher  = {SBC},
+     address    = {Porto Alegre, RS, Brasil},
+     doi        = {10.5753/webmedia.2024.241857},
+     url        = {https://sol.sbc.org.br/index.php/webmedia/article/view/30317}
+    }
 
 ## Project Organization
 
@@ -47,6 +73,18 @@ If this repository could be usefull to you, please cite us:
 :page_facing_up: evaluation_utils.py: evaluation of recommender engines source code
 
 :page_facing_up: requirements.txt: list of library requirements to run the code
+
+### Trained Models
+
+The embedding model used in the WebMedia paper are available in https://tinyurl.com/2p969fe3
+
+Please add them in the models folder inside each of the datasets folder, therefore, 
+./datasets/ml-latest-small/models/ and ./datasets/hetrec2011-lastfm-2k/models/
+
+To run the models with Large Language Models gpt-4o-mini and llm_gpt-3.5-turbo-1106 it is required to generate a key
+with [OpenAI](https://platform.openai.com/docs/quickstart) and add create an .env file on the root of the project with
+a key named OPEN_AI_KEY. The same is required for the Llama 80B model, but with [Groq](https://console.groq.com/keys)
+and add the key with name GROQ_API_KEY.
 
 ## Wikidata extracted metatdata 
 The files [props_wikidata_movilens_small.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/props_wikidata_movielens_small.csv) and [props_artists_id.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/last-fm/props_artists_id.csv) contains the [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page). metadata extracted using [SPARQLWrapper 1.8.5](https://github.com/RDFLib/sparqlwrapper) library for the [MovieLens 100k dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/ml-latest-small) and the and the [LastFM artist dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/hetrec2011-lastfm-2k). For the MovieLens we extracted metadata from 97% of the movies available and for the LastFM we extracted 66% of the artists available.
@@ -71,6 +109,8 @@ All the generated files and results are available in this repository for the [Mo
 * [sparqlwrapper 1.8.5](https://github.com/RDFLib/sparqlwrapper)
 * [caserecommender 1.1.0](https://github.com/caserec/CaseRecommender)
 * [pykeen 1.5.0](https://github.com/pykeen/pykeen)
+* [openai 0.27.8](https://github.com/openai/openai-python)
+* [groq 0.9.0](https://github.com/groq/groq-python)
 
 ### Enviroment 
 To install the libraries used in this project, use the command: 
@@ -155,7 +195,7 @@ To run the Lastfm experiments use the following command line:
 
     python main.py --mode=run --dataset=lastfm --begin=0 --end=9 --alg="MostPop BPRMF UserKNN PageRank NCF EASE" --reord="MostPop BPRMF UserKNN PageRank NCF EASE" --nreorder=10 --pitems=0.1 --policy=last
 
-To run a statistical relevance test for ranking metrics use the following command in which the bprmf baseline is compared to the proposed reordering with policy of last items, percentage of historic items to build user profile of 0.1 and reordering of the top 10 of the baseline:
+To run a statistical relevance test for ranking metrics, considering all the folds, use the following command in which the bprmf baseline is compared to the proposed reordering with policy of last items, percentage of historic items to build user profile of 0.1 and reordering of the top 10 of the baseline:
 
     python main.py --mode=validate --dataset=lastfm --sufix=path[policy=last_items=01_reorder=10_hybrid] --baseline=bprmf --method="both" --save=1 --metrics="MAP AGG_DIV NDCG GINI ENTROPY COVERAGE"
 
@@ -167,7 +207,7 @@ To run an explanation samples for the pem explanations algorithm on the movielen
 
     python main.py --mode=explanation --dataset=ml --begin=0 --end=1 --reord="PageRank" --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=20 --max_users=2 --expl_alg=pem --reordered_recs=0
     
-To run a statistical relevance test for explanation metrics for the PageRank algorithm and movielens dataset use the command:
+To run a statistical relevance test, considering all the ten folds, for explanation metrics for the PageRank algorithm and movielens dataset, for the PEM, ExpLOD v2 and ExpLOD algorithms use the command:
     
     python main.py --mode=validate_expl --baseline=wikidata_page_rank8020 --dataset=ml --reordered_recs=0
     
@@ -177,8 +217,8 @@ To run the Multi-Attribute Utility Theory between explanation algorithms for a r
 
 ### Papers Command-Line Experiments
 
-To run the experiments from the paper: "Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data", 
-run the following commands:
+__To run the experiments from the paper: "Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data", 
+run the following commands:__
  
 To run the ranking of the base algorithms and reordering with the following commands:
     
@@ -189,8 +229,10 @@ Then compare the algorithms with the following command to perform statistical va
     
     python main.py --mode=validate --dataset=lastfm --sufix=path[policy=last_items=01_reorder=10_hybrid] --baseline=bprmf --method="both" --save=1 --metrics="MAP AGG_DIV NDCG GINI ENTROPY COVERAGE"
 
-To run the experiments from the paper: "Model-Agnostic Knowledge Graph Embedding Explanations for Recommender Systems", 
-run the following commands:
+--- 
+
+__To run the experiments from the paper: "Model-Agnostic Knowledge Graph Embedding Explanations for Recommender Systems", 
+run the following commands:__
 
     python main.py --mode=explanation --dataset=ml --begin=0 --end=0 --reord="EASE" --nreorder=5 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=rotate --reordered_recs=0 --n_explain=5
 
@@ -205,6 +247,52 @@ Then to run the method MAUT run the command:
 
 In this command we run maut for the ml dataset, comparing the `expl_alg` for the `ease` recommender using the metrics `LIR SEP ETD`
 as attributes. In the paper we ran for both datasets, all recommendation algorithms (`MostPop BPRMF UserKNN PageRank NCF EASE`) and `n_explain` 1 and 5. 
+
+--- 
+
+__To run the experiments from the paper: "O Impacto de Estratégias de Embeddings de Grafos na Explicabilidade 
+de Sistemas de Recomendação", run the following commands:__
+
+    python main.py --mode=explanation --dataset=ml --begin=0 --end=0 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" --nreorder=5 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=webmedia_transe --reordered_recs=0 --n_explain=5
+    python main.py --mode=explanation --dataset=ml --begin=0 --end=0 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" --nreorder=5 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=webmedia_complex --reordered_recs=0 --n_explain=5
+    python main.py --mode=explanation --dataset=ml --begin=0 --end=0 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" --nreorder=5 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=webmedia_rotate --reordered_recs=0 --n_explain=5
+
+We ran these three models also for the LastFM dataset, so it is required to change the dataset from ml to lastfm. In this
+paper we only ran for n_explain=5.
+
+To compare the results using maut, use the command:
+
+    python main.py --mode=maut --dataset=ml --expl_algs="explod explod_v2 pem rotate webmedia_transe webmedia_complex webmedia_rotate" 
+        --alg=ease --expl_metrics="LIR SEP ETD" --n_explain=5
+
+Changing the `alg` param with all recommenders and the parameter `dataset` with ml and lastfm. 
+
+---
+
+__To run the experiments with LLMs: run the following commands:__
+
+    
+    python main.py --mode=explanation --dataset=ml --begin=0 --end=0 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" 
+        --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=llm_gpt-3.5-turbo-1106 
+        --reordered_recs=0 --n_explain=5
+        
+    python main.py --mode=explanation --dataset=ml --begin=0 --end=0 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" 
+        --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=llm_gpt-4o-mini
+        --reordered_recs=0 --n_explain=5
+        
+    python main.py --mode=explanation --dataset=ml --begin=0 --end=0 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" 
+        --nreorder=10 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=llm_llama3-70b-8192
+        --reordered_recs=0 --n_explain=5
+
+Each of these commands execute the experiments for the MovieLens dataset for three LLMs: Llama 70B, GPT 3.5 and GPT 4o mini.
+We ran these three models also for the LastFM dataset, so it is required to change the dataset from ml to lastfm. In this
+paper we only ran for n_explain=5.
+
+To compare the results using maut, use the command:
+
+    python main.py --mode=maut --dataset=ml --expl_algs="explod explod_v2 pem webmedia_complex webmedia_rotate webmedia_transe rotate llm_gpt-3.5-turbo-1106 llm_gpt-4o-mini llm_llama3-70b-8192" --alg=mostpop --expl_metrics="SEP ETD LIR"  --n_explain=5
+
+Changing the `alg` param with all recommenders and the parameter `dataset` with ml and lastfm.
 
 ## Papers outputs and metrics
 

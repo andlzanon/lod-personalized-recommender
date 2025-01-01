@@ -1,0 +1,17 @@
+./datasets/hetrec2011-lastfm-2k/folds/0/results/explanations/llm/reordered_recs=0_expl_alg=llm_llama3-70b-8192_mostpop.csv
+Mean user item aggregate diversity: 5.555733333333333
+Std user item aggregate diversity: 1.5914648793555646
+Mean user property aggregate diversity: 6.223466666666667
+Std user property aggregate diversity: 1.420866865293469
+Total items aggregate diversity: 2665
+Total property aggregate diversity: 377
+Items entropy: 6.408415832792542
+Props entropy: 3.9536318673907322
+Items Gini index: 0.9282545798439037
+Props Gini index: 0.9977615196553405
+LIR metric: 0.009653333333333335
+ETD metric: 1.2446933333333334
+SEP metric: 0.6240218792982848
+std LIR metric: 0.06595058621591034
+std ETD metric: 0.28417337305869383
+std SEP metric: 0.14439179549722433

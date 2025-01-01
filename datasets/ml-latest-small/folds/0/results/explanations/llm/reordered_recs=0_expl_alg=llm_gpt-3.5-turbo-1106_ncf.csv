@@ -1,0 +1,17 @@
+./datasets/ml-latest-small/folds/0/results/explanations/llm/reordered_recs=0_expl_alg=llm_gpt-3.5-turbo-1106_ncf.csv
+Mean user item aggregate diversity: 4.27013422818792
+Std user item aggregate diversity: 0.7852546174315428
+Mean user property aggregate diversity: 3.912751677852349
+Std user property aggregate diversity: 0.9928123291370059
+Total items aggregate diversity: 1310
+Total property aggregate diversity: 312
+Items entropy: 6.825686600826145
+Props entropy: 3.542742483289649
+Items Gini index: 0.9164900459885417
+Props Gini index: 0.9992418081390854
+LIR metric: 0.055704697986577185
+ETD metric: 0.7825503355704697
+SEP metric: 0.6305820833208834
+std LIR metric: 0.11865156836685935
+std ETD metric: 0.19856246582740117
+std SEP metric: 0.18097503795736847

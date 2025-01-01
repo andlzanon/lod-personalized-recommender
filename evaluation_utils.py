@@ -405,8 +405,11 @@ def sep_metric(beta: float, props: list, prop_set: pd.DataFrame, memo_sep: dict)
                             last_sep = sep
 
                 # generate normalized sep column
-                count_link['normalized'] = scaler.fit_transform(
-                    np.asarray(count_link[count_link.columns[-1]]).astype(np.float64).reshape(-1, 1)).reshape(-1)
+                try:
+                    count_link['normalized'] = scaler.fit_transform(
+                        np.asarray(count_link[count_link.columns[-1]]).astype(np.float64).reshape(-1, 1)).reshape(-1)
+                except ValueError:
+                    continue
                 p_sep_value = count_link.loc[p][-1]
                 for l in links:
                     memo_sep[l] = count_link
@@ -471,15 +474,17 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
     explod_results = []
     explodv2_results = []
     pem_results = []
+    final_fold = 10
 
     path = "./datasets/"
     if dataset == "ml":
         path = path + "ml-latest-small"
     else:
         path = path + "hetrec2011-lastfm-2k"
+        final_fold = 1
     path_base = path + "/folds/"
 
-    for i in range(0, 10):
+    for i in range(0, final_fold):
         path = path_base + str(i) + "/results/explanations/" + "reordered_recs=" + str(reordered)
 
         n_explain_s = "_"
@@ -504,7 +509,7 @@ def statistical_relevance_explanations(rec_alg: str, dataset: str, reordered: in
         m_explod = []
         m_explodv2 = []
         m_pem = []
-        for i in range(0, 10):
+        for i in range(0, final_fold):
             m_explod.append(float(explod_results[i].loc[m].value))
             m_explodv2.append(float(explodv2_results[i].loc[m].value))
             m_pem.append(float(pem_results[i].loc[m].value))
@@ -597,11 +602,19 @@ def maut(dataset: str, folder: int, expl_algs: str, rec_alg: str, metrics: str, 
     df_metrics = []
     for i in range(0, len(expl_algs_l)):
         alg = expl_algs_l[i]
+        if alg.startswith("webmedia"):
+            path = path.replace("/explanations/", "/explanations/webmedia/")
+        elif alg.startswith("llm"):
+            path = path.replace("/explanations/", "/explanations/llm/")
+
         if n_explain != 5:
             alg_path = path + "_expl_alg=" + alg + "_" + path_n_expain + "_" + str(rec_alg) + ".csv"
         else:
             alg_path = path + "_expl_alg=" + alg + "_" + str(rec_alg) + ".csv"
         df_metrics.append(explanation_file_to_df(alg_path, alg))
+
+        if alg.startswith("llm") or alg.startswith("webmedia"):
+            path = path_base + str(folder) + "/results/explanations/" + "reordered_recs=0"
 
     scaler = MinMaxScaler()
     utility_matrix = pd.concat(df_metrics).pivot(index='alg', columns='metric', values='value').astype(np.float64)
