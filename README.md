@@ -182,7 +182,7 @@ for an explanation algorithm;
 Works only on 'maut' mode.
 
 
-Therefore there are three main commands: the 'run' that is responsable of running an experiment, the 'validate' to run a statistical relevance test comparison of a baseline with a proposed metric and 
+Therefore there are three main commands: the 'run' that is responsable for running an experiment, the 'validate' to run a statistical relevance test comparison of a baseline with a proposed metric and 
 the 'explanation' mode that generates to a fold recommendations just like the run, but it prints on the console the items names, the semantic profile and the explanation paths.  
 
 ### Examples
@@ -247,6 +247,10 @@ Then to run the method MAUT run the command:
 
 In this command we run maut for the ml dataset, comparing the `expl_alg` for the `ease` recommender using the metrics `LIR SEP ETD`
 as attributes. In the paper we ran for both datasets, all recommendation algorithms (`MostPop BPRMF UserKNN PageRank NCF EASE`) and `n_explain` 1 and 5. 
+
+MAUT refers to Multi-Attribute Utility Theory and it orders options (in our case algorithms) based on attributes (in our case metrics).
+It aggregates the attributes on a single score that ranks the options. Therefore, it aggregates 
+explanation quality metrics into a single score that orders the options. 
 
 --- 
 
