@@ -1,4 +1,4 @@
-# Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data
+# Explanations for Recommender Systems
 
 ## Project Organization
 
