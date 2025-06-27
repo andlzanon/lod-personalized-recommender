@@ -1,63 +1,5 @@
 # Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data
 
-## Description 
-This is the source code used for the experiments of two papers:
-
-The first paper is you can find the link to our paper on ScienceDirect [here](https://www.sciencedirect.com/science/article/pii/S0950705122006682). It proposes a reordering algorithm that aims to improve or maintain a collaborative filtering recommendation engine's accuracy, while also providing more diversity, coverage and fairness with the ability to generate personalized explanations to the user with the Wikidata Linked Open Data.
- 
-
->Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data." Knowledge-Based Systems 252 (2022): 109333.
-
-
-The second paper proposes a approach to explaining recommendation based on graph embeddings, that are trained on the Wikidata Linked Open Data. A cosine similarity is between a user embedding and a path embedding. The user embedding is the sum pooling of the user's interacted items embeddings and the path's embedding are the sum pooling of item and edges that connect an interacted item with a recommended. The path with most similarity to the user is chosen to be displayed. 
-
->Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "Model-Agnostic Knowledge Graph Embedding Explanations for Recommender Systems". The 2nd World Conference on eXplainable Artificial Intelligence (2023)
-
-In the third paper we compared results of different graph embeddings on the paradigm on the previous paper.
-
-> Zanon, André Levi, Leonardo Chaves Dutra da Rocha, and Marcelo Garcia Manzato. "O impacto de estratégias de embeddings de grafos na explicabilidade de sistemas de recomendação." Proceedings of the Brazilian Symposium on Multimedia and the Web (WebMedia). 2024.
-
-In the fourth paper we compared results of all the previous papers and compared to the Large Language Model results. In this method we leveraged paths from the KG and extracted the explanation quality metrics of the path chosen by the LLM.  
-
-## Citation 
-If this repository could be usefull to you, please cite us:
-    
-    @article{zanon2022balancing,
-        title       = {Balancing the trade-off between accuracy and diversity in
-                     recommender systems with personalized explanations based on 
-                     Linked Open Data},
-        author      = {Zanon, Andr{\'e} Levi and 
-                      da Rocha, Leonardo Chaves Dutra and 
-                      Manzato, Marcelo Garcia},
-        journal     = {Knowledge-Based Systems},
-        volume      = {252},
-        pages       = {109333},
-        year        = {2022},
-        publisher   = {Elsevier}
-    }
-    
-    @inproceedings{zanon2024model,
-      title         = {Model-agnostic knowledge graph embedding explanations for recommender systems},
-      author        ={Zanon, Andr{\'e} Levi and da Rocha, Leonardo Chaves Dutra and Manzato, Marcelo Garcia},
-      booktitle     ={World Conference on Explainable Artificial Intelligence},
-      pages         ={3--27},
-      year          ={2024},
-      organization  ={Springer}
-    }
-    
-    @inproceedings{webmedia,
-     author     = {André Zanon and Leonardo Rocha and Marcelo Manzato},
-     title      = { O Impacto de Estratégias de Embeddings de Grafos na Explicabilidade de Sistemas de Recomendação},
-     booktitle  = {Proceedings of the 30th Brazilian Symposium on Multimedia and the Web},
-     location   = {Juiz de Fora/MG},
-     year       = {2024},
-     pages      = {231--239},
-     publisher  = {SBC},
-     address    = {Porto Alegre, RS, Brasil},
-     doi        = {10.5753/webmedia.2024.241857},
-     url        = {https://sol.sbc.org.br/index.php/webmedia/article/view/30317}
-    }
-
 ## Project Organization
 
 :file_folder: datasets: file with MovieLens 100k and LastFM datasets, folds of cross validation and experiments outputs and results for all folds
@@ -87,7 +29,7 @@ a key named OPEN_AI_KEY. The same is required for the Llama 80B model, but with 
 and add the key with name GROQ_API_KEY.
 
 ## Wikidata extracted metatdata 
-The files [props_wikidata_movilens_small.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/props_wikidata_movielens_small.csv) and [props_artists_id.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/last-fm/props_artists_id.csv) contains the [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page). metadata extracted using [SPARQLWrapper 1.8.5](https://github.com/RDFLib/sparqlwrapper) library for the [MovieLens 100k dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/ml-latest-small) and the and the [LastFM artist dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/hetrec2011-lastfm-2k). For the MovieLens we extracted metadata from 97% of the movies available and for the LastFM we extracted 66% of the artists available.
+The files [props_wikidata_movilens_small.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/props_wikidata_movielens_small.csv) and [props_artists_id.csv](https://github.com/andlzanon/lod-personalized-recommender/blob/main/generated_files/wikidata/last-fm/props_artists_id.csv) contains the [Wikidata](https://www.wikidata.org/wiki/Wikidata:Main_Page). metadata extracted using [SPARQLWrapper 1.8.5](https://github.com/RDFLib/sparqlwrapper) library for the [MovieLens dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/ml-latest-small) and the and the [LastFM artist dataset](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/hetrec2011-lastfm-2k). For the MovieLens we extracted metadata from 97% of the movies available and for the LastFM we extracted 66% of the artists available.
 
 ## Reproduction 
 
@@ -217,7 +159,7 @@ To run the Multi-Attribute Utility Theory between explanation algorithms for a r
 
 ### Papers Command-Line Experiments
 
-__To run the experiments from the paper: "Balancing the trade-off between accuracy and diversity in recommender systems with personalized explanations based on Linked Open Data", 
+__To run the experiments from the paper: XXX, 
 run the following commands:__
  
 To run the ranking of the base algorithms and reordering with the following commands:
@@ -231,7 +173,7 @@ Then compare the algorithms with the following command to perform statistical va
 
 --- 
 
-__To run the experiments from the paper: "Model-Agnostic Knowledge Graph Embedding Explanations for Recommender Systems", 
+__To run the experiments from the paper: XXX, 
 run the following commands:__
 
     python main.py --mode=explanation --dataset=ml --begin=0 --end=0 --reord="EASE" --nreorder=5 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=rotate --reordered_recs=0 --n_explain=5
@@ -254,8 +196,7 @@ explanation quality metrics into a single score that orders the options.
 
 --- 
 
-__To run the experiments from the paper: "O Impacto de Estratégias de Embeddings de Grafos na Explicabilidade 
-de Sistemas de Recomendação", run the following commands:__
+__To run the experiments from the paper: XXX, run the following commands:__
 
     python main.py --mode=explanation --dataset=ml --begin=0 --end=0 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" --nreorder=5 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=webmedia_transe --reordered_recs=0 --n_explain=5
     python main.py --mode=explanation --dataset=ml --begin=0 --end=0 --reord="MostPop BPRMF UserKNN PageRank NCF EASE" --nreorder=5 --pitems=0.1 --policy=last --min=0 --max=0 --max_users=0 --expl_alg=webmedia_complex --reordered_recs=0 --n_explain=5
