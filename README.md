@@ -18,7 +18,7 @@
 
 ### Trained Models
 
-The embedding model used in the WebMedia paper are available in https://tinyurl.com/2p969fe3
+The embedding model used in the WebMedia paper are available in [anonymized]()
 
 Please add them in the models folder inside each of the datasets folder, therefore, 
 ./datasets/ml-latest-small/models/ and ./datasets/hetrec2011-lastfm-2k/models/
@@ -33,7 +33,7 @@ The files [props_wikidata_movilens_small.csv](https://github.com/andlzanon/lod-p
 
 ## Reproduction 
 
-All the generated files and results are available in this repository for the [MovieLens 100k database](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/ml-latest-small/folds) and the [LastFM database](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/hetrec2011-lastfm-2k/folds). Bellow are the libraries and command line arguments to reproduce the results of those two folders.
+All the generated files and results are available in this repository for the [MovieLens Latest database](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/ml-latest-small/folds) and the [LastFM database](https://github.com/andlzanon/lod-personalized-recommender/tree/main/datasets/hetrec2011-lastfm-2k/folds). Bellow are the libraries and command line arguments to reproduce the results of those two folders.
 
 ### Libraries
 
