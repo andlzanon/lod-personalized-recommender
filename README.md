@@ -2,7 +2,7 @@
 
 ## Project Organization
 
-:file_folder: datasets: file with MovieLens 100k and LastFM datasets, folds of cross validation and experiments outputs and results for all folds
+:file_folder: datasets: file with MovieLens and LastFM datasets, folds of cross validation and experiments outputs and results for all folds
 
 :file_folder: generated_files: files of metadata generated from the Wikidata for items on both datasets
 
